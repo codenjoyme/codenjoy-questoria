@@ -20,7 +20,18 @@ public class TestTerritoryMap {
 
     @Before
     public void init() {
-        game = new JavaQuest();
+        Settings settings = new Settings() {
+            @Override
+            public int getWorldSize() {
+                return 100;
+            }
+
+            @Override
+            public int getViewAreaSize() {
+                return 13;
+            }
+        };
+        game = new JavaQuest(settings);
         map = game.getTerritoryMap();
         joystick = game.getPlayer();
     }

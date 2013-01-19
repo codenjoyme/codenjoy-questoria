@@ -8,7 +8,14 @@ import java.util.List;
  * Time: 2:50 PM
  */
 public class JavaQuest {
-    TerritoryMap map = new TerritoryMap();
+
+    private TerritoryMap map;
+    private Settings settings;
+
+    public JavaQuest(Settings settings) {
+        this.settings = settings;
+        map = new TerritoryMap(settings.getWorldSize(), settings.getViewAreaSize());
+    }
 
     public TerritoryMap getTerritoryMap() {
         return map;

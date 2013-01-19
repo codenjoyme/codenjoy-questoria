@@ -13,23 +13,29 @@ import java.util.List;
  */
 public class TerritoryMap {
 
-    private static final int SIZE = 100;
-    private char[][] map = new char[SIZE][SIZE];
-    private char[][] fog = new char[SIZE][SIZE];
-    private int posx = -1, posy = -1;
+    private int size;
+    private char[][] map, fog;
+    private int posx, posy;
     private PlayerView view;
     private String message;
 
-    public TerritoryMap() {
-        view = new PlayerView(13);
+    public TerritoryMap(int size, int viewAreaSize) {
+        view = new PlayerView(viewAreaSize);
+        this.size = size;
+        map = new char[size][size];
+        fog = new char[size][size];
+
         fill(fog, '?');
         fill(map, ' ');
         map[40][22] = '@';
+
+        posx = -1;
+        posy = -1;
         changePos(20, 20);
     }
 
     public void changePos(int x, int y) {
-        if (y < 0 || x < 0 || y >= SIZE || x >= SIZE) {
+        if (y < 0 || x < 0 || y >= size || x >= size) {
             return;
         }
         removeMe();
@@ -50,7 +56,7 @@ public class TerritoryMap {
     }
 
     private void openSpace() {
-        view.see(posx, posy, SIZE, new Apply() {
+        view.see(posx, posy, size, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
@@ -85,7 +91,7 @@ public class TerritoryMap {
     public String getViewArea() {
         final StringBuffer result = new StringBuffer();
 
-        view.see(posx, posy, SIZE, new Apply() {
+        view.see(posx, posy, size, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (isWall) {
@@ -125,7 +131,7 @@ public class TerritoryMap {
     public List<Character> getSomethingNearMe() {
         final List<Character> result = new LinkedList<Character>();
 
-        view.near(posx, posy, SIZE, new Apply() {
+        view.near(posx, posy, size, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (!isWall && map[x][y] != ' ' && map[x][y] != '#') {
