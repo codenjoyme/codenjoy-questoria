@@ -153,4 +153,5 @@ public class TestTerritoryMap {
         verifyXY(99, 20);
         verifyMap();
     }
+
 }

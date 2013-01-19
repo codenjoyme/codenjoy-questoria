@@ -83,7 +83,11 @@ public class TerritoryMap {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (isWall) {
-                    result.append('#');
+                    if (canSee) {
+                        result.append('#');
+                    } else {
+                        result.append('?');
+                    }
                 } else {
                     result.append(map[x][y]);
                 }

@@ -9,10 +9,6 @@ public class PlayerView {
 
     private char[][] viewMask;
     private int size;
-    private static final boolean CANT_SEE = false;
-    private static final boolean CAN_SEE = true;
-    private static final boolean WALL = true;
-    private static final boolean EMPTY = false;
 
     public PlayerView(int size) {
         this.size = size;
@@ -56,15 +52,9 @@ public class PlayerView {
             for (int x = 0; x < size; x++) {
                 int dx = x + posx - radius();
                 int dy = y + posy - radius();
-                if (dx >= 0 && dy >= 0 && dy < mapSize && dx < mapSize) {
-                    if (canSee(x, y)) {
-                        see.xy(dx, dy, CAN_SEE, EMPTY);
-                    } else {
-                        see.xy(dx, dy, CANT_SEE, false);
-                    }
-                } else {
-                    see.xy(dx, dy, CAN_SEE, WALL);
-                }
+                boolean isWall = (dx < 0 || dy < 0 || dy >= mapSize || dx >= mapSize);
+                boolean canSee = canSee(x, y);
+                see.xy(dx, dy, canSee, isWall);
             }
         }
     }
