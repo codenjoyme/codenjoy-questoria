@@ -1,6 +1,5 @@
 package apofig.javaquest.map;
 
-import com.sun.webpane.sg.prism.WCMediaPlayerImpl;
 import org.approvaltests.Approvals;
 import org.junit.Before;
 import org.junit.Test;
@@ -186,6 +185,23 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(39, 22);
+    }
+
+    @Test
+    public void shouldKillMonsterWhenAttack() throws Exception {
+        moveTo(39, 22);
+        joystick.attack("die!");
+
+        verifyMap();
+    }
+
+
+    @Test
+    public void shouldMonsterStillAliveWhenBadAttack() throws Exception {
+        moveTo(39, 22);
+        joystick.attack("No!!!");
+
+        verifyMap();
     }
 
 

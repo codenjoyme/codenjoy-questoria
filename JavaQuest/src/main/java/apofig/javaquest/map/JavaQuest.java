@@ -42,6 +42,15 @@ public class JavaQuest {
             public void moveDown() {
                 tryToMove(0, -1);
             }
+
+            @Override
+            public void attack(String message) {
+                for (Something object : map.getSomethingNearMe()) {
+                    if (object instanceof Monster) {
+                        map.writeMessage(object.say(message));
+                    }
+                }
+            }
         };
     }
 
@@ -59,9 +68,9 @@ public class JavaQuest {
     }
 
     private boolean isNearMonster() {
-        List<Character> nearMe = map.getSomethingNearMe();
-        for (char object : nearMe) {
-            if (object == '@') {
+        List<Something> nearMe = map.getSomethingNearMe();
+        for (Something object : nearMe) {
+            if (object instanceof Monster) {
                 return true;
             }
         }

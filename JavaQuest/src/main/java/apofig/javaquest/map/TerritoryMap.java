@@ -128,18 +128,39 @@ public class TerritoryMap {
         }
     }
 
-    public List<Character> getSomethingNearMe() {
-        final List<Character> result = new LinkedList<Character>();
+    public List<Something> getSomethingNearMe() {
+        final List<Something> result = new LinkedList<Something>();
 
         view.near(posx, posy, size, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (!isWall && map[x][y] != ' ' && map[x][y] != '#') {
-                    result.add(map[x][y]);
+                    result.add(wrap(x, y));
                 }
             }
         });
+
+        for (Something smth : result) {
+            if (smth instanceof Nothing) {
+                result.remove(smth);
+            }
+        }
+
         return result;
+    }
+
+    private Something wrap(final int x, final int y) {
+        char c = map[x][y];
+        if (c == ' ') {
+            return new Nothing();
+        } else if (c == '@') {
+            return new Monster(new OnKill() {
+                public void doit() {
+                    map[x][y] = ' ';
+                }
+            });
+        }
+        throw new UnsupportedOperationException("WTF! New object in world - " + c);
     }
 
     public void writeMessage(String message) {

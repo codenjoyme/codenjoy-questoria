@@ -13,4 +13,6 @@ public interface Joystick {
     void moveUp();
 
     void moveDown();
+
+    void attack(String message);
 }

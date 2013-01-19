@@ -80,6 +80,9 @@ public class PlayerView {
     public void near(int posx, int posy, int mapSize, Apply meet) {
         for (int y = -1; y <= 1; y++) {
             for (int x = -1; x <= 1; x++) {
+                if (x == 0 && y == 0) {
+                    continue;
+                }
                 int dx = x + posx;
                 int dy = y + posy;
                 boolean isWall = (dx < 0 || dy < 0 || dy >= mapSize || dx >= mapSize);
