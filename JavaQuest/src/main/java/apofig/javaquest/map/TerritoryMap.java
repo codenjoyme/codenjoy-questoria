@@ -44,8 +44,8 @@ public class TerritoryMap {
     }
 
     private void openSpace() {
-        for (int x = 0; x < view.size(); x++) {
-            for (int y = 0; y < view.size(); y++) {
+        for (int y = view.size() - 1; y >= 0; y--) {
+            for (int x = 0; x < view.size(); x++) {
                 if (view.canSee(x, y)) {
                     int dx = x + posx - view.radius();
                     int dy = y + posy - view.radius();
@@ -86,10 +86,10 @@ public class TerritoryMap {
             for (int x = 0; x < view.size(); x++) {
                 int dx = x + posx - view.radius();
                 int dy = y + posy - view.radius();
-                if (dx < 0 || dy < 0 || dx >= SIZE || dy >= SIZE) {
-                    result.append('#');
-                } else {
+                if (dx >= 0 && dy >= 0 && dy < SIZE && dx < SIZE) {
                     result.append(map[dx][dy]);
+                } else {
+                    result.append('#');
                 }
             }
             result.append('\n');
