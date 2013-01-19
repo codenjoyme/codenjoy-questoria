@@ -24,11 +24,6 @@ public class PlayerView {
         return (size - 1)/2;
     }
 
-
-    public int size() {
-        return size;
-    }
-
     private boolean canSee(int x, int y) {
         return viewMask[x][y] == ' ';
     }
