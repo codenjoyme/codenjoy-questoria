@@ -44,17 +44,14 @@ public class TerritoryMap {
     }
 
     private void openSpace() {
-        for (int y = view.size() - 1; y >= 0; y--) {
-            for (int x = 0; x < view.size(); x++) {
-                if (view.canSee(x, y)) {
-                    int dx = x + posx - view.radius();
-                    int dy = y + posy - view.radius();
-                    if (dx >= 0 && dy >= 0 && dy < SIZE && dx < SIZE) {
-                        map[dx][dy] = ' ';
-                    }
+        view.see(posx, posy, SIZE, new Apply() {
+            @Override
+            public void xy(int x, int y, boolean canSee, boolean isWall) {
+                if (canSee && !isWall) {
+                    map[x][y] = ' ';
                 }
             }
-        }
+        });
     }
 
     private void fill(char[][] m, char с) {
@@ -80,20 +77,22 @@ public class TerritoryMap {
     }
 
     public String getViewArea() {
-        StringBuffer result = new StringBuffer();
+        final StringBuffer result = new StringBuffer();
 
-        for (int y = view.size() - 1; y >= 0; y--) {
-            for (int x = 0; x < view.size(); x++) {
-                int dx = x + posx - view.radius();
-                int dy = y + posy - view.radius();
-                if (dx >= 0 && dy >= 0 && dy < SIZE && dx < SIZE) {
-                    result.append(map[dx][dy]);
-                } else {
+        view.see(posx, posy, SIZE, new Apply() {
+            @Override
+            public void xy(int x, int y, boolean canSee, boolean isWall) {
+                if (isWall) {
                     result.append('#');
+                } else {
+                    result.append(map[x][y]);
+                }
+
+                if ((x - posx) == view.radius()) {
+                    result.append('\n');
                 }
             }
-            result.append('\n');
-        }
+        });
 
         return result.toString();
     }
