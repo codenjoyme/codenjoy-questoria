@@ -43,6 +43,7 @@ public class PlayerViewTest {
                 } else {
                     result.append('?');
                 }
+                result.append(" ");
 
                 boolean endLine = (x - fogSize/2) == view.radius();
                 if (endLine) {

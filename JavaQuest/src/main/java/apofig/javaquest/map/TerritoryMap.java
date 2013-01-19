@@ -107,6 +107,7 @@ public class TerritoryMap {
                         result.append(map[x][y]);
                     }
                 }
+                result.append(" ");
 
                 boolean endLine = (x - posx) == view.radius();
                 if (endLine) {
