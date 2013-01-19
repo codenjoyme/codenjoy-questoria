@@ -12,20 +12,14 @@ import java.util.Arrays;
 public class TerritoryMap {
 
     private static final int SIZE = 100;
-    private static final int VIEW_RADIUS = 13;
-
     private char[][] map = new char[SIZE][SIZE];
-    private char[][] viewMask = new char[VIEW_RADIUS][VIEW_RADIUS];
     private int posx = -1, posy = -1;
+    private PlayerView view;
 
     public TerritoryMap() {
+        view = new PlayerView(13);
         fill(map, '?');
-        buildMask();
         changePos(20, 20);
-    }
-
-    private int delta() {
-        return (VIEW_RADIUS - 1)/2;
     }
 
     public void changePos(int x, int y) {
@@ -50,38 +44,15 @@ public class TerritoryMap {
     }
 
     private void openSpace() {
-        for (int x = 0; x < VIEW_RADIUS; x++) {
-            for (int y = 0; y < VIEW_RADIUS; y++) {
-                if (viewMask[x][y] == ' ') {
-                    int dx = x + posx - delta();
-                    int dy = y + posy - delta();
+        for (int x = 0; x < view.size(); x++) {
+            for (int y = 0; y < view.size(); y++) {
+                if (view.canSee(x, y)) {
+                    int dx = x + posx - view.radius();
+                    int dy = y + posy - view.radius();
                     if (dx >= 0 && dy >= 0 && dy < SIZE && dx < SIZE) {
                         map[dx][dy] = ' ';
                     }
                 }
-            }
-        }
-    }
-
-    private void buildMask() {
-        final String[] mask = new String[]{
-                "?????????????",
-                "?????   ?????",
-                "???       ???",
-                "??         ??",
-                "??         ??",
-                "?           ?",
-                "?           ?",
-                "?           ?",
-                "??         ??",
-                "??         ??",
-                "???       ???",
-                "?????   ?????",
-                "?????????????"};
-
-        for (int y = 0; y < VIEW_RADIUS; y++) {
-            for (int x = 0; x < VIEW_RADIUS; x++) {
-                viewMask[x][y] = mask[y].charAt(x);
             }
         }
     }
@@ -111,10 +82,10 @@ public class TerritoryMap {
     public String getViewArea() {
         StringBuffer result = new StringBuffer();
 
-        for (int y = VIEW_RADIUS - 1; y >= 0; y--) {
-            for (int x = 0; x < VIEW_RADIUS; x++) {
-                int dx = x + posx - delta();
-                int dy = y + posy - delta();
+        for (int y = view.size() - 1; y >= 0; y--) {
+            for (int x = 0; x < view.size(); x++) {
+                int dx = x + posx - view.radius();
+                int dy = y + posy - view.radius();
                 if (dx < 0 || dy < 0 || dx >= SIZE || dy >= SIZE) {
                     result.append('#');
                 } else {
