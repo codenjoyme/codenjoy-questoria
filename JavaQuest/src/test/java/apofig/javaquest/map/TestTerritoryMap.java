@@ -27,34 +27,38 @@ public class TestTerritoryMap {
 
     @Test
     public void testIAmOnMap() throws Exception {
-        verifyMap(map);
+        verifyMap();
     }
 
-    private void verifyMap(TerritoryMap map) throws Exception {
+    private void verifyMap() throws Exception {
+        Approvals.verify(getMap());
+    }
+
+    private String getMap() {
         StringOutputStream out = new StringOutputStream();
         map.printNearMe(out);
-        Approvals.verify(out.getResult());
+        return out.getResult();
     }
 
     @Test
     public void testIGoRight() throws Exception {
         joystick.moveRight();
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
     public void testIGoLeft() throws Exception {
         joystick.moveLeft();
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
     public void testIGoUp() throws Exception {
         joystick.moveUp();
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
@@ -62,7 +66,7 @@ public class TestTerritoryMap {
         joystick.moveDown();
         joystick.moveDown();
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
@@ -72,7 +76,7 @@ public class TestTerritoryMap {
             joystick.moveLeft();
         }
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
@@ -82,7 +86,7 @@ public class TestTerritoryMap {
             joystick.moveLeft();
         }
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
@@ -92,7 +96,7 @@ public class TestTerritoryMap {
             joystick.moveRight();
         }
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
@@ -102,7 +106,7 @@ public class TestTerritoryMap {
             joystick.moveRight();
         }
 
-        verifyMap(map);
+        verifyMap();
     }
 
     @Test
@@ -111,8 +115,8 @@ public class TestTerritoryMap {
             joystick.moveDown();
         }
 
-        assertEquals(0, map.getY());
-        verifyMap(map);
+        verifyXY(20, 0);
+        verifyMap();
     }
 
     @Test
@@ -121,8 +125,8 @@ public class TestTerritoryMap {
             joystick.moveUp();
         }
 
-        assertEquals(99, map.getY());
-        verifyMap(map);
+        verifyXY(20, 99);
+        verifyMap();
     }
 
     @Test
@@ -131,8 +135,13 @@ public class TestTerritoryMap {
             joystick.moveLeft();
         }
 
-        assertEquals(0, map.getX());
-        verifyMap(map);
+        verifyXY(0, 20);
+        verifyMap();
+    }
+
+    private void verifyXY(int x, int y) {
+        assertEquals(x, map.getX());
+        assertEquals(y, map.getY());
     }
 
     @Test
@@ -141,9 +150,7 @@ public class TestTerritoryMap {
             joystick.moveRight();
         }
 
-        assertEquals(99, map.getX());
-        verifyMap(map);
+        verifyXY(99, 20);
+        verifyMap();
     }
-
-
 }
