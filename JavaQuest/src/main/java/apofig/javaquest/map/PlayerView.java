@@ -1,5 +1,7 @@
 package apofig.javaquest.map;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13
@@ -7,10 +9,28 @@ package apofig.javaquest.map;
  */
 public class PlayerView {
 
+    private static final String[] VIEW_CIRCLE = new String[]{
+            "????   ????",
+            "??       ??",
+            "?         ?",
+            "?         ?",
+            "           ",
+            "           ",
+            "           ",
+            "?         ?",
+            "?         ?",
+            "??       ??",
+            "????   ????"};
     private char[][] viewMask;
     private int size;
 
     public PlayerView(int size) {
+        if (size < VIEW_CIRCLE.length) {
+            throw new IllegalArgumentException("View size must be more than 10!");
+        }
+        if (size % 2 == 0) {
+            throw new IllegalArgumentException("View size must be an odd!");
+        }
         this.size = size;
         viewMask = new char[size][size];
         buildMask();
@@ -25,20 +45,18 @@ public class PlayerView {
     }
 
     private void buildMask() {
-        final String[] mask = new String[]{
-                "?????????????",
-                "?????   ?????",
-                "???       ???",
-                "??         ??",
-                "??         ??",
-                "?           ?",
-                "?           ?",
-                "?           ?",
-                "??         ??",
-                "??         ??",
-                "???       ???",
-                "?????   ?????",
-                "?????????????"};
+        String[] mask = new String[size];
+        int delta = (size - VIEW_CIRCLE.length)/2;
+        for (int y = 0; y < size; y++) {
+            if (y < delta || y >= (size - delta)) {
+                mask[y] = StringUtils.repeat("?", size);
+            } else {
+                String temp = VIEW_CIRCLE[y - delta];
+                temp = StringUtils.leftPad(temp, size - delta, "?");
+                temp = StringUtils.rightPad(temp, size, "?");
+                mask[y] = temp;
+            }
+        }
 
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {

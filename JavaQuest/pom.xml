@@ -20,6 +20,11 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ApprovalTests-012.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
     </dependencies>
 
 

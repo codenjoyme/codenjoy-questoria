@@ -61,7 +61,7 @@ public class TerritoryMap {
     }
 
     private void fill(char[][] m, char с) {
-        for (int x = 0; x < SIZE; x++) {
+        for (int x = 0; x < m.length; x++) {
             Arrays.fill(m[x], с);
         }
     }
