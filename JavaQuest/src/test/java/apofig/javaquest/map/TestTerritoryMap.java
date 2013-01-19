@@ -71,49 +71,36 @@ public class TestTerritoryMap {
 
     @Test
     public void testCheckGoToBoardLeftDown() throws Exception {
-        for (int count = 0; count < 15; count++) {
-            joystick.moveDown();
-            joystick.moveLeft();
-        }
+        moveTo(5, 5);
 
         verifyMap();
     }
 
     @Test
     public void testTryToOpenViewOnBoardLeftDown() throws Exception {
-        for (int count = 0; count < 19; count++) {
-            joystick.moveDown();
-            joystick.moveLeft();
-        }
+        moveTo(1, 1);
 
         verifyMap();
     }
 
     @Test
     public void testCheckGoToBoardUpRight() throws Exception {
-        for (int count = 0; count < 74; count++) {
-            joystick.moveUp();
-            joystick.moveRight();
-        }
+        moveTo(94, 94);
 
         verifyMap();
     }
 
     @Test
     public void testTryToOpenViewOnBoardUpRight() throws Exception {
-        for (int count = 0; count < 78; count++) {
-            joystick.moveUp();
-            joystick.moveRight();
-        }
+        moveTo(98, 98);
 
         verifyMap();
     }
 
     @Test
     public void testICantGoOnBoardDown() throws Exception {
-        for (int count = 0; count < 1000; count++) {
-            joystick.moveDown();
-        }
+        moveTo(20, 0);
+        joystick.moveDown();
 
         verifyXY(20, 0);
         verifyMap();
@@ -121,9 +108,8 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardUp() throws Exception {
-        for (int count = 0; count < 1000; count++) {
-            joystick.moveUp();
-        }
+        moveTo(20, 99);
+        joystick.moveUp();
 
         verifyXY(20, 99);
         verifyMap();
@@ -131,9 +117,8 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardLeft() throws Exception {
-        for (int count = 0; count < 1000; count++) {
-            joystick.moveLeft();
-        }
+        moveTo(0, 20);
+        joystick.moveLeft();
 
         verifyXY(0, 20);
         verifyMap();
@@ -146,9 +131,8 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardRight() throws Exception {
-        for (int count = 0; count < 1000; count++) {
-            joystick.moveRight();
-        }
+        moveTo(99, 20);
+        joystick.moveRight();
 
         verifyXY(99, 20);
         verifyMap();
@@ -156,30 +140,22 @@ public class TestTerritoryMap {
 
     @Test
     public void testWhenMoveICanFindMonster() throws Exception {
-        verifyXY(20, 20);
         moveTo(37, 20);
 
         verifyMap();
     }
 
     private void moveTo(int x, int y) {
-        if (map.getX() < x) {
-            for (int dx = map.getX(); dx < x; dx++) {
-                joystick.moveRight();
-            }
-        } else {
-            for (int dx = x; dx < map.getX(); dx++) {
-                joystick.moveLeft();
-            }
-        }
-
-        if (map.getY() < y) {
-            for (int dy = map.getY(); dy < y; dy++) {
+        while (Math.abs(map.getX() - x) != 0 || Math.abs(map.getY() - y) != 0) {
+            if (map.getY() < y) {
                 joystick.moveUp();
-            }
-        } else {
-            for (int dy = y; dy < map.getY(); dy++) {
+            } else if (map.getY() > y) {
                 joystick.moveDown();
+            }
+            if (map.getX() < x) {
+                joystick.moveRight();
+            } else if (map.getX() > x) {
+                joystick.moveLeft();
             }
         }
         verifyXY(x, y);
