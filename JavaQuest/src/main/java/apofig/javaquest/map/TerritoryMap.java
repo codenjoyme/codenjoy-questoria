@@ -16,7 +16,7 @@ public class TerritoryMap {
 
     private char[][] map = new char[SIZE][SIZE];
     private char[][] viewMask = new char[VIEW_RADIUS][VIEW_RADIUS];
-    private int posx, posy;
+    private int posx = -1, posy = -1;
 
     public TerritoryMap() {
         fill(map, '?');
@@ -41,7 +41,9 @@ public class TerritoryMap {
     }
 
     private void removeMe() {
-        map[posx][posy] = ' ';
+        if (posx != -1 || posy != -1) {
+            map[posx][posy] = ' ';
+        }
     }
 
     private void openSpace() {
@@ -104,7 +106,13 @@ public class TerritoryMap {
 
         for (int y = VIEW_RADIUS - 1; y >= 0; y--) {
             for (int x = 0; x < VIEW_RADIUS; x++) {
-                result.append(map[x + posx - delta()][y + posy - delta()]);
+                int dx = x + posx - delta();
+                int dy = y + posy - delta();
+                if (dx < 0 || dy < 0) {
+                    result.append('#');
+                } else {
+                    result.append(map[dx][dy]);
+                }
             }
             result.append('\n');
         }

@@ -63,5 +63,15 @@ public class TestTerritoryMap {
         verifyMap(map);
     }
 
+    @Test
+    public void testCheckGoToBoard() throws Exception {
+        for (int count = 0; count < 15; count++) {
+            joystick.moveDown();
+            joystick.moveLeft();
+        }
+
+        verifyMap(map);
+    }
+
 
 }
