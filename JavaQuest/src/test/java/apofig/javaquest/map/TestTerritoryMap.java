@@ -2,6 +2,7 @@ package apofig.javaquest.map;
 
 import com.sun.webpane.sg.prism.WCMediaPlayerImpl;
 import org.approvaltests.Approvals;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -11,12 +12,19 @@ import org.junit.Test;
  */
 public class TestTerritoryMap {
 
-    private JavaQuest game = new JavaQuest();
+    private JavaQuest game;
+    private TerritoryMap map;
+    private Joystick joystick;
+
+    @Before
+    public void init() {
+        game = new JavaQuest();
+        map = game.getTerritoryMap();
+        joystick = game.getPlayer();
+    }
 
     @Test
     public void testIAmOnMap() throws Exception {
-        TerritoryMap map = game.getTerritoryMap();
-
         verifyMap(map);
     }
 
@@ -28,10 +36,14 @@ public class TestTerritoryMap {
 
     @Test
     public void testIGoRight() throws Exception {
-        Joystick joystick = game.getPlayer();
-        TerritoryMap map = game.getTerritoryMap();
-
         joystick.moveRight();
+
+        verifyMap(map);
+    }
+
+    @Test
+         public void testIGoLeft() throws Exception {
+        joystick.moveLeft();
 
         verifyMap(map);
     }

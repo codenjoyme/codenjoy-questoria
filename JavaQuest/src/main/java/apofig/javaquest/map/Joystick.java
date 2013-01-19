@@ -7,4 +7,6 @@ package apofig.javaquest.map;
  */
 public interface Joystick {
     void moveRight();
+
+    void moveLeft();
 }
