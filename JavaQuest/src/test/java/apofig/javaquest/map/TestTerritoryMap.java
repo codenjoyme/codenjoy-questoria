@@ -5,6 +5,8 @@ import org.approvaltests.Approvals;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13
@@ -100,6 +102,46 @@ public class TestTerritoryMap {
             joystick.moveRight();
         }
 
+        verifyMap(map);
+    }
+
+    @Test
+    public void testICantGoOnBoardDown() throws Exception {
+        for (int count = 0; count < 1000; count++) {
+            joystick.moveDown();
+        }
+
+        assertEquals(0, map.getY());
+        verifyMap(map);
+    }
+
+    @Test
+    public void testICantGoOnBoardUp() throws Exception {
+        for (int count = 0; count < 1000; count++) {
+            joystick.moveUp();
+        }
+
+        assertEquals(99, map.getY());
+        verifyMap(map);
+    }
+
+    @Test
+    public void testICantGoOnBoardLeft() throws Exception {
+        for (int count = 0; count < 1000; count++) {
+            joystick.moveLeft();
+        }
+
+        assertEquals(0, map.getX());
+        verifyMap(map);
+    }
+
+    @Test
+    public void testICantGoOnBoardRight() throws Exception {
+        for (int count = 0; count < 1000; count++) {
+            joystick.moveRight();
+        }
+
+        assertEquals(99, map.getX());
         verifyMap(map);
     }
 

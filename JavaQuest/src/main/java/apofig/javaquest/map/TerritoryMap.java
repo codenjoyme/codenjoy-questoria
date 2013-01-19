@@ -29,6 +29,9 @@ public class TerritoryMap {
     }
 
     public void changePos(int x, int y) {
+        if (y < 0 || x < 0 || y >= SIZE || x >= SIZE) {
+            return;
+        }
         removeMe();
         posx = x;
         posy = y;
