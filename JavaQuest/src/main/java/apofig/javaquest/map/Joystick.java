@@ -11,4 +11,6 @@ public interface Joystick {
     void moveLeft();
 
     void moveUp();
+
+    void moveDown();
 }

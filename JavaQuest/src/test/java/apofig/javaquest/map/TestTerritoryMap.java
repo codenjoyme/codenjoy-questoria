@@ -55,5 +55,13 @@ public class TestTerritoryMap {
         verifyMap(map);
     }
 
+    @Test
+    public void testIGoDownTwice() throws Exception {
+        joystick.moveDown();
+        joystick.moveDown();
+
+        verifyMap(map);
+    }
+
 
 }
