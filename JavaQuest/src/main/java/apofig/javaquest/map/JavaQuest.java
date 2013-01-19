@@ -25,36 +25,46 @@ public class JavaQuest {
         return new Joystick() {
             @Override
             public void moveRight() {
-                map.changePos(map.getX() + 1, map.getY());
-                meetWith();
+                tryToMove(1, 0);
             }
 
             @Override
             public void moveLeft() {
-                map.changePos(map.getX() - 1, map.getY());
-                meetWith();
+                tryToMove(-1, 0);
             }
 
             @Override
             public void moveUp() {
-                map.changePos(map.getX(), map.getY() + 1);
-                meetWith();
+                tryToMove(0, 1);
             }
 
             @Override
             public void moveDown() {
-                map.changePos(map.getX(), map.getY() - 1);
-                meetWith();
+                tryToMove(0, -1);
             }
         };
     }
 
+    private void tryToMove(int dx, int dy) {
+        if (!isNearMonster()) {
+            map.changePos(map.getX() + dx, map.getY() + dy);
+            meetWith();
+        }
+    }
+
     private void meetWith() {
+        if (isNearMonster()) {
+            map.writeMessage("Fight with me!");
+        }
+    }
+
+    private boolean isNearMonster() {
         List<Character> nearMe = map.getSomethingNearMe();
         for (char object : nearMe) {
             if (object == '@') {
-                map.writeMessage("Fight with me!");
+                return true;
             }
         }
+        return false;
     }
 }

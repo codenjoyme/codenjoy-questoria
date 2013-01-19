@@ -179,5 +179,14 @@ public class TestTerritoryMap {
         verifyMap();
     }
 
+    @Test
+    public void shouldNoMoveWhenITalkWithMonster() throws Exception {
+        moveTo(39, 22);
+        joystick.moveRight();
+        joystick.moveRight();
+
+        verifyXY(39, 22);
+    }
+
 
 }
