@@ -140,7 +140,7 @@ public class TestTerritoryMap {
 
     @Test
     public void testWhenMoveICanFindMonster() throws Exception {
-        moveTo(37, 20);
+        moveTo(37, 22);
 
         verifyMap();
     }
@@ -159,6 +159,13 @@ public class TestTerritoryMap {
             }
         }
         verifyXY(x, y);
+    }
+
+    @Test
+    public void testWhenITalkWithMonster() throws Exception {
+        moveTo(39, 22);
+
+        verifyMap();
     }
 
 

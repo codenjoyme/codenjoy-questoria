@@ -3,6 +3,8 @@ package apofig.javaquest.map;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: oleksandr.baglai
@@ -16,12 +18,13 @@ public class TerritoryMap {
     private char[][] fog = new char[SIZE][SIZE];
     private int posx = -1, posy = -1;
     private PlayerView view;
+    private String message;
 
     public TerritoryMap() {
         view = new PlayerView(13);
         fill(fog, '?');
         fill(map, ' ');
-        map[40][20] = '@';
+        map[40][22] = '@';
         changePos(20, 20);
     }
 
@@ -106,6 +109,34 @@ public class TerritoryMap {
             }
         });
 
+        printMessage(result);
+
         return result.toString();
+    }
+
+    private void printMessage(StringBuffer result) {
+        if (message != null) {
+            result.append('\n');
+            result.append(message);
+            message = null;
+        }
+    }
+
+    public List<Character> getSomethingNearMe() {
+        final List<Character> result = new LinkedList<Character>();
+
+        view.near(posx, posy, SIZE, new Apply() {
+            @Override
+            public void xy(int x, int y, boolean canSee, boolean isWall) {
+                if (!isWall && map[x][y] != ' ' && map[x][y] != '#') {
+                    result.add(map[x][y]);
+                }
+            }
+        });
+        return result;
+    }
+
+    public void writeMessage(String message) {
+        this.message = message;
     }
 }
