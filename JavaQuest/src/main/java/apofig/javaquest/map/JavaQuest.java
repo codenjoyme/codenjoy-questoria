@@ -23,6 +23,11 @@ public class JavaQuest {
             public void moveLeft() {
                 map.changePos(map.getX() - 1, map.getY());
             }
+
+            @Override
+            public void moveUp() {
+                map.changePos(map.getX(), map.getY() + 1);
+            }
         };
     }
 }

@@ -42,8 +42,15 @@ public class TestTerritoryMap {
     }
 
     @Test
-         public void testIGoLeft() throws Exception {
+    public void testIGoLeft() throws Exception {
         joystick.moveLeft();
+
+        verifyMap(map);
+    }
+
+    @Test
+    public void testIGoUp() throws Exception {
+        joystick.moveUp();
 
         verifyMap(map);
     }

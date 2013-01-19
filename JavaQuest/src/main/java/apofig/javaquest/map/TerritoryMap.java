@@ -102,14 +102,12 @@ public class TerritoryMap {
     public String getViewArea() {
         StringBuffer result = new StringBuffer();
 
-        for (int y = 0; y < VIEW_RADIUS; y++) {
+        for (int y = VIEW_RADIUS - 1; y >= 0; y--) {
             for (int x = 0; x < VIEW_RADIUS; x++) {
                 result.append(map[x + posx - delta()][y + posy - delta()]);
             }
             result.append('\n');
         }
-
-
 
         return result.toString();
     }
