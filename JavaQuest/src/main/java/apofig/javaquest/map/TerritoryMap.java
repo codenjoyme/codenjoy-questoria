@@ -88,7 +88,8 @@ public class TerritoryMap {
                     result.append(map[x][y]);
                 }
 
-                if ((x - posx) == view.radius()) {
+                boolean endLine = (x - posx) == view.radius();
+                if (endLine) {
                     result.append('\n');
                 }
             }
