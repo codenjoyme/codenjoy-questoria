@@ -50,7 +50,11 @@ public class TerritoryMap {
         for (int x = 0; x < VIEW_RADIUS; x++) {
             for (int y = 0; y < VIEW_RADIUS; y++) {
                 if (viewMask[x][y] == ' ') {
-                    map[x + posx - delta()][y + posy - delta()] = ' ';
+                    int dx = x + posx - delta();
+                    int dy = y + posy - delta();
+                    if (dx >= 0 && dy >= 0) {
+                        map[dx][dy] = ' ';
+                    }
                 }
             }
         }

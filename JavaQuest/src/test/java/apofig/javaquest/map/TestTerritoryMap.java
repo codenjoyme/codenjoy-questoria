@@ -73,5 +73,15 @@ public class TestTerritoryMap {
         verifyMap(map);
     }
 
+    @Test
+    public void testTryToOpenViewOnBoard() throws Exception {
+        for (int count = 0; count < 19; count++) {
+            joystick.moveDown();
+            joystick.moveLeft();
+        }
+
+        verifyMap(map);
+    }
+
 
 }
