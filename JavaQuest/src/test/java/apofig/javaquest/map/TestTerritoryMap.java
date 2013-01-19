@@ -64,7 +64,7 @@ public class TestTerritoryMap {
     }
 
     @Test
-    public void testCheckGoToBoard() throws Exception {
+    public void testCheckGoToBoardLeftDown() throws Exception {
         for (int count = 0; count < 15; count++) {
             joystick.moveDown();
             joystick.moveLeft();
@@ -74,10 +74,30 @@ public class TestTerritoryMap {
     }
 
     @Test
-    public void testTryToOpenViewOnBoard() throws Exception {
+    public void testTryToOpenViewOnBoardLeftDown() throws Exception {
         for (int count = 0; count < 19; count++) {
             joystick.moveDown();
             joystick.moveLeft();
+        }
+
+        verifyMap(map);
+    }
+
+    @Test
+    public void testCheckGoToBoardUpRight() throws Exception {
+        for (int count = 0; count < 74; count++) {
+            joystick.moveUp();
+            joystick.moveRight();
+        }
+
+        verifyMap(map);
+    }
+
+    @Test
+    public void testTryToOpenViewOnBoardUpRight() throws Exception {
+        for (int count = 0; count < 78; count++) {
+            joystick.moveUp();
+            joystick.moveRight();
         }
 
         verifyMap(map);

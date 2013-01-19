@@ -52,7 +52,7 @@ public class TerritoryMap {
                 if (viewMask[x][y] == ' ') {
                     int dx = x + posx - delta();
                     int dy = y + posy - delta();
-                    if (dx >= 0 && dy >= 0) {
+                    if (dx >= 0 && dy >= 0 && dy < SIZE && dx < SIZE) {
                         map[dx][dy] = ' ';
                     }
                 }
@@ -112,7 +112,7 @@ public class TerritoryMap {
             for (int x = 0; x < VIEW_RADIUS; x++) {
                 int dx = x + posx - delta();
                 int dy = y + posy - delta();
-                if (dx < 0 || dy < 0) {
+                if (dx < 0 || dy < 0 || dx >= SIZE || dy >= SIZE) {
                     result.append('#');
                 } else {
                     result.append(map[dx][dy]);
