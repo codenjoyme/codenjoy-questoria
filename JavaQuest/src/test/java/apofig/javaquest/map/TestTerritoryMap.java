@@ -154,4 +154,36 @@ public class TestTerritoryMap {
         verifyMap();
     }
 
+    @Test
+    public void testWhenMoveICanFindMonster() throws Exception {
+        verifyXY(20, 20);
+        moveTo(37, 20);
+
+        verifyMap();
+    }
+
+    private void moveTo(int x, int y) {
+        if (map.getX() < x) {
+            for (int dx = map.getX(); dx < x; dx++) {
+                joystick.moveRight();
+            }
+        } else {
+            for (int dx = x; dx < map.getX(); dx++) {
+                joystick.moveLeft();
+            }
+        }
+
+        if (map.getY() < y) {
+            for (int dy = map.getY(); dy < y; dy++) {
+                joystick.moveUp();
+            }
+        } else {
+            for (int dy = y; dy < map.getY(); dy++) {
+                joystick.moveDown();
+            }
+        }
+        verifyXY(x, y);
+    }
+
+
 }

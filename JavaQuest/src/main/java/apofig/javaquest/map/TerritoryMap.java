@@ -13,12 +13,15 @@ public class TerritoryMap {
 
     private static final int SIZE = 100;
     private char[][] map = new char[SIZE][SIZE];
+    private char[][] fog = new char[SIZE][SIZE];
     private int posx = -1, posy = -1;
     private PlayerView view;
 
     public TerritoryMap() {
         view = new PlayerView(13);
-        fill(map, '?');
+        fill(fog, '?');
+        fill(map, ' ');
+        map[40][20] = '@';
         changePos(20, 20);
     }
 
@@ -48,7 +51,7 @@ public class TerritoryMap {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
-                    map[x][y] = ' ';
+                    fog[x][y] = ' ';
                 }
             }
         });
@@ -89,7 +92,11 @@ public class TerritoryMap {
                         result.append('?');
                     }
                 } else {
-                    result.append(map[x][y]);
+                    if (fog[x][y] == '?') {
+                        result.append('?');
+                    } else {
+                        result.append(map[x][y]);
+                    }
                 }
 
                 boolean endLine = (x - posx) == view.radius();
