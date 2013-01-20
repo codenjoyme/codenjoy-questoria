@@ -49,7 +49,6 @@ public class LoadMapFromFileTest {
         for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
                 result.append(map[x][y]);
-                result.append(" ");
             }
             result.append('\n');
         }

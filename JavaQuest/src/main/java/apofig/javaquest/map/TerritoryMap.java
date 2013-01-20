@@ -95,18 +95,21 @@ public class TerritoryMap {
 
                 if (isWall) {
                     if (canSee) {
-                        result.append("#");
+                        result.append("##");
                     } else {
-                        result.append("?");
+                        result.append("??");
                     }
                 } else {
                     if (fog[x][y] == '?') {
-                        result.append("?");
+                        result.append("??");
                     } else {
+                        if (map[x][y] == '?') {
+                            result.append("??");
+                        }
                         result.append(map[x][y]);
+                        result.append(' ');
                     }
                 }
-                result.append(" ");
 
                 boolean endLine = (x - posx) == view.radius();
                 if (endLine) {
