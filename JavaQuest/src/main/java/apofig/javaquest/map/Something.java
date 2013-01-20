@@ -13,4 +13,8 @@ public interface Something {
     String askMe();
 
     boolean iCanUse();
+
+    Something leaveAfter();
+
+    char symbol();
 }

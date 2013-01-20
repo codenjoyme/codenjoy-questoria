@@ -6,5 +6,5 @@ package apofig.javaquest.map;
  * Time: 8:37 PM
  */
 public interface OnKill {
-    void doit();
+    void doit(Something body);
 }

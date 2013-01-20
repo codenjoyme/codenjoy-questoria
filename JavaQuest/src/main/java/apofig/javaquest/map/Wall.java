@@ -25,4 +25,14 @@ public class Wall implements Something {
     public boolean iCanUse() {
         return false;
     }
+
+    @Override
+    public Something leaveAfter() {
+        return new Nothing();
+    }
+
+    @Override
+    public char symbol() {
+        return '#';
+    }
 }

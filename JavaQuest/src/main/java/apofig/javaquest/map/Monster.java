@@ -16,7 +16,7 @@ public class Monster implements Something {
     @Override
     public String answer(String message) {
         if (message.equals("die!")) {
-            onKill.doit();
+            onKill.doit(this);
             return "Monster: yOU @#& Ki$%@&^ll me $!@!";
         }
         return "Monster: I'll kill you!";
@@ -35,5 +35,15 @@ public class Monster implements Something {
     @Override
     public boolean iCanUse() {
         return false;
+    }
+
+    @Override
+    public Something leaveAfter() {
+        return new Gold(10);
+    }
+
+    @Override
+    public char symbol() {
+        return '@';
     }
 }

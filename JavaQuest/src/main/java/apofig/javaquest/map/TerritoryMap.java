@@ -161,8 +161,8 @@ public class TerritoryMap {
             return new Nothing();
         } else if (c == '@') {
             return new Monster(new OnKill() {
-                public void doit() {
-                    map[x][y] = ' ';
+                public void doit(Something body) {
+                    map[x][y] = body.leaveAfter().symbol();
                 }
             });
         } else if (c == '#') {
