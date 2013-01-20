@@ -7,12 +7,6 @@ package apofig.javaquest.map;
  */
 public class Gold implements Something {
 
-    private int count;
-
-    public Gold(int count) {
-        this.count = count;
-    }
-
     @Override
     public String answer(String message) {
         return null;
@@ -25,7 +19,7 @@ public class Gold implements Something {
 
     @Override
     public String askMe() {
-        return count + "Gold";
+        return "10 Gold";
     }
 
     @Override

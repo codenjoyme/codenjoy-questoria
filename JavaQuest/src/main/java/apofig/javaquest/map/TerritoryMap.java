@@ -167,6 +167,8 @@ public class TerritoryMap {
             });
         } else if (c == '#') {
             return new Wall();
+        } else if (c == '$') {
+            return new Gold();
         }
         throw new UnsupportedOperationException("WTF! New object in world - " + c);
     }

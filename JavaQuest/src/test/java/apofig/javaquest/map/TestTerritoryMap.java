@@ -263,4 +263,13 @@ public class TestTerritoryMap {
         verifyMap();
     }
 
+    @Test
+    public void shouldGetGoldAfterMonsterDie() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("die!");
+        joystick.moveRight();
+
+        verifyMap();
+    }
+
 }

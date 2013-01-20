@@ -39,7 +39,7 @@ public class Monster implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Gold(10);
+        return new Gold();
     }
 
     @Override

@@ -54,8 +54,8 @@ public class JavaQuest {
         int x = map.getX() + dx;
         int y = map.getY() + dy;
         Something smthAtWay = map.getAt(x, y);
+        map.writeMessage(smthAtWay.askMe());
         if (!smthAtWay.iCanUse()) {
-            map.writeMessage(smthAtWay.askMe());
             return;
         }
 
