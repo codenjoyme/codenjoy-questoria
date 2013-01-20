@@ -31,7 +31,6 @@ public class PlayerViewTest {
 
     private void verifyView(int size) throws Exception {
         final int fogSize = size*2;
-        char[][] fog = new char[fogSize][fogSize];
         final PlayerView view = new PlayerView(size);
         final StringBuffer result = new StringBuffer();
 

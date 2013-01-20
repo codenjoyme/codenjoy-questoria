@@ -3,11 +3,7 @@ package apofig.javaquest;
 import apofig.javaquest.console.Console;
 import apofig.javaquest.console.ConsoleImpl;
 import apofig.javaquest.console.Runner;
-import apofig.javaquest.map.JavaQuest;
-import apofig.javaquest.map.Settings;
-
-import java.io.DataInputStream;
-import java.io.IOException;
+import apofig.javaquest.map.*;
 
 /**
  * User: oleksandr.baglai
@@ -19,13 +15,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Settings settings = new Settings() {
             @Override
-            public int getWorldSize() {
-                return 100;
+            public int getViewAreaSize() {
+                return 33;
             }
 
             @Override
-            public int getViewAreaSize() {
-                return 33;
+            public MapLoader getMapLoader() {
+                return new LoadMapFromFile("map.txt");
             }
         };
         JavaQuest game = new JavaQuest(settings);

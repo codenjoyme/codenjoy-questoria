@@ -14,7 +14,7 @@ public class JavaQuest {
 
     public JavaQuest(Settings settings) {
         this.settings = settings;
-        map = new TerritoryMap(settings.getWorldSize(), settings.getViewAreaSize());
+        map = new TerritoryMap(settings.getMapLoader(), settings.getViewAreaSize());
     }
 
     public TerritoryMap getTerritoryMap() {

@@ -19,19 +19,14 @@ public class TerritoryMap {
     private PlayerView view;
     private String message;
 
-    public TerritoryMap(int size, int viewAreaSize) {
+    public TerritoryMap(MapLoader loader, int viewAreaSize) {
         view = new PlayerView(viewAreaSize);
-        this.size = size;
-        map = new char[size][size];
-        fog = new char[size][size];
 
-        fill(fog, '?');
-        fill(map, ' ');
-        map[40][22] = '@';
-
-        posx = -1;
-        posy = -1;
-        changePos(20, 20);
+        this.size = loader.getMapSize();
+        map = loader.getMap();
+        fog = loader.getFog();
+        posx = -1; posy = -1;
+        changePos(loader.getPlayerX(), loader.getPlayerY());
     }
 
     public void changePos(int x, int y) {
@@ -64,12 +59,6 @@ public class TerritoryMap {
                 }
             }
         });
-    }
-
-    private void fill(char[][] m, char с) {
-        for (int x = 0; x < m.length; x++) {
-            Arrays.fill(m[x], с);
-        }
     }
 
     public void printNearMe(OutputStream out) {

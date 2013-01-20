@@ -6,7 +6,8 @@ package apofig.javaquest.map;
  * Time: 8:13 PM
  */
 public interface Settings {
-    int getWorldSize();
 
     int getViewAreaSize();
+
+    MapLoader getMapLoader();
 }

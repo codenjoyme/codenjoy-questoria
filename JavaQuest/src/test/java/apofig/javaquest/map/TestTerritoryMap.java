@@ -20,7 +20,6 @@ public class TestTerritoryMap {
     @Before
     public void init() {
         Settings settings = new Settings() {
-            @Override
             public int getWorldSize() {
                 return 100;
             }
@@ -28,6 +27,11 @@ public class TestTerritoryMap {
             @Override
             public int getViewAreaSize() {
                 return 13;
+            }
+
+            @Override
+            public MapLoader getMapLoader() {
+                return new SquareMap(getWorldSize());
             }
         };
         game = new JavaQuest(settings);
