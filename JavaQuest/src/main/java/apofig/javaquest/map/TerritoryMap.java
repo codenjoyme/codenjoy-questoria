@@ -2,7 +2,6 @@ package apofig.javaquest.map;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class TerritoryMap {
     public TerritoryMap(MapLoader loader, int viewAreaSize) {
         view = new PlayerView(viewAreaSize);
 
-        this.size = loader.getMapSize();
+        this.size = loader.getWidth();
         map = loader.getMap();
         fog = loader.getFog();
         posx = -1; posy = -1;

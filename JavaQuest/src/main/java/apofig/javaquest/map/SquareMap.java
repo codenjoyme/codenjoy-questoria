@@ -29,7 +29,7 @@ public class SquareMap implements MapLoader {
     }
 
     @Override
-    public int getMapSize() {
+    public int getWidth() {
         return size;
     }
 
@@ -51,5 +51,10 @@ public class SquareMap implements MapLoader {
     @Override
     public int getPlayerY() {
         return posy;
+    }
+
+    @Override
+    public int getHeight() {
+        return size;
     }
 }

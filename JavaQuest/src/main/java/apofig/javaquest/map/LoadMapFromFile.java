@@ -1,13 +1,9 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.MapLoader;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -52,8 +48,8 @@ public class LoadMapFromFile implements MapLoader {
             throw new RuntimeException(e);
         }
         List<String> lines = new LinkedList<>();
-        try (Scanner scanner = new Scanner(new File(uri))){
-            while (scanner.hasNextLine()){
+        try (Scanner scanner = new Scanner(new File(uri))) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 lines.add(line);
             }
@@ -64,8 +60,13 @@ public class LoadMapFromFile implements MapLoader {
     }
 
     @Override
-    public int getMapSize() {
-        return map.length; // TODO
+    public int getWidth() {
+        return map.length;
+    }
+
+    @Override
+    public int getHeight() {
+        return map[0].length;
     }
 
     @Override

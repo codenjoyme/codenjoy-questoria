@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Time: 6:05 PM
  */
 public interface MapLoader {
-    int getMapSize();
+    int getWidth();
 
     char[][] getMap();
 
@@ -17,6 +17,8 @@ public interface MapLoader {
     int getPlayerX();
 
     int getPlayerY();
+
+    int getHeight();
 
     static class Utils {
         public static void fill(char[][] m, char с) {
