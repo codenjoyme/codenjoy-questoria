@@ -19,7 +19,18 @@ public class LoadMapFromFileTest {
         assertEquals(33, loader.getHeight());
         assertEquals(35, loader.getWidth());
         assertEquals(10, loader.getPlayerX());
-        assertEquals(24, loader.getPlayerY()); // TODO
+        assertEquals(8, loader.getPlayerY());
+        verifyMap(loader.getMap());
+    }
+
+    @Test
+    public void shouldLoadFileToMap2() throws Exception {
+        MapLoader loader = new LoadMapFromFile("apofig\\javaquest\\map\\test_map2.txt");
+
+        assertEquals(12, loader.getHeight());
+        assertEquals(50, loader.getWidth());
+        assertEquals(2, loader.getPlayerX());
+        assertEquals(8, loader.getPlayerY());
         verifyMap(loader.getMap());
     }
 

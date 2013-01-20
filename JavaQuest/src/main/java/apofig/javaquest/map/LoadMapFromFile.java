@@ -27,14 +27,15 @@ public class LoadMapFromFile implements MapLoader {
         fog = new char[lines.get(0).length()][lines.size()];
         Utils.fill(fog, '?');
 
-        for (int y = lines.size() - 1; y >= 0; y--) {
+        for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
+            int dy = lines.size() - 1 - y;
             for (int x = 0; x < line.length(); x++) {
-                map[x][y] = line.charAt(x);
+                map[x][dy] = line.charAt(x);
 
-                if (map[x][y] == 'I') {
+                if (map[x][dy] == 'I') {
                     posx = x;
-                    posy = y;
+                    posy = dy;
                 }
             }
         }
