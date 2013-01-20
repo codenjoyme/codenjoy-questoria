@@ -43,8 +43,8 @@ public class JavaQuest {
 
             @Override
             public void attack(String message) {
-                for (Something object : map.getSomethingNearMe()) {
-                    map.writeMessage(object.answer(message));
+                for (Something smthNear : map.getSomethingNearMe()) {
+                    map.writeMessage(smthNear.answer(message));
                 }
             }
         };
@@ -53,14 +53,15 @@ public class JavaQuest {
     private void tryToMove(int dx, int dy) {
         int x = map.getX() + dx;
         int y = map.getY() + dy;
-        Something smth = map.getAt(x, y);
-        if (!smth.iCanUse()) {
-            map.writeMessage(smth.askMe());
+        Something smthAtWay = map.getAt(x, y);
+        if (!smthAtWay.iCanUse()) {
+            map.writeMessage(smthAtWay.askMe());
             return;
         }
 
-        for (Something object : map.getSomethingNearMe()) {
-            if (!object.iCanLeave()) {
+        for (Something smthNear : map.getSomethingNearMe()) {
+            if (!smthNear.iCanLeave()) {
+                map.writeMessage(smthNear.askMe());
                 return;
             }
         }

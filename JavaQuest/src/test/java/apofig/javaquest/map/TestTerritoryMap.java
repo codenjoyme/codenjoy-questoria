@@ -234,6 +234,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getMonsterX() - 1, getMonsterY());
+        verifyMap();
     }
 
     @Test

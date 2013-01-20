@@ -36,6 +36,8 @@ public class Runner {
                     player.moveUp();
                 } else if (ch == 'q') {
                     break;
+                } else {
+                    player.attack(String.valueOf(ch));
                 }
             } else {
                 player.attack(line);
