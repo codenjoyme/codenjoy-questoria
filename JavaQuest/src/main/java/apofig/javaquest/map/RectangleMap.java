@@ -31,6 +31,10 @@ public class RectangleMap implements MapLoader {
         map[x][y] = '@';
     }
 
+    public void setWall(int wallX, int wallY) {
+        map[wallX][wallY] = '#';
+    }
+
     @Override
     public int getWidth() {
         return width;

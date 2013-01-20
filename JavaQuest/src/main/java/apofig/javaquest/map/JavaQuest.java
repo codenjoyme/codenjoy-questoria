@@ -1,7 +1,5 @@
 package apofig.javaquest.map;
 
-import java.util.List;
-
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13
@@ -46,20 +44,28 @@ public class JavaQuest {
             @Override
             public void attack(String message) {
                 for (Something object : map.getSomethingNearMe()) {
-                    map.writeMessage(object.say(message));
+                    map.writeMessage(object.answer(message));
                 }
             }
         };
     }
 
     private void tryToMove(int dx, int dy) {
+        int x = map.getX() + dx;
+        int y = map.getY() + dy;
+        Something smth = map.getAt(x, y);
+        if (!smth.iCanUse()) {
+            map.writeMessage(smth.askMe());
+            return;
+        }
+
         for (Something object : map.getSomethingNearMe()) {
             if (!object.iCanLeave()) {
                 return;
             }
         }
 
-        map.changePos(map.getX() + dx, map.getY() + dy);
+        map.changePos(x, y);
         meetWith();
     }
 

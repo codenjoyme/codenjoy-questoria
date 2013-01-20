@@ -33,7 +33,7 @@ public class TerritoryMap {
     }
 
     public void changePos(int x, int y) {
-        if (y < 0 || x < 0 || y >= height || x >= width) {
+        if (isOutOfWorld(x, y)) {
             return;
         }
         removeMe();
@@ -41,6 +41,10 @@ public class TerritoryMap {
         posy = y;
         openSpace();
         setMe();
+    }
+
+    private boolean isOutOfWorld(int x, int y) {
+        return y < 0 || x < 0 || y >= height || x >= width;
     }
 
     private void setMe() {
@@ -139,7 +143,7 @@ public class TerritoryMap {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (!isWall && map[x][y] != ' ' && map[x][y] != '#') {
-                    result.add(wrap(x, y));
+                    result.add(getAt(x, y));
                 }
             }
         });
@@ -147,7 +151,11 @@ public class TerritoryMap {
         return result;
     }
 
-    private Something wrap(final int x, final int y) {
+    public Something getAt(final int x, final int y) {
+        if (isOutOfWorld(x, y)) {
+            return new Wall();
+        }
+
         char c = map[x][y];
         if (c == ' ') {
             return new Nothing();
@@ -157,6 +165,8 @@ public class TerritoryMap {
                     map[x][y] = ' ';
                 }
             });
+        } else if (c == '#') {
+            return new Wall();
         }
         throw new UnsupportedOperationException("WTF! New object in world - " + c);
     }

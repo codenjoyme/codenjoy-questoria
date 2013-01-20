@@ -2,10 +2,10 @@ package apofig.javaquest.map;
 
 /**
  * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 8:43 PM
+ * Date: 1/20/13
+ * Time: 10:25 PM
  */
-public class Nothing implements Something {
+public class Wall implements Something {
     @Override
     public String answer(String message) {
         return null;
@@ -18,11 +18,11 @@ public class Nothing implements Something {
 
     @Override
     public String askMe() {
-        return null;
+        return "Wall: Please stop!";
     }
 
     @Override
     public boolean iCanUse() {
-        return true;
+        return false;
     }
 }

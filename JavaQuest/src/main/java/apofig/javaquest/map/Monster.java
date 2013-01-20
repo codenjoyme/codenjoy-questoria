@@ -14,7 +14,7 @@ public class Monster implements Something {
     }
 
     @Override
-    public String say(String message) {
+    public String answer(String message) {
         if (message.equals("die!")) {
             onKill.doit();
             return "Monster: yOU @#& Ki$%@&^ll me $!@!";
@@ -30,5 +30,10 @@ public class Monster implements Something {
     @Override
     public String askMe() {
         return "Monster: Fight with me!";
+    }
+
+    @Override
+    public boolean iCanUse() {
+        return false;
     }
 }

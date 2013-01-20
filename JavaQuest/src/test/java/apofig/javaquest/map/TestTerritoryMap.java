@@ -37,6 +37,14 @@ public class TestTerritoryMap {
         return 22;
     }
 
+    public int getWallX() {
+        return 22;
+    }
+
+    public int getWallY() {
+        return 10;
+    }
+
     public RectangleMap getMapLoader() {
         return new SquareMap(getWidth());
     }
@@ -45,6 +53,7 @@ public class TestTerritoryMap {
     public void init() {
         final RectangleMap mapLoader = getMapLoader();
         mapLoader.setMonster(getMonsterX(), getMonsterY());
+        mapLoader.setWall(getWallX(), getWallY());
 
         Settings settings = new Settings() {
             @Override
@@ -188,8 +197,15 @@ public class TestTerritoryMap {
         verifyMap();
     }
 
-    private void moveTo(int x, int y) {
+    private void moveTo(int x, int y) throws Exception {
+        int count = 0;
         while (Math.abs(map.getX() - x) != 0 || Math.abs(map.getY() - y) != 0) {
+            if (count++ > 1000) {
+//                verifyMap();
+                throw new RuntimeException(String.format(
+                        "I cant go there! My x=%s and y=%s, and view:\n%s",
+                        map.getX(), map.getY(), map.getViewArea()));
+            }
             if (map.getY() < y) {
                 joystick.moveUp();
             } else if (map.getY() > y) {
@@ -217,7 +233,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
         joystick.moveRight();
 
-        moveTo(getMonsterX() - 1, getMonsterY());
+        verifyXY(getMonsterX() - 1, getMonsterY());
     }
 
     @Test
@@ -235,4 +251,15 @@ public class TestTerritoryMap {
 
         verifyMap();
     }
+
+    @Test
+    public void shouldNoMoveWhenITryToGoOnWall() throws Exception {
+        moveTo(getWallX() - 1, getWallY());
+        joystick.moveRight();
+        joystick.moveRight();
+
+        verifyXY(getWallX() - 1, getWallY());
+        verifyMap();
+    }
+
 }
