@@ -272,4 +272,22 @@ public class TestTerritoryMap {
         verifyMap();
     }
 
+    @Test
+    public void shouldLeaveGoldAfterMonsterDie() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("die!");
+        joystick.moveUp();
+
+        verifyMap();
+    }
+
+    @Test
+    public void shouldNoKillGold() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("die!");
+        joystick.attack("Gold die!");
+
+        verifyMap();
+    }
+
 }
