@@ -59,31 +59,38 @@ begin
     repeat
        colors[len]:=currentColor;
        symbols[len]:=edMask.Text[len + 1];
-//       debug.Lines.Add('symbols[' + IntToStr(len) + ']=' + symbols[len]);
-//       debug.Lines.Add(IntToStr(firstColor) + '=' + IntToStr(currentColor));
+       debug.Lines.Add('symbols[' + IntToStr(len) + ']=' + symbols[len]);
+       debug.Lines.Add('colors[' + IntToStr(len) + ']=' + IntToStr(colors[len]));
+       debug.Lines.Add('firstColor=' + IntToStr(firstColor) + ', currentColor=' + IntToStr(currentColor));
+       debug.Lines.Add('-----');
        inc(len);
        currentColor:=Bmp.Canvas.Pixels[len, 0];
     until ((len >= Bmp.Width) or ((len > 1) and (currentColor = firstColor)));
     dec(len);
 
-//    debug.Lines.Add('---------------');
-//    for i:=0 to len do begin
-//       debug.Lines.Add('symbols[' + IntToStr(i) + ']=' + symbols[i]);
-//    end;
-//    debug.Lines.Add('---------------');
+    debug.Lines.Add('---------------');
+    for i:=0 to len do begin
+       debug.Lines.Add('symbols[' + IntToStr(i) + ']=' + symbols[i]);
+    end;
+    debug.Lines.Add('---------------');
 
     Lines := TStringList.Create;
     try
         for y:=0 to (Bmp.Height - 1) do begin
             str:='';
             for x:=0 to (Bmp.Width - 1) do begin
-                col := Bmp.Canvas.Pixels[x, y];
-                for i:=0 to len do begin
-                    if (colors[i] = col) then begin
-                        ch:=symbols[i];
+                if ((y = 0) and (x <= len)) then begin
+                    ch:=symbols[0];
+                end else begin
+                    col := Bmp.Canvas.Pixels[x, y];
+                    for i:=0 to len do begin
+                        if (colors[i] = col) then begin
+                            ch:=symbols[i];
+                        end;
                     end;
-                end;
-                str:=str + ch;
+                 end;   
+                 //debug.Lines.Add('xy[' + IntToStr(x) + ',' + IntToStr(y) + ']=' + ch);
+                 str:=str + ch;
             end;
             Lines.Add(str);
         end;
