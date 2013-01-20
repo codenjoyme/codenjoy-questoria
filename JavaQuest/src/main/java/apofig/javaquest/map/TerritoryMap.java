@@ -1,5 +1,7 @@
 package apofig.javaquest.map;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.LinkedList;
@@ -81,18 +83,25 @@ public class TerritoryMap {
     public String getViewArea() {
         final StringBuffer result = new StringBuffer();
 
+
+        result.append("╔" + StringUtils.repeat("═", view.size()*2) + "╗\n");
         view.see(posx, posy, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
+                boolean startLine = (posx - x) == view.radius();
+                if (startLine) {
+                    result.append("║");
+                }
+
                 if (isWall) {
                     if (canSee) {
-                        result.append('#');
+                        result.append("#");
                     } else {
-                        result.append('?');
+                        result.append("?");
                     }
                 } else {
                     if (fog[x][y] == '?') {
-                        result.append('?');
+                        result.append("?");
                     } else {
                         result.append(map[x][y]);
                     }
@@ -101,10 +110,11 @@ public class TerritoryMap {
 
                 boolean endLine = (x - posx) == view.radius();
                 if (endLine) {
-                    result.append('\n');
+                    result.append("║\n");
                 }
             }
         });
+        result.append('╚' + StringUtils.repeat("═", view.size()*2) + '╝');
 
         printMessage(result);
 
@@ -130,12 +140,6 @@ public class TerritoryMap {
                 }
             }
         });
-
-        for (Something smth : result) {
-            if (smth instanceof Nothing) {
-                result.remove(smth);
-            }
-        }
 
         return result;
     }

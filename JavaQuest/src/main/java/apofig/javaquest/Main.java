@@ -16,7 +16,7 @@ public class Main {
         Settings settings = new Settings() {
             @Override
             public int getViewAreaSize() {
-                return 33;
+                return 40;
             }
 
             @Override

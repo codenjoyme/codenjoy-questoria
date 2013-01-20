@@ -7,4 +7,8 @@ package apofig.javaquest.map;
  */
 public interface Something {
     String say(String message);
+
+    boolean iCanLeave();
+
+    String askMe();
 }

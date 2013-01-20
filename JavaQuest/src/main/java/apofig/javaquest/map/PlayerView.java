@@ -90,4 +90,8 @@ public class PlayerView {
             }
         }
     }
+
+    public int size() {
+        return size;
+    }
 }

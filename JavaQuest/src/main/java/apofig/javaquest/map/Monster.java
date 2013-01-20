@@ -17,8 +17,18 @@ public class Monster implements Something {
     public String say(String message) {
         if (message.equals("die!")) {
             onKill.doit();
-            return "yOU @#& Ki$%@&^ll me $!@!";
+            return "Monster: yOU @#& Ki$%@&^ll me $!@!";
         }
-        return "I'll kill you!";
+        return "Monster: I'll kill you!";
+    }
+
+    @Override
+    public boolean iCanLeave() {
+        return false;
+    }
+
+    @Override
+    public String askMe() {
+        return "Monster: Fight with me!";
     }
 }

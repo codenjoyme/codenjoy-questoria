@@ -46,34 +46,26 @@ public class JavaQuest {
             @Override
             public void attack(String message) {
                 for (Something object : map.getSomethingNearMe()) {
-                    if (object instanceof Monster) {
-                        map.writeMessage(object.say(message));
-                    }
+                    map.writeMessage(object.say(message));
                 }
             }
         };
     }
 
     private void tryToMove(int dx, int dy) {
-        if (!isNearMonster()) {
-            map.changePos(map.getX() + dx, map.getY() + dy);
-            meetWith();
+        for (Something object : map.getSomethingNearMe()) {
+            if (!object.iCanLeave()) {
+                return;
+            }
         }
+
+        map.changePos(map.getX() + dx, map.getY() + dy);
+        meetWith();
     }
 
     private void meetWith() {
-        if (isNearMonster()) {
-            map.writeMessage("Fight with me!");
+        for (Something object : map.getSomethingNearMe()) {
+            map.writeMessage(object.askMe());
         }
-    }
-
-    private boolean isNearMonster() {
-        List<Something> nearMe = map.getSomethingNearMe();
-        for (Something object : nearMe) {
-            if (object instanceof Monster) {
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -10,4 +10,14 @@ public class Nothing implements Something {
     public String say(String message) {
         return null;
     }
+
+    @Override
+    public boolean iCanLeave() {
+        return true;
+    }
+
+    @Override
+    public String askMe() {
+        return null;
+    }
 }
