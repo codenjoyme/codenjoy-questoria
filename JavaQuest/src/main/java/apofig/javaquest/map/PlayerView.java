@@ -65,19 +65,19 @@ public class PlayerView {
         }
     }
 
-    public void see(int posx, int posy, int mapSize, Apply see) {
+    public void see(int posx, int posy, int mapWidth, int mapHeight, Apply see) {
         for (int y = size - 1; y >= 0; y--) {
             for (int x = 0; x < size; x++) {
                 int dx = x + posx - radius();
                 int dy = y + posy - radius();
-                boolean isWall = (dx < 0 || dy < 0 || dy >= mapSize || dx >= mapSize);
+                boolean isWall = (dx < 0 || dy < 0 || dy >= mapHeight || dx >= mapWidth);
                 boolean canSee = canSee(x, y);
                 see.xy(dx, dy, canSee, isWall);
             }
         }
     }
 
-    public void near(int posx, int posy, int mapSize, Apply meet) {
+    public void near(int posx, int posy, int mapWidth, int mapHeight, Apply meet) {
         for (int y = -1; y <= 1; y++) {
             for (int x = -1; x <= 1; x++) {
                 if (x == 0 && y == 0) {
@@ -85,7 +85,7 @@ public class PlayerView {
                 }
                 int dx = x + posx;
                 int dy = y + posy;
-                boolean isWall = (dx < 0 || dy < 0 || dy >= mapSize || dx >= mapSize);
+                boolean isWall = (dx < 0 || dy < 0 || dy >= mapHeight || dx >= mapWidth);
                 meet.xy(dx, dy, true, isWall);
             }
         }

@@ -17,21 +17,44 @@ public class TestTerritoryMap {
     private TerritoryMap map;
     private Joystick joystick;
 
+    public int getWidth() {
+        return 100;
+    }
+
+    public int getHeight() {
+        return 100;
+    }
+
+    public int getViewAreaSize() {
+        return 13;
+    }
+
+    public int getMonsterX() {
+        return 40;
+    }
+
+    public int getMonsterY() {
+        return 22;
+    }
+
+    public RectangleMap getMapLoader() {
+        return new SquareMap(getWidth());
+    }
+
     @Before
     public void init() {
-        Settings settings = new Settings() {
-            public int getWorldSize() {
-                return 100;
-            }
+        final RectangleMap mapLoader = getMapLoader();
+        mapLoader.setMonster(getMonsterX(), getMonsterY());
 
+        Settings settings = new Settings() {
             @Override
             public int getViewAreaSize() {
-                return 13;
+                return TestTerritoryMap.this.getViewAreaSize();
             }
 
             @Override
             public MapLoader getMapLoader() {
-                return new SquareMap(getWorldSize());
+                return mapLoader;
             }
         };
         game = new JavaQuest(settings);
@@ -99,14 +122,20 @@ public class TestTerritoryMap {
 
     @Test
     public void testCheckGoToBoardUpRight() throws Exception {
-        moveTo(94, 94);
+        if (getHeight() > getWidth()) { // fix for TestTerritoryRectangleMap test
+            moveTo(20, 20 + (getHeight() - getWidth()));
+        }
+        moveTo(getWidth() - 6, getHeight() - 6);
 
         verifyMap();
     }
 
     @Test
     public void testTryToOpenViewOnBoardUpRight() throws Exception {
-        moveTo(98, 98);
+        if (getHeight() > getWidth()) { // fix for TestTerritoryRectangleMap test
+            moveTo(20, 20 + (getHeight() - getWidth()));
+        }
+        moveTo(getWidth() - 2, getHeight() - 2);
 
         verifyMap();
     }
@@ -122,10 +151,10 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardUp() throws Exception {
-        moveTo(20, 99);
+        moveTo(20, getHeight() - 1);
         joystick.moveUp();
 
-        verifyXY(20, 99);
+        verifyXY(20, getHeight() - 1);
         verifyMap();
     }
 
@@ -145,16 +174,16 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardRight() throws Exception {
-        moveTo(99, 20);
+        moveTo(getWidth() - 1, 20);
         joystick.moveRight();
 
-        verifyXY(99, 20);
+        verifyXY(getWidth() - 1, 20);
         verifyMap();
     }
 
     @Test
     public void testWhenMoveICanFindMonster() throws Exception {
-        moveTo(37, 22);
+        moveTo(getMonsterX() - 3, getMonsterY());
 
         verifyMap();
     }
@@ -177,36 +206,33 @@ public class TestTerritoryMap {
 
     @Test
     public void testWhenITalkWithMonster() throws Exception {
-        moveTo(39, 22);
+        moveTo(getMonsterX() - 1, getMonsterY());
 
         verifyMap();
     }
 
     @Test
     public void shouldNoMoveWhenITalkWithMonster() throws Exception {
-        moveTo(39, 22);
+        moveTo(getMonsterX() - 1, getMonsterY());
         joystick.moveRight();
         joystick.moveRight();
 
-        verifyXY(39, 22);
+        moveTo(getMonsterX() - 1, getMonsterY());
     }
 
     @Test
     public void shouldKillMonsterWhenAttack() throws Exception {
-        moveTo(39, 22);
+        moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("die!");
 
         verifyMap();
     }
 
-
     @Test
     public void shouldMonsterStillAliveWhenBadAttack() throws Exception {
-        moveTo(39, 22);
+        moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("No!!!");
 
         verifyMap();
     }
-
-
 }

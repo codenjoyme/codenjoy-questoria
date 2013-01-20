@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class TerritoryMap {
 
-    private int size;
+    private int width;
+    private int height;
     private char[][] map, fog;
     private int posx, posy;
     private PlayerView view;
@@ -21,7 +22,8 @@ public class TerritoryMap {
     public TerritoryMap(MapLoader loader, int viewAreaSize) {
         view = new PlayerView(viewAreaSize);
 
-        this.size = loader.getWidth();
+        this.width = loader.getWidth();
+        this.height = loader.getHeight();
         map = loader.getMap();
         fog = loader.getFog();
         posx = -1; posy = -1;
@@ -29,7 +31,7 @@ public class TerritoryMap {
     }
 
     public void changePos(int x, int y) {
-        if (y < 0 || x < 0 || y >= size || x >= size) {
+        if (y < 0 || x < 0 || y >= height || x >= width) {
             return;
         }
         removeMe();
@@ -50,7 +52,7 @@ public class TerritoryMap {
     }
 
     private void openSpace() {
-        view.see(posx, posy, size, new Apply() {
+        view.see(posx, posy, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
@@ -79,7 +81,7 @@ public class TerritoryMap {
     public String getViewArea() {
         final StringBuffer result = new StringBuffer();
 
-        view.see(posx, posy, size, new Apply() {
+        view.see(posx, posy, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (isWall) {
@@ -120,7 +122,7 @@ public class TerritoryMap {
     public List<Something> getSomethingNearMe() {
         final List<Something> result = new LinkedList<Something>();
 
-        view.near(posx, posy, size, new Apply() {
+        view.near(posx, posy, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (!isWall && map[x][y] != ' ' && map[x][y] != '#') {
