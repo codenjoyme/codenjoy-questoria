@@ -13,26 +13,20 @@
             text-decoration: none;
         }
     </style>
+    <script src="/resources/js/jquery-1.7.2.js"></script>
+    <script src="/resources/js/game.js"></script>
 </head>
 <body>
     <table>
     <tr>
         <td>
-    	    <div>${message}</div>
+    	    <div id="message">${message}</div>
     	</td>
     	<td>
     	    <div>
-        	    <form:form commandName="answerForm" action="/play" method="POST">
-        	        <form:textarea path="message" rows="30" cols="60"/>
-        	        <input type="submit" value="Say"/>
-        	    </form:form>
+                <textarea id="answer" rows="30" cols="60"></textarea>
+                <input id="say" type="button" value="Say"/>
     	    </div>
-	    	<div style="font-size:50px;">
-        	    <a href="/play/?left">&#8656;</a>
-        	    <a href="/play/?up">&#8657;</a>
-        	    <a href="/play/?down">&#8659;</a>
-        	    <a href="/play/?right">&#8658;</a>
-        	</div>
         </td>
     </tr>
 </body>

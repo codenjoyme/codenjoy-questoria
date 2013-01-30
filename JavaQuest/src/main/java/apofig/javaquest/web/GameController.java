@@ -1,13 +1,14 @@
 package apofig.javaquest.web;
 
 import apofig.javaquest.map.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,52 +18,45 @@ import javax.servlet.http.HttpSession;
  * Time: 3:21 PM
  */
 @Controller
-@RequestMapping("/play")
 public class GameController {
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String get(Answer answer, BindingResult result, Model model, HttpSession session) {
-        if (!result.hasErrors()) {
-            getGameFrom(session).getPlayer().attack(answer.getMessage());
-        }
-        return printGame(model, session);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String post(Model model, HttpSession session) {
-        return printGame(model, session);
+         return printGame(model, session);
     }
 
-    @RequestMapping(params = "up", method = RequestMethod.GET)
-    public String up(Model model, HttpSession session) {
-        getGameFrom(session).getPlayer().moveUp();
-        return printGame(model, session);
-    }
+    @RequestMapping(value = "/answer", method = RequestMethod.GET)
+    public ModelAndView command(Model model, HttpSession session, @RequestParam String command) throws JSONException {
+        JavaQuest game = getGameFrom(session);
+        Joystick joystick = game.getPlayer();
+        if (command.equals("up")) {
+            joystick.moveUp();
+        } else if (command.equals("down")) {
+            joystick.moveDown();
+        } else if (command.equals("left")) {
+            joystick.moveLeft();
+        } else if (command.equals("right")) {
+            joystick.moveRight();
+        } else if (command.equals("refresh")) {
+        } else {
+            joystick.attack(command);
+        }
 
-    @RequestMapping(params = "down", method = RequestMethod.GET)
-    public String down(Model model, HttpSession session) {
-        getGameFrom(session).getPlayer().moveDown();
-        return printGame(model, session);
-    }
+        JSONObject result = new JSONObject();
+        result.put("map", getMap(session));
+        String json = result.toString();
 
-    @RequestMapping(params = "left", method = RequestMethod.GET)
-    public String left(Model model, HttpSession session) {
-        getGameFrom(session).getPlayer().moveLeft();
-        return printGame(model, session);
-    }
-
-    @RequestMapping(params = "right", method = RequestMethod.GET)
-    public String right(Model model, HttpSession session) {
-        getGameFrom(session).getPlayer().moveRight();
-        return printGame(model, session);
+        ModelAndView mav = new ModelAndView("html_utf8");
+        mav.addObject("responseBody", json);
+        return mav;
     }
 
     private String printGame(Model model, HttpSession session) {
-        Answer answer = new Answer();
-        model.addAttribute("answerForm", answer);
+        return print(model, getMap(session));
+    }
 
-        String map = getGameFrom(session).getTerritoryMap().getViewArea().replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
-        return print(model, map);
+    private String getMap(HttpSession session) {
+        return getGameFrom(session).getTerritoryMap().getViewArea().replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
     }
 
     private String print(Model model, String message) {
