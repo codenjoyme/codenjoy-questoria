@@ -1,14 +1,21 @@
 package apofig.javaquest.map;
 
+import java.util.List;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/20/13
  * Time: 10:25 PM
  */
-public class Wall implements Something {
+public class Wall extends TalkingObject implements Something {
+
+    public Wall(Messages messages) {
+        super(messages);
+    }
+
     @Override
-    public String answer(String message) {
-        return null;
+    public void answer(String message) {
+        say("You can't do this!"); // TODO test it
     }
 
     @Override
@@ -17,8 +24,8 @@ public class Wall implements Something {
     }
 
     @Override
-    public String askMe() {
-        return "Wall: Please stop!";
+    public void askMe() {
+        say("Please stop!");
     }
 
     @Override
@@ -28,7 +35,7 @@ public class Wall implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Nothing();
+        return new Nothing(messages);
     }
 
     @Override

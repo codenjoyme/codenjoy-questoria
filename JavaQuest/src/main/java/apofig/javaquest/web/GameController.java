@@ -58,11 +58,15 @@ public class GameController {
     }
 
     private String getMap(JavaQuest game) {
-        return game.getTerritoryMap().getViewArea().replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
+        return encode(game.getTerritoryMap().getViewArea());
+    }
+
+    private String encode(String string) {
+        return string.replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
     }
 
     private String getMessage(JavaQuest game) {
-        return game.getTerritoryMap().getMessage();
+        return encode(game.getTerritoryMap().getMessage());
     }
 
     private String print(Model model, String map) {

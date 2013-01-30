@@ -5,21 +5,24 @@ package apofig.javaquest.map;
  * Date: 1/19/13
  * Time: 8:30 PM
  */
-public class Monster implements Something {
+public class Monster extends TalkingObject implements Something {
 
     private final OnKill onKill;
 
-    public Monster(OnKill onKill) {
+    public Monster(Messages messages, OnKill onKill) {
+        super(messages);
         this.onKill = onKill;
     }
 
     @Override
-    public String answer(String message) {
+    public void answer(String message) {
         if (message.equals("die!")) {
+            say("yOU @#& Ki$%@&^ll me $!@!");
+            leaveAfter().askMe();
             onKill.doit(this);
-            return "Monster: yOU @#& Ki$%@&^ll me $!@!";
+        } else {
+            say("I'll kill you!");
         }
-        return "Monster: I'll kill you!";
     }
 
     @Override
@@ -28,8 +31,8 @@ public class Monster implements Something {
     }
 
     @Override
-    public String askMe() {
-        return "Monster: Fight with me!";
+    public void askMe() {
+        say("Fight with me!");
     }
 
     @Override
@@ -39,7 +42,7 @@ public class Monster implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Gold();
+        return new Gold(messages);
     }
 
     @Override

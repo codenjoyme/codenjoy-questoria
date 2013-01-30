@@ -5,11 +5,15 @@ package apofig.javaquest.map;
  * Date: 1/20/13
  * Time: 11:03 PM
  */
-public class Gold implements Something {
+public class Gold extends TalkingObject implements Something {
+
+    public Gold(Messages messages) {
+        super(messages);
+    }
 
     @Override
-    public String answer(String message) {
-        return "Gold: You can't do this!";
+    public void answer(String message) {
+        say("You can't do this!");
     }
 
     @Override
@@ -18,8 +22,8 @@ public class Gold implements Something {
     }
 
     @Override
-    public String askMe() {
-        return "10 Gold";
+    public void askMe() {
+        say("I am an 10$");
     }
 
     @Override
@@ -29,7 +33,7 @@ public class Gold implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Nothing();
+        return new Nothing(messages);
     }
 
     @Override

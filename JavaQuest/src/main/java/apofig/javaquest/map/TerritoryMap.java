@@ -23,10 +23,11 @@ public class TerritoryMap {
     private char[][] map, fog;
     private int posx, posy;
     private PlayerView view;
-    private String message;
+    Messages messages;
 
     public TerritoryMap(MapLoader loader, int viewAreaSize) {
         view = new PlayerView(viewAreaSize);
+        messages = new Messages();
 
         this.width = loader.getWidth();
         this.height = loader.getHeight();
@@ -147,31 +148,27 @@ public class TerritoryMap {
 
     public Something getAt(final int x, final int y) {
         if (isOutOfWorld(x, y)) {
-            return new Wall();
+            return new Wall(messages);
         }
 
         char c = map[x][y];
         if (c == ' ') {
-            return new Nothing();
+            return new Nothing(messages);
         } else if (c == '@') {
-            return new Monster(new OnKill() {
+            return new Monster(messages, new OnKill() {
                 public void doit(Something body) {
                     map[x][y] = body.leaveAfter().symbol();
                 }
             });
         } else if (c == '#') {
-            return new Wall();
+            return new Wall(messages);
         } else if (c == '$') {
-            return new Gold();
+            return new Gold(messages);
         }
         throw new UnsupportedOperationException("WTF! New object in world - " + c);
     }
 
-    public void writeMessage(String message) {
-        this.message = message;
-    }
-
     public String getMessage() {
-        return message;
+        return messages.toString();
     }
 }

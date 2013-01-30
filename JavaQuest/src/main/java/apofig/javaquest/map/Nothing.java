@@ -5,10 +5,15 @@ package apofig.javaquest.map;
  * Date: 1/19/13
  * Time: 8:43 PM
  */
-public class Nothing implements Something {
+public class Nothing extends TalkingObject implements Something {
+
+    public Nothing(Messages messages) {
+        super(messages);
+    }
+
     @Override
-    public String answer(String message) {
-        return "";
+    public void answer(String message) {
+        clearLog();
     }
 
     @Override
@@ -17,8 +22,8 @@ public class Nothing implements Something {
     }
 
     @Override
-    public String askMe() {
-        return "";
+    public void askMe() {
+        clearLog();
     }
 
     @Override
@@ -28,7 +33,7 @@ public class Nothing implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Nothing();
+        return new Nothing(messages);
     }
 
     @Override

@@ -6,11 +6,11 @@ package apofig.javaquest.map;
  * Time: 8:29 PM
  */
 public interface Something {
-    String answer(String message);
+    void answer(String message);
 
     boolean iCanLeave();
 
-    String askMe();
+    void askMe();
 
     boolean iCanUse();
 

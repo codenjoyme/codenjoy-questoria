@@ -248,7 +248,10 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("die!");
 
-        assertMessage("Monster: yOU @#& Ki$%@&^ll me $!@!");
+        assertMessage("Monster: Fight with me!\n" +
+                "You: die!\n" +
+                "Monster: yOU @#& Ki$%@&^ll me $!@!\n" +
+                "Gold: I am an 10$");
         verifyMap();
     }
 
@@ -257,7 +260,23 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("No!!!");
 
-        assertMessage("Monster: I'll kill you!");
+        assertMessage("Monster: Fight with me!\n" +
+                "You: No!!!\n" +
+                "Monster: I'll kill you!");
+        verifyMap();
+    }
+
+    @Test
+    public void shouldMonsterStillAliveWhenBadAttackTwice() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("No!!!");
+        joystick.attack("Nooooo!!!");
+
+        assertMessage("Monster: Fight with me!\n" +
+                "You: No!!!\n" +
+                "Monster: I'll kill you!\n" +
+                "You: Nooooo!!!\n" +
+                "Monster: I'll kill you!");
         verifyMap();
     }
 
@@ -278,7 +297,10 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.moveRight();
 
-        assertMessage("10 Gold");
+        assertMessage("Monster: Fight with me!\n" +
+                "You: die!\n" +
+                "Monster: yOU @#& Ki$%@&^ll me $!@!\n" +
+                "Gold: I am an 10$");
         verifyMap();
     }
 
@@ -292,7 +314,7 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.moveUp();
 
-        assertMessage("10 Gold");
+        assertMessage("Gold: I am an 10$");
         verifyMap();
     }
 
@@ -302,7 +324,12 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.attack("Gold die!");
 
-        assertMessage("Gold: You can't do this!");
+        assertMessage("Monster: Fight with me!\n" +
+                "You: die!\n" +
+                "Monster: yOU @#& Ki$%@&^ll me $!@!\n" +
+                "Gold: I am an 10$\n" +
+                "You: Gold die!\n" +
+                "Gold: You can't do this!");
         verifyMap();
     }
 
