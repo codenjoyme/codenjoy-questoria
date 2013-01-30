@@ -127,17 +127,7 @@ public class TerritoryMap {
         });
         result.append('╚' + StringUtils.repeat("═", view.size()*2) + '╝');
 
-        printMessage(result);
-
         return result.toString();
-    }
-
-    private void printMessage(StringBuffer result) {
-        if (message != null) {
-            result.append('\n');
-            result.append(message);
-            message = null;
-        }
     }
 
     public List<Something> getSomethingNearMe() {
@@ -179,5 +169,9 @@ public class TerritoryMap {
 
     public void writeMessage(String message) {
         this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

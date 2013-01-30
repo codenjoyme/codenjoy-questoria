@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 
 /**
  * User: oleksandr.baglai
@@ -43,7 +44,8 @@ public class GameController {
         }
 
         JSONObject result = new JSONObject();
-        result.put("map", getMap(session));
+        result.put("map", getMap(game));
+        result.put("message", getMessage(game));
         String json = result.toString();
 
         ModelAndView mav = new ModelAndView("html_utf8");
@@ -52,15 +54,20 @@ public class GameController {
     }
 
     private String printGame(Model model, HttpSession session) {
-        return print(model, getMap(session));
+        return print(model, getMap(getGameFrom(session)));
     }
 
-    private String getMap(HttpSession session) {
-        return getGameFrom(session).getTerritoryMap().getViewArea().replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
+    private String getMap(JavaQuest game) {
+        return game.getTerritoryMap().getViewArea().replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
     }
 
-    private String print(Model model, String message) {
-        model.addAttribute("message", message);
+    private String getMessage(JavaQuest game) {
+        return game.getTerritoryMap().getMessage();
+    }
+
+    private String print(Model model, String map) {
+        model.addAttribute("map", map);
+        model.addAttribute("message", "");
         return "game";
     }
 

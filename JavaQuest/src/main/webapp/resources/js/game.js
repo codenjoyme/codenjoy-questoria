@@ -2,23 +2,14 @@ $(document).ready(function() {
 
     var serverAnswered = true;
 
-//    $.ajaxSetup({
-//        async: true
-//    });
-
     function drawMap(data) {
-        $("#message").html(data.map);
+        $("#map").html(data.map);
+        $("#message").html(data.message);
         serverAnswered = true;
     }
 
     function send(command) {
         $.getJSON('/answer', 'command=' + command + "&time=" + $.now(), drawMap);
-//        $.ajax({
-//            url: '/answer',
-//            dataType : "json",
-//            data:'command=' + command + "&time=" + $.now(),
-//            success: drawMap
-//        });
     }
 
     function onTextArea() {

@@ -20,11 +20,12 @@
     <table>
     <tr>
         <td>
-    	    <div id="message">${message}</div>
+    	    <div id="map">${map}</div>
     	</td>
     	<td>
     	    <div>
-                <textarea id="answer" rows="30" cols="60"></textarea>
+    	        <div id="message">${message}</div></br>
+                <textarea id="answer" rows="30" cols="60"></textarea></br>
                 <input id="say" type="button" value="Say"/>
     	    </div>
         </td>

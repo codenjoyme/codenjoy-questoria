@@ -9,7 +9,7 @@ public class Gold implements Something {
 
     @Override
     public String answer(String message) {
-        return "Gold: Don't do this!";
+        return "Gold: You can't do this!";
     }
 
     @Override

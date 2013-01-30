@@ -155,6 +155,7 @@ public class TestTerritoryMap {
         joystick.moveDown();
 
         verifyXY(20, 0);
+        assertMessage("Wall: Please stop!");
         verifyMap();
     }
 
@@ -164,6 +165,7 @@ public class TestTerritoryMap {
         joystick.moveUp();
 
         verifyXY(20, getHeight() - 1);
+        assertMessage("Wall: Please stop!");
         verifyMap();
     }
 
@@ -173,6 +175,7 @@ public class TestTerritoryMap {
         joystick.moveLeft();
 
         verifyXY(0, 20);
+        assertMessage("Wall: Please stop!");
         verifyMap();
     }
 
@@ -187,6 +190,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getWidth() - 1, 20);
+        assertMessage("Wall: Please stop!");
         verifyMap();
     }
 
@@ -224,6 +228,7 @@ public class TestTerritoryMap {
     public void testWhenITalkWithMonster() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
 
+        assertMessage("Monster: Fight with me!");
         verifyMap();
     }
 
@@ -234,6 +239,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getMonsterX() - 1, getMonsterY());
+        assertMessage("Monster: Fight with me!");
         verifyMap();
     }
 
@@ -242,6 +248,7 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("die!");
 
+        assertMessage("Monster: yOU @#& Ki$%@&^ll me $!@!");
         verifyMap();
     }
 
@@ -250,6 +257,7 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("No!!!");
 
+        assertMessage("Monster: I'll kill you!");
         verifyMap();
     }
 
@@ -260,6 +268,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getWallX() - 1, getWallY());
+        assertMessage("Wall: Please stop!");
         verifyMap();
     }
 
@@ -269,7 +278,12 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.moveRight();
 
+        assertMessage("10 Gold");
         verifyMap();
+    }
+
+    private void assertMessage(String message) {
+        assertEquals(message, map.getMessage());
     }
 
     @Test
@@ -278,6 +292,7 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.moveUp();
 
+        assertMessage("10 Gold");
         verifyMap();
     }
 
@@ -287,6 +302,18 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.attack("Gold die!");
 
+        assertMessage("Gold: You can't do this!");
+        verifyMap();
+    }
+
+    @Test
+    public void shouldHideMessageAfterGetGold() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("die!");
+        joystick.moveRight();
+        joystick.moveRight();
+
+        assertMessage("");
         verifyMap();
     }
 

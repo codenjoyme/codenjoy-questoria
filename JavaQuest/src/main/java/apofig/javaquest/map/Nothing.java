@@ -8,7 +8,7 @@ package apofig.javaquest.map;
 public class Nothing implements Something {
     @Override
     public String answer(String message) {
-        return null;
+        return "";
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Nothing implements Something {
 
     @Override
     public String askMe() {
-        return null;
+        return "";
     }
 
     @Override
