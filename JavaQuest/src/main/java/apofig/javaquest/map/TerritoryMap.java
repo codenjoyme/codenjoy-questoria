@@ -14,6 +14,10 @@ import java.util.List;
  */
 public class TerritoryMap {
 
+    // ✉ ✍ ✎ ✓ ☑ ☒ ✗ ⊕ ⊗ ☞ ☜ ♫ ✄ ✁ ∞ ♨ ☢ ✈ ☰ ☷ ♥ ★ ☆ ☺ ☹
+    // ♔ ♕ ♖ ♘ ♆ ✠ ♂ ♀ ♠ ♣ ♥ ♦ ☣ ☮ ☃ ☂ ☯ ☠
+    // TODO use it
+
     private int width;
     private int height;
     private char[][] map, fog;
