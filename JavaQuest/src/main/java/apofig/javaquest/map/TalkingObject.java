@@ -5,13 +5,9 @@ package apofig.javaquest.map;
  * Date: 1/31/13
  * Time: 12:35 AM
  */
-public class TalkingObject {
+public class TalkingObject extends MapObject implements ObjectSettings {
 
     protected Messages messages;
-
-    public TalkingObject(Messages messages) {
-        this.messages = messages;
-    }
 
     public void say(String message) {
         messages.add(this.getClass().getSimpleName() + ": " + message);
@@ -19,5 +15,10 @@ public class TalkingObject {
 
     public void clearLog() {
         messages.clear();
+    }
+
+    @Override
+    public void setMessages(Messages messages) {
+        this.messages = messages;
     }
 }

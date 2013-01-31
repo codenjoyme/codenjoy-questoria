@@ -5,6 +5,7 @@ $(document).ready(function() {
     function drawMap(data) {
         $("#map").html(data.map);
         $("#message").html(data.message);
+        $("#info").html(data.info);
         serverAnswered = true;
     }
 

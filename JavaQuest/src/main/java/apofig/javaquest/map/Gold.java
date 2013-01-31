@@ -7,10 +7,6 @@ package apofig.javaquest.map;
  */
 public class Gold extends TalkingObject implements Something {
 
-    public Gold(Messages messages) {
-        super(messages);
-    }
-
     @Override
     public void answer(String message) {
         say("You can't do this!");
@@ -33,11 +29,18 @@ public class Gold extends TalkingObject implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Nothing(messages);
+        return make(' ');
     }
 
     @Override
     public char symbol() {
         return '$';
+    }
+
+    @Override
+    public void getBy(Player player) {
+        player.addGold(10);
+        clearLog();
+        say("You pick up me! Thanks!!");
     }
 }

@@ -8,11 +8,37 @@ package apofig.javaquest.map;
 public class JavaQuest {
 
     private TerritoryMap map;
-    private Settings settings;
+    private Messages messages;
+    private ObjectFactory factory;
+    private Player info;
 
     public JavaQuest(Settings settings) {
-        this.settings = settings;
-        map = new TerritoryMap(settings.getMapLoader(), settings.getViewAreaSize());
+        messages = new Messages();
+        info = new Player();
+        factory = new ObjectFactory() {
+            @Override
+            public Something make(char c, Place place) {
+                ObjectSettings object = getObject(c);
+                object.setPlace(place);
+                object.setFactory(factory);
+                object.setMessages(messages);
+                return (Something)object;
+            }
+        };
+        map = new TerritoryMap(settings.getMapLoader(), settings.getViewAreaSize(), factory);
+    }
+
+    private ObjectSettings getObject(char c) {
+        if (c == ' ') {
+            return new Nothing();
+        } else if (c == '@') {
+            return new Monster();
+        } else if (c == '#') {
+            return new Wall();
+        } else if (c == '$') {
+            return new Gold();
+        }
+        throw new UnsupportedOperationException("WTF! New object in world - " + c);
     }
 
     public TerritoryMap getTerritoryMap() {
@@ -44,7 +70,7 @@ public class JavaQuest {
             @Override
             public void attack(String message) {
                 for (Something smthNear : map.getSomethingNearMe()) {
-                    map.messages.add("You: " + message);
+                    messages.add("You: " + message);
                     smthNear.answer(message);
                 }
             }
@@ -67,6 +93,7 @@ public class JavaQuest {
             }
         }
 
+        smthAtWay.getBy(info);
         map.changePos(x, y);
         meetWith();
     }
@@ -75,5 +102,13 @@ public class JavaQuest {
         for (Something object : map.getSomethingNearMe()) {
             object.askMe();
         }
+    }
+
+    public String getMessage() {
+        return messages.toString();
+    }
+
+    public Player getPlayerInfo() {
+        return info;
     }
 }

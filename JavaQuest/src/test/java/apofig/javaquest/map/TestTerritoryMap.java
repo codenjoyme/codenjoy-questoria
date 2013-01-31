@@ -294,18 +294,23 @@ public class TestTerritoryMap {
     @Test
     public void shouldGetGoldAfterMonsterDie() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
+        assertInfo("Level:0 Xp:0 Health:100 Gold:0");
+
         joystick.attack("die!");
         joystick.moveRight();
 
-        assertMessage("Monster: Fight with me!\n" +
-                "You: die!\n" +
-                "Monster: yOU @#& Ki$%@&^ll me $!@!\n" +
-                "Gold: I am an 10$");
+        assertMessage("Gold: You pick up me! Thanks!!");
         verifyMap();
+
+        assertInfo("Level:0 Xp:0 Health:100 Gold:10");
+    }
+
+    private void assertInfo(String info) {
+        assertEquals(info, game.getPlayerInfo().toString());
     }
 
     private void assertMessage(String message) {
-        assertEquals(message, map.getMessage());
+        assertEquals(message, game.getMessage());
     }
 
     @Test

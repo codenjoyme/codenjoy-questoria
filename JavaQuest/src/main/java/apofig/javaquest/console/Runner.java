@@ -51,7 +51,7 @@ public class Runner {
 	
 	private void printBoard() {
         TerritoryMap map = game.getTerritoryMap();
-        console.print(map.getViewArea() + "\n" + map.getMessage());
+        console.print(map.getViewArea() + "\n" + game.getMessage());
 	}
 
 }

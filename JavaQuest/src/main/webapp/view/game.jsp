@@ -7,10 +7,6 @@
         div {
             font-family:lucida console;
             font-size:16px;
-            text-decoration: none;
-        }
-        div a, div a:hover {
-            text-decoration: none;
         }
     </style>
     <script src="/resources/js/jquery-1.7.2.js"></script>
@@ -22,12 +18,15 @@
         <td>
     	    <div id="map">${map}</div>
     	</td>
-    	<td>
+    	<td valign="top">
     	    <div>
-    	        <div id="message">${message}</div></br>
-                <textarea id="answer" rows="30" cols="60"></textarea></br>
-                <input id="say" type="button" value="Say"/>
+    	        <div id="info">${info}</div></br>
+                <textarea id="answer" rows="3" cols="40"></textarea>
+                <input id="say" type="button" value="Say"/></br>
+                <div id="message">${message}</div></br>
     	    </div>
+        </td>
+        <td>
         </td>
     </tr>
 </body>

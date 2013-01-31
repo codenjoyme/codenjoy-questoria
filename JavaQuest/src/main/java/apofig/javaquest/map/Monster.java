@@ -7,19 +7,13 @@ package apofig.javaquest.map;
  */
 public class Monster extends TalkingObject implements Something {
 
-    private final OnKill onKill;
-
-    public Monster(Messages messages, OnKill onKill) {
-        super(messages);
-        this.onKill = onKill;
-    }
-
     @Override
     public void answer(String message) {
         if (message.equals("die!")) {
             say("yOU @#& Ki$%@&^ll me $!@!");
-            leaveAfter().askMe();
-            onKill.doit(this);
+            Something something = leaveAfter();
+            place.update(something.symbol());
+            something.askMe();
         } else {
             say("I'll kill you!");
         }
@@ -42,11 +36,16 @@ public class Monster extends TalkingObject implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Gold(messages);
+        return make('$');
     }
 
     @Override
     public char symbol() {
         return '@';
+    }
+
+    @Override
+    public void getBy(Player info) {
+        // do nothing
     }
 }

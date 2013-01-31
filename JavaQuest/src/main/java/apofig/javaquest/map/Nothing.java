@@ -7,10 +7,6 @@ package apofig.javaquest.map;
  */
 public class Nothing extends TalkingObject implements Something {
 
-    public Nothing(Messages messages) {
-        super(messages);
-    }
-
     @Override
     public void answer(String message) {
         clearLog();
@@ -33,11 +29,16 @@ public class Nothing extends TalkingObject implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Nothing(messages);
+        return make(' ');
     }
 
     @Override
     public char symbol() {
         return ' ';
+    }
+
+    @Override
+    public void getBy(Player info) {
+        // do nothing
     }
 }

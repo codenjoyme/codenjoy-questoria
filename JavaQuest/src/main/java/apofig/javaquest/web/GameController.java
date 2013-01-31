@@ -46,6 +46,7 @@ public class GameController {
         JSONObject result = new JSONObject();
         result.put("map", getMap(game));
         result.put("message", getMessage(game));
+        result.put("info", game.getPlayerInfo());
         String json = result.toString();
 
         ModelAndView mav = new ModelAndView("html_utf8");
@@ -54,7 +55,8 @@ public class GameController {
     }
 
     private String printGame(Model model, HttpSession session) {
-        return print(model, getMap(getGameFrom(session)));
+        JavaQuest game = getGameFrom(session);
+        return print(model, getMap(game), game.getPlayerInfo());
     }
 
     private String getMap(JavaQuest game) {
@@ -66,12 +68,13 @@ public class GameController {
     }
 
     private String getMessage(JavaQuest game) {
-        return encode(game.getTerritoryMap().getMessage());
+        return encode(game.getMessage());
     }
 
-    private String print(Model model, String map) {
+    private String print(Model model, String map, Player playerInfo) {
         model.addAttribute("map", map);
         model.addAttribute("message", "");
+        model.addAttribute("info", playerInfo.toString());
         return "game";
     }
 

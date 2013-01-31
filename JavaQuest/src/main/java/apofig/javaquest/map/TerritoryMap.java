@@ -20,14 +20,15 @@ public class TerritoryMap {
 
     private int width;
     private int height;
-    private char[][] map, fog;
+    protected char[][] map;
+    private char[][] fog;
     private int posx, posy;
     private PlayerView view;
-    Messages messages;
+    private ObjectFactory factory;
 
-    public TerritoryMap(MapLoader loader, int viewAreaSize) {
+    public TerritoryMap(MapLoader loader, int viewAreaSize, ObjectFactory factory) {
+        this.factory = factory;
         view = new PlayerView(viewAreaSize);
-        messages = new Messages();
 
         this.width = loader.getWidth();
         this.height = loader.getHeight();
@@ -146,29 +147,13 @@ public class TerritoryMap {
         return result;
     }
 
-    public Something getAt(final int x, final int y) {
+    public Something getAt(int x, int y) {
         if (isOutOfWorld(x, y)) {
-            return new Wall(messages);
+            return factory.make('#', null);
         }
 
-        char c = map[x][y];
-        if (c == ' ') {
-            return new Nothing(messages);
-        } else if (c == '@') {
-            return new Monster(messages, new OnKill() {
-                public void doit(Something body) {
-                    map[x][y] = body.leaveAfter().symbol();
-                }
-            });
-        } else if (c == '#') {
-            return new Wall(messages);
-        } else if (c == '$') {
-            return new Gold(messages);
-        }
-        throw new UnsupportedOperationException("WTF! New object in world - " + c);
+        return factory.make(map[x][y], new Place(map, x, y));
     }
 
-    public String getMessage() {
-        return messages.toString();
-    }
+
 }

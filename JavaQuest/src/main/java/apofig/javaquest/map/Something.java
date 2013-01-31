@@ -17,4 +17,6 @@ public interface Something {
     Something leaveAfter();
 
     char symbol();
+
+    void getBy(Player info);
 }

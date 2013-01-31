@@ -9,10 +9,6 @@ import java.util.List;
  */
 public class Wall extends TalkingObject implements Something {
 
-    public Wall(Messages messages) {
-        super(messages);
-    }
-
     @Override
     public void answer(String message) {
         say("You can't do this!"); // TODO test it
@@ -35,11 +31,16 @@ public class Wall extends TalkingObject implements Something {
 
     @Override
     public Something leaveAfter() {
-        return new Nothing(messages);
+        return make(symbol());
     }
 
     @Override
     public char symbol() {
         return '#';
+    }
+
+    @Override
+    public void getBy(Player info) {
+        // do nothing
     }
 }
