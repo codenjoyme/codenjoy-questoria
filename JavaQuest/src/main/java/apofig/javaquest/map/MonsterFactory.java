@@ -7,6 +7,6 @@ package apofig.javaquest.map;
  */
 public class MonsterFactory {
     public Monster next() {
-        return new Monster();
+        return new Monster("Fight with me!", "die!", "I'll kill you!");
     }
 }

@@ -7,15 +7,25 @@ package apofig.javaquest.map;
  */
 public class Monster extends TalkingObject implements Something {
 
+    private String question;
+    private String answer;
+    private String help;
+
+    public Monster(String question, String answer, String help) {
+        this.question = question;
+        this.answer = answer;
+        this.help = help;
+    }
+
     @Override
     public void answer(String message) {
-        if (message.equals("die!")) {
+        if (message.equals(answer)) {
             say("yOU @#& Ki$%@&^ll me $!@!");
             Something something = leaveAfter();
             place.update(something.symbol());
             something.askMe();
         } else {
-            say("I'll kill you!");
+            say(help);
         }
     }
 
@@ -26,7 +36,7 @@ public class Monster extends TalkingObject implements Something {
 
     @Override
     public void askMe() {
-        say("Fight with me!");
+        say(question);
     }
 
     @Override
