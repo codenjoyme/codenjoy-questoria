@@ -18,5 +18,11 @@ public class ColorizerTest {
                 Colorizer.process("???????"));
     }
 
+    @Test
+    public void shouldWrapToOtherSpanIfBetween() throws Exception {
+        assertEquals("<span class=\"fog\">???<span class=\"gold\">$$$$$</span>????</span>",
+                Colorizer.process("???$$$$$????"));
+    }
+
 
 }

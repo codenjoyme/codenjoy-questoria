@@ -31,13 +31,12 @@ public class Colorizer {
         return String.format("<spanclass=\"%s\">%s</span>", aclass, "%s");
     }
 
-
     public static String process(String chars) {
         StringBuffer result = new StringBuffer();
         char[] charArray = chars.toCharArray();
         int start = 0;
-        int end = chars.length();
-//        while (start != charArray.length - 1) {
+        int end = 1;
+        while (end != charArray.length) {
 //            String found = "";
 //            for (String string : colorizer.keySet()) {
 //                if (chars.substring(start, end).startsWith(string)) {
@@ -48,34 +47,48 @@ public class Colorizer {
 //
 //
             String c1 = String.valueOf(charArray[start]);
-//            char c2 = charArray[end];
-//            if (c1 == c2) {
-//                continue;
-//            }
-//
-            String span = colorizer.get(c1);
+            String c2 = String.valueOf(charArray[end]);
+            if (c1.equals(c2)) {
+                end++;
+                if (end <= charArray.length - 1) {
+                    continue;
+                }
+            }
+
             String line = chars.substring(start, end);
+            String span = colorizer.get(c1);
 //            if (span == null && !isN(line) && !isS(line)) {
 //                throw new IllegalArgumentException("New object in world '" + c1 + "'");
 //            }
             processLine(result, span, line);
 //
-//            start = end;
-//        }
-//        char lastChar = charArray[start];
-//        processLine(result, colorizer.get(lastChar), String.valueOf(lastChar));
+            start = end;
+        }
+
+        addFogSpan(result);
 
         return result.toString().replaceAll("spanclass", "span class");
     }
 
+    private static void addFogSpan(StringBuffer result) {
+        result.insert(0, "<span class=\"fog\">");
+        result.insert(result.length(), "</span>");
+    }
+
     private static void processLine(StringBuffer result, String span, String line) {
-        if (isN(line)) {
+        if (isFog(line)) {
+            result.append(line);
+//        } else if (isN(line)) {
 //            result.append(line.replaceAll("\n", "<br>"));
-        } else if (isS(line)) {
+//        } else if (isS(line)) {
 //            result.append(line.replaceAll(" ", "&nbsp;"));
         } else {
             result.append(String.format(span, line));
         }
+    }
+
+    private static boolean isFog(String line) {
+        return line.charAt(0) == '?';
     }
 
     private static boolean isN(String line) {
