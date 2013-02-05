@@ -24,5 +24,21 @@ public class ColorizerTest {
                 Colorizer.process("???$$$$$????"));
     }
 
+    @Test
+    public void shouldWrapToOtherSpanIfBetweenTwice() throws Exception {
+        assertEquals("<span class=\"fog\">" +
+                "???" +
+                "<span class=\"gold\">" +
+                    "$$$$$" +
+                "</span>" +
+                "??" +
+                "<span class=\"monster\">" +
+                    "@@@" +
+                "</span>" +
+                "??" +
+                "</span>",
+                Colorizer.process("???$$$$$??@@@??"));
+    }
+
 
 }
