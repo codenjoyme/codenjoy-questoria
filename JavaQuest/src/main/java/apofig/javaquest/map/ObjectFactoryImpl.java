@@ -7,9 +7,11 @@ package apofig.javaquest.map;
  */
 public class ObjectFactoryImpl implements ObjectFactory {
     private Messages messages;
+    private MonsterFactory monsters;
 
     public ObjectFactoryImpl(Messages messages) {
         this.messages = messages;
+        this.monsters = new MonsterFactory();
     }
 
     @Override
@@ -25,7 +27,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         if (c == ' ') {
             return new Nothing();
         } else if (c == '@') {
-            return new Monster();
+            return monsters.next();
         } else if (c == '#') {
             return new Wall();
         } else if (c == '$') {
