@@ -8,6 +8,24 @@
             font-family:lucida console;
             font-size:16px;
         }
+        .fog {
+            color:gray;
+        }
+        .gold {
+            color:gold;
+        }
+        .border {
+            color:pink;
+        }
+        .iam{
+            color:blue;
+        }
+        .monster {
+            color:red;
+        }
+        .wall {
+            color:brown;
+        }
     </style>
     <script src="/resources/js/jquery-1.7.2.js"></script>
     <script src="/resources/js/game.js"></script>

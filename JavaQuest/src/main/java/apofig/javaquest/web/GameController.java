@@ -60,7 +60,7 @@ public class GameController {
     }
 
     private String getMap(JavaQuest game) {
-        return encode(game.getTerritoryMap().getViewArea());
+        return Colorizer.process(game.getTerritoryMap().getViewArea());
     }
 
     private String encode(String string) {

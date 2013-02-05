@@ -37,32 +37,31 @@ public class Colorizer {
         int start = 0;
         int end = 1;
         while (end != charArray.length) {
-//            String found = "";
-//            for (String string : colorizer.keySet()) {
-//                if (chars.substring(start, end).startsWith(string)) {
-//                    found = string;
-//                    break;
-//                }
-//            }
-//
-//
-            String c1 = String.valueOf(charArray[start]);
-            String c2 = String.valueOf(charArray[end]);
+            String found = " ";
+            for (String string : colorizer.keySet()) {
+                if (chars.substring(start, end + 1).startsWith(string)) {
+                    found = string;
+                    break;
+                }
+            }
+
+            String c1 = String.valueOf(chars.substring(start, start + found.length()));
+            String c2 = String.valueOf(chars.substring(end - found.length() + 1, end + 1));
             if (c1.equals(c2)) {
-                end++;
+                end += found.length();
                 if (end <= charArray.length - 1) {
                     continue;
                 }
             }
 
-            String line = chars.substring(start, end);
+            String line = chars.substring(start, end - (found.length() - 1));
             String span = colorizer.get(c1);
             if (span == null && !isN(line) && !isS(line)) {
                 throw new IllegalArgumentException("New object in world '" + c1 + "'");
             }
             processLine(result, span, line);
 //
-            start = end;
+            start = end - (found.length() - 1);
         }
 
         addFogSpan(result);

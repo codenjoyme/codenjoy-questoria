@@ -69,5 +69,11 @@ public class ColorizerTest {
         Colorizer.process("???Q????");
     }
 
+    @Test
+    public void shouldWrapWall() throws Exception {
+        assertEquals("<span class=\"fog\">????<span class=\"wall\"># # # # </span>??</span>",
+                Colorizer.process("????# # # # ??"));
+    }
+
 
 }
