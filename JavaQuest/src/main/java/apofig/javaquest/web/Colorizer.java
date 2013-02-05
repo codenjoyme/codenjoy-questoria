@@ -80,8 +80,8 @@ public class Colorizer {
             result.append(line);
 //        } else if (isN(line)) {
 //            result.append(line.replaceAll("\n", "<br>"));
-//        } else if (isS(line)) {
-//            result.append(line.replaceAll(" ", "&nbsp;"));
+        } else if (isS(line)) {
+            result.append(line.replaceAll(" ", "&nbsp;"));
         } else {
             result.append(String.format(span, line));
         }
