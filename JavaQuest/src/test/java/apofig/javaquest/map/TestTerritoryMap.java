@@ -3,8 +3,11 @@ package apofig.javaquest.map;
 import org.approvaltests.Approvals;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * User: oleksandr.baglai
@@ -64,6 +67,18 @@ public class TestTerritoryMap {
             @Override
             public MapLoader getMapLoader() {
                 return mapLoader;
+            }
+
+            @Override
+            public MonsterFactory getMonsters() {
+                return new MonsterFactory() {
+                    @Override
+                    public Monster next() {
+
+                        return new Monster("Fight with me!",
+                                "die!", "I'll kill you!", null);
+                    }
+                };
             }
         };
         game = new JavaQuest(settings);

@@ -23,6 +23,11 @@ public class Main {
             public MapLoader getMapLoader() {
                 return new LoadMapFromFile("map.txt");
             }
+
+            @Override
+            public MonsterFactory getMonsters() {
+                return new MonsterFactoryImpl();
+            }
         };
         JavaQuest game = new JavaQuest(settings);
         Console console = new ConsoleImpl();

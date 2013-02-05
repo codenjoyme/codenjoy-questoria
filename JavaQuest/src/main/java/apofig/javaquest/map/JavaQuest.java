@@ -15,7 +15,7 @@ public class JavaQuest {
     public JavaQuest(Settings settings) {
         messages = new Messages();
         info = new Player();
-        factory = new ObjectFactoryImpl(messages);
+        factory = new ObjectFactoryImpl(messages, settings.getMonsters());
         map = new TerritoryMap(settings.getMapLoader(), settings.getViewAreaSize(), factory);
     }
 

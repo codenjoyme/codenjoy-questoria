@@ -9,9 +9,9 @@ public class ObjectFactoryImpl implements ObjectFactory {
     private Messages messages;
     private MonsterFactory monsters;
 
-    public ObjectFactoryImpl(Messages messages) {
+    public ObjectFactoryImpl(Messages messages, MonsterFactory monsters) {
         this.messages = messages;
-        this.monsters = new MonsterFactory();
+        this.monsters = monsters;
     }
 
     @Override

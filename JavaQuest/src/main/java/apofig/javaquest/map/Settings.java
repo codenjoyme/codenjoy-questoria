@@ -10,4 +10,6 @@ public interface Settings {
     int getViewAreaSize();
 
     MapLoader getMapLoader();
+
+    MonsterFactory getMonsters();
 }

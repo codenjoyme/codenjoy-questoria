@@ -10,11 +10,13 @@ public class Monster extends TalkingObject implements Something {
     private String question;
     private String answer;
     private String help;
+    private Action onKill;
 
-    public Monster(String question, String answer, String help) {
+    public Monster(String question, String answer, String help, Action onKill) {
         this.question = question;
         this.answer = answer;
         this.help = help;
+        this.onKill = onKill;
     }
 
     @Override
@@ -23,6 +25,9 @@ public class Monster extends TalkingObject implements Something {
             say("yOU @#& Ki$%@&^ll me $!@!");
             Something something = leaveAfter();
             place.update(something.symbol());
+            if (onKill != null) {
+                onKill.act(this);
+            }
             something.askMe();
         } else {
             say(help);

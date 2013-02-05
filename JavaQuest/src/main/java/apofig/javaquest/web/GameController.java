@@ -91,6 +91,11 @@ public class GameController {
                 public MapLoader getMapLoader() {
                     return new LoadMapFromFile("map.txt");
                 }
+
+                @Override
+                public MonsterFactory getMonsters() {
+                    return new MonsterFactoryImpl();
+                }
             };
 
             game = new JavaQuest(settings);
