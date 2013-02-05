@@ -15,30 +15,8 @@ public class JavaQuest {
     public JavaQuest(Settings settings) {
         messages = new Messages();
         info = new Player();
-        factory = new ObjectFactory() {
-            @Override
-            public Something make(char c, Place place) {
-                ObjectSettings object = getObject(c);
-                object.setPlace(place);
-                object.setFactory(factory);
-                object.setMessages(messages);
-                return (Something)object;
-            }
-        };
+        factory = new ObjectFactoryImpl(messages);
         map = new TerritoryMap(settings.getMapLoader(), settings.getViewAreaSize(), factory);
-    }
-
-    private ObjectSettings getObject(char c) {
-        if (c == ' ') {
-            return new Nothing();
-        } else if (c == '@') {
-            return new Monster();
-        } else if (c == '#') {
-            return new Wall();
-        } else if (c == '$') {
-            return new Gold();
-        }
-        throw new UnsupportedOperationException("WTF! New object in world - " + c);
     }
 
     public TerritoryMap getTerritoryMap() {
