@@ -41,17 +41,27 @@ public class ColorizerTest {
     }
 
     @Test
-    public void shouldIgnoreSpaces() throws Exception {
+     public void shouldIgnoreSpaces() throws Exception {
         assertEquals("<span class=\"fog\">" +
                 "???" +
                 "&nbsp;&nbsp;" +
                 "<span class=\"iam\">" +
-                    "I" +
+                "I" +
                 "</span>" +
                 "&nbsp;&nbsp;&nbsp;" +
                 "????" +
                 "</span>",
                 Colorizer.process("???  I   ????"));
+    }
+
+    @Test
+    public void shouldIgnoreNextLines() throws Exception {
+        assertEquals("<span class=\"fog\">" +
+                "???" +
+                "<br>" +
+                "????" +
+                "</span>",
+                Colorizer.process("???\n????"));
     }
 
 

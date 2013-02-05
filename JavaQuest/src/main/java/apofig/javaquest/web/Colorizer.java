@@ -78,8 +78,8 @@ public class Colorizer {
     private static void processLine(StringBuffer result, String span, String line) {
         if (isFog(line)) {
             result.append(line);
-//        } else if (isN(line)) {
-//            result.append(line.replaceAll("\n", "<br>"));
+        } else if (isN(line)) {
+            result.append(line.replaceAll("\n", "<br>"));
         } else if (isS(line)) {
             result.append(line.replaceAll(" ", "&nbsp;"));
         } else {
