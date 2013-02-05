@@ -64,5 +64,10 @@ public class ColorizerTest {
                 Colorizer.process("???\n????"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldExceptionWhenNewObject() throws Exception {
+        Colorizer.process("???Q????");
+    }
+
 
 }

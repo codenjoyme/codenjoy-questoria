@@ -57,9 +57,9 @@ public class Colorizer {
 
             String line = chars.substring(start, end);
             String span = colorizer.get(c1);
-//            if (span == null && !isN(line) && !isS(line)) {
-//                throw new IllegalArgumentException("New object in world '" + c1 + "'");
-//            }
+            if (span == null && !isN(line) && !isS(line)) {
+                throw new IllegalArgumentException("New object in world '" + c1 + "'");
+            }
             processLine(result, span, line);
 //
             start = end;
