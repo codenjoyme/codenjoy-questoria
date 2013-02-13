@@ -26,13 +26,13 @@ public class CodeRunnerMonsterTest {
             "return (i % 3 == 0)?\"Fizz\":String.valueOf(i);" +
             "}";
 
-    public static final String BAD_CODE_WARNINGS = "For 0 must be returns “FizzBuzz” but was “Fizz”\n" +
-            "For 5 must be returns “Buzz” but was “5”\n" +
-            "For 10 must be returns “Buzz” but was “10”\n" +
-            "For 15 must be returns “FizzBuzz” but was “Fizz”\n" +
-            "For 20 must be returns “Buzz” but was “20”\n" +
-            "For 25 must be returns “Buzz” but was “25”\n" +
-            "For 30 must be returns “FizzBuzz” but was “Fizz”\n" +
+    public static final String BAD_CODE_WARNINGS = "Для 5 метод должен вернуть “Buzz”, но ты вернул “5”\n" +
+            "Для 10 метод должен вернуть “Buzz”, но ты вернул “10”\n" +
+            "Для 15 метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
+            "Для 20 метод должен вернуть “Buzz”, но ты вернул “20”\n" +
+            "Для 25 метод должен вернуть “Buzz”, но ты вернул “25”\n" +
+            "Для 30 метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
+            "Для 35 метод должен вернуть “Buzz”, но ты вернул “35”\n" +
             "...\n";
     private Messages messages;
     private CodeRunnerMonster monster;
@@ -91,8 +91,8 @@ public class CodeRunnerMonsterTest {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(OK_CODE,
-                "FizzBuzzMonster: yOU @#& Ki$%@&^ll me $!@!\n" +
-                        "Gold: I am an 10$");
+                "FizzBuzzMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                        "Gold: Привет, я - 10$");
         assertMonsterDie();
     }
 

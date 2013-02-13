@@ -1,7 +1,7 @@
 package apofig.javaquest.web;
 
 import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.monster.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,7 +92,7 @@ public class GameController {
                 }
 
                 @Override
-                public MonsterFactory getMonsters() {
+                public MonsterPool getMonsters() {
                     return new MonsterFactoryImpl();
                 }
             };

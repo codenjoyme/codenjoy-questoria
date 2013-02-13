@@ -1,7 +1,7 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.monster.Monster;
-import apofig.javaquest.map.object.monster.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterPool;
 import org.approvaltests.Approvals;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,13 +70,13 @@ public class TestTerritoryMap {
             }
 
             @Override
-            public MonsterFactory getMonsters() {
-                return new MonsterFactory() {
+            public MonsterPool getMonsters() {
+                return new MonsterPool() {
                     @Override
                     public Monster next() {
 
-                        return new Monster("Fight with me!",
-                                "die!", "I'll kill you!", null);
+                        return new Monster("Сразись со мной!",
+                                "die!", "Я убью тебя!", null);
                     }
                 };
             }
@@ -170,7 +170,7 @@ public class TestTerritoryMap {
         joystick.moveDown();
 
         verifyXY(20, 0);
-        assertMessage("Wall: Please stop!");
+        assertMessage("Wall: Пожалуйста, остановись!");
         verifyMap();
     }
 
@@ -180,7 +180,7 @@ public class TestTerritoryMap {
         joystick.moveUp();
 
         verifyXY(20, getHeight() - 1);
-        assertMessage("Wall: Please stop!");
+        assertMessage("Wall: Пожалуйста, остановись!");
         verifyMap();
     }
 
@@ -190,7 +190,7 @@ public class TestTerritoryMap {
         joystick.moveLeft();
 
         verifyXY(0, 20);
-        assertMessage("Wall: Please stop!");
+        assertMessage("Wall: Пожалуйста, остановись!");
         verifyMap();
     }
 
@@ -205,7 +205,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getWidth() - 1, 20);
-        assertMessage("Wall: Please stop!");
+        assertMessage("Wall: Пожалуйста, остановись!");
         verifyMap();
     }
 
@@ -222,7 +222,7 @@ public class TestTerritoryMap {
             if (count++ > 1000) {
 //                verifyMap();
                 throw new RuntimeException(String.format(
-                        "I cant go there! My x=%s and y=%s, and view:\n%s",
+                        "Я не могу пройти сюда! My x=%s and y=%s, and view:\n%s",
                         map.getX(), map.getY(), map.getViewArea()));
             }
             if (map.getY() < y) {
@@ -243,7 +243,7 @@ public class TestTerritoryMap {
     public void testWhenITalkWithMonster() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
 
-        assertMessage("Monster: Fight with me!");
+        assertMessage("Monster: Сразись со мной!");
         verifyMap();
     }
 
@@ -254,7 +254,7 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getMonsterX() - 1, getMonsterY());
-        assertMessage("Monster: Fight with me!");
+        assertMessage("Monster: Сразись со мной!");
         verifyMap();
     }
 
@@ -263,10 +263,10 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("die!");
 
-        assertMessage("Monster: Fight with me!\n" +
+        assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
-                "Monster: yOU @#& Ki$%@&^ll me $!@!\n" +
-                "Gold: I am an 10$");
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
         verifyMap();
     }
 
@@ -275,9 +275,9 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("No!!!");
 
-        assertMessage("Monster: Fight with me!\n" +
+        assertMessage("Monster: Сразись со мной!\n" +
                 "You: No!!!\n" +
-                "Monster: I'll kill you!");
+                "Monster: Я убью тебя!");
         verifyMap();
     }
 
@@ -287,11 +287,11 @@ public class TestTerritoryMap {
         joystick.attack("No!!!");
         joystick.attack("Nooooo!!!");
 
-        assertMessage("Monster: Fight with me!\n" +
+        assertMessage("Monster: Сразись со мной!\n" +
                 "You: No!!!\n" +
-                "Monster: I'll kill you!\n" +
+                "Monster: Я убью тебя!\n" +
                 "You: Nooooo!!!\n" +
-                "Monster: I'll kill you!");
+                "Monster: Я убью тебя!");
         verifyMap();
     }
 
@@ -302,22 +302,22 @@ public class TestTerritoryMap {
         joystick.moveRight();
 
         verifyXY(getWallX() - 1, getWallY());
-        assertMessage("Wall: Please stop!");
+        assertMessage("Wall: Пожалуйста, остановись!");
         verifyMap();
     }
 
     @Test
     public void shouldGetGoldAfterMonsterDie() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        assertInfo("Level:0 Xp:0 Health:100 Gold:0");
+        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
 
         joystick.attack("die!");
         joystick.moveRight();
 
-        assertMessage("Gold: You pick up me! Thanks!!");
+        assertMessage("Gold: Ты подобрал меня! Спасибо!!");
         verifyMap();
 
-        assertInfo("Level:0 Xp:0 Health:100 Gold:10");
+        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:10");
     }
 
     private void assertInfo(String info) {
@@ -334,7 +334,7 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.moveUp();
 
-        assertMessage("Gold: I am an 10$");
+        assertMessage("Gold: Привет, я - 10$");
         verifyMap();
     }
 
@@ -344,12 +344,12 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.attack("Gold die!");
 
-        assertMessage("Monster: Fight with me!\n" +
+        assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
-                "Monster: yOU @#& Ki$%@&^ll me $!@!\n" +
-                "Gold: I am an 10$\n" +
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$\n" +
                 "You: Gold die!\n" +
-                "Gold: You can't do this!");
+                "Gold: Ты не можешь делать это со мной!");
         verifyMap();
     }
 

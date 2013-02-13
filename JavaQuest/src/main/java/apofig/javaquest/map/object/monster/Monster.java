@@ -27,7 +27,7 @@ public class Monster extends TalkingObject implements Something {
     @Override
     public void answer(String message) {
         if (message.equals(answer)) {
-            say("yOU @#& Ki$%@&^ll me $!@!");
+            say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
             Something something = leaveAfter();
             place.update(something.symbol());
             if (onKill != null) {

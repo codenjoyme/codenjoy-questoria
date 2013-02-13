@@ -1,7 +1,7 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Messages;
-import apofig.javaquest.map.object.monster.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterPool;
 
 /**
  * User: oleksandr.baglai
@@ -10,9 +10,9 @@ import apofig.javaquest.map.object.monster.MonsterFactory;
  */
 public class ObjectFactoryImpl implements ObjectFactory {
     private Messages messages;
-    private MonsterFactory monsters;
+    private MonsterPool monsters;
 
-    public ObjectFactoryImpl(Messages messages, MonsterFactory monsters) {
+    public ObjectFactoryImpl(Messages messages, MonsterPool monsters) {
         this.messages = messages;
         this.monsters = monsters;
     }
@@ -36,6 +36,6 @@ public class ObjectFactoryImpl implements ObjectFactory {
         } else if (c == '$') {
             return new Gold();
         }
-        throw new UnsupportedOperationException("WTF! New object in world - " + c);
+        throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: " + c);
     }
 }

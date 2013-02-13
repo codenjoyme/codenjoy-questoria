@@ -24,7 +24,21 @@ public class Messages {
         if (count > size) {
             count = size;
         }
-        return messages.subList(size - count, size).toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "\n");
+        List<String> strings = messages.subList(size - count, size);
+        return toString(strings);
+    }
+
+    public static String toString(List<String> strings) {
+        StringBuffer result = new StringBuffer();
+        int count = strings.size();
+        for (String string : strings) {
+            result.append(string);
+            count--;
+            if (count > 0) {
+                result.append("\n");
+            }
+        }
+        return result.toString();
     }
 
     public void clear() {

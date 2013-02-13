@@ -10,6 +10,7 @@ import static junit.framework.Assert.assertEquals;
  * Time: 8:56 PM
  */
 public class MessagesTest {
+
     @Test
     public void shouldGetOnlyLastRecords() {
         Messages messages = new Messages();
@@ -33,5 +34,17 @@ public class MessagesTest {
                 "five\n" +
                 "siz\n" +
                 "seven", messages.getLast(4));
+    }
+
+    @Test
+    public void shouldLeaveCommasAndOtherSymbols() {
+        Messages messages = new Messages();
+        messages.add("o, n, e");
+        messages.add("t[ ]o");
+        messages.add("[three]");
+
+        assertEquals("o, n, e\n" +
+                "t[ ]o\n" +
+                "[three]", messages.toString());
     }
 }

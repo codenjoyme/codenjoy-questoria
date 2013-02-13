@@ -10,7 +10,7 @@ public class Player implements PlayerInfo {
     private int gold;
 
     public String toString() {
-        return String.format("Level:%s Xp:%s Health:%s Gold:%s", 0, 0, 100, gold);
+        return String.format("Уровень:%s Опыт:%s Здоровье:%s Золото:%s", 0, 0, 100, gold);
     }
 
     public void addGold(int count) {

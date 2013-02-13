@@ -13,7 +13,7 @@ public class Wall extends TalkingObject implements Something {
 
     @Override
     public void answer(String message) {
-        say("You can't do this!"); // TODO test it
+        say("Ты не можешь это делать со мной!"); // TODO test it
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Wall extends TalkingObject implements Something {
 
     @Override
     public void askMe() {
-        say("Please stop!");
+        say("Пожалуйста, остановись!");
     }
 
     @Override
