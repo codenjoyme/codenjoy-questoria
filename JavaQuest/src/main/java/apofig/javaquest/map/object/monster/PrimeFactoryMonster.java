@@ -7,7 +7,7 @@ import apofig.javaquest.map.Action;
  * Date: 2/13/13
  * Time: 7:10 PM
  */
-public class PrimeFactorsMonster extends CodeRunnerMonster {
+public class PrimeFactoryMonster extends CodeRunnerMonster {
 
     public static final String OK_CODE =
             "public String method(int number) {\n" +
@@ -60,7 +60,7 @@ public class PrimeFactorsMonster extends CodeRunnerMonster {
 
     public final static String HELP = "Попробуй еще раз!";
 
-    public PrimeFactorsMonster(Action onKill) {
+    public PrimeFactoryMonster(Action onKill) {
         super(QUESTION, HELP, onKill);
     }
 }

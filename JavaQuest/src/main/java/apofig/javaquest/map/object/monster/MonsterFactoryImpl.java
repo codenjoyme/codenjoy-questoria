@@ -14,13 +14,15 @@ import java.util.List;
 public class MonsterFactoryImpl implements MonsterPool, Action {
 
     private List<Monster> monsters;
-    private int count = 3;
+    private int count;
     private Monster monster;
 
     public MonsterFactoryImpl() {
         monsters = new LinkedList<Monster>();
         monsters.add(new FizzBuzzMonster(this));
-        monsters.add(new PrimeFactorsMonster(this));
+        monsters.add(new PrimeFactoryMonster(this));
+        monsters.add(new FibonacciNumbersMonster(this));
+        count = monsters.size() + 1;
     }
 
     public Monster next() {

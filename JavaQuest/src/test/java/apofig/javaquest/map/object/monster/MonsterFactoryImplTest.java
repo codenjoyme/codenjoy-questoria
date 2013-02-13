@@ -35,8 +35,13 @@ public class MonsterFactoryImplTest {
 
         monster = factory.next();
         setupMonster(monster);
-        assertEquals(PrimeFactorsMonster.class, monster.getClass());
-        monster.answer(PrimeFactorsMonster.OK_CODE);
+        assertEquals(PrimeFactoryMonster.class, monster.getClass());
+        monster.answer(PrimeFactoryMonster.OK_CODE);
+
+        monster = factory.next();
+        setupMonster(monster);
+        assertEquals(FibonacciNumbersMonster.class, monster.getClass());
+        monster.answer(FibonacciNumbersMonster.OK_CODE);
 
         monster = factory.next();
         setupMonster(monster);
