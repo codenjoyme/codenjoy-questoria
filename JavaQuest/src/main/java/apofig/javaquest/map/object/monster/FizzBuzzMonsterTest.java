@@ -1,4 +1,7 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object.monster;
+
+import apofig.javaquest.map.MethodRunner;
+import apofig.javaquest.map.MonsterTest;
 
 import java.util.LinkedList;
 import java.util.List;
