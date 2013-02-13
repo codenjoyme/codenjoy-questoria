@@ -1,6 +1,4 @@
-package apofig.javaquest.map;
-
-import apofig.javaquest.map.object.monster.FizzBuzzMonster;
+package apofig.javaquest.map.object.monster;
 
 /**
  * User: oleksandr.baglai

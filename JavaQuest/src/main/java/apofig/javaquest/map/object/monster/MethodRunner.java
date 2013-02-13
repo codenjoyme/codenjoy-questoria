@@ -1,4 +1,4 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object.monster;
 
 import com.sun.xml.internal.bind.v2.runtime.Name;
 

@@ -4,6 +4,8 @@ import apofig.javaquest.console.Console;
 import apofig.javaquest.console.ConsoleImpl;
 import apofig.javaquest.console.Runner;
 import apofig.javaquest.map.*;
+import apofig.javaquest.map.object.monster.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
 
 /**
  * User: oleksandr.baglai

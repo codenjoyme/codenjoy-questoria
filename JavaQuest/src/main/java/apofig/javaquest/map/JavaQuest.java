@@ -1,5 +1,9 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.ObjectFactory;
+import apofig.javaquest.map.object.ObjectFactoryImpl;
+import apofig.javaquest.map.object.Something;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13

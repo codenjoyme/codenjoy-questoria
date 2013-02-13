@@ -1,5 +1,8 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.MapPlace;
+import apofig.javaquest.map.object.ObjectFactory;
+import apofig.javaquest.map.object.Something;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;

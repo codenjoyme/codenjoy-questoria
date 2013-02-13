@@ -1,8 +1,6 @@
 package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
-import apofig.javaquest.map.CodeRunnerMonster;
-import apofig.javaquest.map.MonsterTest;
 
 /**
  * User: oleksandr.baglai

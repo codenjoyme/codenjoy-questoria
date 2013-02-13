@@ -1,4 +1,4 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object;
 
 /**
  * User: oleksandr.baglai

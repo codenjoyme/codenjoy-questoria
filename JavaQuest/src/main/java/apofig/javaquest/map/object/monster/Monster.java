@@ -1,4 +1,9 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object.monster;
+
+import apofig.javaquest.map.Action;
+import apofig.javaquest.map.Player;
+import apofig.javaquest.map.object.Something;
+import apofig.javaquest.map.object.TalkingObject;
 
 /**
  * User: oleksandr.baglai

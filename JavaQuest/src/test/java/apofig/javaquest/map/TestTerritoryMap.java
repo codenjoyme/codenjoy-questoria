@@ -1,13 +1,13 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.monster.Monster;
+import apofig.javaquest.map.object.monster.MonsterFactory;
 import org.approvaltests.Approvals;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * User: oleksandr.baglai

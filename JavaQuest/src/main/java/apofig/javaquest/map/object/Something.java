@@ -1,4 +1,6 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object;
+
+import apofig.javaquest.map.Player;
 
 /**
  * User: oleksandr.baglai

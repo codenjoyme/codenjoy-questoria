@@ -1,9 +1,10 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object.monster;
 
 import apofig.compiler.JavaCompiler;
 import apofig.compiler.JavaMethod;
-
-import java.lang.reflect.InvocationTargetException;
+import apofig.javaquest.map.Action;
+import apofig.javaquest.map.object.monster.Monster;
+import apofig.javaquest.map.object.monster.MonsterTest;
 
 /**
  * User: oleksandr.baglai

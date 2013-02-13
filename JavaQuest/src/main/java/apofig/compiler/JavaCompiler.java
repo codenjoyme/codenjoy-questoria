@@ -61,7 +61,7 @@ public class JavaCompiler {
         // Then we run the compilation with call()
         stealSystemOut();
         compiler.getTask(null, fileManager, null, null, null, jfiles).call();
-        retreiveSystemOut();
+        retrieveSystemOut();
 
         // Creating an instance of our compiled class
         try {
@@ -74,7 +74,7 @@ public class JavaCompiler {
         }
     }
 
-    private void retreiveSystemOut() {
+    private void retrieveSystemOut() {
         System.setErr(old);
     }
 

@@ -1,9 +1,15 @@
-package apofig.javaquest.map;
+package apofig.javaquest.map.object.monster;
 
 import static apofig.javaquest.map.object.monster.FizzBuzzMonster.*;
 
+import apofig.javaquest.map.Action;
+import apofig.javaquest.map.Messages;
+import apofig.javaquest.map.object.Gold;
+import apofig.javaquest.map.object.ObjectFactory;
+import apofig.javaquest.map.object.Place;
+import apofig.javaquest.map.object.Something;
+import apofig.javaquest.map.object.monster.CodeRunnerMonster;
 import apofig.javaquest.map.object.monster.FizzBuzzMonster;
-import apofig.javaquest.map.object.monster.FizzBuzzMonsterTest;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -86,7 +92,7 @@ public class CodeRunnerMonsterTest {
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(OK_CODE,
                 "FizzBuzzMonster: yOU @#& Ki$%@&^ll me $!@!\n" +
-                "Gold: I am an 10$");
+                        "Gold: I am an 10$");
         assertMonsterDie();
     }
 

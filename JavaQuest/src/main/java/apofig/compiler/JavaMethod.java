@@ -1,6 +1,6 @@
 package apofig.compiler;
 
-import apofig.javaquest.map.MethodRunner;
+import apofig.javaquest.map.object.monster.MethodRunner;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
