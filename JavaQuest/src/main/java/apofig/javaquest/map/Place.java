@@ -2,21 +2,9 @@ package apofig.javaquest.map;
 
 /**
  * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 1:50 AM
+ * Date: 2/13/13
+ * Time: 6:57 PM
  */
-public class Place {
-    private char[][] map;
-    private final int x;
-    private final int y;
-
-    public Place(char[][] map, int x, int y) {
-        this.map = map;
-        this.x = x;
-        this.y = y;
-    }
-
-    public void update(char newChar) {
-        map[x][y] = newChar;
-    }
+public interface Place {
+    void update(char newChar);
 }

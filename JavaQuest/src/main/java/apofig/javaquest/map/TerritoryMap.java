@@ -152,7 +152,7 @@ public class TerritoryMap {
             return factory.make('#', null);
         }
 
-        return factory.make(map[x][y], new Place(map, x, y));
+        return factory.make(map[x][y], new MapPlace(map, x, y));
     }
 
 
