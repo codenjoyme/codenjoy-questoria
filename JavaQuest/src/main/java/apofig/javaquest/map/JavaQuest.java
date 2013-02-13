@@ -83,7 +83,7 @@ public class JavaQuest {
     }
 
     public String getMessage() {
-        return messages.toString();
+        return messages.getLast(6);
     }
 
     public Player getPlayerInfo() {

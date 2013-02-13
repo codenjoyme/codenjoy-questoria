@@ -38,7 +38,46 @@ public class CodeRunnerMonsterTest {
     public void shouldPrintErrorWhenNotPass() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer(BAD_CODE, BAD_CODE_WARNINGS + HELP);
+        assertMonsterHelpMeWithMyAnswer(BAD_CODE,
+                "FizzBuzzMonster: " + BAD_CODE_WARNINGS +
+                "FizzBuzzMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintExceptionWhenBadCode() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer("",
+                "FizzBuzzMonster: Expected one method!\n" +
+                "FizzBuzzMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintExceptionWhenBadCode2() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "String fizzbuzz(int i) {\n" +
+                "    return String.valueOf(i);\n" +
+                "}",
+                "FizzBuzzMonster: java.lang.IllegalAccessException: Class apofig.compiler.JavaMethod can not access a member of class Dynamic with modifiers \"\"\n" +
+                "FizzBuzzMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintExceptionWhenBadCode3() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "public String fizzbuzz(int i) {\n" +
+                "     return (i  == 0)\\?\"Fizz\":String.valueOf(i);\n" +
+                "}",
+                "FizzBuzzMonster: /Dynamic.java:2: error: illegal character: \\92\r\n" +
+                "     return (i  == 0)\\?\"Fizz\":String.valueOf(i);\r\n" +
+                "                     ^\r\n" +
+                "1 error\r\n" +
+                "\n" +
+                "FizzBuzzMonster: " + HELP);
     }
 
     @Test
@@ -47,8 +86,7 @@ public class CodeRunnerMonsterTest {
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(OK_CODE,
                 "FizzBuzzMonster: yOU @#& Ki$%@&^ll me $!@!\n" +
-                "Gold: I am an 10$\n" +
-                "Please play with code again!");
+                "Gold: I am an 10$");
         assertMonsterDie();
     }
 

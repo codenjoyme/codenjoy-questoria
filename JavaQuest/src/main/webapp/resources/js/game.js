@@ -10,7 +10,8 @@ $(document).ready(function() {
     }
 
     function send(command) {
-        $.getJSON('/answer', 'command=' + command + "&time=" + $.now(), drawMap);
+        command = command.split("\n").join("</br>");
+        $.getJSON('/answer', {command:command, time:$.now()}, drawMap);
     }
 
     function onTextArea() {

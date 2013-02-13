@@ -3,6 +3,7 @@ package apofig.compiler;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
 import javax.tools.ToolProvider;
+import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
  */
 public class JavaCompiler {
     public static int ID = 0;
+    private StringBufferOutputStream out;
+    private PrintStream old;
 
     public JavaMethod getMethod(String code, Object... args) {
         String className = "Dynamic" + (ID++);
@@ -56,17 +59,29 @@ public class JavaCompiler {
         // We specify a task to the compiler. Compiler should use our file
         // manager and our list of "files".
         // Then we run the compilation with call()
-        compiler.getTask(null, fileManager, null, null,
-                null, jfiles).call();
+        stealSystemOut();
+        compiler.getTask(null, fileManager, null, null, null, jfiles).call();
+        retreiveSystemOut();
 
-        // Creating an instance of our compiled class and
-        // running its toString() method
+        // Creating an instance of our compiled class
         try {
-            return fileManager.getClassLoader(null)
-                    .loadClass(fullName);
-        } catch (ClassNotFoundException e) {
+            return fileManager.getClassLoader(null).loadClass(fullName);
+        } catch (Exception e) {
+            if (NullPointerException.class.equals(e.getClass())) {
+                throw new RuntimeException(out.get());
+            }
             throw new RuntimeException(e);
         }
+    }
+
+    private void retreiveSystemOut() {
+        System.setErr(old);
+    }
+
+    private void stealSystemOut() {
+        out = new StringBufferOutputStream();  // TODO fixme
+        old = System.err;
+        System.setErr(new PrintStream(out, true));
     }
 
     public JavaClass newClass(String code) {

@@ -40,7 +40,7 @@ public class GameController {
             joystick.moveRight();
         } else if (command.equals("refresh")) {
         } else {
-            joystick.attack(command);
+            joystick.attack(command.replaceAll("</br>", "\n"));
         }
 
         JSONObject result = new JSONObject();

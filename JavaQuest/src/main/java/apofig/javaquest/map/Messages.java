@@ -11,11 +11,20 @@ import java.util.List;
 public class Messages {
     private List<String> messages = new LinkedList<>();
 
+    @Override
     public String toString() {
+        return getLast(messages.size());
+    }
+
+    public String getLast(int count) {
         if (messages.isEmpty()) {
             return "";
         }
-        return messages.toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "\n");
+        int size = messages.size();
+        if (count > size) {
+            count = size;
+        }
+        return messages.subList(size - count, size).toString().replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", ", "\n");
     }
 
     public void clear() {

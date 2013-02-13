@@ -27,15 +27,23 @@ public class CodeRunnerMonster extends Monster {
         if (message.equals("OK")) {
             super.answer("4E0A");
         } else {
-            messages.add(message);
+            say(message);
+            say(help);
         }
-        messages.add(help);
     }
 
     private String runTest(String code) {
         JavaCompiler compiler = new JavaCompiler();
-        JavaMethod method = compiler.getMethod(code);
-        return test.test(method);
+        JavaMethod method;
+        try {
+            method = compiler.getMethod(code);
+            return test.test(method);
+        } catch (Exception e) {
+            if (e.getClass().equals(NullPointerException.class)) {
+                return "Sorry, NPE!";
+            }
+            return e.getMessage().replaceAll("Dynamic[0-9]+", "Dynamic"); // TODO hotfix
+        }
     }
 
 
