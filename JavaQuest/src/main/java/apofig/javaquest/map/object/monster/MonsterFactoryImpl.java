@@ -24,6 +24,7 @@ public class MonsterFactoryImpl implements MonsterPool, Action {
         monsters.add(new FibonacciNumbersMonster(this));
         monsters.add(new SumSquareDifferenceMonster(this));
         monsters.add(new XthPrimeMonster(this));
+        monsters.add(new PowerDigitSumMonster(this));
         count = monsters.size() + 1;
     }
 

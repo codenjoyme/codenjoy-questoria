@@ -6,14 +6,14 @@ import static junit.framework.Assert.assertEquals;
 
 /**
  * User: oleksandr.baglai
- * Date: 2/13/13
+ * Date: 2/25/13
  * Time: 11:42 PM
  */
 public class XthPrimeMonsterTest {
 
     @Test
     public void shouldWork() {
-        int[] primes = new int[] {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+        int[] primes = new int[] {1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
                 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173,
                 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
                 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409,
@@ -38,9 +38,6 @@ public class XthPrimeMonsterTest {
                 3083, 3089, 3109, 3119, 3121, 3137, 3163, 3167, 3169, 3181, 3187, 3191, 3203, 3209, 3217, 3221, 3229, 3251, 3253, 3257,
                 3259, 3271, 3299, 3301, 3307, 3313, 3319, 3323, 3329, 3331, 3343, 3347, 3359, 3361, 3371, 3373, 3389, 3391, 3407, 3413,
                 3433, 3449, 3457, 3461, 3463, 3467, 3469, 3491, 3499, 3511, 3517, 3527, 3529, 3533, 3539, 3541, 3547, 3557, 3559, 3571};
-        XthPrimeMonster monster = new XthPrimeMonster(null);
-        for (int index = 1; index < primes.length; index ++) {
-            assertEquals("At index " + index,  String.valueOf(primes[index - 1]), monster.method(index));
-        }
+        Assertions.assertMonster(primes, new XthPrimeMonster(null));
     }
 }

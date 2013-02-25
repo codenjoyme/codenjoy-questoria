@@ -13,6 +13,9 @@ public class XthPrimeMonster extends CodeRunnerMonster {
     public static final String OK_CODE =
             "    public java.util.LinkedList<Integer> primes = new java.util.LinkedList<Integer>();\n" +
             "    public String method(int i) {\n" +
+            "        if (i == 0) {\n" +
+            "            return \"1\";\n" +
+            "        }" +
             "        if (i < primes.size()) {\n" +
             "            return String.valueOf(primes.get(i));\n" +
             "        }\n" +
@@ -48,6 +51,9 @@ public class XthPrimeMonster extends CodeRunnerMonster {
 
     public java.util.LinkedList<Integer> primes = new java.util.LinkedList<Integer>();
     public String method(int i) {
+        if (i == 0) {
+            return "1";
+        }
         if (i < primes.size()) {
             return String.valueOf(primes.get(i));
         }

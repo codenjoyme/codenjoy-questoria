@@ -55,6 +55,11 @@ public class MonsterFactoryImplTest {
 
         monster = factory.next();
         setupMonster(monster);
+        assertEquals(PowerDigitSumMonster.class, monster.getClass());
+        monster.answer(PowerDigitSumMonster.OK_CODE);
+
+        monster = factory.next();
+        setupMonster(monster);
         assertEquals(Monster.class, monster.getClass());
         monster.answer("die!");
 
