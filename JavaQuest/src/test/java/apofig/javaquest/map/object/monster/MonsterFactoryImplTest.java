@@ -5,10 +5,10 @@ import apofig.javaquest.map.object.Gold;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.Place;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import static junit.framework.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * User: oleksandr.baglai
@@ -33,34 +33,60 @@ public class MonsterFactoryImplTest {
         assertEquals(FizzBuzzMonster.class, monster.getClass());
         monster.answer(FizzBuzzMonster.OK_CODE);
 
+        verify(messages, atLeastOnce()).add(captor.capture());
+        String message = captor.getAllValues().toString();
+
         monster = factory.next();
         setupMonster(monster);
-        assertEquals(PrimeFactoryMonster.class, monster.getClass());
+        assertEquals(message, PrimeFactoryMonster.class, monster.getClass());
         monster.answer(PrimeFactoryMonster.OK_CODE);
 
+        verify(messages, atLeastOnce()).add(captor.capture());
+        message = captor.getAllValues().toString();
+
         monster = factory.next();
         setupMonster(monster);
-        assertEquals(FibonacciNumbersMonster.class, monster.getClass());
+        assertEquals(message, FibonacciNumbersMonster.class, monster.getClass());
         monster.answer(FibonacciNumbersMonster.OK_CODE);
 
+        verify(messages, atLeastOnce()).add(captor.capture());
+        message = captor.getAllValues().toString();
+
         monster = factory.next();
         setupMonster(monster);
-        assertEquals(SumSquareDifferenceMonster.class, monster.getClass());
+        assertEquals(message, SumSquareDifferenceMonster.class, monster.getClass());
         monster.answer(SumSquareDifferenceMonster.OK_CODE);
 
+        verify(messages, atLeastOnce()).add(captor.capture());
+        message = captor.getAllValues().toString();
+
         monster = factory.next();
         setupMonster(monster);
-        assertEquals(XthPrimeMonster.class, monster.getClass());
+        assertEquals(message, XthPrimeMonster.class, monster.getClass());
         monster.answer(XthPrimeMonster.OK_CODE);
 
-        monster = factory.next();
-        setupMonster(monster);
-        assertEquals(PowerDigitSumMonster.class, monster.getClass());
-        monster.answer(PowerDigitSumMonster.OK_CODE);
+        verify(messages, atLeastOnce()).add(captor.capture());
+        message = captor.getAllValues().toString();
 
         monster = factory.next();
         setupMonster(monster);
-        assertEquals(Monster.class, monster.getClass());
+        assertEquals(message, PowerDigitSumMonster.class, monster.getClass());
+        monster.answer(PowerDigitSumMonster.OK_CODE);
+
+        verify(messages, atLeastOnce()).add(captor.capture());
+        message = captor.getAllValues().toString();
+
+        monster = factory.next();
+        setupMonster(monster);
+        assertEquals(message, FactorialMonster.class, monster.getClass());
+        monster.answer(FactorialMonster.OK_CODE);
+
+        verify(messages, atLeastOnce()).add(captor.capture());
+        message = captor.getAllValues().toString();
+
+        monster = factory.next();
+        setupMonster(monster);
+        assertEquals(message, Monster.class, monster.getClass());
         monster.answer("die!");
 
         assertNotSame(monster, factory.next());
@@ -70,8 +96,11 @@ public class MonsterFactoryImplTest {
         monster.answer("die!");
     }
 
+    ArgumentCaptor<String> captor;
+    Messages messages;
     private void setupMonster(Monster monster) {
-        Messages messages = mock(Messages.class);
+        captor = ArgumentCaptor.forClass(String.class);
+        messages = mock(Messages.class);
         monster.setMessages(messages);
         ObjectFactory objects = mock(ObjectFactory.class);
         Place place = mock(Place.class);

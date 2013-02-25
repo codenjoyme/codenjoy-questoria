@@ -8,6 +8,12 @@ import static junit.framework.Assert.assertEquals;
  * Time: 11:37 PM
  */
 public class Assertions {
+    public static void assertMonster(String[] expected, CodeRunnerMonster monster) {
+        for (int index = 0; index < expected.length; index ++) {
+            assertEquals("At index " + index,  expected[index], monster.method(index));
+        }
+    }
+
     public static void assertMonster(int[] expected, CodeRunnerMonster monster) {
         for (int index = 0; index < expected.length; index ++) {
             assertEquals("At index " + index,  String.valueOf(expected[index]), monster.method(index));
