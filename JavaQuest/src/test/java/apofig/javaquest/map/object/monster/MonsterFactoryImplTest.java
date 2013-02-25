@@ -50,6 +50,11 @@ public class MonsterFactoryImplTest {
 
         monster = factory.next();
         setupMonster(monster);
+        assertEquals(XthPrimeMonster.class, monster.getClass());
+        monster.answer(XthPrimeMonster.OK_CODE);
+
+        monster = factory.next();
+        setupMonster(monster);
         assertEquals(Monster.class, monster.getClass());
         monster.answer("die!");
 
