@@ -7,7 +7,7 @@ import apofig.javaquest.map.Action;
  * Date: 2/13/13
  * Time: 7:10 PM
  */
-public class FibonacciNumbersMonster extends CodeRunnerMonster {
+public class FibonacciNumbersMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =
             "public String method(int number) {\n" +

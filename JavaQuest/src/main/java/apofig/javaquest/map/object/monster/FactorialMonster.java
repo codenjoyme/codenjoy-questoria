@@ -7,7 +7,7 @@ import apofig.javaquest.map.Action;
  * Date: 2/13/13
  * Time: 7:10 PM
  */
-public class FactorialMonster extends CodeRunnerMonster implements MonsterTest {
+public class FactorialMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =
             "    private java.util.Map<Integer, java.math.BigInteger> cache = new java.util.HashMap<Integer, java.math.BigInteger>();\n" +

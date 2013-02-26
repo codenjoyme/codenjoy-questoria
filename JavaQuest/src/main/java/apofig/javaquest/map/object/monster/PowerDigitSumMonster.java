@@ -9,7 +9,7 @@ import apofig.javaquest.map.Action;
  * Time: 7:10 PM
  * @author http://projecteuler.net/problem=16
  */
-public class PowerDigitSumMonster extends CodeRunnerMonster {
+public class PowerDigitSumMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =
             "public String method(int pow) {\n" +

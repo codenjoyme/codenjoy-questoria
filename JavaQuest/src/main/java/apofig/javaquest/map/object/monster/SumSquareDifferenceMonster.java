@@ -8,7 +8,7 @@ import apofig.javaquest.map.Action;
  * Time: 8:12 PM
  * @author http://projecteuler.net/problem=6
  */
-public class SumSquareDifferenceMonster extends CodeRunnerMonster {
+public class SumSquareDifferenceMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =
             "public String method(int input) {\n" +

@@ -1,97 +1,97 @@
 package apofig.javaquest.map.object.monster;
 
-import static apofig.javaquest.map.object.monster.FizzBuzzMonster.*;
-
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.Gold;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.Place;
 import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.monster.CodeRunnerMonster;
-import apofig.javaquest.map.object.monster.FizzBuzzMonster;
 import org.junit.Test;
 
+import static apofig.javaquest.map.object.monster.LongDivisionMonster.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 /**
  * User: oleksandr.baglai
- * Date: 2/8/13
+ * Date: 2/26/13
  * Time: 1:21 PM
  */
-public class CodeRunnerMonsterTest {
+public class ManyInputCodeRunnerMonsterTest {
 
-    public static final String BAD_CODE = "public String fizzbuzz(int i) {" +
-            "return (i % 3 == 0)?\"Fizz\":String.valueOf(i);" +
+    public static final String BAD_CODE = "public String method(int a, int b) {" +
+                "return \"0\";" +
             "}";
 
-    public static final String BAD_CODE_WARNINGS = "Для 5 метод должен вернуть “Buzz”, но ты вернул “5”\n" +
-            "Для 10 метод должен вернуть “Buzz”, но ты вернул “10”\n" +
-            "Для 15 метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
-            "Для 20 метод должен вернуть “Buzz”, но ты вернул “20”\n" +
-            "Для 25 метод должен вернуть “Buzz”, но ты вернул “25”\n" +
-            "Для 30 метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
-            "Для 35 метод должен вернуть “Buzz”, но ты вернул “35”\n" +
+    public static final String BAD_CODE_WARNINGS =
+            "Для [1, 2] метод должен вернуть “0.5”, но ты вернул “0”\n" +
+            "Для [1, 1] метод должен вернуть “1”, но ты вернул “0”\n" +
+            "Для [5, 5] метод должен вернуть “1”, но ты вернул “0”\n" +
+            "Для [55, 5] метод должен вернуть “11”, но ты вернул “0”\n" +
+            "Для [55, 44] метод должен вернуть “1.25”, но ты вернул “0”\n" +
+            "Для [56, 1] метод должен вернуть “56”, но ты вернул “0”\n" +
+            "Для [1, -2] метод должен вернуть “-0.5”, но ты вернул “0”\n" +
             "...\n";
+
     private Messages messages;
     private CodeRunnerMonster monster;
-
 
     private boolean die = false;
 
     @Test
     public void shouldPrintErrorWhenNotPass() {
         buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(BAD_CODE,
-                "FizzBuzzMonster: " + BAD_CODE_WARNINGS +
-                "FizzBuzzMonster: " + HELP);
+                "LongDivisionMonster: " + BAD_CODE_WARNINGS +
+                "LongDivisionMonster: " + HELP);
     }
 
     @Test
     public void shouldPrintExceptionWhenBadCode() {
         buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer("",
-                "FizzBuzzMonster: Expected one method!\n" +
-                "FizzBuzzMonster: " + HELP);
+                "LongDivisionMonster: Expected one method!\n" +
+                "LongDivisionMonster: " + HELP);
     }
 
     @Test
     public void shouldPrintExceptionWhenBadCode2() {
         buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(
-                "String fizzbuzz(int i) {\n" +
-                "    return String.valueOf(i);\n" +
+                "String method(int a, int b) {\n" +
+                "    return \"0\";\n" +
                 "}",
-                "FizzBuzzMonster: java.lang.IllegalAccessException: Class apofig.compiler.JavaMethod can not access a member of class Dynamic with modifiers \"\"\n" +
-                "FizzBuzzMonster: " + HELP);
+                "LongDivisionMonster: java.lang.IllegalAccessException: Class apofig.compiler.JavaMethod can not access a member of class Dynamic with modifiers \"\"\n" +
+                "LongDivisionMonster: " + HELP);
     }
 
     @Test
     public void shouldPrintExceptionWhenBadCode3() {
         buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(
-                "public String fizzbuzz(int i) {\n" +
-                "     return (i  == 0)\\?\"Fizz\":String.valueOf(i);\n" +
+                "public String method(int a, int b) {\n" +
+                "     return qwe;\n" +
                 "}",
-                "FizzBuzzMonster: /Dynamic.java:2: error: illegal character: \\92\r\n" +
-                "     return (i  == 0)\\?\"Fizz\":String.valueOf(i);\r\n" +
-                "                     ^\r\n" +
+                "LongDivisionMonster: /Dynamic.java:2: error: cannot find symbol\r\n" +
+                "     return qwe;\r\n" +
+                "            ^\r\n" +
+                "  symbol:   variable qwe\r\n" +
+                "  location: class Dynamic\r\n" +
                 "1 error\r\n" +
                 "\n" +
-                "FizzBuzzMonster: " + HELP);
+                "LongDivisionMonster: " + HELP);
     }
 
     @Test
     public void shouldPrintOkAndDieWhenOk() {
         buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(OK_CODE,
-                "FizzBuzzMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "LongDivisionMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                         "Gold: Привет, я - 10$");
         assertMonsterDie();
     }
@@ -113,7 +113,7 @@ public class CodeRunnerMonsterTest {
     }
 
     private void buildMonster(String question, String help) {
-        monster = new FizzBuzzMonster(
+        monster = new LongDivisionMonster(
                 new Action() {
                     @Override
                     public void act(Something object) {

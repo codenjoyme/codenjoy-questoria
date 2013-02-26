@@ -47,35 +47,9 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
             if (e.getClass().equals(NullPointerException.class)) {
                 return "Извини, NPE!";
             }
+            System.out.println(e.toString());
             return e.getMessage().replaceAll("Dynamic[0-9]+", "Dynamic"); // TODO hotfix
         }
     }
-
-    private void addWarning(List<String> messages, int index, String expected, Object actual) {
-        messages.add(String.format("Для %s метод должен вернуть “%s”, но ты вернул “%s”", index, expected, actual));
-    }
-
-    @Override
-    public String test(MethodRunner runner) {
-        List<String> messages = new LinkedList<String>();
-        for (int i = 1; i <= 100; i++) {
-            Object actual = runner.run(i);
-            String expected = method(i);
-            if (!actual.equals(expected)) {
-                addWarning(messages, i, expected, actual);
-            }
-            if (messages.size() > 6) {
-                messages.add("...");
-                break;
-            }
-        }
-        if (messages.size() == 0) {
-            return "OK";
-        }
-        return Messages.toString(messages);
-    }
-
-    protected abstract String method(int input);
-
 
 }

@@ -8,7 +8,7 @@ import apofig.javaquest.map.Action;
  * Time: 7:10 PM
  * @author http://euler.jakumo.org/problems/view/7.html
  */
-public class XthPrimeMonster extends CodeRunnerMonster {
+public class XthPrimeMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =
             "    public java.util.LinkedList<Integer> primes = new java.util.LinkedList<Integer>();\n" +
@@ -54,8 +54,8 @@ public class XthPrimeMonster extends CodeRunnerMonster {
         if (i == 0) {
             return "1";
         }
-        if (i < primes.size()) {
-            return String.valueOf(primes.get(i));
+        if (i <= primes.size()) {
+            return String.valueOf(primes.get(i - 1));
         }
         int index = 1;
         int num = 1;

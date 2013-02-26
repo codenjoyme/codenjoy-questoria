@@ -10,7 +10,7 @@ import java.util.List;
  * Date: 2/13/13
  * Time: 7:10 PM
  */
-public class FizzBuzzMonster extends CodeRunnerMonster implements MonsterTest {
+public class FizzBuzzMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =
             "public String fizzbuzz(int i) {" +
