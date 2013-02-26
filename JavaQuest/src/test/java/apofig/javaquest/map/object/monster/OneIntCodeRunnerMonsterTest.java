@@ -26,13 +26,13 @@ public class OneIntCodeRunnerMonsterTest {
             "return (i % 3 == 0)?\"Fizz\":String.valueOf(i);" +
             "}";
 
-    public static final String BAD_CODE_WARNINGS = "Для 5 метод должен вернуть “Buzz”, но ты вернул “5”\n" +
-            "Для 10 метод должен вернуть “Buzz”, но ты вернул “10”\n" +
-            "Для 15 метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
-            "Для 20 метод должен вернуть “Buzz”, но ты вернул “20”\n" +
-            "Для 25 метод должен вернуть “Buzz”, но ты вернул “25”\n" +
-            "Для 30 метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
-            "Для 35 метод должен вернуть “Buzz”, но ты вернул “35”\n" +
+    public static final String BAD_CODE_WARNINGS = "Для [5] метод должен вернуть “Buzz”, но ты вернул “5”\n" +
+            "Для [10] метод должен вернуть “Buzz”, но ты вернул “10”\n" +
+            "Для [15] метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
+            "Для [20] метод должен вернуть “Buzz”, но ты вернул “20”\n" +
+            "Для [25] метод должен вернуть “Buzz”, но ты вернул “25”\n" +
+            "Для [30] метод должен вернуть “FizzBuzz”, но ты вернул “Fizz”\n" +
+            "Для [35] метод должен вернуть “Buzz”, но ты вернул “35”\n" +
             "...\n";
     private Messages messages;
     private CodeRunnerMonster monster;
