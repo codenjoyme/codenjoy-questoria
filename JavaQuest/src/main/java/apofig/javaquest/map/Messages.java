@@ -9,11 +9,16 @@ import java.util.List;
  * Time: 12:33 AM
  */
 public class Messages {
+    private static final String SEPARATOR = "---------------------------------------------------------------\n";
     private List<String> messages = new LinkedList<>();
 
     @Override
     public String toString() {
         return getLast(messages.size());
+    }
+
+    public static String withoutSeparator(String message) {
+        return message.replaceAll(SEPARATOR, "");
     }
 
     public String getLast(int count) {
@@ -25,17 +30,17 @@ public class Messages {
             count = size;
         }
         List<String> strings = messages.subList(size - count, size);
-        return toString(strings);
+        return join(strings, "\n" + SEPARATOR);
     }
 
-    public static String toString(List<String> strings) {
+    public static String join(List<String> strings, String separator) {
         StringBuffer result = new StringBuffer();
         int count = strings.size();
         for (String string : strings) {
             result.append(string);
             count--;
             if (count > 0) {
-                result.append("\n");
+                result.append(separator);
             }
         }
         return result.toString();

@@ -2,6 +2,7 @@ package apofig.javaquest.map;
 
 import org.junit.Test;
 
+import static apofig.javaquest.map.Messages.withoutSeparator;
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -22,7 +23,7 @@ public class MessagesTest {
         messages.add("siz");
         messages.add("seven");
 
-        assertEquals("one\n" +
+        assertMessage("one\n" +
                 "two\n" +
                 "three\n" +
                 "four\n" +
@@ -30,10 +31,14 @@ public class MessagesTest {
                 "siz\n" +
                 "seven", messages.toString());
 
-        assertEquals("four\n" +
+        assertMessage("four\n" +
                 "five\n" +
                 "siz\n" +
                 "seven", messages.getLast(4));
+    }
+
+    private void assertMessage(String expected, String messages) {
+        assertEquals(expected, withoutSeparator(messages));
     }
 
     @Test
@@ -43,7 +48,7 @@ public class MessagesTest {
         messages.add("t[ ]o");
         messages.add("[three]");
 
-        assertEquals("o, n, e\n" +
+        assertMessage("o, n, e\n" +
                 "t[ ]o\n" +
                 "[three]", messages.toString());
     }

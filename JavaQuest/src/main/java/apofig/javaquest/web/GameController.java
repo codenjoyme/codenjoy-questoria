@@ -67,7 +67,7 @@ public class GameController {
     }
 
     private String getMessage(JavaQuest game) {
-        return encode(game.getMessage());
+        return game.getMessage();
     }
 
     private String print(Model model, String map, Player playerInfo) {

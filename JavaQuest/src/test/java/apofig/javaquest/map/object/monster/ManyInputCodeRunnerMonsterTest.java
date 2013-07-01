@@ -8,6 +8,7 @@ import apofig.javaquest.map.object.Place;
 import apofig.javaquest.map.object.Something;
 import org.junit.Test;
 
+import static apofig.javaquest.map.Messages.withoutSeparator;
 import static apofig.javaquest.map.object.monster.LongDivisionMonster.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -102,7 +103,7 @@ public class ManyInputCodeRunnerMonsterTest {
 
     private void assertMonsterHelpMeWithMyAnswer(String myAnswer, String expectedHelp) {
         monster.answer(myAnswer);
-        assertEquals(expectedHelp, messages.get());
+        assertEquals(expectedHelp, withoutSeparator(messages.get()));
         messages.clear();
     }
 

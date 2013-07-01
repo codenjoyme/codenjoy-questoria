@@ -1,5 +1,6 @@
 package apofig.javaquest.map.object.monster;
 
+import static apofig.javaquest.map.Messages.withoutSeparator;
 import static apofig.javaquest.map.object.monster.FizzBuzzMonster.*;
 
 import apofig.javaquest.map.Action;
@@ -102,13 +103,17 @@ public class OneIntCodeRunnerMonsterTest {
 
     private void assertMonsterHelpMeWithMyAnswer(String myAnswer, String expectedHelp) {
         monster.answer(myAnswer);
-        assertEquals(expectedHelp, messages.get());
+        assertMessage(expectedHelp, messages);
         messages.clear();
+    }
+
+    private void assertMessage(String expected, Messages messages) {
+        assertEquals(expected, withoutSeparator(messages.get()));
     }
 
     private void assertMonsterAskMe(String expected) {
         monster.askMe();
-        assertEquals(expected, messages.get());
+        assertMessage(expected, messages);
         messages.clear();
     }
 

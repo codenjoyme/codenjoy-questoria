@@ -6,6 +6,7 @@ import org.approvaltests.Approvals;
 import org.junit.Before;
 import org.junit.Test;
 
+import static apofig.javaquest.map.Messages.withoutSeparator;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -325,7 +326,7 @@ public class TestTerritoryMap {
     }
 
     private void assertMessage(String message) {
-        assertEquals(message, game.getMessage());
+        assertEquals(message, withoutSeparator(game.getMessage()));
     }
 
     @Test

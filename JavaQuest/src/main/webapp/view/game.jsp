@@ -39,9 +39,9 @@
     	<td valign="top">
     	    <div>
     	        <div id="info">${info}</div></br>
-                <textarea id="answer" rows="3" cols="40"></textarea>
+                <textarea id="answer" rows="15" cols="80"></textarea>
                 <input id="say" type="button" value="Say"/></br>
-                <div id="message">${message}</div></br>
+                <textarea id="message" rows="25" cols="80" wrap="off">${message}</textarea></br>
     	    </div>
         </td>
         <td>

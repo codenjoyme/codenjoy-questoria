@@ -40,7 +40,7 @@ public abstract class ManyInputCodeRunnerMonster extends CodeRunnerMonster {
         if (messages.size() == 0) {
             return "OK";
         }
-        return Messages.toString(messages);
+        return Messages.join(messages, "\n");
     }
 
     protected abstract String method(Object...inputs);

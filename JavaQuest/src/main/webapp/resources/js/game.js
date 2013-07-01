@@ -4,9 +4,17 @@ $(document).ready(function() {
 
     function drawMap(data) {
         $("#map").html(data.map);
-        $("#message").html(data.message);
+        showMessage(data.message);
         $("#info").html(data.info);
         serverAnswered = true;
+    }
+
+    function showMessage(message) {
+        var container = $("#message");
+        container.html(message);
+        container.scrollTop(
+            container[0].scrollHeight - container.height()
+        );
     }
 
     function send(command) {
