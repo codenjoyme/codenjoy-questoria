@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     function showMessage(message) {
         var container = $("#message");
-        container.html(message);
+        container.val(message);
         container.scrollTop(
             container[0].scrollHeight - container.height()
         );
