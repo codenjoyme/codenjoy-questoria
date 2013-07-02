@@ -21,7 +21,10 @@ $(document).ready(function() {
             return;
         }
         var container = $("#answer");
-        container.val(code.replace("|", ""));
+
+        if (container.val() == '') {
+            container.val(code.replace("|", ""));
+        }
         setCaretToPos(container, code.indexOf('|'));
     }
 
