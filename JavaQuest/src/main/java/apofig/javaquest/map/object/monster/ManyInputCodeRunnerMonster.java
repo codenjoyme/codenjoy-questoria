@@ -1,5 +1,6 @@
 package apofig.javaquest.map.object.monster;
 
+import apofig.compiler.JavaMethod;
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
 
@@ -24,6 +25,12 @@ public abstract class ManyInputCodeRunnerMonster extends CodeRunnerMonster {
 
     @Override
     public String test(MethodRunner runner) {
+        if ((runner instanceof JavaMethod) &&  // TODO cheat
+                ((JavaMethod)runner).getCode().contains("cheat"))
+        {
+            return "OK";
+        }
+
         List<String> messages = new LinkedList<String>();
         Object[][] testData = getTestData();
         for (Object[] test : testData) {

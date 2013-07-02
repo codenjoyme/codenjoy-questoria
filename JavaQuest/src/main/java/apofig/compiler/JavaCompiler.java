@@ -37,7 +37,7 @@ public class JavaCompiler {
             throw new IllegalArgumentException("Expected one method!");
         }
 
-        return new JavaMethod(methods[0], compile);
+        return new JavaMethod(methods[0], compile, code);
     }
 
     private Class compile(String fullName, String src) {
