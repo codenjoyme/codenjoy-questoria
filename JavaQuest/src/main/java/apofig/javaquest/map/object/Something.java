@@ -24,4 +24,6 @@ public interface Something extends CodeHelper {
     void getBy(Player info);
 
     void tryToLeave();
+
+    boolean isAt(int x, int y);
 }

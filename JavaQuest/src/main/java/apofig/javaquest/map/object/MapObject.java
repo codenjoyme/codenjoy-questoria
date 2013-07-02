@@ -24,4 +24,8 @@ public abstract class MapObject implements ObjectSettings {
         return factory.make(c, place);
     }
 
+    public boolean isAt(int x, int y) {
+        return place.getX() == x && place.getY() == y;
+    }
+
 }

@@ -1,5 +1,6 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.approvaltests.Approvals;
@@ -200,8 +201,12 @@ public class TestTerritoryMap {
     }
 
     private void verifyXY(int x, int y) {
-        assertEquals(x, map.getX());
-        assertEquals(y, map.getY());
+        assertEquals(x, me().getX());
+        assertEquals(y, me().getY());
+    }
+    
+    public Me me() {
+        return map.me();
     }
 
     @Test
@@ -223,20 +228,20 @@ public class TestTerritoryMap {
 
     private void moveTo(int x, int y) throws Exception {
         int count = 0;
-        while (Math.abs(map.getX() - x) != 0 || Math.abs(map.getY() - y) != 0) {
+        while (Math.abs(me().getX() - x) != 0 || Math.abs(me().getY() - y) != 0) {
             if (count++ > 1000) {
                 throw new RuntimeException(String.format(
                         "Я не могу пройти сюда! My x=%s and y=%s, and view:\n%s",
-                        map.getX(), map.getY(), map.getViewArea()));
+                        me().getX(), me().getY(), map.getViewArea()));
             }
-            if (map.getY() < y) {
+            if (me().getY() < y) {
                 moveUp();
-            } else if (map.getY() > y) {
+            } else if (me().getY() > y) {
                 moveDown();
             }
-            if (map.getX() < x) {
+            if (me().getX() < x) {
                 moveRight();
-            } else if (map.getX() > x) {
+            } else if (me().getX() > x) {
                 moveLeft();
             }
         }
@@ -350,8 +355,6 @@ public class TestTerritoryMap {
                 "You: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
-                "Gold: Ну и ладно! Достанусь кому-то другому!!\n" +
-                "Gold: Привет, я - 10$\n" +
                 "Gold: Ты подобрал меня! Спасибо!!");
         verifyMap();
 
@@ -412,16 +415,15 @@ public class TestTerritoryMap {
     public void shouldSomeMessageAfterGetGold() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
-        moveRight();
-        moveRight();
+        moveRight();  // get gold
+        moveRight();  // go away
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
-                "Gold: Ну и ладно! Достанусь кому-то другому!!\n" +
-                "Gold: Привет, я - 10$\n" +
                 "Gold: Ты подобрал меня! Спасибо!!");
+
         verifyMap();
     }
 
@@ -430,13 +432,13 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
         moveLeft();
-        moveLeft();
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ну и ладно! Достанусь кому-то другому!!");
+
         verifyMap();
     }
 

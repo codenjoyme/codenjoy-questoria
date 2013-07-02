@@ -1,5 +1,6 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 
 import java.io.OutputStream;
@@ -16,14 +17,13 @@ public interface TerritoryMap {
 
     Something getAt(int x, int y);
 
-    int getY();
-
-    int getX();
-
     boolean isNear(int xx, int yy, Something object);
-
-    void changePos(int x, int y);
 
     String getViewArea();
 
+    Me me();
+
+    boolean isOutOfWorld(int x, int y);
+
+    void openSpace();
 }

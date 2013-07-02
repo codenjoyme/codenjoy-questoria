@@ -42,6 +42,7 @@ public class Gold extends TalkingObject implements Something {
     @Override
     public void getBy(Player player) {
         player.addGold(10);
+        place.update(new Nothing().symbol());
         say("Ты подобрал меня! Спасибо!!");
     }
 

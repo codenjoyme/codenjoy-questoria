@@ -7,4 +7,8 @@ package apofig.javaquest.map.object;
  */
 public interface Place {
     void update(char newChar);
+
+    int getX();
+
+    int getY();
 }

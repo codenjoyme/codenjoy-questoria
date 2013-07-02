@@ -1,9 +1,6 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.Nothing;
-import apofig.javaquest.map.object.ObjectFactory;
-import apofig.javaquest.map.object.ObjectFactoryImpl;
-import apofig.javaquest.map.object.Something;
+import apofig.javaquest.map.object.*;
 import apofig.javaquest.services.Tickable;
 
 /**
@@ -56,7 +53,8 @@ public class JavaQuest implements Tickable {
             public void attack(String message) {
                 messages.add("You: " + message);
                 if (map.getSomethingNearMe().isEmpty()) {
-                    Something whereIAm = map.getAt(map.getX(), map.getY());
+                    Me me = map.me();
+                    Something whereIAm = map.getAt(me.getX(), me.getY());
                     whereIAm.answer(message);
                 }
 
@@ -68,8 +66,8 @@ public class JavaQuest implements Tickable {
     }
 
     private void tryToMove(int dx, int dy) {
-        int x = map.getX() + dx;
-        int y = map.getY() + dy;
+        int x = map.me().getX() + dx;
+        int y = map.me().getY() + dy;
         whereToGo = new Point(x, y);
     }
 
@@ -83,7 +81,7 @@ public class JavaQuest implements Tickable {
 
         for (Something smth : map.getSomethingNearMe()) {
             if (smth.iCanLeave()) {
-                if (!map.isNear(x, y, smth)) {
+                if (!map.isNear(x, y, smth) && !smth.isAt(x, y)) {
                     smth.tryToLeave();
                 }
             }
@@ -95,7 +93,7 @@ public class JavaQuest implements Tickable {
             return;
         }
         smthAtWay.getBy(info);
-        map.changePos(x, y);
+        map.me().moveTo(x, y);
         meetWith();
     }
 

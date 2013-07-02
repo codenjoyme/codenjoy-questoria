@@ -19,4 +19,15 @@ public class MapPlace implements Place {
     public void update(char newChar) {
         map[x][y] = newChar;
     }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
 }
