@@ -30,7 +30,10 @@ $(document).ready(function() {
         if (container.val() == '') {
             container.val(code.replace('|', ''));
         }
-        setCaretToPos(container, code.indexOf('|'));
+
+        if (!onTextArea()) {
+            setCaretToPos(container, code.indexOf('|'));
+        }
     }
 
     function scrollDown(textarea) {
