@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * User: oleksandr.baglai
@@ -134,12 +135,7 @@ public class OneIntCodeRunnerMonsterTest {
                 return gold;
             }
         });
-        monster.setPlace(new Place() {
-            @Override
-            public void update(char newChar) {
-
-            }
-        });
+        monster.setPlace(mock(Place.class));
         messages = new Messages();
         monster.setMessages(messages);
     }

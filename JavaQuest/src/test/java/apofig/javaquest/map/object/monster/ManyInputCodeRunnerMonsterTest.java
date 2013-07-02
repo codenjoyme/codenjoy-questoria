@@ -12,6 +12,7 @@ import static apofig.javaquest.map.Messages.withoutSeparator;
 import static apofig.javaquest.map.object.monster.LongDivisionMonster.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * User: oleksandr.baglai
@@ -130,12 +131,7 @@ public class ManyInputCodeRunnerMonsterTest {
                 return gold;
             }
         });
-        monster.setPlace(new Place() {
-            @Override
-            public void update(char newChar) {
-
-            }
-        });
+        monster.setPlace(mock(Place.class));
         messages = new Messages();
         monster.setMessages(messages);
     }
