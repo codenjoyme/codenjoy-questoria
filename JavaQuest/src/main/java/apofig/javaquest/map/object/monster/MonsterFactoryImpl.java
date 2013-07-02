@@ -17,6 +17,7 @@ public class MonsterFactoryImpl implements MonsterPool, Action {
     private int count;
     private Monster monster;
 
+    // TODO автоматизировать загрузку классов монстров по маркер интерфейсу и выстроить их в порядке сложности
     public MonsterFactoryImpl() {
         monsters = new LinkedList<Monster>();
         monsters.add(new FizzBuzzMonster(this));
@@ -27,6 +28,7 @@ public class MonsterFactoryImpl implements MonsterPool, Action {
         monsters.add(new PowerDigitSumMonster(this));
         monsters.add(new FactorialMonster(this));
         monsters.add(new LongDivisionMonster(this));
+        monsters.add(new MakeBricksMonster(this));
         count = monsters.size() + 1;
     }
 

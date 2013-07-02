@@ -29,7 +29,7 @@ public abstract class ManyInputCodeRunnerMonster extends CodeRunnerMonster {
         for (Object[] test : testData) {
             Object actual = runner.run(test);
             String expected = method(test);
-            if (!actual.equals(expected)) {
+            if (!actual.equals(expected) && !actual.toString().equals(expected.toString())) {
                 addWarning(messages, test, expected, actual);
             }
             if (messages.size() > 6) {
