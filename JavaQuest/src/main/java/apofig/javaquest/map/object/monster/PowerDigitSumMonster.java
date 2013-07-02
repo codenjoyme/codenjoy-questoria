@@ -36,9 +36,7 @@ public class PowerDigitSumMonster extends OneIntCodeRunnerMonster implements Mon
             "Напиши для расчета метод принимающий int\n" +
             "и возвращающий результат в виде String";
 
-    public final static String HELP = "Попробуй еще раз!";
-
     public PowerDigitSumMonster(Action onKill) {
-        super(QUESTION, HELP, onKill);
+        super(QUESTION, onKill);
     }
 }

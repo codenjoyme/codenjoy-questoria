@@ -14,8 +14,8 @@ import java.util.List;
  */
 public abstract class ManyInputCodeRunnerMonster extends CodeRunnerMonster {
 
-    public ManyInputCodeRunnerMonster(String question, String help, Action onKill) {
-        super(question, help, onKill);
+    public ManyInputCodeRunnerMonster(String question, Action onKill) {
+        super(question, onKill);
     }
 
     private void addWarning(List<String> messages, Object[] data, String expected, Object actual) {

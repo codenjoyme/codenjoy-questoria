@@ -49,9 +49,7 @@ public class FibonacciNumbersMonster extends OneIntCodeRunnerMonster implements 
             "f(9) = 13 + 21 = 34\n" +
             "и так далее...";
 
-    public final static String HELP = "Попробуй еще раз!";
-
     public FibonacciNumbersMonster(Action onKill) {
-        super(QUESTION, HELP, onKill);
+        super(QUESTION, onKill);
     }
 }

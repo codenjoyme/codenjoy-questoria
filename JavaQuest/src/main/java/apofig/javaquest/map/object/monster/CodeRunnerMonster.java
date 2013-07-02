@@ -17,13 +17,14 @@ import java.util.List;
  */
 public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
 
-    private MonsterTest test;
-    private String help;
+    public final static String HELP = "Попробуй еще раз!";
+    public final static String LEAVE = "Никуда ты не уйдешь!";
 
-    public CodeRunnerMonster(String question, String help, Action onKill) {
-        super(question, "4E0A", help, onKill);
+    private MonsterTest test;
+
+    public CodeRunnerMonster(String question, Action onKill) {
+        super(question, "4E0A", HELP, LEAVE, onKill);
         this.test = this;
-        this.help = help;
     }
 
     @Override

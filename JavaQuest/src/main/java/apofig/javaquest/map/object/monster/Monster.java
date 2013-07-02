@@ -14,13 +14,15 @@ public class Monster extends TalkingObject implements Something {
 
     private String question;
     private String answer;
-    private String help;
+    protected String help;
+    private String leave;
     private Action onKill;
 
-    public Monster(String question, String answer, String help, Action onKill) {
+    public Monster(String question, String answer, String help, String leave, Action onKill) {
         this.question = question;
         this.answer = answer;
         this.help = help;
+        this.leave = leave;
         this.onKill = onKill;
     }
 

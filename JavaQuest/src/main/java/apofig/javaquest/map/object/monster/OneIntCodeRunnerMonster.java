@@ -9,8 +9,8 @@ import apofig.javaquest.map.Action;
  */
 public abstract class OneIntCodeRunnerMonster extends ManyInputCodeRunnerMonster {
 
-    public OneIntCodeRunnerMonster(String question, String help, Action onKill) {
-        super(question, help, onKill);
+    public OneIntCodeRunnerMonster(String question, Action onKill) {
+        super(question,  onKill);
     }
 
     protected Object[][] getTestData() {

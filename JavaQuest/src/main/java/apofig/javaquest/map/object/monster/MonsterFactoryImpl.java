@@ -49,6 +49,7 @@ public class MonsterFactoryImpl implements MonsterPool, Action {
         return new Monster("Я монстр №" + count + "! Борись со мной!",
                 "die!",
                 "Я убью тебя!",
+                "Никуда ты не уйдешь!",
                 new Action() {
                     @Override
                     public void act(Something object) {

@@ -48,10 +48,8 @@ public class FizzBuzzMonster extends OneIntCodeRunnerMonster implements MonsterT
             "что делятся на 5 - “Buzz”, для тех же, что делятся и на 3 \n" +
             "и на 5 - “FizzBuzz”, ну а для всех остальных - само число.";
 
-    public final static String HELP = "Попробуй еще раз!";
-
     public FizzBuzzMonster(Action onKill) {
-        super(QUESTION, HELP, onKill);
+        super(QUESTION, onKill);
     }
 
 

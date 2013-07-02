@@ -92,9 +92,7 @@ public class XthPrimeMonster extends OneIntCodeRunnerMonster implements MonsterT
             "Первые 10 простых чисел - 2, 3, 5, 7, 11, 13, 17, 19, 23, 29. \n" +
             "Напиши метод, который вернет i-тое простое число.";
 
-    public final static String HELP = "Попробуй еще раз!";
-
     public XthPrimeMonster(Action onKill) {
-        super(QUESTION, HELP, onKill);
+        super(QUESTION, onKill);
     }
 }
