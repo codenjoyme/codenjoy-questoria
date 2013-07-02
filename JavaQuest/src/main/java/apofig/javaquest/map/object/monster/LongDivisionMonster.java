@@ -87,7 +87,7 @@ public class LongDivisionMonster extends ManyInputCodeRunnerMonster implements M
             "    }";
 
     private static final String SIGNATURE =
-            "public String method(int a, int b) {/n" +
+            "public String method(int a, int b) {\n" +
             "    return |;\n" +
             "}";
 
