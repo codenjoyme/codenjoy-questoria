@@ -89,4 +89,5 @@ $(document).ready(function() {
         send($("#answer").val());
     });
 
+    send('refresh');
 });
