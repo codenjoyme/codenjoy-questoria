@@ -10,7 +10,7 @@ import apofig.javaquest.map.Action;
 public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements MonsterTest {
 
     private static final String SIGNATURE =
-            "public boolean method(int small, int big, int goal) {/n" +
+            "public boolean method(int small, int big, int goal) {\n" +
             "    return |;\n" +
             "}";
 
