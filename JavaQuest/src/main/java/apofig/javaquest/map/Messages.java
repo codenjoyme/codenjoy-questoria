@@ -54,10 +54,14 @@ public class Messages {
         return toString();
     }
 
-    public void add(String message) {
+    public void addUnique(String message) {
         if (!isLast(message)) {
             messages.add(message);
         }
+    }
+
+    public void add(String message) {
+        messages.add(message);
     }
 
     private boolean isLast(String message) {

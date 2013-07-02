@@ -15,6 +15,10 @@ public class TalkingObject extends MapObject implements ObjectSettings {
         messages.add(this.getClass().getSimpleName() + ": " + message);
     }
 
+    public void sayUnique(String message) {  // TODO подумать об этом
+        messages.addUnique(this.getClass().getSimpleName() + ": " + message);
+    }
+
     public void clearLog() {
         messages.clear();
     }

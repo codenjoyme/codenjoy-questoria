@@ -77,7 +77,10 @@ public class TestTerritoryMap {
                     public Monster next() {
 
                         return new Monster("Сразись со мной!",
-                                "die!", "Я убью тебя!", null);
+                                "die!",
+                                "Я убью тебя!",
+                                "Никуда ты не уйдешь!",
+                                null);
                     }
                 };
             }
@@ -252,10 +255,10 @@ public class TestTerritoryMap {
     public void shouldNoMoveWhenITalkWithMonster() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.moveRight();
-        joystick.moveRight();
 
         verifyXY(getMonsterX() - 1, getMonsterY());
-        assertMessage("Monster: Сразись со мной!");
+        assertMessage("Monster: Сразись со мной!\n" +
+                "Monster: Никуда ты не уйдешь!");
         verifyMap();
     }
 
@@ -300,7 +303,6 @@ public class TestTerritoryMap {
     public void shouldNoMoveWhenITryToGoOnWall() throws Exception {
         moveTo(getWallX() - 1, getWallY());
         joystick.moveRight();
-        joystick.moveRight();
 
         verifyXY(getWallX() - 1, getWallY());
         assertMessage("Wall: Пожалуйста, остановись!");
@@ -315,7 +317,13 @@ public class TestTerritoryMap {
         joystick.attack("die!");
         joystick.moveRight();
 
-        assertMessage("Gold: Ты подобрал меня! Спасибо!!");
+        assertMessage("Monster: Сразись со мной!\n" +
+                "You: die!\n" +
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$\n" +
+                "Gold: Ну и ладно! Достанусь кому-то другому!!\n" +
+                "Gold: Привет, я - 10$\n" +
+                "Gold: Ты подобрал меня! Спасибо!!");
         verifyMap();
 
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:10");
@@ -333,9 +341,26 @@ public class TestTerritoryMap {
     public void shouldLeaveGoldAfterMonsterDie() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("die!");
+
+        assertMessage("Monster: Сразись со мной!\n" +
+                "You: die!\n" +
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+
+        verifyMap();
+    }
+
+    @Test
+    public void shouldNoRepeatMessageAgain() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("die!");
         joystick.moveUp();
 
-        assertMessage("Gold: Привет, я - 10$");
+        assertMessage("Monster: Сразись со мной!\n" +
+                "You: die!\n" +
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+
         verifyMap();
     }
 
@@ -355,13 +380,34 @@ public class TestTerritoryMap {
     }
 
     @Test
-    public void shouldHideMessageAfterGetGold() throws Exception {
+    public void shouldSomeMessageAfterGetGold() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
         joystick.attack("die!");
         joystick.moveRight();
         joystick.moveRight();
 
-        assertMessage("");
+        assertMessage("Monster: Сразись со мной!\n" +
+                "You: die!\n" +
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$\n" +
+                "Gold: Ну и ладно! Достанусь кому-то другому!!\n" +
+                "Gold: Привет, я - 10$\n" +
+                "Gold: Ты подобрал меня! Спасибо!!");
+        verifyMap();
+    }
+
+    @Test
+    public void shouldGoAwayFromGold() throws Exception {
+        moveTo(getMonsterX() - 1, getMonsterY());
+        joystick.attack("die!");
+        joystick.moveLeft();
+        joystick.moveLeft();
+
+        assertMessage("Monster: Сразись со мной!\n" +
+                "You: die!\n" +
+                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$\n" +
+                "Gold: Ну и ладно! Достанусь кому-то другому!!");
         verifyMap();
     }
 

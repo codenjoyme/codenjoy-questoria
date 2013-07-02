@@ -11,7 +11,7 @@ public class Nothing extends TalkingObject implements Something {
 
     @Override
     public void answer(String message) {
-        clearLog();
+        say("Ну и?..");
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Nothing extends TalkingObject implements Something {
 
     @Override
     public void askMe() {
-        clearLog();
+//        clearLog();  // TODO реализовать очистку лога после двух подряд Nothing
     }
 
     @Override
@@ -41,6 +41,11 @@ public class Nothing extends TalkingObject implements Something {
 
     @Override
     public void getBy(Player info) {
+        // do nothing
+    }
+
+    @Override
+    public void tryToLeave() {
         // do nothing
     }
 }

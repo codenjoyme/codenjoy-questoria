@@ -11,7 +11,7 @@ public class Gold extends TalkingObject implements Something {
 
     @Override
     public void answer(String message) {
-        say("Ты не можешь делать это со мной!");
+        sayUnique("Ты не можешь делать это со мной!");
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Gold extends TalkingObject implements Something {
 
     @Override
     public void askMe() {
-        say("Привет, я - 10$");
+        sayUnique("Привет, я - 10$");
     }
 
     @Override
@@ -42,7 +42,11 @@ public class Gold extends TalkingObject implements Something {
     @Override
     public void getBy(Player player) {
         player.addGold(10);
-        clearLog();
         say("Ты подобрал меня! Спасибо!!");
+    }
+
+    @Override
+    public void tryToLeave() {
+        sayUnique("Ну и ладно! Достанусь кому-то другому!!");
     }
 }

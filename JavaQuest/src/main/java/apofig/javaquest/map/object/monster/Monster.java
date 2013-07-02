@@ -70,4 +70,9 @@ public class Monster extends TalkingObject implements Something {
     public void getBy(Player info) {
         // do nothing
     }
+
+    @Override
+    public void tryToLeave() {
+        say(leave);
+    }
 }

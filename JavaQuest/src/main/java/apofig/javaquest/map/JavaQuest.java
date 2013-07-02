@@ -51,8 +51,13 @@ public class JavaQuest {
 
             @Override
             public void attack(String message) {
+                messages.add("You: " + message);
+                if (map.getSomethingNearMe().isEmpty()) {
+                    Something whereIAm = map.getAt(map.getX(), map.getY());
+                    whereIAm.answer(message);
+                }
+
                 for (Something smthNear : map.getSomethingNearMe()) {
-                    messages.add("You: " + message);
                     smthNear.answer(message);
                 }
             }
@@ -62,19 +67,27 @@ public class JavaQuest {
     private void tryToMove(int dx, int dy) {
         int x = map.getX() + dx;
         int y = map.getY() + dy;
+
+        for (Something smthNear : map.getSomethingNearMe()) {
+            if (!smthNear.iCanLeave()) {
+                smthNear.tryToLeave();
+                return;
+            }
+        }
+
+        for (Something smth : map.getSomethingNearMe()) {
+            if (smth.iCanLeave()) {
+                if (!map.isNear(x, y, smth)) {
+                    smth.tryToLeave();
+                }
+            }
+        }
+
         Something smthAtWay = map.getAt(x, y);
         smthAtWay.askMe();
         if (!smthAtWay.iCanUse()) {
             return;
         }
-
-        for (Something smthNear : map.getSomethingNearMe()) {
-            if (!smthNear.iCanLeave()) {
-                smthNear.askMe();
-                return;
-            }
-        }
-
         smthAtWay.getBy(info);
         map.changePos(x, y);
         meetWith();

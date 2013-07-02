@@ -45,4 +45,9 @@ public class Wall extends TalkingObject implements Something {
     public void getBy(Player info) {
         // do nothing
     }
+
+    @Override
+    public void tryToLeave() {
+        // do nothing
+    }
 }

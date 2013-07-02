@@ -158,5 +158,18 @@ public class TerritoryMap {
         return factory.make(map[x][y], new MapPlace(map, x, y));
     }
 
+    public boolean isNear(int xx, int yy, final Something object) {
+        final boolean[] result = {false};
 
+        view.near(xx, yy, width, height, new Apply() {
+            @Override
+            public void xy(int x, int y, boolean canSee, boolean isWall) {
+                if (!isWall && map[x][y] == object.symbol()) {
+                    result[0] = true;
+                }
+            }
+        });
+
+        return result[0];
+    }
 }

@@ -27,7 +27,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     private ObjectSettings getObject(char c) {
-        if (c == ' ') {
+        if (c == ' ' || c == 'I') {
             return new Nothing();
         } else if (c == '@') {
             return monsters.next();

@@ -21,4 +21,6 @@ public interface Something {
     char symbol();
 
     void getBy(Player info);
+
+    void tryToLeave();
 }
