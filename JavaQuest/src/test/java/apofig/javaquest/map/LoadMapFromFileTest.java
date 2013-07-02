@@ -14,7 +14,7 @@ public class LoadMapFromFileTest {
 
     @Test
     public void shouldLoadFileToMap() throws Exception {
-        MapLoader loader = new LoadMapFromFile("apofig\\javaquest\\map\\test_map.txt");
+        MapLoader loader = new LoadMapFromFile("test_map.txt");
 
         assertEquals(33, loader.getHeight());
         assertEquals(35, loader.getWidth());
@@ -25,7 +25,7 @@ public class LoadMapFromFileTest {
 
     @Test
     public void shouldLoadFileToMap2() throws Exception {
-        MapLoader loader = new LoadMapFromFile("apofig\\javaquest\\map\\test_map2.txt");
+        MapLoader loader = new LoadMapFromFile("test_map2.txt");
 
         assertEquals(12, loader.getHeight());
         assertEquals(50, loader.getWidth());
@@ -36,7 +36,7 @@ public class LoadMapFromFileTest {
 
     @Test
     public void shouldLoadFileToFog() throws Exception {
-        MapLoader loader = new LoadMapFromFile("apofig\\javaquest\\map\\test_map.txt");
+        MapLoader loader = new LoadMapFromFile("test_map.txt");
 
         verifyMap(loader.getFog());
     }
