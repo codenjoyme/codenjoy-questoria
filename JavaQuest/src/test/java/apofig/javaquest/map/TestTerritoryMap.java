@@ -108,29 +108,29 @@ public class TestTerritoryMap {
 
     @Test
     public void testIGoRight() throws Exception {
-        joystick.moveRight();
+        moveRight();
 
         verifyMap();
     }
 
     @Test
     public void testIGoLeft() throws Exception {
-        joystick.moveLeft();
+        moveLeft();
 
         verifyMap();
     }
 
     @Test
     public void testIGoUp() throws Exception {
-        joystick.moveUp();
+        moveUp();
 
         verifyMap();
     }
 
     @Test
     public void testIGoDownTwice() throws Exception {
-        joystick.moveDown();
-        joystick.moveDown();
+        moveDown();
+        moveDown();
 
         verifyMap();
     }
@@ -172,7 +172,7 @@ public class TestTerritoryMap {
     @Test
     public void testICantGoOnBoardDown() throws Exception {
         moveTo(20, 0);
-        joystick.moveDown();
+        moveDown();
 
         verifyXY(20, 0);
         assertMessage("Wall: Пожалуйста, остановись!");
@@ -182,7 +182,7 @@ public class TestTerritoryMap {
     @Test
     public void testICantGoOnBoardUp() throws Exception {
         moveTo(20, getHeight() - 1);
-        joystick.moveUp();
+        moveUp();
 
         verifyXY(20, getHeight() - 1);
         assertMessage("Wall: Пожалуйста, остановись!");
@@ -192,7 +192,7 @@ public class TestTerritoryMap {
     @Test
     public void testICantGoOnBoardLeft() throws Exception {
         moveTo(0, 20);
-        joystick.moveLeft();
+        moveLeft();
 
         verifyXY(0, 20);
         assertMessage("Wall: Пожалуйста, остановись!");
@@ -207,7 +207,7 @@ public class TestTerritoryMap {
     @Test
     public void testICantGoOnBoardRight() throws Exception {
         moveTo(getWidth() - 1, 20);
-        joystick.moveRight();
+        moveRight();
 
         verifyXY(getWidth() - 1, 20);
         assertMessage("Wall: Пожалуйста, остановись!");
@@ -225,23 +225,37 @@ public class TestTerritoryMap {
         int count = 0;
         while (Math.abs(map.getX() - x) != 0 || Math.abs(map.getY() - y) != 0) {
             if (count++ > 1000) {
-//                verifyMap();
                 throw new RuntimeException(String.format(
                         "Я не могу пройти сюда! My x=%s and y=%s, and view:\n%s",
                         map.getX(), map.getY(), map.getViewArea()));
             }
             if (map.getY() < y) {
-                joystick.moveUp();
+                moveUp();
             } else if (map.getY() > y) {
-                joystick.moveDown();
+                moveDown();
             }
             if (map.getX() < x) {
-                joystick.moveRight();
+                moveRight();
             } else if (map.getX() > x) {
-                joystick.moveLeft();
+                moveLeft();
             }
         }
         verifyXY(x, y);
+    }
+
+    private void moveLeft() {
+        joystick.moveLeft();
+        game.tick();
+    }
+
+    private void moveUp() {
+        joystick.moveUp();
+        game.tick();
+    }
+
+    private void moveDown() {
+        joystick.moveDown();
+        game.tick();
     }
 
     @Test
@@ -259,7 +273,7 @@ public class TestTerritoryMap {
     @Test
     public void shouldNoMoveWhenITalkWithMonster() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.moveRight();
+        moveRight();
 
         verifyXY(getMonsterX() - 1, getMonsterY());
         assertMessage("Monster: Сразись со мной!\n" +
@@ -270,7 +284,7 @@ public class TestTerritoryMap {
     @Test
     public void shouldKillMonsterWhenAttack() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("die!");
+        attack("die!");
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
@@ -282,7 +296,7 @@ public class TestTerritoryMap {
     @Test
     public void shouldMonsterStillAliveWhenBadAttack() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("No!!!");
+        attack("No!!!");
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: No!!!\n" +
@@ -290,11 +304,16 @@ public class TestTerritoryMap {
         verifyMap();
     }
 
+    private void attack(String message) {
+        joystick.attack(message);
+        game.tick();
+    }
+
     @Test
     public void shouldMonsterStillAliveWhenBadAttackTwice() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("No!!!");
-        joystick.attack("Nooooo!!!");
+        attack("No!!!");
+        attack("Nooooo!!!");
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: No!!!\n" +
@@ -307,11 +326,16 @@ public class TestTerritoryMap {
     @Test
     public void shouldNoMoveWhenITryToGoOnWall() throws Exception {
         moveTo(getWallX() - 1, getWallY());
-        joystick.moveRight();
+        moveRight();
 
         verifyXY(getWallX() - 1, getWallY());
         assertMessage("Wall: Пожалуйста, остановись!");
         verifyMap();
+    }
+
+    private void moveRight() {
+        joystick.moveRight();
+        game.tick();
     }
 
     @Test
@@ -319,8 +343,8 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
 
-        joystick.attack("die!");
-        joystick.moveRight();
+        attack("die!");
+        moveRight();
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
@@ -345,7 +369,7 @@ public class TestTerritoryMap {
     @Test
     public void shouldLeaveGoldAfterMonsterDie() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("die!");
+        attack("die!");
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
@@ -358,8 +382,8 @@ public class TestTerritoryMap {
     @Test
     public void shouldNoRepeatMessageAgain() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("die!");
-        joystick.moveUp();
+        attack("die!");
+        moveUp();
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
@@ -372,8 +396,8 @@ public class TestTerritoryMap {
     @Test
     public void shouldNoKillGold() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("die!");
-        joystick.attack("Gold die!");
+        attack("die!");
+        attack("Gold die!");
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
@@ -387,9 +411,9 @@ public class TestTerritoryMap {
     @Test
     public void shouldSomeMessageAfterGetGold() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("die!");
-        joystick.moveRight();
-        joystick.moveRight();
+        attack("die!");
+        moveRight();
+        moveRight();
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +
@@ -404,9 +428,9 @@ public class TestTerritoryMap {
     @Test
     public void shouldGoAwayFromGold() throws Exception {
         moveTo(getMonsterX() - 1, getMonsterY());
-        joystick.attack("die!");
-        joystick.moveLeft();
-        joystick.moveLeft();
+        attack("die!");
+        moveLeft();
+        moveLeft();
 
         assertMessage("Monster: Сразись со мной!\n" +
                 "You: die!\n" +

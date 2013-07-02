@@ -4,18 +4,20 @@ import apofig.javaquest.map.object.Nothing;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.ObjectFactoryImpl;
 import apofig.javaquest.map.object.Something;
+import apofig.javaquest.services.Tickable;
 
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13
  * Time: 2:50 PM
  */
-public class JavaQuest {
+public class JavaQuest implements Tickable {
 
     private TerritoryMap map;
     private Messages messages;
     private ObjectFactory factory;
     private Player info;
+    private Point whereToGo;
 
     public JavaQuest(Settings settings) {
         messages = new Messages();
@@ -68,7 +70,10 @@ public class JavaQuest {
     private void tryToMove(int dx, int dy) {
         int x = map.getX() + dx;
         int y = map.getY() + dy;
+        whereToGo = new Point(x, y);
+    }
 
+    private void move(int x, int y) {
         for (Something smthNear : map.getSomethingNearMe()) {
             if (!smthNear.iCanLeave()) {
                 smthNear.tryToLeave();
@@ -115,5 +120,13 @@ public class JavaQuest {
             }
         }
         return new Nothing();
+    }
+
+    @Override
+    public void tick() {
+        if (whereToGo != null) {
+            move(whereToGo.x, whereToGo.y);
+            whereToGo = null;
+        }
     }
 }

@@ -58,6 +58,11 @@ $(document).ready(function() {
     }
 
     function send(command) {
+        if (!serverAnswered) {
+            return;
+        }
+        serverAnswered = false;
+
         command = command.split("\n").join("</br>");
         $.getJSON('/answer', {command:command, time:$.now()}, drawMap);
     }
@@ -67,10 +72,9 @@ $(document).ready(function() {
     }
 
     $("body").keydown(function(e){
-        if (onTextArea() || !serverAnswered) {
+        if (onTextArea()) {
             return;
         }
-        serverAnswered = false;
 
         if (e.keyCode == 32) {
             send('refresh');
@@ -89,5 +93,15 @@ $(document).ready(function() {
         send($("#answer").val());
     });
 
-    send('refresh');
+    function timer(delay, onTimer) {
+        window.setInterval(function() {
+            if (onTimer) {
+                onTimer();
+            }
+	    }, delay);
+	}
+
+    timer(1000, function () {
+        send('refresh');
+    });
 });

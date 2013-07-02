@@ -1,10 +1,10 @@
 package apofig.javaquest.web;
 
 import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.monster.MonsterPool;
-import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
+import apofig.javaquest.services.PlayerService;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +20,17 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class GameController {
 
+    @Autowired
+    private PlayerService playerService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String post(Model model, HttpSession session) {
-         return printGame(model, session);
+         return printGame(model);
     }
 
     @RequestMapping(value = "/answer", method = RequestMethod.GET)
     public ModelAndView command(Model model, HttpSession session, @RequestParam String command) throws JSONException {
-        JavaQuest game = getGameFrom(session);
+        JavaQuest game = playerService.getGame();
         Joystick joystick = game.getPlayer();
         if (command.equals("up")) {
             joystick.moveUp();
@@ -54,8 +57,8 @@ public class GameController {
         return mav;
     }
 
-    private String printGame(Model model, HttpSession session) {
-        JavaQuest game = getGameFrom(session);
+    private String printGame(Model model) {
+        JavaQuest game = playerService.getGame();
         return print(model, getMap(game), game.getPlayerInfo());
     }
 
@@ -63,41 +66,11 @@ public class GameController {
         return Colorizer.process(game.getTerritoryMap().getViewArea());
     }
 
-    private String encode(String string) {
-        return string.replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
-    }
-
     private String print(Model model, String map, Player playerInfo) {
         model.addAttribute("map", map);
         model.addAttribute("message", "");
         model.addAttribute("info", playerInfo.toString());
         return "game";
-    }
-
-    private JavaQuest getGameFrom(HttpSession session) {
-        JavaQuest game = (JavaQuest)session.getAttribute("getGameFrom");
-        if (game == null) {
-            Settings settings = new Settings() {
-                @Override
-                public int getViewAreaSize() {
-                    return 41;
-                }
-
-                @Override
-                public MapLoader getMapLoader() {
-                    return new LoadMapFromFile("map.txt");
-                }
-
-                @Override
-                public MonsterPool getMonsters() {
-                    return new MonsterFactoryImpl();
-                }
-            };
-
-            game = new JavaQuest(settings);
-            session.setAttribute("getGameFrom", game);
-        }
-        return game;
     }
 
 }
