@@ -44,7 +44,8 @@ public class GameController {
 
         JSONObject result = new JSONObject();
         result.put("map", getMap(game));
-        result.put("message", getMessage(game));
+        result.put("message", game.getMessage());
+        result.put("code", game.getCodeHelper().getCode());
         result.put("info", game.getPlayerInfo());
         String json = result.toString();
 
@@ -64,10 +65,6 @@ public class GameController {
 
     private String encode(String string) {
         return string.replaceAll("\n", "<\\br>").replaceAll(" ", "&nbsp;");
-    }
-
-    private String getMessage(JavaQuest game) {
-        return game.getMessage();
     }
 
     private String print(Model model, String map, Player playerInfo) {

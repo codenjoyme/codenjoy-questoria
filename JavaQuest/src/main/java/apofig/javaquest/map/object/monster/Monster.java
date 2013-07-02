@@ -16,13 +16,15 @@ public class Monster extends TalkingObject implements Something {
     private String answer;
     protected String help;
     private String leave;
+    private String signature;
     private Action onKill;
 
-    public Monster(String question, String answer, String help, String leave, Action onKill) {
+    public Monster(String question, String answer, String help, String leave, String signature, Action onKill) {
         this.question = question;
         this.answer = answer;
         this.help = help;
         this.leave = leave;
+        this.signature = signature;
         this.onKill = onKill;
     }
 
@@ -74,5 +76,10 @@ public class Monster extends TalkingObject implements Something {
     @Override
     public void tryToLeave() {
         say(leave);
+    }
+
+    @Override
+    public String getCode() {
+        return signature;
     }
 }

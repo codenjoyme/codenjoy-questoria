@@ -86,6 +86,11 @@ public class LongDivisionMonster extends ManyInputCodeRunnerMonster implements M
             "        return ((isMinus)?\"-\":\"\") + result;\n" +
             "    }";
 
+    private static final String SIGNATURE =
+            "public String method(int a, int b) {/n" +
+            "    return |;\n" +
+            "}";
+
     @Override
     public String method(Object... inputs) {
         int a = (Integer) inputs[0];
@@ -208,6 +213,6 @@ public class LongDivisionMonster extends ManyInputCodeRunnerMonster implements M
                     "87/78   = 1.1(153846)";
 
     public LongDivisionMonster(Action onKill) {
-        super(QUESTION, onKill);
+        super(QUESTION, SIGNATURE, onKill);
     }
 }

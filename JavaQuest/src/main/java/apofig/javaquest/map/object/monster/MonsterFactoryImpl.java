@@ -52,7 +52,7 @@ public class MonsterFactoryImpl implements MonsterPool, Action {
                 "die!",
                 "Я убью тебя!",
                 "Никуда ты не уйдешь!",
-                new Action() {
+                "", new Action() {
                     @Override
                     public void act(Something object) {
                         count++;

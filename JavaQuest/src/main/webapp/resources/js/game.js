@@ -5,6 +5,7 @@ $(document).ready(function() {
     function drawMap(data) {
         $("#map").html(data.map);
         showMessage(data.message);
+        showAnswer(data.code);
         $("#info").html(data.info);
         serverAnswered = true;
     }
@@ -12,9 +13,40 @@ $(document).ready(function() {
     function showMessage(message) {
         var container = $("#message");
         container.val(message);
-        container.scrollTop(
-            container[0].scrollHeight - container.height()
+        scrollDown(container);
+    }
+
+    function showAnswer(code) {
+        if (code == '') {
+            return;
+        }
+        var container = $("#answer");
+        container.val(code.replace("|", ""));
+        setCaretToPos(container, code.indexOf('|'));
+    }
+
+    function scrollDown(textarea) {
+        textarea.scrollTop(
+            textarea[0].scrollHeight - textarea.height()
         );
+    }
+
+    function setSelectionRange(input, selectionStart, selectionEnd) {
+        input = input[0];
+        if (input.setSelectionRange) {
+            input.focus();
+            input.setSelectionRange(selectionStart, selectionEnd);
+        } else if (input.createTextRange) {
+            var range = input.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', selectionEnd);
+            range.moveStart('character', selectionStart);
+            range.select();
+        }
+    }
+
+    function setCaretToPos(input, pos) {
+        setSelectionRange(input, pos, pos);
     }
 
     function send(command) {

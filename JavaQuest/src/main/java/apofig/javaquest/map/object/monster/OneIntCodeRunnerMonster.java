@@ -9,8 +9,13 @@ import apofig.javaquest.map.Action;
  */
 public abstract class OneIntCodeRunnerMonster extends ManyInputCodeRunnerMonster {
 
+    public static String SIGNATURE =
+            "public String method(int number) {\n" +
+            "    return |;\n" +
+            "}";
+
     public OneIntCodeRunnerMonster(String question, Action onKill) {
-        super(question,  onKill);
+        super(question, SIGNATURE, onKill);
     }
 
     protected Object[][] getTestData() {

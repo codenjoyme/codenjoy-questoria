@@ -1,5 +1,6 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Nothing;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.ObjectFactoryImpl;
 import apofig.javaquest.map.object.Something;
@@ -105,5 +106,14 @@ public class JavaQuest {
 
     public Player getPlayerInfo() {
         return info;
+    }
+
+    public Something getCodeHelper() {
+        for (Something smthNear : map.getSomethingNearMe()) {
+            if (!smthNear.iCanLeave()) {
+                return smthNear;
+            }
+        }
+        return new Nothing();
     }
 }

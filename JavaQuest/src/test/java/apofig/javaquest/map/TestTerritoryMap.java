@@ -80,7 +80,8 @@ public class TestTerritoryMap {
                                 "die!",
                                 "Я убью тебя!",
                                 "Никуда ты не уйдешь!",
-                                null);
+                                "немногоКода('для подсказки');", null);
+
                     }
                 };
             }
@@ -248,6 +249,10 @@ public class TestTerritoryMap {
         moveTo(getMonsterX() - 1, getMonsterY());
 
         assertMessage("Monster: Сразись со мной!");
+
+        assertEquals("немногоКода('для подсказки');",
+                game.getCodeHelper().getCode());
+
         verifyMap();
     }
 

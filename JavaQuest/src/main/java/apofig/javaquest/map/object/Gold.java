@@ -49,4 +49,9 @@ public class Gold extends TalkingObject implements Something {
     public void tryToLeave() {
         sayUnique("Ну и ладно! Достанусь кому-то другому!!");
     }
+
+    @Override
+    public String getCode() {
+        return "";
+    }
 }

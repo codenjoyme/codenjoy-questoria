@@ -9,14 +9,19 @@ import apofig.javaquest.map.Action;
  */
 public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements MonsterTest {
 
-    public MakeBricksMonster(Action onKill) {
-        super(QUESTION, onKill);
-    }
+    private static final String SIGNATURE =
+            "public boolean method(int small, int big, int goal) {/n" +
+            "    return |;\n" +
+            "}";
 
     public static final String OK_CODE =
             "public boolean method(int small, int big, int goal) {\n" +
             "    return (small >= (goal % 5) && small >= goal - big * 5);\n" +
             "}";
+
+    public MakeBricksMonster(Action onKill) {
+        super(QUESTION, SIGNATURE, onKill);
+    }
 
     @Override
     protected String method(Object... inputs) {
