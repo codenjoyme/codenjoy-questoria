@@ -94,14 +94,12 @@ public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements Mon
     }
 
     public final static String QUESTION =
-            "У тебя есть кирпичики размером 5 (bigCount) и 1 (smallCount). " +
-            "Напиши метод, который смог бы определить получится из заданного " +
+            "У тебя есть кирпичики размером 5 (bigCount) и 1 (smallCount). \n" +
+            "Напиши метод, который смог бы определить получится из заданного \n" +
             "набора кирпичиков  построить стенку заданной длинны (length). \n" +
-            "Сигнатура метода: " +
-            "public String method(int smallCount, int bigCount, int length) {\n" +
             "Например: \n" +
-            "makeBricks(3, 1, 8) → true\n" +
-            "makeBricks(3, 1, 9) → false\n" +
-            "makeBricks(3, 2, 10) → true\n" +
+            "method(3, 1, 8) → true\n" +
+            "method(3, 1, 9) → false\n" +
+            "method(3, 2, 10) → true\n" +
             "(задача взята с http://codingbat.com/prob/p183562)";
 }
