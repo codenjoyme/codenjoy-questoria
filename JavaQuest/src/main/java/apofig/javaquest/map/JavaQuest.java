@@ -23,7 +23,7 @@ public class JavaQuest implements Tickable {
         messages = new Messages();
         info = new Player();
         factory = new ObjectFactoryImpl(messages, settings.getMonsters());
-        map = new TerritoryMap(settings.getMapLoader(), settings.getViewAreaSize(), factory);
+        map = new TerritoryMapImpl(settings.getMapLoader(), settings.getViewAreaSize(), factory);
     }
 
     public TerritoryMap getTerritoryMap() {

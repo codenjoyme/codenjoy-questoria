@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 public class TestTerritoryMap {
 
     private JavaQuest game;
-    private TerritoryMap map;
+    private TerritoryMapImpl map;
     private Joystick joystick;
 
     public int getWidth() {
@@ -87,7 +87,7 @@ public class TestTerritoryMap {
             }
         };
         game = new JavaQuest(settings);
-        map = game.getTerritoryMap();
+        map = (TerritoryMapImpl)game.getTerritoryMap();
         joystick = game.getPlayer();
     }
 
