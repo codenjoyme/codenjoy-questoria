@@ -22,8 +22,13 @@ $(document).ready(function() {
         }
         var container = $("#answer");
 
+        if (code == 'no_code') {
+            container.val('');
+            return;
+        }
+
         if (container.val() == '') {
-            container.val(code.replace("|", ""));
+            container.val(code.replace('|', ''));
         }
         setCaretToPos(container, code.indexOf('|'));
     }
