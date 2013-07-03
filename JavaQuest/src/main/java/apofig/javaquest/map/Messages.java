@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Messages {
     private static final String SEPARATOR = "---------------------------------------------------------------\n";
-    private List<String> messages = new LinkedList<>();
+    private List<String> messages = new LinkedList<String>();
 
     @Override
     public String toString() {

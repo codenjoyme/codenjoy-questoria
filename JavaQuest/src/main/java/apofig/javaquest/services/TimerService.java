@@ -17,7 +17,7 @@ public class TimerService implements Runnable {
     private ScheduledFuture<?> future;
 
     @Autowired
-    private PlayerServiceImpl playerService;
+    private PlayerService playerService;
 
     private volatile boolean paused;
     private int period;
