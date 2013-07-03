@@ -132,7 +132,7 @@ public class PlayerView {
         return size;
     }
 
-    public Point getViewArea() {
-        return viewArea;
+    public int getX() {
+        return viewArea.x;
     }
 }

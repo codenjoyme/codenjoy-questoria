@@ -81,7 +81,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         view.see(me().getX(), me().getY(), width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                boolean startLine = x == view.getViewArea().x;
+                boolean startLine = x == view.getX();
                 if (startLine) {
                     result.append("║");
                 }
@@ -98,7 +98,7 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append(map[x][y]).append(' ');
                 }
 
-                boolean endLine = x == view.getViewArea().x + view.size() - 1;
+                boolean endLine = x == view.getX() + view.size() - 1;
                 if (endLine) {
                     result.append("║\n");
                 }
