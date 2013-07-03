@@ -21,9 +21,12 @@ public class PlayerView {
             "?         ?",
             "??       ??",
             "????   ????"};
-    private char[][] viewMask;
+    
+    private char[][] mask;
+    
     private int size;
-    private Point viewArea;
+    private int vx = Integer.MIN_VALUE;
+    private int vy;
 
     public PlayerView(int size) {
         if (size < VIEW_CIRCLE.length) {
@@ -33,7 +36,7 @@ public class PlayerView {
             throw new IllegalArgumentException("View size must be an odd!");
         }
         this.size = size;
-        viewMask = new char[size][size];
+        mask = new char[size][size];
         buildMask();
     }
 
@@ -43,35 +46,36 @@ public class PlayerView {
 
     private boolean canSee(int x, int y) {
         boolean isOutOfMask = x < 0 || x >= size || y < 0 || y >= size;
-        return !isOutOfMask && viewMask[x][y] == ' ';
+        return !isOutOfMask && mask[x][y] == ' ';
     }
 
     public void moveMeTo(int x, int y) {
-        if (viewArea == null) {
-            viewArea = new Point(x - radius(), y - radius());
+        if (vx == Integer.MIN_VALUE) {
+            vx = x - radius();
+            vy = y - radius();
         }
-        int dx = viewArea.x - x;
+        int dx = vx - x;
         int adx = Math.abs(dx);
         if (adx < radius()/2) {
-            viewArea.x += dx / adx;
+            vx += dx / adx;
         }
 
-        int dy = viewArea.y - y;
+        int dy = vy - y;
         int ady = Math.abs(dy);
         if (ady < radius()/2) {
-            viewArea.y += dy / ady;
+            vy += dy / ady;
         }
 
-        dx = viewArea.x + radius()*2 - x;
+        dx = vx + radius()*2 - x;
         adx = Math.abs(dx);
         if (adx < radius()/2) {
-            viewArea.x += dx / adx;
+            vx += dx / adx;
         }
 
-        dy = viewArea.y + radius()*2 - y;
+        dy = vy + radius()*2 - y;
         ady = Math.abs(dy);
         if (ady < radius()/2) {
-            viewArea.y += dy / ady;
+            vy += dy / ady;
         }
     }
 
@@ -91,14 +95,14 @@ public class PlayerView {
 
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
-                viewMask[x][y] = mask[y].charAt(x);
+                this.mask[x][y] = mask[y].charAt(x);
             }
         }
     }
 
     public void see(int ix, int iy, int mapWidth, int mapHeight, Apply see) {
-        int cx = viewArea.x + radius();
-        int cy = viewArea.y + radius();
+        int cx = vx + radius();
+        int cy = vy + radius();
 
         for (int dy = radius(); dy >= -radius(); dy--) {
             for (int dx = -radius(); dx <= radius(); dx++) {
@@ -133,6 +137,6 @@ public class PlayerView {
     }
 
     public int getX() {
-        return viewArea.x;
+        return vx;
     }
 }
