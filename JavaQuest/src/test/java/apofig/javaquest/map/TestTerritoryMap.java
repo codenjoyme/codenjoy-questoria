@@ -115,7 +115,47 @@ public class TestTerritoryMap {
     }
 
     @Test
+    public void testIGoRightTwice() throws Exception {
+        moveRight();
+        moveRight();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoRightThreeTimes() throws Exception {
+        moveRight();
+        moveRight();
+        moveRight();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoRightSevenTimes() throws Exception {
+        moveRight();
+        moveRight();
+        moveRight();
+        moveRight();
+        moveRight();
+        moveRight();
+        moveRight();
+
+        verifyMap();
+    }
+
+    @Test
     public void testIGoLeft() throws Exception {
+        moveLeft();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoLeftFourTimes() throws Exception {
+        moveLeft();
+        moveLeft();
+        moveLeft();
         moveLeft();
 
         verifyMap();
@@ -129,12 +169,77 @@ public class TestTerritoryMap {
     }
 
     @Test
+    public void testIGoUpTwice() throws Exception {
+        moveUp();
+        moveUp();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoUpFiveTimes() throws Exception {
+        moveUp();
+        moveUp();
+        moveUp();
+        moveUp();
+        moveUp();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoUpSixTimes() throws Exception {
+        moveUp();
+        moveUp();
+        moveUp();
+        moveUp();
+        moveUp();
+        moveUp();
+
+        verifyMap();
+    }
+
+    @Test
     public void testIGoDownTwice() throws Exception {
         moveDown();
         moveDown();
 
         verifyMap();
     }
+
+    @Test
+    public void testIGoDownFourTimes() throws Exception {
+        moveDown();
+        moveDown();
+        moveDown();
+        moveDown();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoDownFiveTimes() throws Exception {
+        moveDown();
+        moveDown();
+        moveDown();
+        moveDown();
+        moveDown();
+
+        verifyMap();
+    }
+
+    @Test
+    public void testIGoDownSixTimes() throws Exception {
+        moveDown();
+        moveDown();
+        moveDown();
+        moveDown();
+        moveDown();
+        moveDown();
+
+        verifyMap();
+    }
+
 
     @Test
     public void testCheckGoToBoardLeftDown() throws Exception {

@@ -28,7 +28,8 @@ public class TerritoryMapImpl implements TerritoryMap {
     private char[][] fog;
     private PlayerView view;
     private ObjectFactory factory;
-    private final Me me;
+    private Me me;
+    private Point viewArea;
 
     public TerritoryMapImpl(MapLoader loader, int viewAreaSize, ObjectFactory factory) {
         this.factory = factory;
@@ -47,12 +48,41 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public void openSpace() {
-        view.see(me.getX(), me.getY(), width, height, new Apply() {
+    public void openSpace(int x, int y) {
+        if (viewArea == null) {
+            viewArea = new Point(x - view.radius(), y - view.radius());
+        }
+        int dx = viewArea.x - x;
+        int adx = Math.abs(dx);
+        if (adx < view.radius()/2) {
+            viewArea.x += dx / adx;
+        }
+
+        int dy = viewArea.y - y;
+        int ady = Math.abs(dy);
+        if (ady < view.radius()/2) {
+            viewArea.y += dy / ady;
+        }
+
+        dx = viewArea.x + view.radius()*2 - x;
+        adx = Math.abs(dx);
+        if (adx < view.radius()/2) {
+            viewArea.x += dx / adx;
+        }
+
+        dy = viewArea.y + view.radius()*2 - y;
+        ady = Math.abs(dy);
+        if (ady < view.radius()/2) {
+            viewArea.y += dy / ady;
+        }
+
+        final int centerX = viewArea.x + view.radius();
+        final int centerY = viewArea.y + view.radius();
+        view.see(centerX, centerY, x, y, width, height, new Apply() {
             @Override
-            public void xy(int x, int y, boolean canSee, boolean isWall) {
+            public void xy(int xx, int yy, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
-                    fog[x][y] = ' ';
+                    fog[xx][yy] = ' ';
                 }
             }
         });
@@ -76,10 +106,12 @@ public class TerritoryMapImpl implements TerritoryMap {
         final StringBuffer result = new StringBuffer();
 
         result.append("╔" + StringUtils.repeat("═", view.size()*2) + "╗\n");
-        view.see(me.getX(), me.getY(), width, height, new Apply() {
+        final int centerX = viewArea.x + view.radius();
+        final int centerY = viewArea.y + view.radius();
+        view.see(centerX, centerY, me().getX(), me().getY(), width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                boolean startLine = (me.getX() - x) == view.radius();
+                boolean startLine = x == viewArea.x;
                 if (startLine) {
                     result.append("║");
                 }
@@ -96,7 +128,7 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append(map[x][y]).append(' ');
                 }
 
-                boolean endLine = (x - me.getX()) == view.radius();
+                boolean endLine = x == viewArea.x + view.size() - 1;
                 if (endLine) {
                     result.append("║\n");
                 }

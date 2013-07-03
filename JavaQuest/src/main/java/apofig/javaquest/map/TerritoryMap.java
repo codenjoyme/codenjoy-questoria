@@ -25,5 +25,5 @@ public interface TerritoryMap {
 
     boolean isOutOfWorld(int x, int y);
 
-    void openSpace();
+    void openSpace(int x, int y);
 }

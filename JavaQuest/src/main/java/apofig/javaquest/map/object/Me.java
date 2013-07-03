@@ -26,7 +26,7 @@ public class Me {
         }
         this.x = x;
         this.y = y;
-        map.openSpace();
+        map.openSpace(x, y);
     }
 
     public int getY() {

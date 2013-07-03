@@ -41,7 +41,8 @@ public class PlayerView {
     }
 
     private boolean canSee(int x, int y) {
-        return viewMask[x][y] == ' ';
+        boolean isOutOfMask = x < 0 || x >= size || y < 0 || y >= size;
+        return !isOutOfMask && viewMask[x][y] == ' ';
     }
 
     private void buildMask() {
@@ -65,28 +66,31 @@ public class PlayerView {
         }
     }
 
-    public void see(int posx, int posy, int mapWidth, int mapHeight, Apply see) {
-        for (int y = size - 1; y >= 0; y--) {
-            for (int x = 0; x < size; x++) {
-                int dx = x + posx - radius();
-                int dy = y + posy - radius();
-                boolean isWall = (dx < 0 || dy < 0 || dy >= mapHeight || dx >= mapWidth);
-                boolean canSee = canSee(x, y);
-                see.xy(dx, dy, canSee, isWall);
+    public void see(int cx, int cy, int ix, int iy, int mapWidth, int mapHeight, Apply see) {
+        for (int dy = radius(); dy >= -radius(); dy--) {
+            for (int dx = -radius(); dx <= radius(); dx++) {
+                int x = dx + cx;
+                int y = dy + cy;
+                boolean isWall = (x < 0 || y < 0 || y >= mapHeight || x >= mapWidth);
+
+                int ixx = radius() + x - ix;
+                int iyy = radius() + y - iy;
+                boolean canSee = canSee(ixx, iyy);
+                see.xy(x, y, canSee, isWall);
             }
         }
     }
 
-    public void near(int posx, int posy, int mapWidth, int mapHeight, Apply meet) {
-        for (int y = -1; y <= 1; y++) {
-            for (int x = -1; x <= 1; x++) {
-                if (x == 0 && y == 0) {
+    public void near(int cx, int cy, int mapWidth, int mapHeight, Apply meet) {
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                if (dx == 0 && dy == 0) {
                     continue;
                 }
-                int dx = x + posx;
-                int dy = y + posy;
-                boolean isWall = (dx < 0 || dy < 0 || dy >= mapHeight || dx >= mapWidth);
-                meet.xy(dx, dy, true, isWall);
+                int x = dx + cx;
+                int y = dy + cy;
+                boolean isWall = (x < 0 || y < 0 || y >= mapHeight || x >= mapWidth);
+                meet.xy(x, y, true, isWall);
             }
         }
     }
