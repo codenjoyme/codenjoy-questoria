@@ -1,6 +1,5 @@
 package apofig.javaquest.map.object.monster;
 
-import org.approvaltests.Approvals;
 import org.approvaltests.legacycode.LegacyApprovals;
 import org.approvaltests.legacycode.Range;
 import org.junit.Test;

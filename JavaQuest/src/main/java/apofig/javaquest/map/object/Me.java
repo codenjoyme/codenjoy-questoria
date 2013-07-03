@@ -1,7 +1,6 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.TerritoryMap;
-import apofig.javaquest.map.TerritoryMapImpl;
 
 /**
  * User: sanja

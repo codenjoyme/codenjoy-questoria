@@ -1,7 +1,5 @@
 package apofig.javaquest.map;
 
-import java.util.Arrays;
-
 /**
  * User: oleksandr.baglai
  * Date: 1/20/13

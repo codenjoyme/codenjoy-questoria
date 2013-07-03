@@ -1,8 +1,6 @@
 package apofig.javaquest.map;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * User: oleksandr.baglai

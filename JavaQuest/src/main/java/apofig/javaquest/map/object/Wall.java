@@ -1,8 +1,6 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Player;
-import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.TalkingObject;
 
 /**
  * User: oleksandr.baglai

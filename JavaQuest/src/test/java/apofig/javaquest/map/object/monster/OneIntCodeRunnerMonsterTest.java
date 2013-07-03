@@ -1,18 +1,15 @@
 package apofig.javaquest.map.object.monster;
 
-import static apofig.javaquest.map.Messages.withoutSeparator;
-import static apofig.javaquest.map.object.monster.FizzBuzzMonster.*;
-
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.Gold;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.Place;
 import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.monster.CodeRunnerMonster;
-import apofig.javaquest.map.object.monster.FizzBuzzMonster;
 import org.junit.Test;
 
+import static apofig.javaquest.map.Messages.withoutSeparator;
+import static apofig.javaquest.map.object.monster.FizzBuzzMonster.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

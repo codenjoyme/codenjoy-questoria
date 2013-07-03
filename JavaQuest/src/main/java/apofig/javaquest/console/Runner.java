@@ -3,7 +3,6 @@ package apofig.javaquest.console;
 import apofig.javaquest.map.JavaQuest;
 import apofig.javaquest.map.Joystick;
 import apofig.javaquest.map.TerritoryMap;
-import apofig.javaquest.map.TerritoryMapImpl;
 
 public class Runner {
 	

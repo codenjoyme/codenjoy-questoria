@@ -3,9 +3,12 @@ package apofig.javaquest;
 import apofig.javaquest.console.Console;
 import apofig.javaquest.console.ConsoleImpl;
 import apofig.javaquest.console.Runner;
-import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.monster.MonsterPool;
+import apofig.javaquest.map.JavaQuest;
+import apofig.javaquest.map.LoadMapFromFile;
+import apofig.javaquest.map.MapLoader;
+import apofig.javaquest.map.Settings;
 import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
+import apofig.javaquest.map.object.monster.MonsterPool;
 
 /**
  * User: oleksandr.baglai

@@ -1,13 +1,17 @@
 package apofig.javaquest.web;
 
-import apofig.javaquest.map.*;
+import apofig.javaquest.map.JavaQuest;
+import apofig.javaquest.map.Joystick;
+import apofig.javaquest.map.Player;
 import apofig.javaquest.services.PlayerService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;

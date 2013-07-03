@@ -2,8 +2,6 @@ package apofig.javaquest.map.object.monster;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
 /**
  * User: oleksandr.baglai
  * Date: 2/25/13

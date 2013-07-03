@@ -2,9 +2,6 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * User: oleksandr.baglai
  * Date: 2/13/13
