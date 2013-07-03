@@ -34,7 +34,7 @@ public class PlayerViewTest {
         final PlayerView view = new PlayerView(size);
         final StringBuffer result = new StringBuffer();
 
-        view.see(fogSize/2, fogSize/2, fogSize/2, fogSize/2, fogSize, fogSize, new Apply() {
+        view.see(new Point((size+1)/2, (size+1)/2), size, size, fogSize, fogSize, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (canSee) {

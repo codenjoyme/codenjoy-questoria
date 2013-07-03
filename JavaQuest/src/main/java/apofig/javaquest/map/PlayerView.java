@@ -66,7 +66,10 @@ public class PlayerView {
         }
     }
 
-    public void see(int cx, int cy, int ix, int iy, int mapWidth, int mapHeight, Apply see) {
+    public void see(Point va, int ix, int iy, int mapWidth, int mapHeight, Apply see) {
+        int cx = va.x + radius();
+        int cy = va.y + radius();
+
         for (int dy = radius(); dy >= -radius(); dy--) {
             for (int dx = -radius(); dx <= radius(); dx++) {
                 int x = dx + cx;

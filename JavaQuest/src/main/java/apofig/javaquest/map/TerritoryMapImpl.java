@@ -76,9 +76,7 @@ public class TerritoryMapImpl implements TerritoryMap {
             viewArea.y += dy / ady;
         }
 
-        final int centerX = viewArea.x + view.radius();
-        final int centerY = viewArea.y + view.radius();
-        view.see(centerX, centerY, x, y, width, height, new Apply() {
+        view.see(viewArea, x, y, width, height, new Apply() {
             @Override
             public void xy(int xx, int yy, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
@@ -106,9 +104,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         final StringBuffer result = new StringBuffer();
 
         result.append("╔" + StringUtils.repeat("═", view.size()*2) + "╗\n");
-        final int centerX = viewArea.x + view.radius();
-        final int centerY = viewArea.y + view.radius();
-        view.see(centerX, centerY, me().getX(), me().getY(), width, height, new Apply() {
+        view.see(viewArea, me().getX(), me().getY(), width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 boolean startLine = x == viewArea.x;
