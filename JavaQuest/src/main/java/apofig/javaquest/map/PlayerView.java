@@ -23,6 +23,7 @@ public class PlayerView {
             "????   ????"};
     private char[][] viewMask;
     private int size;
+    private Point viewArea;
 
     public PlayerView(int size) {
         if (size < VIEW_CIRCLE.length) {
@@ -45,7 +46,7 @@ public class PlayerView {
         return !isOutOfMask && viewMask[x][y] == ' ';
     }
 
-    public Point moveMeTo(Point viewArea, int x, int y) {
+    public void moveMeTo(int x, int y) {
         if (viewArea == null) {
             viewArea = new Point(x - radius(), y - radius());
         }
@@ -72,8 +73,6 @@ public class PlayerView {
         if (ady < radius()/2) {
             viewArea.y += dy / ady;
         }
-
-        return viewArea;
     }
 
     private void buildMask() {
@@ -97,9 +96,9 @@ public class PlayerView {
         }
     }
 
-    public void see(Point va, int ix, int iy, int mapWidth, int mapHeight, Apply see) {
-        int cx = va.x + radius();
-        int cy = va.y + radius();
+    public void see(int ix, int iy, int mapWidth, int mapHeight, Apply see) {
+        int cx = viewArea.x + radius();
+        int cy = viewArea.y + radius();
 
         for (int dy = radius(); dy >= -radius(); dy--) {
             for (int dx = -radius(); dx <= radius(); dx++) {
@@ -131,5 +130,9 @@ public class PlayerView {
 
     public int size() {
         return size;
+    }
+
+    public Point getViewArea() {
+        return viewArea;
     }
 }

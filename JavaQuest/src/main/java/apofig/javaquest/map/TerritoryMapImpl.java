@@ -29,7 +29,6 @@ public class TerritoryMapImpl implements TerritoryMap {
     private PlayerView view;
     private ObjectFactory factory;
     private Me me;
-    private Point viewArea;
 
     public TerritoryMapImpl(MapLoader loader, int viewAreaSize, ObjectFactory factory) {
         this.factory = factory;
@@ -49,9 +48,9 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public void openSpace(int x, int y) {
-        viewArea = view.moveMeTo(viewArea, x, y);
+        view.moveMeTo(x, y);
 
-        view.see(viewArea, x, y, width, height, new Apply() {
+        view.see(x, y, width, height, new Apply() {
             @Override
             public void xy(int xx, int yy, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
@@ -79,10 +78,10 @@ public class TerritoryMapImpl implements TerritoryMap {
         final StringBuffer result = new StringBuffer();
 
         result.append("╔" + StringUtils.repeat("═", view.size()*2) + "╗\n");
-        view.see(viewArea, me().getX(), me().getY(), width, height, new Apply() {
+        view.see(me().getX(), me().getY(), width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                boolean startLine = x == viewArea.x;
+                boolean startLine = x == view.getViewArea().x;
                 if (startLine) {
                     result.append("║");
                 }
@@ -99,7 +98,7 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append(map[x][y]).append(' ');
                 }
 
-                boolean endLine = x == viewArea.x + view.size() - 1;
+                boolean endLine = x == view.getViewArea().x + view.size() - 1;
                 if (endLine) {
                     result.append("║\n");
                 }

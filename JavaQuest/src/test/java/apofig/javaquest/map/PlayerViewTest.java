@@ -29,12 +29,12 @@ public class PlayerViewTest {
         verifyView(11);
     }
 
-    private void verifyView(int size) throws Exception {
-        final int fogSize = size*2;
+    private void verifyView(final int size) throws Exception {
         final PlayerView view = new PlayerView(size);
         final StringBuffer result = new StringBuffer();
 
-        view.see(new Point((size+1)/2, (size+1)/2), size, size, fogSize, fogSize, new Apply() {
+        view.moveMeTo(size, size);
+        view.see(size, size, size*2, size*2, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (canSee) {
@@ -44,7 +44,7 @@ public class PlayerViewTest {
                 }
                 result.append(" ");
 
-                boolean endLine = (x - fogSize/2) == view.radius();
+                boolean endLine = (x - size) == view.radius();
                 if (endLine) {
                     result.append('\n');
                 }
