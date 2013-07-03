@@ -45,6 +45,37 @@ public class PlayerView {
         return !isOutOfMask && viewMask[x][y] == ' ';
     }
 
+    public Point moveMeTo(Point viewArea, int x, int y) {
+        if (viewArea == null) {
+            viewArea = new Point(x - radius(), y - radius());
+        }
+        int dx = viewArea.x - x;
+        int adx = Math.abs(dx);
+        if (adx < radius()/2) {
+            viewArea.x += dx / adx;
+        }
+
+        int dy = viewArea.y - y;
+        int ady = Math.abs(dy);
+        if (ady < radius()/2) {
+            viewArea.y += dy / ady;
+        }
+
+        dx = viewArea.x + radius()*2 - x;
+        adx = Math.abs(dx);
+        if (adx < radius()/2) {
+            viewArea.x += dx / adx;
+        }
+
+        dy = viewArea.y + radius()*2 - y;
+        ady = Math.abs(dy);
+        if (ady < radius()/2) {
+            viewArea.y += dy / ady;
+        }
+
+        return viewArea;
+    }
+
     private void buildMask() {
         String[] mask = new String[size];
         int delta = (size - VIEW_CIRCLE.length)/2;

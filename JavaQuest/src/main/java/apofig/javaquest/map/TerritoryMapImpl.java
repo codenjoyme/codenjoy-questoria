@@ -49,32 +49,7 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public void openSpace(int x, int y) {
-        if (viewArea == null) {
-            viewArea = new Point(x - view.radius(), y - view.radius());
-        }
-        int dx = viewArea.x - x;
-        int adx = Math.abs(dx);
-        if (adx < view.radius()/2) {
-            viewArea.x += dx / adx;
-        }
-
-        int dy = viewArea.y - y;
-        int ady = Math.abs(dy);
-        if (ady < view.radius()/2) {
-            viewArea.y += dy / ady;
-        }
-
-        dx = viewArea.x + view.radius()*2 - x;
-        adx = Math.abs(dx);
-        if (adx < view.radius()/2) {
-            viewArea.x += dx / adx;
-        }
-
-        dy = viewArea.y + view.radius()*2 - y;
-        ady = Math.abs(dy);
-        if (ady < view.radius()/2) {
-            viewArea.y += dy / ady;
-        }
+        viewArea = view.moveMeTo(viewArea, x, y);
 
         view.see(viewArea, x, y, width, height, new Apply() {
             @Override
