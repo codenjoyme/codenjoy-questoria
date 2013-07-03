@@ -36,6 +36,7 @@ public class LoadMapFromFile implements MapLoader {
                 if (map[x][dy] == 'I') {
                     posx = x;
                     posy = dy;
+                    map[x][dy] = ' ';
                 }
             }
         }
