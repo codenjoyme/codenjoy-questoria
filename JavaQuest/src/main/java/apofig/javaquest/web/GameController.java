@@ -29,12 +29,12 @@ public class GameController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String post(Model model, HttpSession session) {
-         return printGame(model);
+        return printGame(model, session);
     }
 
     @RequestMapping(value = "/answer", method = RequestMethod.GET)
     public ModelAndView command(Model model, HttpSession session, @RequestParam String command) throws JSONException {
-        JavaQuest game = playerService.getGame();
+        JavaQuest game = getGameFrom(session);
         Joystick joystick = game.getPlayer();
         if (command.equals("up")) {
             joystick.moveUp();
@@ -45,6 +45,7 @@ public class GameController {
         } else if (command.equals("right")) {
             joystick.moveRight();
         } else if (command.equals("refresh")) {
+            // do nothing
         } else {
             joystick.attack(command.replaceAll("</br>", "\n"));
         }
@@ -61,8 +62,8 @@ public class GameController {
         return mav;
     }
 
-    private String printGame(Model model) {
-        JavaQuest game = playerService.getGame();
+    private String printGame(Model model, HttpSession session) {
+        JavaQuest game = getGameFrom(session);
         return print(model, getMap(game), game.getPlayerInfo());
     }
 
@@ -75,6 +76,15 @@ public class GameController {
         model.addAttribute("message", "");
         model.addAttribute("info", playerInfo.toString());
         return "game";
+    }
+
+    private JavaQuest getGameFrom(HttpSession session) {
+        JavaQuest game = (JavaQuest)session.getAttribute("getGameFrom");
+        if (game == null) {
+            game = playerService.newGame();
+            session.setAttribute("getGameFrom", game);
+        }
+        return game;
     }
 
 }

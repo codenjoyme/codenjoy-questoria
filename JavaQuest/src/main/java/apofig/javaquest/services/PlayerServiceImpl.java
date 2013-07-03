@@ -8,6 +8,9 @@ import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * User: sanja
  * Date: 02.07.13
@@ -16,10 +19,14 @@ import org.springframework.stereotype.Component;
 @Component("playerService")
 public class PlayerServiceImpl implements PlayerService {
 
-    private final JavaQuest game;
+    private List<JavaQuest> games;
 
     public PlayerServiceImpl() {
-        Settings settings = new Settings() {
+        games = new LinkedList<JavaQuest>();
+    }
+
+    private Settings getSettings() {
+        return new Settings() {
             @Override
             public int getViewAreaSize() {
                 return 41;
@@ -35,17 +42,19 @@ public class PlayerServiceImpl implements PlayerService {
                 return new MonsterFactoryImpl();
             }
         };
-
-        game = new JavaQuest(settings);
     }
 
     @Override
     public void nextStepForAllGames() {
-        game.tick();
+        for (JavaQuest game : games) {
+            game.tick();
+        }
     }
 
     @Override
-    public JavaQuest getGame() {
+    public JavaQuest newGame() {
+        JavaQuest game = new JavaQuest(getSettings());
+        games.add(game);
         return game;
     }
 
