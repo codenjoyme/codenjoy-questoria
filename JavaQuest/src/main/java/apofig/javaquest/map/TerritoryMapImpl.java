@@ -90,20 +90,13 @@ public class TerritoryMapImpl implements TerritoryMap {
                     } else {
                         result.append("??");
                     }
+                } else if (fog[x][y] == '?' || map[x][y] == '?') {
+                    result.append("??");
+                } else if (me.getX() == x && me.getY() == y) {
+                    result.append("I ");
                 } else {
-                    if (fog[x][y] == '?') {
-                        result.append("??");
-                    } else {
-                        if (map[x][y] == '?') {
-                            result.append("??");
-                        }
-                        if (me.getX() == x && me.getY() == y) {
-                            result.append("I ");
-                        } else {
-                            result.append(map[x][y]);
-                            result.append(' ');
-                        }
-                    }
+                    result.append(map[x][y]);
+                    result.append(' ');
                 }
 
                 boolean endLine = (x - me.getX()) == view.radius();
