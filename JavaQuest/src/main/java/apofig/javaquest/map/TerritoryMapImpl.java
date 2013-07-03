@@ -84,19 +84,16 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append("║");
                 }
 
-                if (isWall) {
-                    if (canSee) {
-                        result.append("##");
-                    } else {
-                        result.append("??");
-                    }
+                if (isWall && canSee) {
+                    result.append("##");
+                } else if (isWall && !canSee) {
+                    result.append("??");
                 } else if (fog[x][y] == '?' || map[x][y] == '?') {
                     result.append("??");
                 } else if (me.getX() == x && me.getY() == y) {
                     result.append("I ");
                 } else {
-                    result.append(map[x][y]);
-                    result.append(' ');
+                    result.append(map[x][y]).append(' ');
                 }
 
                 boolean endLine = (x - me.getX()) == view.radius();
