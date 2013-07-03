@@ -87,6 +87,9 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
+                    <webApp>
+                        <contextPath>/java-quest</contextPath>
+                    </webApp>
                     <stopPort>9999</stopPort>
                     <stopKey>foo</stopKey>
                 </configuration>

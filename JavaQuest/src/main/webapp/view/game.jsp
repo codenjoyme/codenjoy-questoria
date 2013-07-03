@@ -27,8 +27,13 @@
             color:brown;
         }
     </style>
-    <script src="/resources/js/jquery-1.7.2.js"></script>
-    <script src="/resources/js/game.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/game.js"></script>
+    <script>
+        $(document).ready(function () {
+            initGame('${pageContext.request.contextPath}/');
+        });
+    </script>
 </head>
 <body>
     <table>

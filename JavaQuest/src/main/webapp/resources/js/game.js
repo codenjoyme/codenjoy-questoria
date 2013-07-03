@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function initGame(contextPath) {
 
     var serverAnswered = true;
 
@@ -67,7 +67,7 @@ $(document).ready(function() {
         serverAnswered = false;
 
         command = command.split("\n").join("</br>");
-        $.getJSON('/answer', {command:command, time:$.now()}, drawMap);
+        $.getJSON(contextPath + 'answer', {command:command, time:$.now()}, drawMap);
     }
 
     function onTextArea() {
@@ -107,4 +107,4 @@ $(document).ready(function() {
     timer(1000, function () {
         send('refresh');
     });
-});
+}
