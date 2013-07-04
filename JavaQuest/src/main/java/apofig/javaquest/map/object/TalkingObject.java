@@ -19,12 +19,22 @@ public class TalkingObject extends MapObject implements ObjectSettings {
         messages.addUnique(this.getClass().getSimpleName() + ": " + message);
     }
 
-    public void clearLog() {
-        messages.clear();
-    }
-
     @Override
     public void setMessages(Messages messages) {
         this.messages = messages;
+    }
+
+    public Messages getMessages() {
+        return messages;
+    }
+
+    public void meetWith(Me me) {
+        messages = me.getMessages();
+    }
+
+    public Something make(char c) {
+        Something something = super.make(c);
+        ((TalkingObject)something).messages = messages; // TODO ну очень некрасиво
+        return something;
     }
 }

@@ -1,5 +1,6 @@
 package apofig.javaquest.map.object;
 
+import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
 
 /**
@@ -49,6 +50,11 @@ public class Gold extends TalkingObject implements Something {
     @Override
     public void tryToLeave() {
         sayUnique("Ну и ладно! Достанусь кому-то другому!!");
+    }
+
+    @Override
+    public void onKill(Action action) {
+        // do nothing
     }
 
     @Override

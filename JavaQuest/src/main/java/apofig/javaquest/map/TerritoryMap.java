@@ -23,4 +23,6 @@ public interface TerritoryMap {
     void openSpace(Me me);
 
     String getViewArea(Me me);
+
+    List<Something> getAllNear(Me me);
 }

@@ -11,15 +11,13 @@ import apofig.javaquest.services.Tickable;
 public class JavaQuest implements Tickable {
 
     private TerritoryMap map;
-    private Messages messages; // TODO переместить в Me и сделать так, чтобы все монстры взаимодействовали не с общим Messages а с моим
     private ObjectFactory factory;
     private Player info;
     private Me me;
 
     public JavaQuest(Settings settings) {
-        messages = new Messages();
         info = new Player();
-        factory = new ObjectFactoryImpl(messages, settings.getMonsters());
+        factory = new ObjectFactoryImpl(settings.getMonsters());
         MapLoader loader = settings.getMapLoader();
         map = new TerritoryMapImpl(loader, factory);
 
@@ -30,7 +28,7 @@ public class JavaQuest implements Tickable {
     private void newHero(int viewAreaSize, int x, int y) {
         PlayerView view = new PlayerView(viewAreaSize);
         me = new Me(map, view, x, y);
-        me.setMessages(messages);
+        me.setMessages(new Messages());
         me.setFactory(factory);
     }
 
@@ -66,17 +64,21 @@ public class JavaQuest implements Tickable {
         }
         smthAtWay.getBy(info);
         me.go();
-        meetWith();
+        meetWith(me);
     }
 
-    private void meetWith() {
+    private void meetWith(Me me) {
+        for (Something object : map.getAllNear(me)) {
+            object.meetWith(me);
+        }
+
         for (Something object : map.getSomethingNear(me)) {
             object.askMe();
         }
     }
 
     public String getMessage() {
-        return messages.getLast(60);
+        return me.getMessages().getLast(60);
     }
 
     public Player getPlayerInfo() {

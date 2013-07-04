@@ -1,9 +1,6 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.MapPlace;
-import apofig.javaquest.map.object.Me;
-import apofig.javaquest.map.object.ObjectFactory;
-import apofig.javaquest.map.object.Something;
+import apofig.javaquest.map.object.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
@@ -30,9 +27,8 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     public TerritoryMapImpl(MapLoader loader, ObjectFactory factory) {
         this.factory = factory;
-
-        this.width = loader.getWidth();
-        this.height = loader.getHeight();
+        width = loader.getWidth();
+        height = loader.getHeight();
         map = loader.getMap();
         fog = loader.getFog();
     }
@@ -115,13 +111,36 @@ public class TerritoryMapImpl implements TerritoryMap {
         return result;
     }
 
+
+    @Override
+    public List<Something> getAllNear(final Me me) {
+        final List<Something> result = new LinkedList<Something>();
+
+        me.view().near(me, width, height, new Apply() {
+            @Override
+            public void xy(int x, int y, boolean canSee, boolean isWall) {
+                if (!isWall && map[x][y] == ' ') {
+                    return;
+                }
+
+                result.add(getAt(new PointImpl(x, y)));
+            }
+        });
+
+        return result;
+    }
+
     @Override
     public Something getAt(Point point) {
-        if (isOutOfWorld(point)) {
-            return factory.make('#', null);
-        }
+        return factory.make(getChar(point), new MapPlace(map, point.getX(), point.getY()));
+    }
 
-        return factory.make(map[point.getX()][point.getY()], new MapPlace(map, point.getX(), point.getY()));
+    private char getChar(Point point) {
+        if (isOutOfWorld(point)) {
+            return '#';
+        } else {
+            return map[point.getX()][point.getY()];
+        }
     }
 
     @Override

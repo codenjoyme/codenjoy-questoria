@@ -1,7 +1,11 @@
 package apofig.javaquest.map.object;
 
+import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.monster.MonsterPool;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: oleksandr.baglai
@@ -9,21 +13,39 @@ import apofig.javaquest.map.object.monster.MonsterPool;
  * Time: 9:52 PM
  */
 public class ObjectFactoryImpl implements ObjectFactory {
-    private Messages messages;
-    private MonsterPool monsters;
 
-    public ObjectFactoryImpl(Messages messages, MonsterPool monsters) {
-        this.messages = messages;
+    private MonsterPool monsters;
+    private List<Something> objects;
+
+    public ObjectFactoryImpl(MonsterPool monsters) {
         this.monsters = monsters;
+        objects = new LinkedList<Something>();
     }
 
     @Override
     public Something make(char c, Place place) {
+        for (Something smth : objects) {
+            if (smth.isAt(place) && smth.symbol() == c) {
+                return smth;
+            }
+        }
+
         ObjectSettings object = getObject(c);
         object.setPlace(place);
         object.setFactory(this);
-        object.setMessages(messages);
-        return (Something)object;
+
+        Something smth = (Something)object;
+
+        if (!(smth instanceof Nothing)) {
+            objects.add(smth);
+        }
+        smth.onKill(new Action() {
+            @Override
+            public void act(Something object) {
+                objects.remove(object);
+            }
+        });
+        return smth;
     }
 
     private ObjectSettings getObject(char c) {

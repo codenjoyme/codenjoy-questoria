@@ -2,8 +2,12 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
+import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.TalkingObject;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: oleksandr.baglai
@@ -17,7 +21,7 @@ public class Monster extends TalkingObject implements Something {
     protected String help;
     private String leave;
     private String signature;
-    private Action onKill;
+    private List<Action> onKills;
 
     public Monster(String question, String answer, String help, String leave, String signature, Action onKill) {
         this.question = question;
@@ -25,19 +29,20 @@ public class Monster extends TalkingObject implements Something {
         this.help = help;
         this.leave = leave;
         this.signature = signature;
-        this.onKill = onKill;
+        this.onKills = new LinkedList<>();
+        onKill(onKill);
     }
 
     @Override
     public void answer(String message) {
         if (message.equals(answer)) {
             say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
-            Something something = leaveAfter();
-            place.update(something.symbol());
-            if (onKill != null) {
+            Something gold = leaveAfter();
+            place.update(gold.symbol());
+            for (Action onKill : onKills) {
                 onKill.act(this);
             }
-            something.askMe();
+            gold.askMe();
         } else {
             say(help);
         }
@@ -76,6 +81,13 @@ public class Monster extends TalkingObject implements Something {
     @Override
     public void tryToLeave() {
         say(leave);
+    }
+
+    @Override
+    public void onKill(Action action) {
+        if (action != null) {
+            onKills.add(action);
+        }
     }
 
     @Override
