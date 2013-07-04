@@ -35,7 +35,7 @@ public class GameController {
     @RequestMapping(value = "/answer", method = RequestMethod.GET)
     public ModelAndView command(Model model, HttpSession session, @RequestParam String command) throws JSONException {
         JavaQuest game = getGameFrom(session);
-        Joystick joystick = game.getPlayer();
+        Joystick joystick = game.getMe();
         if (command.equals("up")) {
             joystick.moveUp();
         } else if (command.equals("down")) {
@@ -68,7 +68,7 @@ public class GameController {
     }
 
     private String getMap(JavaQuest game) {
-        return Colorizer.process(game.getTerritoryMap().getViewArea());
+        return Colorizer.process(game.toString());
     }
 
     private String print(Model model, String map, Player playerInfo) {

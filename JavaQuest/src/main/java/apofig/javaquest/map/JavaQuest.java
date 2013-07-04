@@ -11,94 +11,66 @@ import apofig.javaquest.services.Tickable;
 public class JavaQuest implements Tickable {
 
     private TerritoryMap map;
-    private Messages messages;
+    private Messages messages; // TODO переместить в Me и сделать так, чтобы все монстры взаимодействовали не с общим Messages а с моим
     private ObjectFactory factory;
     private Player info;
-    private Point whereToGo;
+    private Me me;
 
     public JavaQuest(Settings settings) {
         messages = new Messages();
         info = new Player();
         factory = new ObjectFactoryImpl(messages, settings.getMonsters());
-        map = new TerritoryMapImpl(settings.getMapLoader(), settings.getViewAreaSize(), factory);
+        MapLoader loader = settings.getMapLoader();
+        map = new TerritoryMapImpl(loader, factory);
+
+        newHero(settings.getViewAreaSize(), loader.getPlayerX(), loader.getPlayerY());
+        map.openSpace(me);
+    }
+
+    private void newHero(int viewAreaSize, int x, int y) {
+        PlayerView view = new PlayerView(viewAreaSize);
+        me = new Me(map, view, x, y);
+        me.setMessages(messages);
+        me.setFactory(factory);
     }
 
     public TerritoryMap getTerritoryMap() {
         return map;
     }
 
-    public Joystick getPlayer() {
-        return new Joystick() {
-            @Override
-            public void moveRight() {
-                tryToMove(1, 0);
-            }
+    private void move(Me me) {
+        Point whereToGo = me.whereToGo();
+        if (whereToGo == null) {
+            return;
+        }
 
-            @Override
-            public void moveLeft() {
-                tryToMove(-1, 0);
-            }
-
-            @Override
-            public void moveUp() {
-                tryToMove(0, 1);
-            }
-
-            @Override
-            public void moveDown() {
-                tryToMove(0, -1);
-            }
-
-            @Override
-            public void attack(String message) {
-                messages.add("You: " + message);
-                if (map.getSomethingNearMe().isEmpty()) {
-                    Me me = map.me();
-                    Something whereIAm = map.getAt(me.getX(), me.getY());
-                    whereIAm.answer(message);
-                }
-
-                for (Something smthNear : map.getSomethingNearMe()) {
-                    smthNear.answer(message);
-                }
-            }
-        };
-    }
-
-    private void tryToMove(int dx, int dy) {
-        int x = map.me().getX() + dx;
-        int y = map.me().getY() + dy;
-        whereToGo = new Point(x, y);
-    }
-
-    private void move(int x, int y) {
-        for (Something smthNear : map.getSomethingNearMe()) {
+        for (Something smthNear : map.getSomethingNear(me)) {
             if (!smthNear.iCanLeave()) {
                 smthNear.tryToLeave();
                 return;
             }
         }
 
-        for (Something smth : map.getSomethingNearMe()) {
+        for (Something smth : map.getSomethingNear(me)) {
             if (smth.iCanLeave()) {
-                if (!map.isNear(x, y, smth) && !smth.isAt(x, y)) {
+                if (!map.isNear(me.atNewPlace(), smth) && !smth.isAt(whereToGo)) {
                     smth.tryToLeave();
                 }
             }
         }
 
-        Something smthAtWay = map.getAt(x, y);
+        Something smthAtWay = map.getAt(whereToGo);
         smthAtWay.askMe();
         if (!smthAtWay.iCanUse()) {
             return;
         }
         smthAtWay.getBy(info);
-        map.me().moveTo(x, y);
+        me.go();
         meetWith();
     }
 
     private void meetWith() {
-        for (Something object : map.getSomethingNearMe()) {
+        for (Something object : map.getSomethingNear(me)) {
             object.askMe();
         }
     }
@@ -112,7 +84,7 @@ public class JavaQuest implements Tickable {
     }
 
     public Something getCodeHelper() {
-        for (Something smthNear : map.getSomethingNearMe()) {
+        for (Something smthNear : map.getSomethingNear(me)) {
             if (!smthNear.iCanLeave()) {
                 return smthNear;
             }
@@ -122,9 +94,15 @@ public class JavaQuest implements Tickable {
 
     @Override
     public void tick() {
-        if (whereToGo != null) {
-            move(whereToGo.x, whereToGo.y);
-            whereToGo = null;
-        }
+        move(me);
+    }
+
+    public Joystick getMe() {
+        return me;
+    }
+
+    @Override
+    public String toString() {
+        return map.getViewArea(me);
     }
 }

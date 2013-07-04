@@ -12,17 +12,15 @@ import java.util.List;
  */
 public interface TerritoryMap {
 
-    List<Something> getSomethingNearMe();
+    List<Something> getSomethingNear(Me me);
 
-    Something getAt(int x, int y);
+    Something getAt(Point point);
 
-    boolean isNear(int xx, int yy, Something object);
+    boolean isNear(Me me, Something object);
 
-    String getViewArea();
+    boolean isOutOfWorld(Point point);
 
-    Me me();
+    void openSpace(Me me);
 
-    boolean isOutOfWorld(int x, int y);
-
-    void openSpace(int x, int y);
+    String getViewArea(Me me);
 }

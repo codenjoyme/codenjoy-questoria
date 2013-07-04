@@ -1,11 +1,5 @@
 package apofig.javaquest.map;
 
-import org.approvaltests.Approvals;
-import org.junit.Before;
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13

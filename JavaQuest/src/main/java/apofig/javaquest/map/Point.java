@@ -2,15 +2,11 @@ package apofig.javaquest.map;
 
 /**
  * User: sanja
- * Date: 02.07.13
- * Time: 21:20
+ * Date: 04.07.13
+ * Time: 1:19
  */
-public class Point {
-    int x;
-    int y;
+public interface Point {
+    int getY();
 
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+    int getX();
 }

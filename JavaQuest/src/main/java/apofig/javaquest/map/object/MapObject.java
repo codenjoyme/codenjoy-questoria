@@ -1,5 +1,7 @@
 package apofig.javaquest.map.object;
 
+import apofig.javaquest.map.Point;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/31/13
@@ -24,8 +26,8 @@ public abstract class MapObject implements ObjectSettings {
         return factory.make(c, place);
     }
 
-    public boolean isAt(int x, int y) {
-        return place.getX() == x && place.getY() == y;
+    public boolean isAt(Point point) {
+        return place.getX() == point.getX() && place.getY() == point.getY();
     }
 
 }

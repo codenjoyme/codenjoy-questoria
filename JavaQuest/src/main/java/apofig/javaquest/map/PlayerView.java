@@ -49,30 +49,30 @@ public class PlayerView {
         return !isOutOfMask && mask[x][y] == ' ';
     }
 
-    public void moveMeTo(int x, int y) {
+    public void moveMeTo(Point point) {
         if (vx == Integer.MIN_VALUE) {
-            vx = x - radius();
-            vy = y - radius();
+            vx = point.getX() - radius();
+            vy = point.getY() - radius();
         }
-        int dx = vx - x;
+        int dx = vx - point.getX();
         int adx = Math.abs(dx);
         if (adx < radius()/2) {
             vx += dx / adx;
         }
 
-        int dy = vy - y;
+        int dy = vy - point.getY();
         int ady = Math.abs(dy);
         if (ady < radius()/2) {
             vy += dy / ady;
         }
 
-        dx = vx + radius()*2 - x;
+        dx = vx + radius()*2 - point.getX();
         adx = Math.abs(dx);
         if (adx < radius()/2) {
             vx += dx / adx;
         }
 
-        dy = vy + radius()*2 - y;
+        dy = vy + radius()*2 - point.getY();
         ady = Math.abs(dy);
         if (ady < radius()/2) {
             vy += dy / ady;
@@ -100,7 +100,7 @@ public class PlayerView {
         }
     }
 
-    public void see(int ix, int iy, int mapWidth, int mapHeight, Apply see) {
+    public void see(Point point, int mapWidth, int mapHeight, Apply see) {
         int cx = vx + radius();
         int cy = vy + radius();
 
@@ -110,22 +110,22 @@ public class PlayerView {
                 int y = dy + cy;
                 boolean isWall = (x < 0 || y < 0 || y >= mapHeight || x >= mapWidth);
 
-                int ixx = radius() + x - ix;
-                int iyy = radius() + y - iy;
+                int ixx = radius() + x - point.getX();
+                int iyy = radius() + y - point.getY();
                 boolean canSee = canSee(ixx, iyy);
                 see.xy(x, y, canSee, isWall);
             }
         }
     }
 
-    public void near(int cx, int cy, int mapWidth, int mapHeight, Apply meet) {
+    public void near(Point point, int mapWidth, int mapHeight, Apply meet) {
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
                 if (dx == 0 && dy == 0) {
                     continue;
                 }
-                int x = dx + cx;
-                int y = dy + cy;
+                int x = dx + point.getX();
+                int y = dy + point.getY();
                 boolean isWall = (x < 0 || y < 0 || y >= mapHeight || x >= mapWidth);
                 meet.xy(x, y, true, isWall);
             }

@@ -1,6 +1,5 @@
 package apofig.javaquest.web;
 
-import org.approvaltests.Approvals;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

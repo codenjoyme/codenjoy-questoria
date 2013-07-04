@@ -2,7 +2,6 @@ package apofig.javaquest.console;
 
 import apofig.javaquest.map.JavaQuest;
 import apofig.javaquest.map.Joystick;
-import apofig.javaquest.map.TerritoryMap;
 
 public class Runner {
 	
@@ -15,7 +14,7 @@ public class Runner {
 	}
 
 	public void playGame() {
-		Joystick player = game.getPlayer();
+		Joystick player = game.getMe();
 
         int ch = 0;
 		do {		
@@ -50,8 +49,7 @@ public class Runner {
 	}
 	
 	private void printBoard() {
-        TerritoryMap map = game.getTerritoryMap();
-        console.print(map.getViewArea() + "\n" + game.getMessage());
+        console.print(game.toString() + "\n" + game.getMessage());
 	}
 
 }

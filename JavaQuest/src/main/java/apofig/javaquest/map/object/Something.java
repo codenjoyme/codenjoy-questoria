@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Player;
+import apofig.javaquest.map.Point;
 import apofig.javaquest.map.object.monster.CodeHelper;
 
 /**
@@ -25,5 +26,5 @@ public interface Something extends CodeHelper {
 
     void tryToLeave();
 
-    boolean isAt(int x, int y);
+    boolean isAt(Point point);
 }
