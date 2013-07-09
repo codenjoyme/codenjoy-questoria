@@ -38,7 +38,6 @@ public class Monster extends TalkingObject implements Something {
         if (message.equals(answer)) {
             say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
             Something gold = leaveAfter();
-            place.update(gold.symbol());
             for (Action onKill : onKills) {
                 onKill.act(this);
             }

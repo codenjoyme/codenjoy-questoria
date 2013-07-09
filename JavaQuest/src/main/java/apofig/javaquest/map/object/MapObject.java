@@ -9,7 +9,7 @@ import apofig.javaquest.map.Point;
  */
 public abstract class MapObject implements ObjectSettings {
 
-    protected Place place;
+    private Place place;
     private ObjectFactory factory;
 
     @Override
@@ -23,7 +23,9 @@ public abstract class MapObject implements ObjectSettings {
     }
 
     public Something make(char c) {
-        return factory.get(c, place);
+        Something something = factory.get(c, place);
+        place.update(c);
+        return something;
     }
 
     public boolean isAt(Point point) {
