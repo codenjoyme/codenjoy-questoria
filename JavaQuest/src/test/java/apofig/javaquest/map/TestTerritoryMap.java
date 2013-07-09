@@ -18,7 +18,7 @@ public class TestTerritoryMap {
 
     private JavaQuest game;
     private TerritoryMapImpl map;
-    private Joystick joystick;
+    private Me me;
 
     public int getSize() {
         return 100;
@@ -56,17 +56,17 @@ public class TestTerritoryMap {
 
         Settings settings = new Settings() {
             @Override
-            public int getViewAreaSize() {
+            public int viewSize() {
                 return TestTerritoryMap.this.getViewAreaSize();
             }
 
             @Override
-            public MapLoader getMapLoader() {
+            public MapLoader mapLoader() {
                 return mapLoader;
             }
 
             @Override
-            public MonsterPool getMonsters() {
+            public MonsterPool monsters() {
                 return new MonsterPool() {
                     @Override
                     public Monster next() {
@@ -83,7 +83,7 @@ public class TestTerritoryMap {
         };
         game = new JavaQuest(settings);
         map = (TerritoryMapImpl)game.getTerritoryMap();
-        joystick = game.getMe();
+        me = game.newPlayer();
     }
 
     @Test
@@ -113,7 +113,7 @@ public class TestTerritoryMap {
 
     private String getMap() {
         StringOutputStream out = new StringOutputStream();
-        map.printNear(me(), out);
+        map.printNear(me, out);
         return out.getResult();
     }
 
@@ -604,12 +604,8 @@ public class TestTerritoryMap {
     }
 
     private void verifyXY(int x, int y) {
-        assertEquals(x, me().getX());
-        assertEquals(y, me().getY());
-    }
-    
-    public Me me() {
-        return (Me)game.getMe();
+        assertEquals(x, me.getX());
+        assertEquals(y, me.getY());
     }
 
     @Test
@@ -659,20 +655,20 @@ public class TestTerritoryMap {
 
     private void moveTo(int x, int y) throws Exception {
         int count = 0;
-        while (Math.abs(me().getX() - x) != 0 || Math.abs(me().getY() - y) != 0) {
+        while (Math.abs(me.getX() - x) != 0 || Math.abs(me.getY() - y) != 0) {
             if (count++ > 1000) {
                 throw new RuntimeException(String.format(
                         "Я не могу пройти сюда! My x=%s and y=%s, and view:\n%s",
-                        me().getX(), me().getY(), map.getViewArea(me())));
+                        me.getX(), me.getY(), map.getViewArea(me)));
             }
-            if (me().getY() < y) {
+            if (me.getY() < y) {
                 moveUp();
-            } else if (me().getY() > y) {
+            } else if (me.getY() > y) {
                 moveDown();
             }
-            if (me().getX() < x) {
+            if (me.getX() < x) {
                 moveRight();
-            } else if (me().getX() > x) {
+            } else if (me.getX() > x) {
                 moveLeft();
             }
         }
@@ -680,17 +676,17 @@ public class TestTerritoryMap {
     }
 
     private void moveLeft() {
-        joystick.moveLeft();
+        me.moveLeft();
         game.tick();
     }
 
     private void moveUp() {
-        joystick.moveUp();
+        me.moveUp();
         game.tick();
     }
 
     private void moveDown() {
-        joystick.moveDown();
+        me.moveDown();
         game.tick();
     }
 
@@ -701,7 +697,7 @@ public class TestTerritoryMap {
         assertMessage("Monster: Сразись со мной!");
 
         assertEquals("немногоКода('для подсказки');",
-                game.getCodeHelper().getCode());
+                game.getCodeHelper(me).getCode());
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -797,7 +793,7 @@ public class TestTerritoryMap {
     }
 
     private void attack(String message) {
-        joystick.attack(message);
+        me.attack(message);
         game.tick();
     }
 
@@ -854,7 +850,7 @@ public class TestTerritoryMap {
     }
 
     private void moveRight() {
-        joystick.moveRight();
+        me.moveRight();
         game.tick();
     }
 
@@ -909,11 +905,11 @@ public class TestTerritoryMap {
     }
 
     private void assertInfo(String info) {
-        assertEquals(info, game.getPlayerInfo().toString());
+        assertEquals(info, me.getInfo().toString());
     }
 
     private void assertMessage(String message) {
-        assertEquals(message, withoutSeparator(game.getMessage()));
+        assertEquals(message, withoutSeparator(me.getMessages().get()));
     }
 
     @Test

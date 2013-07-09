@@ -1,20 +1,20 @@
 package apofig.javaquest.console;
 
-import apofig.javaquest.map.JavaQuest;
+import apofig.javaquest.map.JavaQuestSinglePlayer;
 import apofig.javaquest.map.Joystick;
 
 public class Runner {
 	
-	private JavaQuest game;
+	private JavaQuestSinglePlayer game;
 	private Console console;
 		
-	public Runner(JavaQuest game, Console console) {
+	public Runner(JavaQuestSinglePlayer game, Console console) {
 		this.game = game;
 		this.console = console;
 	}
 
 	public void playGame() {
-		Joystick player = game.getMe();
+		Joystick player = game.getJoystick();
 
         int ch = 0;
 		do {		

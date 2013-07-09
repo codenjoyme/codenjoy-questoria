@@ -1,15 +1,9 @@
 package apofig.javaquest.services;
 
-import apofig.javaquest.map.JavaQuest;
-import apofig.javaquest.map.LoadMapFromFile;
-import apofig.javaquest.map.MapLoader;
-import apofig.javaquest.map.Settings;
+import apofig.javaquest.map.*;
 import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.springframework.stereotype.Component;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * User: sanja
@@ -19,26 +13,26 @@ import java.util.List;
 @Component("playerService")
 public class PlayerServiceImpl implements PlayerService {
 
-    private List<JavaQuest> games;
+    private JavaQuest game;
 
     public PlayerServiceImpl() {
-        games = new LinkedList<JavaQuest>();
+        game = new JavaQuest(settings());
     }
 
-    private Settings getSettings() {
+    private Settings settings() {
         return new Settings() {
             @Override
-            public int getViewAreaSize() {
+            public int viewSize() {
                 return 41;
             }
 
             @Override
-            public MapLoader getMapLoader() {
+            public MapLoader mapLoader() {
                 return new LoadMapFromFile("map.txt");
             }
 
             @Override
-            public MonsterPool getMonsters() {
+            public MonsterPool monsters() {
                 return new MonsterFactoryImpl();
             }
         };
@@ -46,16 +40,12 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void nextStepForAllGames() {
-        for (JavaQuest game : games) {
-            game.tick();
-        }
+        game.tick();
     }
 
     @Override
-    public JavaQuest newGame() {
-        JavaQuest game = new JavaQuest(getSettings());
-        games.add(game);
-        return game;
+    public JavaQuestSinglePlayer newGame() {
+        return new JavaQuestSinglePlayer(game);
     }
 
 }

@@ -62,27 +62,22 @@ public class LoadMapFromFile implements MapLoader {
     }
 
     @Override
-    public int getWidth() {
+    public int width() {
         return map.getWidth();
     }
 
     @Override
-    public int getHeight() {
+    public int height() {
         return map.getHeight();
     }
 
     @Override
-    public Map getMap() {
+    public Map map() {
         return map;
     }
 
     @Override
-    public int getPlayerX() {
-        return posx;
-    }
-
-    @Override
-    public int getPlayerY() {
-        return posy;
+    public Point initPosition() {
+        return new PointImpl(posx, posy);
     }
 }

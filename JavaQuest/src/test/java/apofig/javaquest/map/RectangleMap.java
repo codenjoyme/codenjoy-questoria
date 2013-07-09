@@ -31,27 +31,22 @@ public class RectangleMap implements MapLoader {
     }
 
     @Override
-    public int getWidth() {
+    public int width() {
         return width;
     }
 
     @Override
-    public Map getMap() {
+    public Map map() {
         return map;
     }
 
     @Override
-    public int getPlayerX() {
-        return posx;
+    public Point initPosition() {
+        return new PointImpl(posx, posy);
     }
 
     @Override
-    public int getPlayerY() {
-        return posy;
-    }
-
-    @Override
-    public int getHeight() {
+    public int height() {
         return height;
     }
 }

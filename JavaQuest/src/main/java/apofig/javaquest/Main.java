@@ -3,10 +3,7 @@ package apofig.javaquest;
 import apofig.javaquest.console.Console;
 import apofig.javaquest.console.ConsoleImpl;
 import apofig.javaquest.console.Runner;
-import apofig.javaquest.map.JavaQuest;
-import apofig.javaquest.map.LoadMapFromFile;
-import apofig.javaquest.map.MapLoader;
-import apofig.javaquest.map.Settings;
+import apofig.javaquest.map.*;
 import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
 import apofig.javaquest.map.object.monster.MonsterPool;
 
@@ -20,21 +17,21 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Settings settings = new Settings() {
             @Override
-            public int getViewAreaSize() {
+            public int viewSize() {
                 return 41;
             }
 
             @Override
-            public MapLoader getMapLoader() {
+            public MapLoader mapLoader() {
                 return new LoadMapFromFile("map.txt");
             }
 
             @Override
-            public MonsterPool getMonsters() {
+            public MonsterPool monsters() {
                 return new MonsterFactoryImpl();
             }
         };
-        JavaQuest game = new JavaQuest(settings);
+        JavaQuestSinglePlayer game = new JavaQuestSinglePlayer(new JavaQuest(settings));
         Console console = new ConsoleImpl();
         new Runner(game, console).playGame();
     }

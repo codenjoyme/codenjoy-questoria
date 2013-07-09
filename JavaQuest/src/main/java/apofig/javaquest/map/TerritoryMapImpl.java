@@ -28,9 +28,9 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     public TerritoryMapImpl(MapLoader loader, ObjectFactory objects) {
         this.objects = objects;
-        width = loader.getWidth();
-        height = loader.getHeight();
-        map = loader.getMap();
+        width = loader.width();
+        height = loader.height();
+        map = loader.map();
         fogs = new HashMap<Me, Map>();
     }
 

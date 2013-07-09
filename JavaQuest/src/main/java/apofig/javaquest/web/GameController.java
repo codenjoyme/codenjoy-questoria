@@ -1,6 +1,6 @@
 package apofig.javaquest.web;
 
-import apofig.javaquest.map.JavaQuest;
+import apofig.javaquest.map.JavaQuestSinglePlayer;
 import apofig.javaquest.map.Joystick;
 import apofig.javaquest.map.Player;
 import apofig.javaquest.services.PlayerService;
@@ -34,8 +34,8 @@ public class GameController {
 
     @RequestMapping(value = "/answer", method = RequestMethod.GET)
     public ModelAndView command(Model model, HttpSession session, @RequestParam String command) throws JSONException {
-        JavaQuest game = getGameFrom(session);
-        Joystick joystick = game.getMe();
+        JavaQuestSinglePlayer game = getGameFrom(session);
+        Joystick joystick = game.getJoystick();
         if (command.equals("up")) {
             joystick.moveUp();
         } else if (command.equals("down")) {
@@ -63,11 +63,11 @@ public class GameController {
     }
 
     private String printGame(Model model, HttpSession session) {
-        JavaQuest game = getGameFrom(session);
+        JavaQuestSinglePlayer game = getGameFrom(session);
         return print(model, getMap(game), game.getPlayerInfo());
     }
 
-    private String getMap(JavaQuest game) {
+    private String getMap(JavaQuestSinglePlayer game) {
         return Colorizer.process(game.toString());
     }
 
@@ -78,11 +78,11 @@ public class GameController {
         return "game";
     }
 
-    private JavaQuest getGameFrom(HttpSession session) {
-        JavaQuest game = (JavaQuest)session.getAttribute("getGameFrom");
+    private JavaQuestSinglePlayer getGameFrom(HttpSession session) {
+        JavaQuestSinglePlayer game = (JavaQuestSinglePlayer)session.getAttribute("game");
         if (game == null) {
             game = playerService.newGame();
-            session.setAttribute("getGameFrom", game);
+            session.setAttribute("game", game);
         }
         return game;
     }

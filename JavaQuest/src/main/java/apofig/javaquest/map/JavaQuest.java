@@ -1,7 +1,11 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: oleksandr.baglai
@@ -12,23 +16,30 @@ public class JavaQuest implements Tickable {
 
     private TerritoryMap map;
     private ObjectFactory objects;
-    private Me me;
+    private List<Me> players;
+    private int viewSize;
+    private Point initPosition;
 
     public JavaQuest(Settings settings) {
-        objects = new ObjectFactoryImpl(settings.getMonsters());
-        MapLoader loader = settings.getMapLoader();
+        objects = new ObjectFactoryImpl(settings.monsters());
+        MapLoader loader = settings.mapLoader();
         map = new TerritoryMapImpl(loader, objects);
-
-        newHero(settings.getViewAreaSize(), loader.getPlayerX(), loader.getPlayerY());
-        map.openSpace(me);
+        players = new LinkedList<Me>();
+        viewSize = settings.viewSize();
+        initPosition = settings.mapLoader().initPosition();
     }
 
-    private void newHero(int viewAreaSize, int x, int y) {
-        PlayerView view = new PlayerView(viewAreaSize);
+    public Me newPlayer() {
+        PlayerView view = new PlayerView(viewSize);
         Player info = new Player();
-        me = new Me(map, view, x, y, info);
-        me.setMessages(new Messages());
-        me.setFactory(objects);
+        Me player = new Me(map, view, initPosition.getX(), initPosition.getY(), info);
+        player.setMessages(new Messages());
+        player.setFactory(objects);
+
+        players.add(player);
+        map.openSpace(player);
+
+        return player;
     }
 
     public TerritoryMap getTerritoryMap() {
@@ -76,16 +87,8 @@ public class JavaQuest implements Tickable {
         }
     }
 
-    public String getMessage() {
-        return me.getMessages().getLast(60);
-    }
-
-    public Player getPlayerInfo() {
-        return me.getInfo();
-    }
-
-    public Something getCodeHelper() {
-        for (Something smthNear : map.getSomethingNear(me)) {
+    public Something getCodeHelper(Me player) {
+        for (Something smthNear : map.getSomethingNear(player)) {
             if (!smthNear.iCanLeave()) {
                 return smthNear;
             }
@@ -95,15 +98,13 @@ public class JavaQuest implements Tickable {
 
     @Override
     public void tick() {
-        move(me);
+        for (Me player : players) {
+            move(player);
+        }
     }
 
-    public Joystick getMe() {
-        return me;
+    public String printView(Me player) {
+        return map.getViewArea(player);
     }
 
-    @Override
-    public String toString() {
-        return map.getViewArea(me);
-    }
 }

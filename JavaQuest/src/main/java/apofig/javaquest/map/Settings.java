@@ -9,9 +9,9 @@ import apofig.javaquest.map.object.monster.MonsterPool;
  */
 public interface Settings {
 
-    int getViewAreaSize();
+    int viewSize();
 
-    MapLoader getMapLoader();
+    MapLoader mapLoader();
 
-    MonsterPool getMonsters();
+    MonsterPool monsters();
 }

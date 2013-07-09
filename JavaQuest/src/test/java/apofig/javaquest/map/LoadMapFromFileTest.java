@@ -15,11 +15,10 @@ public class LoadMapFromFileTest {
     public void shouldLoadFileToMap() throws Exception {
         MapLoader loader = new LoadMapFromFile("test_map.txt");
 
-        assertEquals(33, loader.getHeight());
-        assertEquals(35, loader.getWidth());
-        assertEquals(10, loader.getPlayerX());
-        assertEquals(8, loader.getPlayerY());
-        verifyMap(loader.getMap(),
+        assertEquals(33, loader.height());
+        assertEquals(35, loader.width());
+        assertEquals("[10,8]", loader.initPosition().toString());
+        verifyMap(loader.map(),
                 "###################################\n" +
                 "#################      ############\n" +
                 "######              @  ############\n" +
@@ -59,11 +58,10 @@ public class LoadMapFromFileTest {
     public void shouldLoadFileToMap2() throws Exception {
         MapLoader loader = new LoadMapFromFile("test_map2.txt");
 
-        assertEquals(12, loader.getHeight());
-        assertEquals(50, loader.getWidth());
-        assertEquals(2, loader.getPlayerX());
-        assertEquals(8, loader.getPlayerY());
-        verifyMap(loader.getMap(),
+        assertEquals(12, loader.height());
+        assertEquals(50, loader.width());
+        assertEquals("[2,8]", loader.initPosition().toString());
+        verifyMap(loader.map(),
                 "##################################################\n" +
                 "##################################################\n" +
                 "##################################################\n" +

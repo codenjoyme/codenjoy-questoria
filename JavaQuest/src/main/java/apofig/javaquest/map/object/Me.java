@@ -104,4 +104,24 @@ public class Me extends TalkingObject implements Point, Joystick {
     public Player getInfo() {
         return info;
     }
+
+    @Override
+    public int hashCode() {
+        return info.getName().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Me)) {
+            return false;
+        }
+
+        Me me = (Me)o;
+
+        return me.getInfo().getName().equals(info.getName());
+    }
 }

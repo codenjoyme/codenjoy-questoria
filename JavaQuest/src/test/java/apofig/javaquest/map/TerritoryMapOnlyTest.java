@@ -24,9 +24,9 @@ public class TerritoryMapOnlyTest {
 
         Map map = new Map(size, size, ' ');
 
-        when(loader.getWidth()).thenReturn(size);
-        when(loader.getHeight()).thenReturn(size);
-        when(loader.getMap()).thenReturn(map);
+        when(loader.width()).thenReturn(size);
+        when(loader.height()).thenReturn(size);
+        when(loader.map()).thenReturn(map);
 
         PlayerView view = new PlayerView(13);
 

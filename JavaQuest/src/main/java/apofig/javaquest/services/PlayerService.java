@@ -1,6 +1,8 @@
 package apofig.javaquest.services;
 
 import apofig.javaquest.map.JavaQuest;
+import apofig.javaquest.map.JavaQuestSinglePlayer;
+import apofig.javaquest.map.Joystick;
 
 /**
  * User: sanja
@@ -11,5 +13,5 @@ public interface PlayerService {
 
     void nextStepForAllGames();
 
-    JavaQuest newGame();
+    JavaQuestSinglePlayer newGame();
 }
