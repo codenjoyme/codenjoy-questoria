@@ -1,7 +1,6 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.*;
-import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
 
 import java.util.LinkedList;
@@ -69,12 +68,13 @@ public class JavaQuest implements Tickable {
 
         Something smthAtWay = map.getAt(whereToGo);
         smthAtWay.askMe();
-        if (!smthAtWay.iCanUse()) {
-            return;
+        if (smthAtWay.iCanUse()) {
+            smthAtWay.getBy(me.getInfo());
+            me.go();
+            meetWith(me);
+        } else {
+            me.stop();
         }
-        smthAtWay.getBy(me.getInfo());
-        me.go();
-        meetWith(me);
     }
 
     private void meetWith(Me me) {

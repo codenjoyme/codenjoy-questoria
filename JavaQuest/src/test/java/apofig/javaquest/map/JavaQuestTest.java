@@ -561,6 +561,18 @@ public class JavaQuestTest {
     }
 
     @Test
+    public void shouldOnlyOneMessagePerTick() {
+        testICantGoOnBoardDown();
+
+        game.tick();
+        game.tick();
+        game.tick();
+        game.tick();
+        game.tick();
+        assertMessage("Wall: Пожалуйста, остановись!");
+    }
+
+    @Test
     public void testICantGoOnBoardUp() {
         moveTo(20, getSize() - 1);
         moveUp();
@@ -1202,7 +1214,14 @@ public class JavaQuestTest {
                 "╚══════════════════════════╝");
 
         assertMessage(anotherMe,
-                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!");
+        assertMessage(me,
+                "");
+
+        game.tick();
+        game.tick();
+
+        assertMessage(anotherMe,
                 "Alien: Привет, я такой же как и ты игрок!");
         assertMessage(me,
                 "");

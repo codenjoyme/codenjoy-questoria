@@ -23,7 +23,7 @@ public class Alien extends TalkingObject implements Something {
 
     @Override
     public void askMe() {
-        say("Привет, я такой же как и ты игрок!");
+        sayUnique("Привет, я такой же как и ты игрок!");
     }
 
     @Override

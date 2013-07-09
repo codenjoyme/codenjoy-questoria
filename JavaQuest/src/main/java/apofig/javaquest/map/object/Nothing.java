@@ -57,6 +57,6 @@ public class Nothing extends TalkingObject implements Something {
 
     @Override
     public String getCode() {
-        return "no_code";
+        return "";
     }
 }

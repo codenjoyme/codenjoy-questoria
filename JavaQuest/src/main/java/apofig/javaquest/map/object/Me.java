@@ -52,7 +52,7 @@ public class Me extends TalkingObject implements Viewable, Joystick {
             move(whereToGo.getX(), whereToGo.getY());
             x = whereToGo.getX();
             y = whereToGo.getY();
-            whereToGo = null;
+            stop();
 
             map.openSpace(this);
         }
@@ -151,5 +151,9 @@ public class Me extends TalkingObject implements Viewable, Joystick {
         Me me = (Me)o;
 
         return me.getInfo().getName().equals(info.getName());
+    }
+
+    public void stop() {
+        whereToGo = null;
     }
 }
