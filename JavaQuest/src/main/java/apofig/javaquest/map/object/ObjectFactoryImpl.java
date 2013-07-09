@@ -23,7 +23,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     @Override
-    public Something make(char c, Place place) {
+    public Something get(char c, Place place) {
         for (Something smth : objects) {
             if (smth.isAt(place) && smth.symbol() == c) {
                 return smth;

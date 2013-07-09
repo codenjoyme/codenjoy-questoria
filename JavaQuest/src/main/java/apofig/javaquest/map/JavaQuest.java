@@ -11,15 +11,13 @@ import apofig.javaquest.services.Tickable;
 public class JavaQuest implements Tickable {
 
     private TerritoryMap map;
-    private ObjectFactory factory;
-    private Player info;
+    private ObjectFactory objects;
     private Me me;
 
     public JavaQuest(Settings settings) {
-        info = new Player();
-        factory = new ObjectFactoryImpl(settings.getMonsters());
+        objects = new ObjectFactoryImpl(settings.getMonsters());
         MapLoader loader = settings.getMapLoader();
-        map = new TerritoryMapImpl(loader, factory);
+        map = new TerritoryMapImpl(loader, objects);
 
         newHero(settings.getViewAreaSize(), loader.getPlayerX(), loader.getPlayerY());
         map.openSpace(me);
@@ -27,9 +25,10 @@ public class JavaQuest implements Tickable {
 
     private void newHero(int viewAreaSize, int x, int y) {
         PlayerView view = new PlayerView(viewAreaSize);
-        me = new Me(map, view, x, y);
+        Player info = new Player();
+        me = new Me(map, view, x, y, info);
         me.setMessages(new Messages());
-        me.setFactory(factory);
+        me.setFactory(objects);
     }
 
     public TerritoryMap getTerritoryMap() {
@@ -62,7 +61,7 @@ public class JavaQuest implements Tickable {
         if (!smthAtWay.iCanUse()) {
             return;
         }
-        smthAtWay.getBy(info);
+        smthAtWay.getBy(me.getInfo());
         me.go();
         meetWith(me);
     }
@@ -82,7 +81,7 @@ public class JavaQuest implements Tickable {
     }
 
     public Player getPlayerInfo() {
-        return info;
+        return me.getInfo();
     }
 
     public Something getCodeHelper() {

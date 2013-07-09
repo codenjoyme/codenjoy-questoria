@@ -12,15 +12,17 @@ public class Me extends TalkingObject implements Point, Joystick {
     private PlayerView view;
     private int x;
     private int y;
+    private Player info;
     private Point whereToGo;
 
     private TerritoryMap map;
 
-    public Me(TerritoryMap map, PlayerView view, int x, int y) {
+    public Me(TerritoryMap map, PlayerView view, int x, int y, Player info) {
         this.map = map;
         this.view = view;
         this.x = x;
         this.y = y;
+        this.info = info;
         tryToGo(0, 0);
         view.moveMeTo(this);
     }
@@ -91,6 +93,10 @@ public class Me extends TalkingObject implements Point, Joystick {
     }
 
     public Me atNewPlace() {    // TODO cheat
-        return new Me(map, view, whereToGo.getX(), whereToGo.getY());
+        return new Me(map, view, whereToGo.getX(), whereToGo.getY(), info);
+    }
+
+    public Player getInfo() {
+        return info;
     }
 }

@@ -23,10 +23,10 @@ public class TerritoryMapImpl implements TerritoryMap {
     private int height;
     protected char[][] map;
     private char[][] fog;
-    private ObjectFactory factory;
+    private ObjectFactory objects;
 
-    public TerritoryMapImpl(MapLoader loader, ObjectFactory factory) {
-        this.factory = factory;
+    public TerritoryMapImpl(MapLoader loader, ObjectFactory objects) {
+        this.objects = objects;
         width = loader.getWidth();
         height = loader.getHeight();
         map = loader.getMap();
@@ -132,7 +132,7 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public Something getAt(Point point) {
-        return factory.make(getChar(point), new MapPlace(map, point.getX(), point.getY()));
+        return objects.get(getChar(point), new MapPlace(map, point.getX(), point.getY()));
     }
 
     private char getChar(Point point) {
