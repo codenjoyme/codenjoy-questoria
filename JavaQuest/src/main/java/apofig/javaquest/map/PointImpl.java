@@ -28,4 +28,19 @@ public class PointImpl implements Point {
     public String toString() {
         return String.format("[%s,%s]", x, y);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Point)) {
+            return false;
+        }
+
+        Point point = (Point)o;
+
+        return point.getX() == x && point.getY() == y;
+    }
 }

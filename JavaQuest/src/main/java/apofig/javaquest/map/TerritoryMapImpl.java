@@ -5,9 +5,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: oleksandr.baglai
@@ -73,6 +71,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         me.view().see(me, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
+                Point pt = new PointImpl(x, y);
                 boolean startLine = x == me.view().getX();
                 if (startLine) {
                     result.append("║");
@@ -84,8 +83,12 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append("??");
                 } else if (fog(me).get(x, y) == '?' || map.get(x, y) == '?') {
                     result.append("??");
-                } else if (me.getX() == x && me.getY() == y) {
-                    result.append("I ");
+                } else if (playerAt(pt)) {
+                    if (me.isAt(pt)) {
+                        result.append("I ");
+                    } else {
+                        result.append("A ");
+                    }
                 } else {
                     result.append(map.get(x, y)).append(' ');
                 }
@@ -99,6 +102,16 @@ public class TerritoryMapImpl implements TerritoryMap {
         result.append('╚' + StringUtils.repeat("═", me.view().size()*2) + '╝');
 
         return result.toString();
+    }
+
+    private boolean playerAt(Point point) {
+        for (Me player : fogs.keySet()) {
+            if (player.isAt(point)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -134,6 +147,11 @@ public class TerritoryMapImpl implements TerritoryMap {
         });
 
         return result;
+    }
+
+    @Override
+    public Map getMap() {
+        return map;
     }
 
     @Override

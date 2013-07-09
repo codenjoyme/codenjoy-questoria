@@ -48,6 +48,7 @@ public class Me extends TalkingObject implements Point, Joystick {
             whereToGo = null;
 
             map.openSpace(this);
+            setPlace(new MapPlace(map.getMap(), x, y));
         }
     }
 
