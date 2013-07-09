@@ -1,7 +1,5 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.Map;
-
 /**
  * User: oleksandr.baglai
  * Date: 1/20/13

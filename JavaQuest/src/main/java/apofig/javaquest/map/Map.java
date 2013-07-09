@@ -1,4 +1,4 @@
-package apofig.javaquest.map.object;
+package apofig.javaquest.map;
 
 import apofig.javaquest.map.MapLoader;
 

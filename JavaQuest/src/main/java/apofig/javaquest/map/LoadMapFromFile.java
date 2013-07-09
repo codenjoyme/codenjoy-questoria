@@ -1,7 +1,5 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.Map;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;

@@ -1,6 +1,5 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.Map;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

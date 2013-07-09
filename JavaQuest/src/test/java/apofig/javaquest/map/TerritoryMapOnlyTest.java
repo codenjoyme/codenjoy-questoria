@@ -1,6 +1,5 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.Map;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.ObjectFactory;
 import org.junit.Test;
