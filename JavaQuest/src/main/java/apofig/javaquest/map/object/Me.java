@@ -76,8 +76,13 @@ public class Me extends TalkingObject implements Point, Joystick {
     }
 
     @Override
+    public String getName() {
+        return info.getName();
+    }
+
+    @Override
     public void attack(String message) {
-        messages.add("You: " + message);
+        say(message);
         if (map.getSomethingNear(this).isEmpty()) {
             Something whereIAm = map.getAt(this);
             whereIAm.answer(message);

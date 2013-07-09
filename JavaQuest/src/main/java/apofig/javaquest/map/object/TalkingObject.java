@@ -9,10 +9,10 @@ import apofig.javaquest.map.Messages;
  */
 public class TalkingObject extends MapObject implements ObjectSettings {
 
-    protected Messages messages;
+    private Messages messages;
 
     public void say(String message) {
-        messages.add(this.getClass().getSimpleName() + ": " + message);
+        messages.add(getName() + ": " + message);
     }
 
     public void sayUnique(String message) {  // TODO подумать об этом
@@ -36,5 +36,9 @@ public class TalkingObject extends MapObject implements ObjectSettings {
         Something something = super.make(c);
         ((TalkingObject)something).messages = messages; // TODO ну очень некрасиво
         return something;
+    }
+
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 }

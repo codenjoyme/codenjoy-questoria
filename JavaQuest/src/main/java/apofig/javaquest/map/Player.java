@@ -8,6 +8,7 @@ package apofig.javaquest.map;
 public class Player implements PlayerInfo {
 
     private int gold;
+    private String name = "You";
 
     public String toString() {
         return String.format("Уровень:%s Опыт:%s Здоровье:%s Золото:%s", 0, 0, 100, gold);
@@ -15,5 +16,9 @@ public class Player implements PlayerInfo {
 
     public void addGold(int count) {
         gold += count;
+    }
+
+    public String getName() {
+        return name;
     }
 }
