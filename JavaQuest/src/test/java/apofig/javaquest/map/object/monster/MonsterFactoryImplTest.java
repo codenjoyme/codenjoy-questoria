@@ -164,7 +164,7 @@ public class MonsterFactoryImplTest {
         Place place = mock(Place.class);
         Gold gold = new Gold();
         gold.setMessages(messages);
-        when(objects.get('$', place)).thenReturn(gold);
+        when(objects.get(place)).thenReturn(gold);
         monster.setFactory(objects);
         monster.setPlace(place);
     }

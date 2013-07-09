@@ -23,14 +23,14 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     @Override
-    public Something get(char c, Place place) {
+    public Something get(Place place) {
         for (Something smth : objects) {
-            if (smth.isAt(place) && smth.symbol() == c) {
+            if (smth.isAt(place) && smth.symbol() == place.getChar()) {
                 return smth;
             }
         }
 
-        ObjectSettings object = getObject(c);
+        ObjectSettings object = getObject(place.getChar());
         object.setPlace(place);
         object.setFactory(this);
 

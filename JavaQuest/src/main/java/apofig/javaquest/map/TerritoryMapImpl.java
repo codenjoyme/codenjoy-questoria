@@ -33,10 +33,6 @@ public class TerritoryMapImpl implements TerritoryMap {
         fog = loader.getFog();
     }
 
-    public boolean isOutOfWorld(Point point) {
-        return point.getX() < 0 || point.getY() < 0 || point.getY() >= height || point.getX() >= width;
-    }
-
     @Override
     public void openSpace(Me me) {
         me.view().moveMeTo(me);
@@ -132,15 +128,7 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public Something getAt(Point point) {
-        return objects.get(getChar(point), map.get(point));
-    }
-
-    private char getChar(Point point) {
-        if (isOutOfWorld(point)) {
-            return '#';
-        } else {
-            return map.get(point.getX(), point.getY());
-        }
+        return objects.get(map.get(point));
     }
 
     @Override

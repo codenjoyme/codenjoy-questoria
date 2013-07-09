@@ -23,9 +23,8 @@ public abstract class MapObject implements ObjectSettings {
     }
 
     public Something make(char c) {
-        Something something = factory.get(c, place);
         place.update(c);
-        return something;
+        return factory.get(place);
     }
 
     public boolean isAt(Point point) {

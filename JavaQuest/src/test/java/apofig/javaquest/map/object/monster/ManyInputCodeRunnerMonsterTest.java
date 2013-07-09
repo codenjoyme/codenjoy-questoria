@@ -124,7 +124,7 @@ public class ManyInputCodeRunnerMonsterTest {
                 });
         monster.setFactory(new ObjectFactory() {
             @Override
-            public Something get(char c, Place place) {
+            public Something get(Place place) {
                 Gold gold = new Gold();
                 gold.setMessages(messages);
                 gold.setFactory(this);

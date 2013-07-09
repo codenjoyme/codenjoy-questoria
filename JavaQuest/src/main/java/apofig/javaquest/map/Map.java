@@ -1,7 +1,5 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.MapLoader;
-
 import java.util.Arrays;
 
 /**
@@ -27,7 +25,13 @@ public class Map {
         }
     }
 
+    private boolean isOutOfWorld(int x, int y) {
+        return x < 0 || y < 0 || y >= getHeight() || x >= getWidth();
+    }
+
     public char get(int x, int y) {
+        if (isOutOfWorld(x, y)) return '#';
+
         return map[x][y];
     }
 

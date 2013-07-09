@@ -18,8 +18,6 @@ public interface TerritoryMap {
 
     boolean isNear(Me me, Something object);
 
-    boolean isOutOfWorld(Point point);
-
     void openSpace(Me me);
 
     String getViewArea(Me me);

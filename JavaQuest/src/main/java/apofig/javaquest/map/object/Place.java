@@ -9,4 +9,6 @@ import apofig.javaquest.map.Point;
  */
 public interface Place extends Point {
     void update(char newChar);
+
+    char getChar();
 }

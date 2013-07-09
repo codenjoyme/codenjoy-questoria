@@ -6,5 +6,5 @@ package apofig.javaquest.map.object;
  * Time: 1:49 AM
  */
 public interface ObjectFactory {
-    Something get(char c, Place place);
+    Something get(Place place);
 }

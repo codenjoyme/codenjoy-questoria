@@ -24,6 +24,11 @@ public class MapPlace implements Place {
     }
 
     @Override
+    public char getChar() {
+        return map.get(x, y);
+    }
+
+    @Override
     public int getX() {
         return x;
     }
