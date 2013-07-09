@@ -13,9 +13,9 @@ public class JavaQuestSinglePlayer {
     private JavaQuest game;
     private Me player;
 
-    public JavaQuestSinglePlayer(JavaQuest game) {
+    public JavaQuestSinglePlayer(JavaQuest game, String name) {
         this.game = game;
-        player = game.newPlayer();
+        player = game.newPlayer(name);
     }
 
     public String getMessage() {

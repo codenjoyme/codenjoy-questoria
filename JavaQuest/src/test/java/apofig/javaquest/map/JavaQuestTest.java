@@ -83,11 +83,11 @@ public class JavaQuestTest {
         };
         game = new JavaQuest(settings);
         map = (TerritoryMapImpl)game.getTerritoryMap();
-        me = game.newPlayer();
+        me = game.newPlayer("Player1");
     }
 
     @Test
-    public void testIAmOnMap() throws Exception {
+    public void testIAmOnMap() {
         game.tick();
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -107,18 +107,22 @@ public class JavaQuestTest {
                 "╚══════════════════════════╝");
     }
 
-    private void asrtMap(String expected) throws Exception {
-        assertEquals(expected, getMap());
+    private void asrtMap(String expected) {
+        assertEquals(expected, getMap(me));
     }
 
-    private String getMap() {
+    private void asrtMap(String expected, Me me) {
+        assertEquals(expected, getMap(me));
+    }
+
+    private String getMap(Me me) {
         StringOutputStream out = new StringOutputStream();
         map.printNear(me, out);
         return out.getResult();
     }
 
     @Test
-    public void testIGoRight() throws Exception {
+    public void testIGoRight() {
         moveRight();
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -139,7 +143,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoRightTwice() throws Exception {
+    public void testIGoRightTwice() {
         moveRight();
         moveRight();
 
@@ -161,7 +165,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoRightThreeTimes() throws Exception {
+    public void testIGoRightThreeTimes() {
         moveRight();
         moveRight();
         moveRight();
@@ -184,7 +188,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoRightSevenTimes() throws Exception {
+    public void testIGoRightSevenTimes() {
         moveRight();
         moveRight();
         moveRight();
@@ -211,7 +215,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoLeft() throws Exception {
+    public void testIGoLeft() {
         moveLeft();
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -232,7 +236,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoLeftFourTimes() throws Exception {
+    public void testIGoLeftFourTimes() {
         moveLeft();
         moveLeft();
         moveLeft();
@@ -256,7 +260,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoUp() throws Exception {
+    public void testIGoUp() {
         moveUp();
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -277,7 +281,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoUpTwice() throws Exception {
+    public void testIGoUpTwice() {
         moveUp();
         moveUp();
 
@@ -299,7 +303,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoUpFiveTimes() throws Exception {
+    public void testIGoUpFiveTimes() {
         moveUp();
         moveUp();
         moveUp();
@@ -324,7 +328,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoUpSixTimes() throws Exception {
+    public void testIGoUpSixTimes() {
         moveUp();
         moveUp();
         moveUp();
@@ -350,7 +354,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoDownTwice() throws Exception {
+    public void testIGoDownTwice() {
         moveDown();
         moveDown();
 
@@ -372,7 +376,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoDownFourTimes() throws Exception {
+    public void testIGoDownFourTimes() {
         moveDown();
         moveDown();
         moveDown();
@@ -396,7 +400,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoDownFiveTimes() throws Exception {
+    public void testIGoDownFiveTimes() {
         moveDown();
         moveDown();
         moveDown();
@@ -421,7 +425,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testIGoDownSixTimes() throws Exception {
+    public void testIGoDownSixTimes() {
         moveDown();
         moveDown();
         moveDown();
@@ -448,7 +452,7 @@ public class JavaQuestTest {
 
 
     @Test
-    public void testCheckGoToBoardLeftDown() throws Exception {
+    public void testCheckGoToBoardLeftDown() {
         moveTo(5, 5);
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -469,7 +473,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testTryToOpenViewOnBoardLeftDown() throws Exception {
+    public void testTryToOpenViewOnBoardLeftDown() {
         moveTo(1, 1);
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -490,7 +494,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testCheckGoToBoardUpRight() throws Exception {
+    public void testCheckGoToBoardUpRight() {
         moveTo(getSize() - 6, getSize() - 6);
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -511,7 +515,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testTryToOpenViewOnBoardUpRight() throws Exception {
+    public void testTryToOpenViewOnBoardUpRight() {
         moveTo(getSize() - 2, getSize() - 2);
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -532,7 +536,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testICantGoOnBoardDown() throws Exception {
+    public void testICantGoOnBoardDown() {
         moveTo(20, 0);
         moveDown();
 
@@ -556,7 +560,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testICantGoOnBoardUp() throws Exception {
+    public void testICantGoOnBoardUp() {
         moveTo(20, getSize() - 1);
         moveUp();
 
@@ -580,7 +584,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testICantGoOnBoardLeft() throws Exception {
+    public void testICantGoOnBoardLeft() {
         moveTo(0, 20);
         moveLeft();
 
@@ -609,7 +613,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testICantGoOnBoardRight() throws Exception {
+    public void testICantGoOnBoardRight() {
         moveTo(getSize() - 1, 20);
         moveRight();
 
@@ -633,7 +637,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testWhenMoveICanFindMonster() throws Exception {
+    public void testWhenMoveICanFindMonster() {
         moveTo(getMonsterX() - 3, getMonsterY());
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -653,7 +657,7 @@ public class JavaQuestTest {
                 "╚══════════════════════════╝");
     }
 
-    private void moveTo(int x, int y) throws Exception {
+    private void moveTo(int x, int y) {
         int count = 0;
         while (Math.abs(me.getX() - x) != 0 || Math.abs(me.getY() - y) != 0) {
             if (count++ > 1000) {
@@ -676,8 +680,7 @@ public class JavaQuestTest {
     }
 
     private void moveLeft() {
-        me.moveLeft();
-        game.tick();
+        moveLeft(me);
     }
 
     private void moveUp() {
@@ -691,7 +694,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void testWhenITalkWithMonster() throws Exception {
+    public void testWhenITalkWithMonster() {
         moveTo(getMonsterX() - 1, getMonsterY());
 
         assertMessage("Monster: Сразись со мной!");
@@ -717,7 +720,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldNoMoveWhenITalkWithMonster() throws Exception {
+    public void shouldNoMoveWhenITalkWithMonster() {
         moveTo(getMonsterX() - 1, getMonsterY());
         moveRight();
 
@@ -742,7 +745,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldKillMonsterWhenAttack() throws Exception {
+    public void shouldKillMonsterWhenAttack() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
 
@@ -768,7 +771,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldMonsterStillAliveWhenBadAttack() throws Exception {
+    public void shouldMonsterStillAliveWhenBadAttack() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("No!!!");
 
@@ -798,7 +801,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldMonsterStillAliveWhenBadAttackTwice() throws Exception {
+    public void shouldMonsterStillAliveWhenBadAttackTwice() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("No!!!");
         attack("Nooooo!!!");
@@ -826,7 +829,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldNoMoveWhenITryToGoOnWall() throws Exception {
+    public void shouldNoMoveWhenITryToGoOnWall() {
         moveTo(getWallX() - 1, getWallY());
         moveRight();
 
@@ -855,7 +858,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldGetGoldAfterMonsterDie() throws Exception {
+    public void shouldGetGoldAfterMonsterDie() {
         moveTo(getMonsterX() - 2, getMonsterY());
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
 
@@ -913,7 +916,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldLeaveGoldAfterMonsterDie() throws Exception {
+    public void shouldLeaveGoldAfterMonsterDie() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
 
@@ -940,7 +943,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldNoRepeatMessageAgain() throws Exception {
+    public void shouldNoRepeatMessageAgain() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
         moveUp();
@@ -968,7 +971,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldNoKillGold() throws Exception {
+    public void shouldNoKillGold() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
         attack("Gold die!");
@@ -997,7 +1000,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldSomeMessageAfterGetGold() throws Exception {
+    public void shouldSomeMessageAfterGetGold() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
         moveRight();  // get gold
@@ -1027,7 +1030,7 @@ public class JavaQuestTest {
     }
 
     @Test
-    public void shouldGoAwayFromGold() throws Exception {
+    public void shouldGoAwayFromGold() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
         moveLeft();
@@ -1053,6 +1056,71 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
+    }
+
+    @Test
+    public void shouldTwoPlayersOnMapWhenCreateSecondPlayer() {
+        moveDown();
+        moveDown();
+        moveDown();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????????      ??????????║\n" +
+                "║??????              ??????║\n" +
+                "║????                  ????║\n" +
+                "║????                  ????║\n" +
+                "║??                      ??║\n" +
+                "║??                      ??║\n" +
+                "║??                      ??║\n" +
+                "║??                      ??║\n" +
+                "║??          I           ??║\n" +
+                "║??                      ??║\n" +
+                "║????                  ????║\n" +
+                "║????                  ????║\n" +
+                "╚══════════════════════════╝");
+
+        Me anotherMe = game.newPlayer("Player2");
+        moveLeft(anotherMe);
+        moveLeft(anotherMe);
+        moveLeft(anotherMe);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????????      ??????????║\n" +
+                "║??????              ??????║\n" +
+                "║????                  ????║\n" +
+                "║????                  ????║\n" +
+                "║??                      ??║\n" +
+                "║??                      ??║\n" +
+                "║??                      ??║\n" +
+                "║??                      ??║\n" +
+                "║??          I           ??║\n" +
+                "║??                      ??║\n" +
+                "║????                  ????║\n" +
+                "║????                  ????║\n" +
+                "╚══════════════════════════╝", me);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║????            ??????????║\n" +
+                "║                    ??????║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                        ??║\n" +
+                "║      I                 ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                    ??????║\n" +
+                "║????            ??????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝", anotherMe);
+    }
+
+    private void moveLeft(Me anotherMe) {
+        anotherMe.moveLeft();
+        game.tick();
     }
 
 }

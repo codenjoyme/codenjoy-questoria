@@ -44,8 +44,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public JavaQuestSinglePlayer newGame() {
-        return new JavaQuestSinglePlayer(game);
+    public JavaQuestSinglePlayer newGame(String playerName) {
+        return new JavaQuestSinglePlayer(game, playerName);
     }
 
 }

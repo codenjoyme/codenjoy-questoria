@@ -31,7 +31,7 @@ public class Main {
                 return new MonsterFactoryImpl();
             }
         };
-        JavaQuestSinglePlayer game = new JavaQuestSinglePlayer(new JavaQuest(settings));
+        JavaQuestSinglePlayer game = new JavaQuestSinglePlayer(new JavaQuest(settings), "You");
         Console console = new ConsoleImpl();
         new Runner(game, console).playGame();
     }

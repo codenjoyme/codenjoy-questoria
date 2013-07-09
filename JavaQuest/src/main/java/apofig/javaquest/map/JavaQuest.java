@@ -29,9 +29,9 @@ public class JavaQuest implements Tickable {
         initPosition = settings.mapLoader().initPosition();
     }
 
-    public Me newPlayer() {
+    public Me newPlayer(String name) {
         PlayerView view = new PlayerView(viewSize);
-        Player info = new Player();
+        Player info = new Player(name);
         Me player = new Me(map, view, initPosition.getX(), initPosition.getY(), info);
         player.setMessages(new Messages());
         player.setFactory(objects);

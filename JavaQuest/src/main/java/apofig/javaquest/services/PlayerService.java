@@ -13,5 +13,5 @@ public interface PlayerService {
 
     void nextStepForAllGames();
 
-    JavaQuestSinglePlayer newGame();
+    JavaQuestSinglePlayer newGame(String playerName);
 }

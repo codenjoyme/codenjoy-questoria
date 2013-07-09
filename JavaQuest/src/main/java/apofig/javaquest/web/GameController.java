@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Random;
 
 /**
  * User: oleksandr.baglai
@@ -81,10 +82,14 @@ public class GameController {
     private JavaQuestSinglePlayer getGameFrom(HttpSession session) {
         JavaQuestSinglePlayer game = (JavaQuestSinglePlayer)session.getAttribute("game");
         if (game == null) {
-            game = playerService.newGame();
+            game = playerService.newGame(getName());
             session.setAttribute("game", game);
         }
         return game;
+    }
+
+    private String getName() {   // TODO исправить это
+        return String.valueOf(new Random().nextInt(Integer.MAX_VALUE));
     }
 
 }
