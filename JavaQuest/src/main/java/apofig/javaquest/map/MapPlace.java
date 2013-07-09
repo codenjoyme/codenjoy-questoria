@@ -1,6 +1,7 @@
-package apofig.javaquest.map.object;
+package apofig.javaquest.map;
 
 import apofig.javaquest.map.Map;
+import apofig.javaquest.map.object.Place;
 
 /**
  * User: oleksandr.baglai

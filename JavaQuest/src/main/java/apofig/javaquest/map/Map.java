@@ -42,4 +42,8 @@ public class Map {
     public int getHeight() {
         return map[0].length;
     }
+
+    public MapPlace get(Point point) {
+        return new MapPlace(this, point.getX(), point.getY());
+    }
 }

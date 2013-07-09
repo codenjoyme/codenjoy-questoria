@@ -132,11 +132,7 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public Something getAt(Point point) {
-        return objects.get(getChar(point), mapPlace(point));
-    }
-
-    private MapPlace mapPlace(Point point) {
-        return new MapPlace(map, point.getX(), point.getY());
+        return objects.get(getChar(point), map.get(point));
     }
 
     private char getChar(Point point) {
