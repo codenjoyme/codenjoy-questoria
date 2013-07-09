@@ -22,10 +22,8 @@ public class TerritoryMapOnlyTest {
 
         int size = 21;
 
-        Map fog = new Map(size, size, '?');
         Map map = new Map(size, size, ' ');
 
-        when(loader.getFog()).thenReturn(fog);
         when(loader.getWidth()).thenReturn(size);
         when(loader.getHeight()).thenReturn(size);
         when(loader.getMap()).thenReturn(map);

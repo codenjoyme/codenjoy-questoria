@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     private int width;
     private int height;
     private Map map;
-    private Map fog;
+    private java.util.Map<Me, Map> fogs;
     private ObjectFactory objects;
 
     public TerritoryMapImpl(MapLoader loader, ObjectFactory objects) {
@@ -30,12 +31,14 @@ public class TerritoryMapImpl implements TerritoryMap {
         width = loader.getWidth();
         height = loader.getHeight();
         map = loader.getMap();
-        fog = loader.getFog();
+        fogs = new HashMap<Me, Map>();
     }
 
     @Override
     public void openSpace(Me me) {
-        me.view().moveMeTo(me);
+        final Map fog = fog(me);
+
+        me.view().moveMeTo(me);  // TODO подумать над этим
 
         me.view().see(me, width, height, new Apply() {
             @Override
@@ -45,6 +48,13 @@ public class TerritoryMapImpl implements TerritoryMap {
                 }
             }
         });
+    }
+
+    private Map fog(Me me) {
+        if (!fogs.containsKey(me)) {
+            fogs.put(me, new Map(width, height, '?'));
+        }
+        return fogs.get(me);
     }
 
     public void printNear(Me me, OutputStream out) {
@@ -72,7 +82,7 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append("##");
                 } else if (isWall && !canSee) {
                     result.append("??");
-                } else if (fog.get(x, y) == '?' || map.get(x, y) == '?') {
+                } else if (fog(me).get(x, y) == '?' || map.get(x, y) == '?') {
                     result.append("??");
                 } else if (me.getX() == x && me.getY() == y) {
                     result.append("I ");

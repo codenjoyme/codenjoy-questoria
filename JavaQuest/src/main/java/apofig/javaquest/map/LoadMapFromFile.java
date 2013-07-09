@@ -16,7 +16,6 @@ import java.util.Scanner;
 public class LoadMapFromFile implements MapLoader {
 
     private Map map;
-    private Map fog;
     private int posx;
     private int posy;
 
@@ -27,7 +26,6 @@ public class LoadMapFromFile implements MapLoader {
         int width = lines.size();
 
         map = new Map(height, width);
-        fog = new Map(height, width, '?');
 
         for (int y = 0; y < width; y++) {
             String line = lines.get(y);
@@ -76,11 +74,6 @@ public class LoadMapFromFile implements MapLoader {
     @Override
     public Map getMap() {
         return map;
-    }
-
-    @Override
-    public Map getFog() {
-        return fog;
     }
 
     @Override

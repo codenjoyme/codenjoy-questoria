@@ -10,8 +10,6 @@ public interface MapLoader {
 
     Map getMap();
 
-    Map getFog();
-
     int getPlayerX();
 
     int getPlayerY();
