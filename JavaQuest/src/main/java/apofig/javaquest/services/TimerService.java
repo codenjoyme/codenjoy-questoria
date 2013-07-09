@@ -33,7 +33,11 @@ public class TimerService implements Runnable {
             return;
         }
 
-        playerService.nextStepForAllGames();
+        try {
+            playerService.nextStepForAllGames();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void pause() {
