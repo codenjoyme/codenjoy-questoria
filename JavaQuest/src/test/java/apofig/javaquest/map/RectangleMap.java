@@ -1,5 +1,7 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Map;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/20/13
@@ -7,8 +9,8 @@ package apofig.javaquest.map;
  */
 public class RectangleMap implements MapLoader {
 
-    private char[][] map;
-    private char[][] fog;
+    private Map map;
+    private Map fog;
     private int posx;
     private int posy;
     private int width;
@@ -17,22 +19,19 @@ public class RectangleMap implements MapLoader {
     public RectangleMap(int width, int height) {
         this.width = width;
         this.height = height;
-        map = new char[width][height];
-        fog = new char[width][height];
-
-        Utils.fill(fog, '?');
-        Utils.fill(map, ' ');
+        map = new Map(width, height, ' ');
+        fog = new Map(width, height, '?');
 
         posx = 20;
         posy = 20;
     }
 
     public void setMonster(int x, int y) {
-        map[x][y] = '@';
+        map.set(x, y, '@');
     }
 
     public void setWall(int wallX, int wallY) {
-        map[wallX][wallY] = '#';
+        map.set(wallX, wallY, '#');
     }
 
     @Override
@@ -41,12 +40,12 @@ public class RectangleMap implements MapLoader {
     }
 
     @Override
-    public char[][] getMap() {
+    public Map getMap() {
         return map;
     }
 
     @Override
-    public char[][] getFog() {
+    public Map getFog() {
         return fog;
     }
 

@@ -1,5 +1,7 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Map;
+
 import java.util.Arrays;
 
 /**
@@ -10,22 +12,13 @@ import java.util.Arrays;
 public interface MapLoader {
     int getWidth();
 
-    char[][] getMap();
+    Map getMap();
 
-    char[][] getFog();
+    Map getFog();
 
     int getPlayerX();
 
     int getPlayerY();
 
     int getHeight();
-
-    static class Utils {
-        public static void fill(char[][] m, char с) {
-            for (int x = 0; x < m.length; x++) {
-                Arrays.fill(m[x], с);
-            }
-        }
-    }
-
 }

@@ -21,8 +21,8 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     private int width;
     private int height;
-    protected char[][] map;
-    private char[][] fog;
+    private Map map;
+    private Map fog;
     private ObjectFactory objects;
 
     public TerritoryMapImpl(MapLoader loader, ObjectFactory objects) {
@@ -45,7 +45,7 @@ public class TerritoryMapImpl implements TerritoryMap {
             @Override
             public void xy(int xx, int yy, boolean canSee, boolean isWall) {
                 if (canSee && !isWall) {
-                    fog[xx][yy] = ' ';
+                    fog.set(xx, yy, ' ');
                 }
             }
         });
@@ -76,12 +76,12 @@ public class TerritoryMapImpl implements TerritoryMap {
                     result.append("##");
                 } else if (isWall && !canSee) {
                     result.append("??");
-                } else if (fog[x][y] == '?' || map[x][y] == '?') {
+                } else if (fog.get(x, y) == '?' || map.get(x, y) == '?') {
                     result.append("??");
                 } else if (me.getX() == x && me.getY() == y) {
                     result.append("I ");
                 } else {
-                    result.append(map[x][y]).append(' ');
+                    result.append(map.get(x, y)).append(' ');
                 }
 
                 boolean endLine = x == me.view().getX() + me.view().size() - 1;
@@ -102,7 +102,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         me.view().near(me, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (!isWall && map[x][y] != ' ' && map[x][y] != '#') {
+                if (!isWall && map.get(x, y) != ' ' && map.get(x, y) != '#') {
                     result.add(getAt(new PointImpl(x, y)));
                 }
             }
@@ -119,7 +119,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         me.view().near(me, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (!isWall && map[x][y] == ' ') {
+                if (!isWall && map.get(x, y) == ' ') {
                     return;
                 }
 
@@ -132,14 +132,18 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public Something getAt(Point point) {
-        return objects.get(getChar(point), new MapPlace(map, point.getX(), point.getY()));
+        return objects.get(getChar(point), mapPlace(point));
+    }
+
+    private MapPlace mapPlace(Point point) {
+        return new MapPlace(map, point.getX(), point.getY());
     }
 
     private char getChar(Point point) {
         if (isOutOfWorld(point)) {
             return '#';
         } else {
-            return map[point.getX()][point.getY()];
+            return map.get(point.getX(), point.getY());
         }
     }
 
@@ -150,7 +154,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         me.view().near(me, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (!isWall && map[x][y] == object.symbol()) {
+                if (!isWall && map.get(x, y) == object.symbol()) {
                     result[0] = true;
                 }
             }

@@ -1,5 +1,6 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Map;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -118,14 +119,14 @@ public class LoadMapFromFileTest {
                 "???????????????????????????????????\n");
     }
 
-    private void verifyMap(char[][] map, String expected) throws Exception {
-        int width = map.length;
-        int height = map[0].length;
+    private void verifyMap(Map map, String expected) throws Exception {
+        int width = map.getWidth();
+        int height = map.getHeight();
 
         final StringBuffer result = new StringBuffer();
         for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
-                result.append(map[x][y]);
+                result.append(map.get(x, y));
             }
             result.append('\n');
         }

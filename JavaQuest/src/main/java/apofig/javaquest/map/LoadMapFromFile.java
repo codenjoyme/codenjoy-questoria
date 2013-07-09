@@ -1,5 +1,7 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Map;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -15,28 +17,30 @@ import java.util.Scanner;
  */
 public class LoadMapFromFile implements MapLoader {
 
-    private char[][] map;
-    private char[][] fog;
+    private Map map;
+    private Map fog;
     private int posx;
     private int posy;
 
     public LoadMapFromFile(String fileName) {
         List<String> lines = loadFromFile(fileName);
 
-        map = new char[lines.get(0).length()][lines.size()];
-        fog = new char[lines.get(0).length()][lines.size()];
-        Utils.fill(fog, '?');
+        int height = lines.get(0).length();
+        int width = lines.size();
 
-        for (int y = 0; y < lines.size(); y++) {
+        map = new Map(height, width);
+        fog = new Map(height, width, '?');
+
+        for (int y = 0; y < width; y++) {
             String line = lines.get(y);
-            int dy = lines.size() - 1 - y;
+            int dy = width - 1 - y;
             for (int x = 0; x < line.length(); x++) {
-                map[x][dy] = line.charAt(x);
+                map.set(x, dy, line.charAt(x));
 
-                if (map[x][dy] == 'I') {
+                if (map.get(x, dy) == 'I') {
                     posx = x;
                     posy = dy;
-                    map[x][dy] = ' ';
+                    map.set(x, dy, ' ');
                 }
             }
         }
@@ -63,21 +67,21 @@ public class LoadMapFromFile implements MapLoader {
 
     @Override
     public int getWidth() {
-        return map.length;
+        return map.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return map[0].length;
+        return map.getHeight();
     }
 
     @Override
-    public char[][] getMap() {
+    public Map getMap() {
         return map;
     }
 
     @Override
-    public char[][] getFog() {
+    public Map getFog() {
         return fog;
     }
 

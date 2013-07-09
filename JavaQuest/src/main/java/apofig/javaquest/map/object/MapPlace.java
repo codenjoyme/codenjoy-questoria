@@ -6,18 +6,18 @@ package apofig.javaquest.map.object;
  * Time: 1:50 AM
  */
 public class MapPlace implements Place {
-    private char[][] map;
+    private Map map;
     private final int x;
     private final int y;
 
-    public MapPlace(char[][] map, int x, int y) {
+    public MapPlace(Map map, int x, int y) {
         this.map = map;
         this.x = x;
         this.y = y;
     }
 
     public void update(char newChar) {
-        map[x][y] = newChar;
+        map.set(x, y, newChar);
     }
 
     @Override

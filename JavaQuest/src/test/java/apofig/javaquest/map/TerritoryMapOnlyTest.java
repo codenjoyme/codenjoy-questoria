@@ -1,5 +1,6 @@
 package apofig.javaquest.map;
 
+import apofig.javaquest.map.object.Map;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.ObjectFactory;
 import org.junit.Test;
@@ -22,10 +23,8 @@ public class TerritoryMapOnlyTest {
 
         int size = 21;
 
-        char[][] fog = new char[size][size];
-        char[][] map = new char[size][size];
-        PlayerViewTest.fill(fog, '?');
-        PlayerViewTest.fill(map, ' ');
+        Map fog = new Map(size, size, '?');
+        Map map = new Map(size, size, ' ');
 
         when(loader.getFog()).thenReturn(fog);
         when(loader.getWidth()).thenReturn(size);
