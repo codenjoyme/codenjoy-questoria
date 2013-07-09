@@ -14,7 +14,7 @@ import static junit.framework.Assert.assertEquals;
  * Date: 1/19/13
  * Time: 2:08 PM
  */
-public class TestTerritoryMap {
+public class JavaQuestTest {
 
     private JavaQuest game;
     private TerritoryMapImpl map;
@@ -57,7 +57,7 @@ public class TestTerritoryMap {
         Settings settings = new Settings() {
             @Override
             public int viewSize() {
-                return TestTerritoryMap.this.getViewAreaSize();
+                return JavaQuestTest.this.getViewAreaSize();
             }
 
             @Override

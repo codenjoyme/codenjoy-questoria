@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
  * Date: 04.07.13
  * Time: 10:27
  */
-public class TerritoryMapOnlyTest {
+public class TerritoryMapTest {
 
     @Test
     public void shouldGetViewArea() {
