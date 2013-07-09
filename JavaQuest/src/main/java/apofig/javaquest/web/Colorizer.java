@@ -3,6 +3,8 @@ package apofig.javaquest.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import static apofig.javaquest.map.object.ObjectFactoryImpl.newObjectError;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/31/13
@@ -18,6 +20,7 @@ public class Colorizer {
         add("iam", "I");
         add("monster", "@");
         add("gold", "$");
+        add("alien", "A");
         add("wall", "# ");  // TODO
     }
 
@@ -57,7 +60,7 @@ public class Colorizer {
             String line = chars.substring(start, end - (found.length() - 1));
             String span = colorizer.get(c1);
             if (span == null && !isN(line) && !isS(line)) {
-                throw new IllegalArgumentException("New object in world '" + c1 + "'");
+                throw newObjectError(c1);
             }
             processLine(result, span, line);
 //

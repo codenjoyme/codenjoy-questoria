@@ -7,7 +7,7 @@ import apofig.javaquest.map.*;
  * Date: 02.07.13
  * Time: 22:57
  */
-public class Me extends TalkingObject implements Point, Joystick {
+public class Me extends TalkingObject implements Viewable, Joystick {
 
     private PlayerView view;
     private int x;
@@ -22,6 +22,10 @@ public class Me extends TalkingObject implements Point, Joystick {
         this.view = view;
         this.x = x;
         this.y = y;
+
+        setPlace(new MapPlace(map.getMap(), x, y));
+        map.getMap().set(x, y, 'A');
+
         this.info = info;
         tryToGo(0, 0);
         view.moveMeTo(this);
@@ -38,17 +42,19 @@ public class Me extends TalkingObject implements Point, Joystick {
     }
 
     private void tryToGo(int dx, int dy) {
+        if (dx == 0 && dy == 0) return;
+
         whereToGo = new PointImpl(x + dx, y + dy);
     }
 
     public void go() {
         if (whereToGo != null) {
+            move(whereToGo.getX(), whereToGo.getY());
             x = whereToGo.getX();
             y = whereToGo.getY();
             whereToGo = null;
 
             map.openSpace(this);
-            setPlace(new MapPlace(map.getMap(), x, y));
         }
     }
 
@@ -94,12 +100,33 @@ public class Me extends TalkingObject implements Point, Joystick {
         }
     }
 
+    @Override
     public PlayerView view() {
         return view;
     }
 
-    public Me atNewPlace() {    // TODO cheat
-        return new Me(map, view, whereToGo.getX(), whereToGo.getY(), info);
+    public Viewable atNewPlace() {    // TODO cheat
+        return new Viewable() {
+            @Override
+            public PlayerView view() {
+                return view;
+            }
+
+            @Override
+            public int getY() {
+                return whereToGo.getY();
+            }
+
+            @Override
+            public int getX() {
+                return whereToGo.getX();
+            }
+
+            @Override
+            public boolean isAt(Point point) {
+                return whereToGo.isAt(point);
+            }
+        };
     }
 
     public Player getInfo() {

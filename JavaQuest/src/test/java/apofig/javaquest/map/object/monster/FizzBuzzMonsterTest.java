@@ -13,7 +13,7 @@ public class FizzBuzzMonsterTest {
 
     @Test
     public void shouldWork() {
-        FizzBuzzMonster monster = new FizzBuzzMonster(null);
+        FizzBuzzMonster monster = new FizzBuzzMonster();
         assertEquals("1", monster.method(1));
         assertEquals("2", monster.method(2));
         assertEquals("Fizz", monster.method(3));

@@ -63,7 +63,7 @@ public class ColorizerTest {
                 Colorizer.process("???\n????"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void shouldExceptionWhenNewObject() throws Exception {
         Colorizer.process("???Q????");
     }

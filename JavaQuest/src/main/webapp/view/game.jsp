@@ -26,6 +26,9 @@
         .wall {
             color:brown;
         }
+        .alien {
+            color:green;
+        }
     </style>
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/game.js"></script>

@@ -21,7 +21,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     private int width;
     private int height;
     private Map map;
-    private java.util.Map<Me, Map> fogs;
+    private java.util.Map<Viewable, Map> fogs;
     private ObjectFactory objects;
 
     public TerritoryMapImpl(MapLoader loader, ObjectFactory objects) {
@@ -29,11 +29,11 @@ public class TerritoryMapImpl implements TerritoryMap {
         width = loader.width();
         height = loader.height();
         map = loader.map();
-        fogs = new HashMap<Me, Map>();
+        fogs = new HashMap<Viewable, Map>();
     }
 
     @Override
-    public void openSpace(Me me) {
+    public void openSpace(Viewable me) {
         final Map fog = fog(me);
 
         me.view().moveMeTo(me);  // TODO подумать над этим
@@ -48,7 +48,7 @@ public class TerritoryMapImpl implements TerritoryMap {
         });
     }
 
-    private Map fog(Me me) {
+    private Map fog(Viewable me) {
         if (!fogs.containsKey(me)) {
             fogs.put(me, new Map(width, height, '?'));
         }
@@ -64,7 +64,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public String getViewArea(final Me me) {
+    public String getViewArea(final Viewable me) {
         final StringBuffer result = new StringBuffer();
 
         result.append("╔" + StringUtils.repeat("═", me.view().size()*2) + "╗\n");
@@ -105,7 +105,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     private boolean playerAt(Point point) {
-        for (Me player : fogs.keySet()) {
+        for (Viewable player : fogs.keySet()) {
             if (player.isAt(point)) {
                 return true;
             }
@@ -115,7 +115,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public List<Something> getSomethingNear(final Me me) {
+    public List<Something> getSomethingNear(final Viewable me) {
         final List<Something> result = new LinkedList<Something>();
 
         me.view().near(me, width, height, new Apply() {
@@ -132,7 +132,7 @@ public class TerritoryMapImpl implements TerritoryMap {
 
 
     @Override
-    public List<Something> getAllNear(final Me me) {
+    public List<Something> getAllNear(final Viewable me) {
         final List<Something> result = new LinkedList<Something>();
 
         me.view().near(me, width, height, new Apply() {
@@ -160,7 +160,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public boolean isNear(Me me, final Something object) {
+    public boolean isNear(Viewable me, final Something object) {
         final boolean[] result = {false};
 
         me.view().near(me, width, height, new Apply() {

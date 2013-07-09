@@ -116,8 +116,8 @@ public class OneIntCodeRunnerMonsterTest {
     }
 
     private void buildMonster(String question, String help) {
-        monster = new FizzBuzzMonster(
-                new Action() {
+        monster = new FizzBuzzMonster();
+        monster.onKill(new Action() {
                     @Override
                     public void act(Something object) {
                         die = true;

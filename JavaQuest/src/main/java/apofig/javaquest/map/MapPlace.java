@@ -19,6 +19,12 @@ public class MapPlace implements Place {
         this.y = y;
     }
 
+    public MapPlace(Place place, int x, int y) {
+        this.map = ((MapPlace)place).map;
+        this.x = x;
+        this.y = y;
+    }
+
     public void update(char newChar) {
         map.set(x, y, newChar);
     }
@@ -34,8 +40,18 @@ public class MapPlace implements Place {
     }
 
     @Override
+    public boolean isAt(Point point) {
+        return x == point.getX() && y == point.getY();
+    }
+
+    @Override
     public int getY() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("map[%s,%s]='%s'", x, y, getChar());
     }
 
 }

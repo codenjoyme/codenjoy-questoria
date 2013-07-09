@@ -16,8 +16,8 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
 
     private MonsterTest test;
 
-    public CodeRunnerMonster(String question, String signature, Action onKill) {
-        super(question, "4E0A", HELP, LEAVE, signature, onKill);
+    public CodeRunnerMonster(String question, String signature) {
+        super(question, "4E0A", HELP, LEAVE, signature);
         this.test = this;
     }
 

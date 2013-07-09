@@ -58,7 +58,7 @@ public class PrimeFactoryMonster extends OneIntCodeRunnerMonster implements Mons
                     "15 -> [3,5]\n" +
                     "и так далее...";
 
-    public PrimeFactoryMonster(Action onKill) {
-        super(QUESTION, onKill);
+    public PrimeFactoryMonster() {
+        super(QUESTION);
     }
 }

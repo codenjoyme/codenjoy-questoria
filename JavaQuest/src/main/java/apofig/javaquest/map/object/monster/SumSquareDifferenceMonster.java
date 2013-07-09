@@ -46,7 +46,7 @@ public class SumSquareDifferenceMonster extends OneIntCodeRunnerMonster implemen
             "Создай метод, вычисляющий разность между суммой \n" +
             "квадратов и квадратом суммы для натурального числа i.";
 
-    public SumSquareDifferenceMonster(Action onKill) {
-        super(QUESTION, onKill);
+    public SumSquareDifferenceMonster() {
+        super(QUESTION);
     }
 }

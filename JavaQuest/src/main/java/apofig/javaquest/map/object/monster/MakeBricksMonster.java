@@ -19,8 +19,8 @@ public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements Mon
             "    return (small >= (goal % 5) && small >= goal - big * 5);\n" +
             "}";
 
-    public MakeBricksMonster(Action onKill) {
-        super(QUESTION, SIGNATURE, onKill);
+    public MakeBricksMonster() {
+        super(QUESTION, SIGNATURE);
     }
 
     @Override

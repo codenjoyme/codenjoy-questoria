@@ -13,7 +13,7 @@ public class PrimeFactoryMonsterTest {
 
     @Test
     public void shouldWork() {
-        PrimeFactoryMonster monster = new PrimeFactoryMonster(null);
+        PrimeFactoryMonster monster = new PrimeFactoryMonster();
         assertEquals("[1]", monster.method(1));
         assertEquals("[2]", monster.method(2));
         assertEquals("[3]", monster.method(3));

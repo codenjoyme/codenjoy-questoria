@@ -20,6 +20,11 @@ public class PointImpl implements Point {
     }
 
     @Override
+    public boolean isAt(Point point) {
+        return point.getX() == x && point.getY() == y;
+    }
+
+    @Override
     public int getY() {
         return y;
     }
@@ -39,8 +44,6 @@ public class PointImpl implements Point {
             return false;
         }
 
-        Point point = (Point)o;
-
-        return point.getX() == x && point.getY() == y;
+        return isAt((Point)o);
     }
 }

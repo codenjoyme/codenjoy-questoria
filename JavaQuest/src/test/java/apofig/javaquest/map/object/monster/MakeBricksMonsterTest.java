@@ -72,6 +72,6 @@ public class MakeBricksMonsterTest {
     }
 
     public String method(Integer small, Integer big, Integer goal) {
-        return new MakeBricksMonster(null).method(small, big, goal);
+        return new MakeBricksMonster().method(small, big, goal);
     }
 }

@@ -3,6 +3,7 @@ package apofig.javaquest.map.object.monster;
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.Me;
+import apofig.javaquest.map.object.Place;
 import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.TalkingObject;
 
@@ -23,14 +24,16 @@ public class Monster extends TalkingObject implements Something {
     private String signature;
     private List<Action> onKills;
 
-    public Monster(String question, String answer, String help, String leave, String signature, Action onKill) {
+    public Monster(String question, String answer,
+                   String help, String leave,
+                   String signature)
+    {
         this.question = question;
         this.answer = answer;
         this.help = help;
         this.leave = leave;
         this.signature = signature;
         this.onKills = new LinkedList<>();
-        onKill(onKill);
     }
 
     @Override

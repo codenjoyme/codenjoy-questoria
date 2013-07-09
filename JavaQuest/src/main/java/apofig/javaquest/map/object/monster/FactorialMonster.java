@@ -44,8 +44,8 @@ public class FactorialMonster extends OneIntCodeRunnerMonster implements Monster
             "возвращающий факториал этого числа в виде String.\n" +
             "Внимание! Возможно переполнение int/long.";
 
-    public FactorialMonster(Action onKill) {
-        super(QUESTION, onKill);
+    public FactorialMonster() {
+        super(QUESTION);
     }
 
 

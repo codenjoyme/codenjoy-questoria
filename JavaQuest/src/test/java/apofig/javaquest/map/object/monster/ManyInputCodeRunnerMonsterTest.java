@@ -115,7 +115,8 @@ public class ManyInputCodeRunnerMonsterTest {
     }
 
     private void buildMonster(String question, String help) {
-        monster = new LongDivisionMonster(
+        monster = new LongDivisionMonster();
+        monster.onKill(
                 new Action() {
                     @Override
                     public void act(Something object) {

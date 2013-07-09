@@ -15,7 +15,7 @@ public class LongDivisionMonsterTest {
 
     @Test
     public void shouldWork() throws Exception {
-        LongDivisionMonster monster = new LongDivisionMonster(null);
+        LongDivisionMonster monster = new LongDivisionMonster();
         assertEquals("0.5", monster.method(1, 2));
         assertEquals("1", monster.method(1, 1));
         assertEquals("1", monster.method(5, 5));
@@ -49,6 +49,6 @@ public class LongDivisionMonsterTest {
     }
 
     public String method(Integer i1, Integer i2) {
-        return new LongDivisionMonster(null).method(i1, i2);
+        return new LongDivisionMonster().method(i1, i2);
     }
 }

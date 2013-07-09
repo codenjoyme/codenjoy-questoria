@@ -20,7 +20,7 @@ public class FactorialMonsterTest {
                 "263130836933693530167218012160000000", "8683317618811886495518194401280000000",
                 "295232799039604140847618609643520000000", "10333147966386144929666651337523200000000"};
 
-        Assertions.assertMonster(expected, new FactorialMonster(null));
+        Assertions.assertMonster(expected, new FactorialMonster());
     }
 
 

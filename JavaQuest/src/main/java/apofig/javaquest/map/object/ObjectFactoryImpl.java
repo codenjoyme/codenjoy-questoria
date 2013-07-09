@@ -1,7 +1,6 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Action;
-import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.monster.MonsterPool;
 
 import java.util.LinkedList;
@@ -30,7 +29,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
 
-        ObjectSettings object = getObject(place.getChar());
+        ObjectSettings object = getObject(place);
         object.setPlace(place);
         object.setFactory(this);
 
@@ -48,9 +47,18 @@ public class ObjectFactoryImpl implements ObjectFactory {
         return smth;
     }
 
+    private ObjectSettings getObject(Place place) {
+        char c = place.getChar();
+        ObjectSettings object = getObject(c);
+        object.setPlace(place);
+        return object;
+    }
+
     private ObjectSettings getObject(char c) {
         if (c == ' ' || c == 'I') {
             return new Nothing();
+        } else if (c == 'A') {
+            return new Alien();
         } else if (c == '@') {
             return monsters.next();
         } else if (c == '#') {
@@ -58,6 +66,10 @@ public class ObjectFactoryImpl implements ObjectFactory {
         } else if (c == '$') {
             return new Gold();
         }
-        throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: " + c);
+        throw newObjectError(""+c);
+    }
+
+    public static UnsupportedOperationException newObjectError(String c) {
+        throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: '" + c + "'");
     }
 }
