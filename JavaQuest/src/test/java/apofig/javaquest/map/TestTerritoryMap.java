@@ -20,11 +20,7 @@ public class TestTerritoryMap {
     private TerritoryMapImpl map;
     private Joystick joystick;
 
-    public int getWidth() {
-        return 100;
-    }
-
-    public int getHeight() {
+    public int getSize() {
         return 100;
     }
 
@@ -49,7 +45,7 @@ public class TestTerritoryMap {
     }
 
     public RectangleMap getMapLoader() {
-        return new SquareMap(getWidth());
+        return new RectangleMap(getSize(), getSize());
     }
 
     @Before
@@ -495,10 +491,7 @@ public class TestTerritoryMap {
 
     @Test
     public void testCheckGoToBoardUpRight() throws Exception {
-        if (getHeight() > getWidth()) { // fix for TestTerritoryRectangleMap test
-            moveTo(20, 20 + (getHeight() - getWidth()));
-        }
-        moveTo(getWidth() - 6, getHeight() - 6);
+        moveTo(getSize() - 6, getSize() - 6);
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║????????                  ║\n" +
@@ -519,10 +512,7 @@ public class TestTerritoryMap {
 
     @Test
     public void testTryToOpenViewOnBoardUpRight() throws Exception {
-        if (getHeight() > getWidth()) { // fix for TestTerritoryRectangleMap test
-            moveTo(20, 20 + (getHeight() - getWidth()));
-        }
-        moveTo(getWidth() - 2, getHeight() - 2);
+        moveTo(getSize() - 2, getSize() - 2);
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????################║\n" +
@@ -567,10 +557,10 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardUp() throws Exception {
-        moveTo(20, getHeight() - 1);
+        moveTo(20, getSize() - 1);
         moveUp();
 
-        verifyXY(20, getHeight() - 1);
+        verifyXY(20, getSize() - 1);
         assertMessage("Wall: Пожалуйста, остановись!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║????##################????║\n" +
@@ -624,10 +614,10 @@ public class TestTerritoryMap {
 
     @Test
     public void testICantGoOnBoardRight() throws Exception {
-        moveTo(getWidth() - 1, 20);
+        moveTo(getSize() - 1, 20);
         moveRight();
 
-        verifyXY(getWidth() - 1, 20);
+        verifyXY(getSize() - 1, 20);
         assertMessage("Wall: Пожалуйста, остановись!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
