@@ -86,8 +86,6 @@ public class JavaQuest implements Tickable {
             smthAtWay.getBy(me.getInfo());
             me.go();
             meetWith(me);
-        } else {
-            me.stop();
         }
     }
 
@@ -120,6 +118,7 @@ public class JavaQuest implements Tickable {
     public void tick() {
         for (Me player : players) {
             move(player);
+            player.stop();
         }
     }
 

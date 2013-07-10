@@ -757,6 +757,18 @@ public class JavaQuestTest {
     }
 
     @Test
+    public void shouldNoMoreTHanOneMessageWhenTick() {
+        shouldNoMoveWhenITalkWithMonster();
+
+        game.tick();
+        game.tick();
+        game.tick();
+
+        assertMessage("Monster: Сразись со мной!\n" +
+                "Monster: Никуда ты не уйдешь!");
+    }
+
+    @Test
     public void shouldKillMonsterWhenAttack() {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
