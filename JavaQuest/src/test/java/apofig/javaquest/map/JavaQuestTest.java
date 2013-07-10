@@ -1,7 +1,6 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
-import apofig.javaquest.map.object.Place;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.junit.Before;
@@ -19,7 +18,7 @@ public class JavaQuestTest {
 
     private JavaQuest game;
     private TerritoryMapImpl map;
-    private Me me;
+    private Me player;
 
     public int getSize() {
         return 100;
@@ -84,7 +83,7 @@ public class JavaQuestTest {
         };
         game = new JavaQuest(settings);
         map = (TerritoryMapImpl) game.getTerritoryMap();
-        me = game.newPlayer("You");
+        player = game.newPlayer("Player");
     }
 
     @Test
@@ -109,7 +108,7 @@ public class JavaQuestTest {
     }
 
     private void asrtMap(String expected) {
-        assertEquals(expected, getMap(me));
+        assertEquals(expected, getMap(player));
     }
 
     private void asrtMap(String expected, Me me) {
@@ -621,8 +620,8 @@ public class JavaQuestTest {
     }
 
     private void verifyXY(int x, int y) {
-        assertEquals(x, me.getX());
-        assertEquals(y, me.getY());
+        assertEquals(x, player.getX());
+        assertEquals(y, player.getY());
     }
 
     @Test
@@ -672,20 +671,20 @@ public class JavaQuestTest {
 
     private void moveTo(int x, int y) {
         int count = 0;
-        while (Math.abs(me.getX() - x) != 0 || Math.abs(me.getY() - y) != 0) {
+        while (Math.abs(player.getX() - x) != 0 || Math.abs(player.getY() - y) != 0) {
             if (count++ > 1000) {
                 throw new RuntimeException(String.format(
                         "Я не могу пройти сюда! My x=%s and y=%s, and view:\n%s",
-                        me.getX(), me.getY(), map.getViewArea(me)));
+                        player.getX(), player.getY(), map.getViewArea(player)));
             }
-            if (me.getY() < y) {
+            if (player.getY() < y) {
                 moveUp();
-            } else if (me.getY() > y) {
+            } else if (player.getY() > y) {
                 moveDown();
             }
-            if (me.getX() < x) {
+            if (player.getX() < x) {
                 moveRight();
-            } else if (me.getX() > x) {
+            } else if (player.getX() > x) {
                 moveLeft();
             }
         }
@@ -693,16 +692,16 @@ public class JavaQuestTest {
     }
 
     private void moveLeft() {
-        moveLeft(me);
+        moveLeft(player);
     }
 
     private void moveUp() {
-        me.moveUp();
+        player.moveUp();
         game.tick();
     }
 
     private void moveDown() {
-        me.moveDown();
+        player.moveDown();
         game.tick();
     }
 
@@ -713,7 +712,7 @@ public class JavaQuestTest {
         assertMessage("Monster: Сразись со мной!");
 
         assertEquals("немногоКода('для подсказки');",
-                game.getCodeHelper(me).getCode());
+                game.getCodeHelper(player).getCode());
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -763,7 +762,7 @@ public class JavaQuestTest {
         attack("die!");
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
         asrtMap("╔══════════════════════════╗\n" +
@@ -789,7 +788,7 @@ public class JavaQuestTest {
         attack("No!!!");
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: No!!!\n" +
+                "Player: No!!!\n" +
                 "Monster: Я убью тебя!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -809,7 +808,7 @@ public class JavaQuestTest {
     }
 
     private void attack(String message) {
-        me.attack(message);
+        player.attack(message);
         game.tick();
     }
 
@@ -820,9 +819,9 @@ public class JavaQuestTest {
         attack("Nooooo!!!");
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: No!!!\n" +
+                "Player: No!!!\n" +
                 "Monster: Я убью тебя!\n" +
-                "You: Nooooo!!!\n" +
+                "Player: Nooooo!!!\n" +
                 "Monster: Я убью тебя!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -866,8 +865,7 @@ public class JavaQuestTest {
     }
 
     private void moveRight() {
-        me.moveRight();
-        game.tick();
+        moveRight(player);
     }
 
     @Test
@@ -914,7 +912,7 @@ public class JavaQuestTest {
         moveRight();
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ты подобрал меня! Спасибо!!");
@@ -939,11 +937,11 @@ public class JavaQuestTest {
     }
 
     private void assertInfo(String info) {
-        assertEquals(info, me.getInfo().toString());
+        assertEquals(info, player.getInfo().toString());
     }
 
     private void assertMessage(String message) {
-        assertMessage(me, message);
+        assertMessage(player, message);
     }
 
     private void assertMessage(Me me, String message) {
@@ -956,7 +954,7 @@ public class JavaQuestTest {
         attack("die!");
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
 
@@ -984,7 +982,7 @@ public class JavaQuestTest {
         moveUp();
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
 
@@ -1012,10 +1010,10 @@ public class JavaQuestTest {
         attack("Gold die!");
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
-                "You: Gold die!\n" +
+                "Player: Gold die!\n" +
                 "Gold: Ты не можешь делать это со мной!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -1042,7 +1040,7 @@ public class JavaQuestTest {
         moveRight();  // go away
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ты подобрал меня! Спасибо!!");
@@ -1071,7 +1069,7 @@ public class JavaQuestTest {
         moveLeft();
 
         assertMessage("Monster: Сразись со мной!\n" +
-                "You: die!\n" +
+                "Player: die!\n" +
                 "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ну и ладно! Достанусь кому-то другому!!");
@@ -1113,7 +1111,7 @@ public class JavaQuestTest {
                 "║??                      ??║\n" +
                 "║????                  ????║\n" +
                 "║????                  ????║\n" +
-                "╚══════════════════════════╝", me);
+                "╚══════════════════════════╝", player);
 
         Me anotherMe = game.newPlayer("Alien");
         moveLeft(anotherMe);
@@ -1134,7 +1132,7 @@ public class JavaQuestTest {
                 "║??                      ??║\n" +
                 "║????                  ????║\n" +
                 "║????                  ????║\n" +
-                "╚══════════════════════════╝", me);
+                "╚══════════════════════════╝", player);
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
@@ -1175,8 +1173,8 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        Me anotherMe = game.newPlayer("Alien");
-        moveLeft(anotherMe);
+        Me alien = game.newPlayer("Alien");
+        moveLeft(alien);
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
@@ -1194,7 +1192,7 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        moveLeft(anotherMe);    // move
+        moveLeft(alien);    // move
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
@@ -1212,14 +1210,14 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertMessage(anotherMe,
-                "You: Привет, я такой же как и ты игрок!\n" +
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
                 "Alien: Привет, я такой же как и ты игрок!");
-        assertMessage(me,
-                "You: Привет, я такой же как и ты игрок!\n" +
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
                 "Alien: Привет, я такой же как и ты игрок!");
 
-        moveLeft(anotherMe);    // dont move
+        moveLeft(alien);    // dont move
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
                 "║????            ??????????║\n" +
@@ -1236,26 +1234,221 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertMessage(anotherMe,
-                "You: Привет, я такой же как и ты игрок!\n" +
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
                 "Alien: Привет, я такой же как и ты игрок!\n" +
-                "You: Привет, я такой же как и ты игрок!");
-        assertMessage(me,
-                "You: Привет, я такой же как и ты игрок!\n" +
+                "Player: Привет, я такой же как и ты игрок!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
                 "Alien: Привет, я такой же как и ты игрок!\n" +
-                "You: Привет, я такой же как и ты игрок!");
+                "Player: Привет, я такой же как и ты игрок!");
 
         game.tick();
         game.tick();
 
-        assertMessage(anotherMe,
-                "You: Привет, я такой же как и ты игрок!\n" +
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
                 "Alien: Привет, я такой же как и ты игрок!\n" +
-                "You: Привет, я такой же как и ты игрок!");
-        assertMessage(me,
-                "You: Привет, я такой же как и ты игрок!\n" +
+                "Player: Привет, я такой же как и ты игрок!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
                 "Alien: Привет, я такой же как и ты игрок!\n" +
-                "You: Привет, я такой же как и ты игрок!");
+                "Player: Привет, я такой же как и ты игрок!");
+    }
+
+    @Test
+    public void shouldNoMessagesWhenLeaveOneAnother() {
+        moveLeft();
+        moveLeft();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????          ??????????║\n" +
+                "║??                  ??????║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                        ??║\n" +
+                "║        I               ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║??                  ??????║\n" +
+                "║??????          ??????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        Me alien = game.newPlayer("Alien");
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????          ??????????║\n" +
+                "║??                  ??????║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                        ??║\n" +
+                "║        I   A           ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║??                  ??????║\n" +
+                "║??????          ??????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        moveLeft(alien);    // meet
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????          ??????????║\n" +
+                "║??                  ??????║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                        ??║\n" +
+                "║        I A             ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║??                  ??????║\n" +
+                "║??????          ??????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!");
+
+        moveRight(alien);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????          ??????????║\n" +
+                "║??                  ??????║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                        ??║\n" +
+                "║        I   A           ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║??                  ??????║\n" +
+                "║??????          ??????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Player: Ну пока!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Player: Ну пока!");
+
+        alien.attack("Some message!");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Player: Ну пока!\n" +
+                "Alien: Some message!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Player: Ну пока!");
+
+        player.attack("Another message!");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Player: Ну пока!\n" +
+                "Alien: Some message!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Player: Ну пока!\n" +
+                "Player: Another message!");
+    }
+
+    private void moveRight(Me alien) {
+        alien.moveRight();
+        game.tick();
+    }
+
+    @Test
+    public void shouldChatBetweenTwoPlayers() {
+        moveLeft();
+        moveLeft();
+
+        Me alien = game.newPlayer("Alien");
+
+        moveLeft(alien);    // meet
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????          ??????????║\n" +
+                "║??                  ??????║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║                        ??║\n" +
+                "║        I A             ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "║??                  ??????║\n" +
+                "║??????          ??????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!");
+
+        alien.attack("Message 1");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Message 1");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Message 1");
+
+        alien.attack("Message 2");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Message 1\n" +
+                "Alien: Message 2");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Message 1\n" +
+                "Alien: Message 2");
+
+        player.attack("Message 3");
+
+        assertMessage(alien,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Message 1\n" +
+                "Alien: Message 2\n" +
+                "Player: Message 3");
+        assertMessage(player,
+                "Player: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Привет, я такой же как и ты игрок!\n" +
+                "Alien: Message 1\n" +
+                "Alien: Message 2\n" +
+                "Player: Message 3");
+
     }
 
     private void moveLeft(Me anotherMe) {
