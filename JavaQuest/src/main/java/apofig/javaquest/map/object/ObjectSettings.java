@@ -10,7 +10,7 @@ import apofig.javaquest.map.Messages;
 public interface ObjectSettings {
     void setPlace(Place place);
 
-    void setMessages(Messages messages);
-
     void setFactory(ObjectFactory factory);
+
+    void add(Messages messages);
 }

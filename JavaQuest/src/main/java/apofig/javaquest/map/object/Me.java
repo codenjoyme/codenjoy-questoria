@@ -7,21 +7,21 @@ import apofig.javaquest.map.*;
  * Date: 02.07.13
  * Time: 22:57
  */
-public class Me extends TalkingObject implements Viewable, Joystick {
+public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     private PlayerView view;
     private int x;
     private int y;
     private Player info;
     private Point whereToGo;
-
     private TerritoryMap map;
 
-    public Me(TerritoryMap map, PlayerView view, int x, int y, Player info) {
+    public Me(TerritoryMap map, PlayerView view, Messages messages, int x, int y, Player info) {
         this.map = map;
         this.view = view;
         this.x = x;
         this.y = y;
+        this.add(messages);
 
         setPlace(new MapPlace(map.getMap(), x, y));
         map.getMap().set(x, y, 'A');
@@ -156,4 +156,55 @@ public class Me extends TalkingObject implements Viewable, Joystick {
     public void stop() {
         whereToGo = null;
     }
+
+    @Override
+    public void answer(String message) {
+
+    }
+
+    @Override
+    public boolean iCanLeave() {
+        return true;
+    }
+
+    @Override
+    public void askMe() {
+        sayUnique("Привет, я такой же как и ты игрок!");
+    }
+
+    @Override
+    public boolean iCanUse() {
+        return false;
+    }
+
+    @Override
+    public Something leaveAfter() {
+        return make(' ');
+    }
+
+    @Override
+    public char symbol() {
+        return 'A';
+    }
+
+    @Override
+    public void getBy(Player info) {
+
+    }
+
+    @Override
+    public void tryToLeave() {
+        say("Ну пока!");
+    }
+
+    @Override
+    public void onKill(Action action) {
+
+    }
+
+    @Override
+    public String getCode() {
+        return "";
+    }
+
 }

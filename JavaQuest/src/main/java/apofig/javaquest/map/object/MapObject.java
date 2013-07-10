@@ -44,4 +44,7 @@ public abstract class MapObject implements ObjectSettings {
         return String.format("[object %s at %s]", this.getClass().getSimpleName(), place);
     }
 
+    public Place getPlace() {
+        return place;
+    }
 }

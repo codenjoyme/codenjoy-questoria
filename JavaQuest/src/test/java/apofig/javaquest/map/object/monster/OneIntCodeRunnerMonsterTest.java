@@ -2,10 +2,7 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
-import apofig.javaquest.map.object.Gold;
-import apofig.javaquest.map.object.ObjectFactory;
-import apofig.javaquest.map.object.Place;
-import apofig.javaquest.map.object.Something;
+import apofig.javaquest.map.object.*;
 import org.junit.Test;
 
 import static apofig.javaquest.map.Messages.withoutSeparator;
@@ -127,13 +124,15 @@ public class OneIntCodeRunnerMonsterTest {
             @Override
             public Something get(Place place) {
                 Gold gold = new Gold();
-                gold.setMessages(messages);
+                gold.add(messages);
                 gold.setFactory(this);
                 return gold;
             }
+
+            @Override public void add(Me me) { }
         });
         monster.setPlace(mock(Place.class));
         messages = new Messages();
-        monster.setMessages(messages);
+        monster.add(messages);
     }
 }

@@ -2,6 +2,10 @@ package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Messages;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * User: oleksandr.baglai
  * Date: 1/31/13
@@ -9,27 +13,47 @@ import apofig.javaquest.map.Messages;
  */
 public class TalkingObject extends MapObject implements ObjectSettings {
 
-    private Messages messages;
+    private List<Messages> messages;
+
+    public TalkingObject() {
+        messages = new LinkedList<>();
+    }
 
     public void say(String message) {
-        messages.add(getName() + ": " + message);
+        for (Messages m : messages) {
+            m.add(getName() + ": " + message);
+        }
     }
 
     public void sayUnique(String message) {  // TODO подумать об этом
-        messages.addUnique(this.getClass().getSimpleName() + ": " + message);
+        for (Messages m : messages) {
+            m.addUnique(getName() + ": " + message);
+        }
     }
 
     @Override
-    public void setMessages(Messages messages) {
-        this.messages = messages;
+    public void add(Messages messages) {
+        if (this.messages.contains(messages)) {
+            return;
+        }
+
+        this.messages.add(messages);
     }
 
     public Messages getMessages() {
-        return messages;
+        return messages.get(0);
     }
 
     public void meetWith(Me me) {
-        messages = me.getMessages();
+        if (messages.contains(me.getMessages())) {
+            return;
+        }
+
+        messages.add(me.getMessages());
+    }
+
+    public void leave(Me me) {
+        messages.remove(me.getMessages());
     }
 
     public Something make(char c) {

@@ -31,14 +31,23 @@ public class JavaQuest implements Tickable {
     public Me newPlayer(String name) {
         PlayerView view = new PlayerView(viewSize);
         Player info = new Player(name);
-        Me player = new Me(map, view, initPosition.getX(), initPosition.getY(), info);
-        player.setMessages(new Messages());
+
+        Point point = findFreePosition();
+        Me player = new Me(map, view, new Messages(), point.getX(), point.getY(), info);
         player.setFactory(objects);
 
         players.add(player);
         map.openSpace(player);
 
         return player;
+    }
+
+    private Point findFreePosition() {
+        Point point = new PointImpl(initPosition.getX(), initPosition.getY());
+        while (!(map.getAt(point) instanceof Nothing)) {
+            point = new PointImpl(point.getX() + 1, point.getY());
+        }
+        return point;
     }
 
     public TerritoryMap getTerritoryMap() {
@@ -80,10 +89,16 @@ public class JavaQuest implements Tickable {
     private void meetWith(Me me) {
         for (Something object : map.getAllNear(me)) {
             object.meetWith(me);
+            if (object instanceof Me) {
+                me.meetWith((Me)object);
+            }
         }
 
         for (Something object : map.getSomethingNear(me)) {
             object.askMe();
+            if (object instanceof Me) {
+                me.askMe();
+            }
         }
     }
 

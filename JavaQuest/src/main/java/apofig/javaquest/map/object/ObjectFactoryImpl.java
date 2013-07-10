@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Action;
+import apofig.javaquest.map.Viewable;
 import apofig.javaquest.map.object.monster.MonsterPool;
 
 import java.util.LinkedList;
@@ -47,6 +48,11 @@ public class ObjectFactoryImpl implements ObjectFactory {
         return smth;
     }
 
+    @Override
+    public void add(Me me) {
+        objects.add(me);
+    }
+
     private ObjectSettings getObject(Place place) {
         char c = place.getChar();
         ObjectSettings object = getObject(c);
@@ -58,7 +64,8 @@ public class ObjectFactoryImpl implements ObjectFactory {
         if (c == ' ' || c == 'I') {
             return new Nothing();
         } else if (c == 'A') {
-            return new Alien();
+//            return new Alien();
+            throw new IllegalStateException("Незареганный Alien!!!");
         } else if (c == '@') {
             return monsters.next();
         } else if (c == '#') {

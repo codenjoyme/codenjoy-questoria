@@ -159,11 +159,11 @@ public class MonsterFactoryImplTest {
     private void setupMonster(Monster monster) {
         captor = ArgumentCaptor.forClass(String.class);
         messages = mock(Messages.class);
-        monster.setMessages(messages);
+        monster.add(messages);
         ObjectFactory objects = mock(ObjectFactory.class);
         Place place = mock(Place.class);
         Gold gold = new Gold();
-        gold.setMessages(messages);
+        gold.add(messages);
         when(objects.get(place)).thenReturn(gold);
         monster.setFactory(objects);
         monster.setPlace(place);

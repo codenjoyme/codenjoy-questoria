@@ -51,6 +51,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     private Map fog(Viewable me) {
         if (!fogs.containsKey(me)) {
             fogs.put(me, new Map(width, height, '?'));
+            objects.add((Me)me); // TODO некрасиво так
         }
         return fogs.get(me);
     }
