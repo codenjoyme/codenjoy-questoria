@@ -162,17 +162,6 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public boolean isNear(Viewable me, final Something object) {
-        final boolean[] result = {false};
-
-        me.view().near(me, width, height, new Apply() {
-            @Override
-            public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (!isWall && map.get(x, y) == object.symbol()) {
-                    result[0] = true;
-                }
-            }
-        });
-
-        return result[0];
+        return getAllNear(me).contains(object);
     }
 }
