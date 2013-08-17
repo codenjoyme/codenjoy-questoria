@@ -89,7 +89,7 @@ public class GameController {
     }
 
     private String getName() {   // TODO исправить это
-        return String.valueOf(new Random().nextInt(Integer.MAX_VALUE));
+        return String.valueOf("Player_" + new Random().nextInt(1000));
     }
 
 }
