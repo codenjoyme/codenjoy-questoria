@@ -1528,6 +1528,7 @@ public class JavaQuestTest {
                 "║                      ????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Обработка началась!");
+        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
 
         game.tick();
 
@@ -1547,6 +1548,7 @@ public class JavaQuestTest {
                 "║                      ????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон подобрал золото!");
+        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:10");
 
         game.tick();
 
@@ -1566,6 +1568,7 @@ public class JavaQuestTest {
                 "║                      ????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон подобрал золото!");
+        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:20");
 
         game.tick();
 
