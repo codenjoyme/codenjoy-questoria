@@ -1,6 +1,7 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
+import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.junit.Before;
@@ -36,6 +37,14 @@ public class JavaQuestTest {
         return 22;
     }
 
+    public int getDronMentorX() {
+        return 60;
+    }
+
+    public int getDronMentorY() {
+        return 60;
+    }
+
     public int getWallX() {
         return 22;
     }
@@ -52,6 +61,7 @@ public class JavaQuestTest {
     public void init() {
         final RectangleMap mapLoader = getMapLoader();
         mapLoader.setMonster(getMonsterX(), getMonsterY());
+        setupDronMentor(mapLoader);
         mapLoader.setWall(getWallX(), getWallY());
 
         Settings settings = new Settings() {
@@ -84,6 +94,14 @@ public class JavaQuestTest {
         game = new JavaQuest(settings);
         map = (TerritoryMapImpl) game.getTerritoryMap();
         player = game.newPlayer("Player");
+    }
+
+    private void setupDronMentor(RectangleMap mapLoader) {
+        mapLoader.setDronMentor(getDronMentorX(), getDronMentorY());
+        mapLoader.setGold(getDronMentorX(), getDronMentorY() + 2);
+        mapLoader.setGold(getDronMentorX(), getDronMentorY() + 3);
+
+        mapLoader.set(getDronMentorX()    , getDronMentorY() + 5, '#');
     }
 
     @Test
@@ -498,19 +516,19 @@ public class JavaQuestTest {
         moveTo(getSize() - 6, getSize() - 6);
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????                  ║\n" +
                 "║??????                    ║\n" +
                 "║????                      ║\n" +
-                "║??                I       ║\n" +
+                "║??                        ║\n" +
+                "║                  I       ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
-                "║                        ??║\n" +
                 "║                      ????║\n" +
                 "║                    ??????║\n" +
                 "║                  ????????║\n" +
                 "║                ??????????║\n" +
+                "║              ????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
@@ -521,17 +539,17 @@ public class JavaQuestTest {
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????################║\n" +
                 "║??????????################║\n" +
-                "║????                  ####║\n" +
-                "║??                I   ####║\n" +
+                "║??                    ####║\n" +
+                "║                  I   ####║\n" +
                 "║                      ####║\n" +
                 "║                      ####║\n" +
                 "║                      ####║\n" +
                 "║                      ####║\n" +
-                "║                      ????║\n" +
                 "║                      ????║\n" +
                 "║                    ??????║\n" +
                 "║                  ????????║\n" +
                 "║                ??????????║\n" +
+                "║              ????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
@@ -568,7 +586,7 @@ public class JavaQuestTest {
         game.tick();
         game.tick();
         game.tick();
-        assertMessage("Wall: Пожалуйста, остановись!");
+        assertMessage("");
     }
 
     @Test
@@ -711,8 +729,7 @@ public class JavaQuestTest {
 
         assertMessage("Monster: Сразись со мной!");
 
-        assertEquals("немногоКода('для подсказки');",
-                game.getCodeHelper(player).getCode());
+        assertCode("немногоКода('для подсказки');");
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -764,8 +781,7 @@ public class JavaQuestTest {
         game.tick();
         game.tick();
 
-        assertMessage("Monster: Сразись со мной!\n" +
-                "Monster: Никуда ты не уйдешь!");
+        assertMessage("");
     }
 
     @Test
@@ -958,6 +974,7 @@ public class JavaQuestTest {
 
     private void assertMessage(Me me, String message) {
         assertEquals(message, withoutSeparator(me.getMessages().get()));
+        me.getMessages().clear();
     }
 
     @Test
@@ -1246,26 +1263,14 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Привет, я такой же как и ты игрок!");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Привет, я такой же как и ты игрок!");
+        assertMessage(alien, "Player: Привет, я такой же как и ты игрок!");
+        assertMessage(player, "Player: Привет, я такой же как и ты игрок!");
 
         game.tick();
         game.tick();
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Привет, я такой же как и ты игрок!");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Привет, я такой же как и ты игрок!");
+        assertMessage(alien, "");
+        assertMessage(player, "");
     }
 
     @Test
@@ -1350,39 +1355,18 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Ну пока!");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Ну пока!");
+        assertMessage(alien, "Player: Ну пока!");
+        assertMessage(player, "Player: Ну пока!");
 
         alien.attack("Some message!");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Ну пока!\n" +
-                "Alien: Some message!");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Ну пока!");
+        assertMessage(alien, "Alien: Some message!");
+        assertMessage(player, "");
 
         player.attack("Another message!");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Ну пока!\n" +
-                "Alien: Some message!");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Player: Ну пока!\n" +
-                "Player: Another message!");
+        assertMessage(alien, "");
+        assertMessage(player, "Player: Another message!");
     }
 
     private void moveRight(Me alien) {
@@ -1424,43 +1408,250 @@ public class JavaQuestTest {
 
         alien.attack("Message 1");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Message 1");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Message 1");
+        assertMessage(alien, "Alien: Message 1");
+        assertMessage(player, "Alien: Message 1");
 
         alien.attack("Message 2");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Message 1\n" +
-                "Alien: Message 2");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Message 1\n" +
-                "Alien: Message 2");
+        assertMessage(alien, "Alien: Message 2");
+        assertMessage(player, "Alien: Message 2");
 
         player.attack("Message 3");
 
-        assertMessage(alien,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Message 1\n" +
-                "Alien: Message 2\n" +
-                "Player: Message 3");
-        assertMessage(player,
-                "Player: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Привет, я такой же как и ты игрок!\n" +
-                "Alien: Message 1\n" +
-                "Alien: Message 2\n" +
-                "Player: Message 3");
+        assertMessage(alien, "Player: Message 3");
+        assertMessage(player, "Player: Message 3");
+    }
 
+    @Test
+    public void shouldMeetWithDronMentor() {
+        moveTo(getDronMentorX() - 2, getDronMentorY() + 2);
+        moveDown();
+        moveDown();
+        moveRight();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????                  ║\n" +
+                "║??????              $     ║\n" +
+                "║??????              $     ║\n" +
+                "║??????                    ║\n" +
+                "║????              I M     ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(player, "DronMentor: " + DronMentor.MESSAGE);
+
+        player.attack("Ok!");
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????                  ║\n" +
+                "║??????              $     ║\n" +
+                "║??????              $     ║\n" +
+                "║??????                    ║\n" +
+                "║????              I *     ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(player,
+                "Player: Ok!\n" +
+                "Dron: Я твой робот! Запрограммируй меня.");
+
+        assertCode("public String whereToGo(String nearMe) {\n" +
+                "    return \"|\";\n" +
+                "}");
+
+        player.attack(
+                "public String whereToGo(String nearMe) {\n" +
+                "    return \"command\";\n" +
+                "}");
+
+        assertMessage(player,
+                "Player: public String whereToGo(String nearMe) {\n" +
+                "    return \"command\";\n" +
+                "}\n" +
+                "Dron: Команда принята! Обработка начнется после того как ты отойдешь.");
+
+        moveLeft();
+
+        assertMessage(player,
+                "Dron: Обработка началась!\n" +
+                "Dron: Команда 'command' не принята! Остановка!!!");
+
+        moveRight();
+
+        assertMessage(player,
+                "Dron: Я твой робот! Запрограммируй меня.");
+
+        assertCode("public String whereToGo(String nearMe) {\n" +
+                "    return \"command\";\n" +
+                "}");
+
+        player.attack(
+                "public String whereToGo(String nearMe) {\n" +
+                "    return \"up\";\n" +
+                "}");
+
+        assertMessage(player,
+                "Player: public String whereToGo(String nearMe) {\n" +
+                "    return \"up\";\n" +
+                "}\n" +
+                "Dron: Команда принята! Обработка начнется после того как ты отойдешь.");
+
+        moveLeft();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????                  ║\n" +
+                "║??????              $     ║\n" +
+                "║??????              $     ║\n" +
+                "║??????              *     ║\n" +
+                "║????            I         ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+        assertMessage(player, "Dron: Обработка началась!");
+
+        game.tick();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????                  ║\n" +
+                "║??????              $     ║\n" +
+                "║??????              *     ║\n" +
+                "║??????                    ║\n" +
+                "║????            I         ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+        assertMessage(player, "Dron: Дрон подобрал золото!");
+
+        game.tick();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????                  ║\n" +
+                "║??????              *     ║\n" +
+                "║??????                    ║\n" +
+                "║??????                    ║\n" +
+                "║????            I         ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+        assertMessage(player, "Dron: Дрон подобрал золото!");
+
+        game.tick();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????            *     ║\n" +
+                "║??????                    ║\n" +
+                "║??????                    ║\n" +
+                "║??????                    ║\n" +
+                "║????            I         ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+        assertMessage(player, "");
+
+        game.tick();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║????????            #   ??║\n" +
+                "║????????            *     ║\n" +
+                "║??????                    ║\n" +
+                "║??????                    ║\n" +
+                "║??????                    ║\n" +
+                "║????            I         ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                        ??║\n" +
+                "║                        ??║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+        assertMessage(player, "Dron: Дрон уперся в неопознанный объект! Остановка!!!");
+
+        game.tick();
+        assertMessage(player, "");
+
+        moveRight();
+        moveRight();
+        moveUp();
+        moveUp();
+        moveUp();
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????                ║\n" +
+                "║??????            #       ║\n" +
+                "║??????            *       ║\n" +
+                "║????              I       ║\n" +
+                "║????                      ║\n" +
+                "║????                      ║\n" +
+                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║                      ????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(player, "Dron: Я твой робот! Запрограммируй меня.");
+
+        assertCode("public String whereToGo(String nearMe) {\n" +
+                "    return \"up\";\n" +
+                "}");
+
+        player.attack("public String whereToGo(String nearMe) {\n" +
+                "    throw new java.lang.RuntimeException(\"\\\"\" + nearMe + \"\\\"\");\n" +
+                "}");
+        player.getMessages().clear();
+
+        moveDown();
+        assertMessage(player, "Dron: Обработка началась!\n" +
+                "Dron: Команда 'java.lang.RuntimeException: " +
+                "java.lang.reflect.InvocationTargetException: " +
+                "java.lang.RuntimeException: \"     #  \"' не принята! Остановка!!!");
+
+    }
+
+    private void assertCode(String expected) {
+        assertEquals(expected,
+                game.getCodeHelper(player).getCode());
     }
 
     private void moveLeft(Me anotherMe) {

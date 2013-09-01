@@ -35,6 +35,19 @@ public class MapPlace implements Place {
     }
 
     @Override
+    public String near() {   // TODO test me
+        return "" + map.get(x - 1, y - 1) + map.get(x, y - 1) + map.get(x + 1, y - 1) +
+                map.get(x + 1, y) +
+                map.get(x + 1, y + 1) + map.get(x, y + 1) + map.get(x - 1, y + 1) +
+                map.get(x - 1, y);
+    }
+
+    @Override
+    public char near(int dx, int dy) {
+        return map.get(x + dx, y + dy);
+    }
+
+    @Override
     public int getX() {
         return x;
     }

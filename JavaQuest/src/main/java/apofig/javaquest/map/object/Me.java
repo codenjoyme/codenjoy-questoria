@@ -1,13 +1,14 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.*;
+import apofig.javaquest.services.Tickable;
 
 /**
  * User: sanja
  * Date: 02.07.13
  * Time: 22:57
  */
-public class Me extends TalkingObject implements Viewable, Joystick, Something {
+public class Me extends TalkingObject implements Viewable, Joystick, Something, Tickable {
 
     private PlayerView view;
     private int x;
@@ -15,6 +16,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     private Player info;
     private Point whereToGo;
     private TerritoryMap map;
+    private Tickable tickable;
 
     public Me(TerritoryMap map, PlayerView view, Messages messages, int x, int y, Player info) {
         this.map = map;
@@ -205,6 +207,17 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     @Override
     public String getCode() {
         return "";
+    }
+
+    @Override
+    public void tick() {
+        if (tickable != null) {
+            tickable.tick();
+        }
+    }
+
+    public void subscribe(Tickable tickable) {    // TODO а это тут должно быть?
+        this.tickable = tickable;
     }
 
 }

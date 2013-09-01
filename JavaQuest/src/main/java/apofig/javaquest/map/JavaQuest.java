@@ -1,6 +1,7 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.dron.Dron;
 import apofig.javaquest.services.Tickable;
 
 import java.util.LinkedList;
@@ -107,7 +108,7 @@ public class JavaQuest implements Tickable {
 
     public Something getCodeHelper(Me player) {
         for (Something smthNear : map.getSomethingNear(player)) {
-            if (!smthNear.iCanLeave()) {
+            if (!smthNear.iCanLeave() || smthNear instanceof Dron) { // TODO instanceof Dron - не ок, архитектуру надобно менять
                 return smthNear;
             }
         }
@@ -119,6 +120,7 @@ public class JavaQuest implements Tickable {
         for (Me player : players) {
             move(player);
             player.stop();
+            player.tick();
         }
     }
 

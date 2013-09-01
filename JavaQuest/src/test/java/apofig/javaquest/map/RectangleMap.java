@@ -26,8 +26,20 @@ public class RectangleMap implements MapLoader {
         map.set(x, y, '@');
     }
 
-    public void setWall(int wallX, int wallY) {
-        map.set(wallX, wallY, '#');
+    public void setWall(int x, int y) {
+        map.set(x, y, '#');
+    }
+
+    public void setDronMentor(int x, int y) {
+        map.set(x, y, 'M');
+    }
+
+    public void setGold(int x, int y) {
+        map.set(x, y, '$');
+    }
+
+    public void set(int x, int y, char c) {
+        map.set(x, y, c);
     }
 
     @Override
