@@ -29,16 +29,15 @@ function initGame(contextPath) {
 
         if (container.val() == '') {
             container.val(code.replace('|', ''));
-        }
-
-        if (!onTextArea()) {
-            setCaretToPos(container, code.indexOf('|'));
+            if (!onTextArea()) {
+                setCaretToPos(container, code.indexOf('|'));
+            }
         }
     }
 
     function scrollDown(textarea) {
         textarea.scrollTop(
-            textarea[0].scrollHeight - textarea.height()
+            textarea[0].scrollHeight
         );
     }
 
