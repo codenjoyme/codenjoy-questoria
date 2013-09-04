@@ -25,7 +25,7 @@ public class TalkingObject extends MapObject implements ObjectSettings {
         }
     }
 
-    public void sayUnique(String message) {  // TODO подумать об этом
+    public void sayOnce(String message) {  // TODO подумать об этом
         for (Messages m : messages) {
             m.addUnique(getName() + ": " + message);
         }

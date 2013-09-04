@@ -45,7 +45,7 @@ public class DronMentor extends TalkingObject implements Something {
 
     @Override
     public void askMe() {
-        sayUnique(MESSAGE);
+        sayOnce(MESSAGE);
     }
 
     @Override

@@ -171,7 +171,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
 
     @Override
     public void askMe() {
-        sayUnique("Привет, я такой же как и ты игрок!");
+        sayOnce("Привет, я такой же как и ты игрок!");
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Dron extends TalkingObject implements Something, Tickable {
     @Override
     public void answer(String message) {
         this.code = message;
-        sayUnique("Команда принята! Обработка начнется после того как ты отойдешь.");
+        sayOnce("Команда принята! Обработка начнется после того как ты отойдешь.");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Dron extends TalkingObject implements Something, Tickable {
 
     @Override
     public void askMe() {
-        sayUnique("Я твой робот! Запрограммируй меня.");
+        sayOnce("Я твой робот! Запрограммируй меня.");
         active = false;
     }
 
@@ -63,7 +63,7 @@ public class Dron extends TalkingObject implements Something, Tickable {
 
     @Override
     public void tryToLeave() {
-        sayUnique("Обработка началась!");
+        sayOnce("Обработка началась!");
         active = true;
 
     }
@@ -97,7 +97,7 @@ public class Dron extends TalkingObject implements Something, Tickable {
                 dy = 1;
             } else {
                 active = false;
-                sayUnique("Команда '" + whereToGo + "' не принята! Остановка!!!");
+                sayOnce("Команда '" + whereToGo + "' не принята! Остановка!!!");
                 return;
             }
 
@@ -110,7 +110,7 @@ public class Dron extends TalkingObject implements Something, Tickable {
                 move(place.getX() + dx, place.getY() + dy);
             } else {
                 active = false;
-                sayUnique("Дрон уперся в неопознанный объект! Остановка!!!");
+                sayOnce("Дрон уперся в неопознанный объект! Остановка!!!");
             }
         }
     }
