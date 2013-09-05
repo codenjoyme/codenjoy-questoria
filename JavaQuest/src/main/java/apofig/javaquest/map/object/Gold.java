@@ -8,7 +8,9 @@ import apofig.javaquest.map.Player;
  * Date: 1/20/13
  * Time: 11:03 PM
  */
-public class Gold extends TalkingObject implements Something {
+public class Gold extends TalkingObject implements Something, SetWorld {
+
+    private World world;
 
     @Override
     public void answer(String message) {
@@ -55,5 +57,10 @@ public class Gold extends TalkingObject implements Something {
     @Override
     public String getCode() {
         return "";
+    }
+
+    @Override
+    public void setWorld(World world) {
+        this.world = world;
     }
 }

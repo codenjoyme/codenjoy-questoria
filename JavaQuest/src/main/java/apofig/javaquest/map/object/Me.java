@@ -9,6 +9,7 @@ import apofig.javaquest.map.*;
  */
 public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
+    private final World world;
     private PlayerView view;
     private int x;
     private int y;
@@ -26,7 +27,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         init(new MessengerImpl());
         add(messages);
 
-        setWorld(new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this));  // TODO тут как-то заумно очень!
+        world = new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this);  // TODO тут как-то заумно очень!
         map.getMap().set(x, y, 'A');
 
         tryToGo(0, 0);
@@ -56,7 +57,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     public void go() {
         if (whereToGo != null) {
-            move(whereToGo.getX(), whereToGo.getY());
+            world.move(whereToGo.getX(), whereToGo.getY());
             x = whereToGo.getX();
             y = whereToGo.getY();
             stop();

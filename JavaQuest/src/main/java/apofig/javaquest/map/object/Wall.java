@@ -32,7 +32,7 @@ public class Wall extends TalkingObject implements Something {
 
     @Override
     public Something leaveAfter() {
-        return world.make(symbol());
+        return new Nothing();
     }
 
     @Override

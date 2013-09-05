@@ -3,10 +3,7 @@ package apofig.javaquest.map.object.monster;
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.Player;
-import apofig.javaquest.map.object.Me;
-import apofig.javaquest.map.object.Place;
-import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.TalkingObject;
+import apofig.javaquest.map.object.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +13,7 @@ import java.util.List;
  * Date: 1/19/13
  * Time: 8:30 PM
  */
-public class Monster extends TalkingObject implements Something, Dieble {
+public class Monster extends TalkingObject implements Something, Dieble, SetWorld {
 
     private String question;
     private String answer;
@@ -24,6 +21,7 @@ public class Monster extends TalkingObject implements Something, Dieble {
     private String leave;
     private String signature;
     private Action onKill;
+    private World world;
 
     public Monster(String question, String answer,
                    String help, String leave,
@@ -96,5 +94,10 @@ public class Monster extends TalkingObject implements Something, Dieble {
     @Override
     public String getCode() {
         return signature;
+    }
+
+    @Override
+    public void setWorld(World world) {
+        this.world = world;
     }
 }

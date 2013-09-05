@@ -12,7 +12,7 @@ import apofig.javaquest.services.Tickable;
  * Date: 01.09.13
  * Time: 2:25
  */
-public class Dron extends TalkingObject implements Something, Tickable, SetPlace {
+public class Dron extends TalkingObject implements Something, Tickable, SetPlace, SetWorld {
 
     public static final char CHAR = '*';
     private Me hero;
@@ -25,6 +25,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
     private boolean active = false;
 
     private Place place;
+    private World world;
 
     @Override
     public void setPlace(Place place) {
@@ -107,7 +108,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
                 hero.getInfo().addGold(10); // TODO тут хардкод, это должно решать золото а не дрон
             }
             if (atWay == ' ' || atWay == '$') {
-                move(place.getX() + dx, place.getY() + dy);
+                world.move(place.getX() + dx, place.getY() + dy);
             } else {
                 active = false;
                 sayOnce("Дрон уперся в неопознанный объект! Остановка!!!");
@@ -132,5 +133,10 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
 
     public void setHero(Me hero) {
         this.hero = hero;
+    }
+
+    @Override
+    public void setWorld(World world) {
+        this.world = world;
     }
 }

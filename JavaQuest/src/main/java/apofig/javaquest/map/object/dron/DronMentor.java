@@ -1,16 +1,14 @@
 package apofig.javaquest.map.object.dron;
 
 import apofig.javaquest.map.Player;
-import apofig.javaquest.map.object.Me;
-import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.TalkingObject;
+import apofig.javaquest.map.object.*;
 
 /**
  * User: sanja
  * Date: 01.09.13
  * Time: 2:02
  */
-public class DronMentor extends TalkingObject implements Something {
+public class DronMentor extends TalkingObject implements Something, SetWorld {
 
     public static final String MESSAGE = "Видишь все это золото? Оно твое. Ты можешь собрать его намного быстрее, \n" +
             "если воспользуешься помощником. Я научу тебя его делать. \n" +
@@ -28,7 +26,9 @@ public class DronMentor extends TalkingObject implements Something {
             "Только находясь рядом с ним ты можешь его модифицировать. \n" +
             "При виде тебя робот останавливается и ждет твоей команды. \n" +
             "Нажми say и твой робот появится...";
+
     private Me hero;
+    private World world;
 
     @Override
     public void answer(String message) {
@@ -83,5 +83,10 @@ public class DronMentor extends TalkingObject implements Something {
     @Override
     public String getCode() {
         return "";
+    }
+
+    @Override
+    public void setWorld(World world) {
+        this.world = world;
     }
 }

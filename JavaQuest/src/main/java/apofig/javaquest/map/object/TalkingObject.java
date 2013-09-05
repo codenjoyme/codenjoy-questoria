@@ -10,15 +10,9 @@ import java.util.List;
  * Date: 1/31/13
  * Time: 12:35 AM
  */
-public class TalkingObject implements SetWorld {
+public class TalkingObject {
 
-    protected World world;
     private Messenger messenger;
-
-    @Override
-    public void setWorld(World world) {
-        this.world = world;
-    }
 
     public void meetWith(Me hero) {
         this.add(hero.getMessages());
@@ -49,10 +43,6 @@ public class TalkingObject implements SetWorld {
 
     public void leave(Me me) {
         messenger.remove(me.getMessages());
-    }
-
-    public void move(int x, int y) {
-        world.move(x, y);
     }
 
     public void init(Messenger messenger) {
