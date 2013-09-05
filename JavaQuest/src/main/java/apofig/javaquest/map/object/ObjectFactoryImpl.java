@@ -1,6 +1,5 @@
 package apofig.javaquest.map.object;
 
-import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.object.dron.Dron;
 import apofig.javaquest.map.object.dron.DronMentor;
@@ -37,7 +36,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
 
-        ObjectSettings object = getObject(place);
+        ObjectSettings object = getObject(place.getChar());
         object.setPlace(place);
         object.setFactory(this);
 
@@ -59,13 +58,6 @@ public class ObjectFactoryImpl implements ObjectFactory {
     @Override
     public void add(Me me) {
         objects.add(me);
-    }
-
-    private ObjectSettings getObject(Place place) {
-        char c = place.getChar();
-        ObjectSettings object = getObject(c);
-        object.setPlace(place);
-        return object;
     }
 
     private ObjectSettings getObject(char c) {
