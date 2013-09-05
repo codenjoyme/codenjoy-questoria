@@ -55,7 +55,6 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     public Dron leaveAfter() {
         Dron dron = (Dron)world.make(Dron.CHAR);
         dron.setHero(hero);
-        dron.getMessenger().add(hero.getMessenger().getMessages());     // TODO выделить в messenger
         return dron;
     }
 

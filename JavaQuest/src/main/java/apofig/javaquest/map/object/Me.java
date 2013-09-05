@@ -215,12 +215,11 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         return world;
     }
 
-    public void meetWith(Something object) {
-        TalkingObject talking = (TalkingObject) object;
-        talking.getMessenger().add(messenger.getMessages());  // TODO выделить это в мессенджер
+    public void meetWith(TalkingObject object) {
+        object.connect(this);
 
         if (object instanceof Me) {
-            messenger.add(talking.getMessenger().getMessages());
+            connect(object);
         }
 
         if (object instanceof MeetWithHero) {
@@ -228,12 +227,11 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         }
     }
 
-    public void leave(Something object) {
-        TalkingObject talking = (TalkingObject) object;
-        talking.getMessenger().remove(messenger.getMessages());   // TODO выделить это в мессенджер
+    public void leave(TalkingObject object) {
+        object.disconnect(this);
 
         if (object instanceof Me) {
-            messenger.remove(talking.getMessenger().getMessages());
+            disconnect(object);
         }
 
         if (object instanceof MeetWithHero) {

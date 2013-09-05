@@ -27,4 +27,12 @@ public class TalkingObject implements SetMessenger {
         this.messenger = messenger;
         this.messenger.changeName(getName());
     }
+
+    public void connect(TalkingObject object) {
+        getMessenger().add(object.messenger.getMessages());
+    }
+
+    public void disconnect(TalkingObject object) {
+        getMessenger().remove(object.messenger.getMessages());
+    }
 }
