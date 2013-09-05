@@ -9,6 +9,4 @@ import apofig.javaquest.map.Messages;
  */
 public interface ObjectSettings {
     void add(Messages messages);
-
-    void setWorld(World world);
 }

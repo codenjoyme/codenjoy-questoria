@@ -61,14 +61,18 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
         WorldImpl world = new WorldImpl(this, place, result);
 
-        result.setWorld(world);
+        if (result instanceof Nothing) {
+            return result;
+        }
+
+        objects.put((Something)result, world);
 
         if (SetPlace.class.isAssignableFrom(result.getClass())) {
             ((SetPlace)result).setPlace(place);
         }
 
-        if (!(result instanceof Nothing)) {
-            objects.put((Something)result, world);
+        if (SetWorld.class.isAssignableFrom(result.getClass())) {
+            ((SetWorld)result).setWorld(world);
         }
 
         return result;
