@@ -1,10 +1,7 @@
 package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Messages;
-import apofig.javaquest.map.object.Gold;
-import apofig.javaquest.map.object.ObjectFactory;
-import apofig.javaquest.map.object.Place;
-import apofig.javaquest.map.object.WorldImpl;
+import apofig.javaquest.map.object.*;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;
@@ -162,11 +159,13 @@ public class MonsterFactoryImplTest {
     private void setupMonster(final Monster monster) {
         captor = ArgumentCaptor.forClass(String.class);
         messages = mock(Messages.class);
+        Messenger messenger = new MessengerImpl();
+        monster.init(messenger);
         monster.add(messages);
         ObjectFactory objects = mock(ObjectFactory.class);
         Place place = mock(Place.class);
         final Gold gold = new Gold();
-        gold.add(messages);
+        gold.init(new MessengerImpl());
         when(objects.get(place)).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {

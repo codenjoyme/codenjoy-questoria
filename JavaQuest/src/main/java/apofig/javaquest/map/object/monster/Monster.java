@@ -64,7 +64,7 @@ public class Monster extends TalkingObject implements Something, Dieble {
 
     @Override
     public Something leaveAfter() {
-        return make('$');
+        return world.make('$');
     }
 
     @Override

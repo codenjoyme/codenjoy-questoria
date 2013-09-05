@@ -115,6 +115,7 @@ public class OneIntCodeRunnerMonsterTest {
 
     private void buildMonster(String question, String help) {
         monster = new FizzBuzzMonster();
+        final Messenger messenger = new MessengerImpl();
         monster.setWorld(new World() {
 
             @Override
@@ -130,12 +131,13 @@ public class OneIntCodeRunnerMonsterTest {
             public Something make(char c) {
                 die = true;
                 Gold gold = new Gold();
-                gold.add(messages);
+                gold.init(messenger);
                 gold.setWorld(this);
                 return gold;
             }
         });
         messages = new Messages();
+        monster.init(messenger);
         monster.add(messages);
     }
 }

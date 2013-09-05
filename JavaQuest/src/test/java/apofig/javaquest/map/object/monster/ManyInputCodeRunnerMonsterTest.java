@@ -114,6 +114,7 @@ public class ManyInputCodeRunnerMonsterTest {
 
     private void buildMonster(String question, String help) {
         monster = new LongDivisionMonster();
+        final Messenger messenger = new MessengerImpl();
         monster.setWorld(new World() {
 
             @Override
@@ -129,12 +130,14 @@ public class ManyInputCodeRunnerMonsterTest {
             public Something make(char c) {
                 die = true;
                 Gold gold = new Gold();
+                gold.init(messenger);
                 gold.add(messages);
                 gold.setWorld(this);
                 return gold;
             }
         });
         messages = new Messages();
+        monster.init(messenger);
         monster.add(messages);
     }
 }

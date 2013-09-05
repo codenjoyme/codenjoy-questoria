@@ -26,6 +26,4 @@ public interface Something extends CodeHelper {
     void getBy(Player info);
 
     void tryToLeave();
-
-    void meetWith(Me me);
 }

@@ -27,21 +27,20 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
     @Override
     public Something get(Place place) {
+        Messenger messenger = null;
+
         for (Something smth : getObjects()) {
             if (isAt(smth, place)) {
                 if (smth.symbol() != place.getChar()) {
                     killSomething(smth);
+                    messenger = ((TalkingObject)smth).getMessenger();
                 } else {
                     return smth;
                 }
             }
         }
 
-        ObjectSettings object = initObject(place);
-
-        Something smth = (Something)object;
-
-        return smth;
+        return initObject(place, messenger);
     }
 
     private Collection<Something> getObjects() {
@@ -56,8 +55,8 @@ public class ObjectFactoryImpl implements ObjectFactory {
         return objects.get(smth).place().isAt(place);
     }
 
-    private ObjectSettings initObject(Place place) {
-        ObjectSettings result = newObject(place.getChar());
+    private Something initObject(Place place, Messenger messenger) {
+        Something result = newObject(place.getChar());
 
         WorldImpl world = new WorldImpl(this, place, result);
 
@@ -65,7 +64,12 @@ public class ObjectFactoryImpl implements ObjectFactory {
             return result;
         }
 
-        objects.put((Something)result, world);
+        objects.put(result, world);
+
+        if (messenger == null) {
+            messenger = new MessengerImpl();
+        }
+        ((TalkingObject)result).init(messenger);
 
         if (SetPlace.class.isAssignableFrom(result.getClass())) {
             ((SetPlace)result).setPlace(place);
@@ -90,7 +94,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         objects.put(me, me.getWorld());
     }
 
-    private ObjectSettings newObject(char c) {
+    private Something newObject(char c) {
         if (c == ' ' || c == 'I') {
             return new Nothing();
         } else if (c == 'A') {

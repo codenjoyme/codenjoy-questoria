@@ -10,68 +10,57 @@ import java.util.List;
  * Date: 1/31/13
  * Time: 12:35 AM
  */
-public class TalkingObject implements ObjectSettings, SetWorld {
+public class TalkingObject implements SetWorld {
 
-    private List<Messages> messages;
     protected World world;
-
-    public TalkingObject() {
-        messages = new LinkedList<>();
-    }
+    private Messenger messenger;
 
     @Override
     public void setWorld(World world) {
         this.world = world;
     }
 
-    public void say(String message) {
-        for (Messages m : messages) {
-            m.add(getName() + ": " + message);
+    public void meetWith(Me hero) {
+        this.add(hero.getMessages());
+        if (this instanceof Me) {
+            hero.add(this.getMessages());
         }
+    }
+
+    public Messenger getMessenger() {
+        return messenger;
+    }
+
+    public void say(String message) {
+        messenger.say(message);
     }
 
     public void sayOnce(String message) {
-        for (Messages m : messages) {
-            m.addOnce(getName() + ": " + message);
-        }
-    }
-
-    @Override
-    public void add(Messages messages) {
-        if (this.messages.contains(messages)) {
-            return;
-        }
-
-        this.messages.add(messages);
+        messenger.sayOnce(message);
     }
 
     public Messages getMessages() {
-        return messages.get(0);
+        return messenger.getMessages();
     }
 
-    public void meetWith(Me me) {
-        if (messages.contains(me.getMessages())) {
-            return;
-        }
-
-        messages.add(me.getMessages());
+    public void add(Messages messages) {
+        messenger.add(messages);
     }
 
     public void leave(Me me) {
-        messages.remove(me.getMessages());
-    }
-
-    public Something make(char c) {
-        Something something = world.make(c);
-        ((TalkingObject)something).messages = messages; // TODO ну очень некрасиво
-        return something;
+        messenger.remove(me.getMessages());
     }
 
     public void move(int x, int y) {
         world.move(x, y);
     }
 
+    public void init(Messenger messenger) {
+        this.messenger = messenger;
+        this.messenger.changeName(getName());
+    }
+
     public String getName() {
-        return this.getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 }

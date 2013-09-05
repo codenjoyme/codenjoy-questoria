@@ -91,10 +91,7 @@ public class JavaQuest implements Tickable {
 
     private void meetWith(Me me) {
         for (Something object : map.getAllNear(me)) {
-            object.meetWith(me);
-            if (object instanceof Me) {
-                me.meetWith((Me)object);
-            }
+            ((TalkingObject)object).meetWith(me);
         }
 
         for (Something object : map.getSomethingNear(me)) {

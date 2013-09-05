@@ -1,7 +1,6 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.*;
-import apofig.javaquest.services.Tickable;
 
 /**
  * User: sanja
@@ -22,12 +21,14 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         this.view = view;
         this.x = x;
         this.y = y;
-        this.add(messages);
+        this.info = info;
+
+        init(new MessengerImpl());
+        add(messages);
 
         setWorld(new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this));  // TODO тут как-то заумно очень!
         map.getMap().set(x, y, 'A');
 
-        this.info = info;
         tryToGo(0, 0);
         view.moveMeTo(this);
     }
@@ -185,7 +186,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public Something leaveAfter() {
-        return make(' ');
+        return world.make(' ');
     }
 
     @Override

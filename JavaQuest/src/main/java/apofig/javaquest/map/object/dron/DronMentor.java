@@ -1,6 +1,5 @@
 package apofig.javaquest.map.object.dron;
 
-import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
@@ -34,7 +33,6 @@ public class DronMentor extends TalkingObject implements Something {
     @Override
     public void answer(String message) {
         Dron dron = leaveAfter();
-        dron.meetWith(hero);
         dron.askMe();
     }
 
@@ -49,21 +47,22 @@ public class DronMentor extends TalkingObject implements Something {
     }
 
     @Override
-    public void meetWith(Me me) {
-        this.hero = me;
-        super.meetWith(me);
-    }
-
-    @Override
     public boolean iCanUse() {
         return false;  
     }
 
     @Override
     public Dron leaveAfter() {
-        Dron dron = (Dron)make(Dron.CHAR);
+        Dron dron = (Dron)world.make(Dron.CHAR);
         dron.setHero(hero);
+        dron.add(hero.getMessages());
         return dron;
+    }
+
+    @Override
+    public void meetWith(Me hero) {
+        super.meetWith(hero);
+        this.hero = hero;
     }
 
     @Override

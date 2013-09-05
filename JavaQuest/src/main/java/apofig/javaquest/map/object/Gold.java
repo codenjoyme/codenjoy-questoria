@@ -32,7 +32,7 @@ public class Gold extends TalkingObject implements Something {
 
     @Override
     public Something leaveAfter() {
-        return make(' ');
+        return world.make(' ');
     }
 
     @Override
