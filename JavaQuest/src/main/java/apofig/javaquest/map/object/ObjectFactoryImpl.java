@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Action;
+import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.object.dron.Dron;
 import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.MonsterPool;
@@ -27,8 +28,12 @@ public class ObjectFactoryImpl implements ObjectFactory {
     @Override
     public Something get(Place place) {
         for (Something smth : objects) {
-            if (smth.isAt(place) && smth.symbol() == place.getChar()) {
-                return smth;
+            if (smth.isAt(place)) {
+                if (smth.symbol() != place.getChar()) {
+                    killSomething(smth);
+                } else {
+                    return smth;
+                }
             }
         }
 
@@ -41,13 +46,14 @@ public class ObjectFactoryImpl implements ObjectFactory {
         if (!(smth instanceof Nothing)) {
             objects.add(smth);
         }
-        smth.onKill(new Action() {
-            @Override
-            public void act(Something object) {
-                objects.remove(object);
-            }
-        });
         return smth;
+    }
+
+    private void killSomething(Something smth) {
+        objects.remove(smth);
+        if (Dieble.class.isAssignableFrom(smth.getClass())) {
+            ((Dieble)smth).die();
+        }
     }
 
     @Override

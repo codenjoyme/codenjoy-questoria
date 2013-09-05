@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
+import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Place;
@@ -15,14 +16,14 @@ import java.util.List;
  * Date: 1/19/13
  * Time: 8:30 PM
  */
-public class Monster extends TalkingObject implements Something {
+public class Monster extends TalkingObject implements Something, Dieble {
 
     private String question;
     private String answer;
     protected String help;
     private String leave;
     private String signature;
-    private List<Action> onKills;
+    private Action onKill;
 
     public Monster(String question, String answer,
                    String help, String leave,
@@ -33,7 +34,6 @@ public class Monster extends TalkingObject implements Something {
         this.help = help;
         this.leave = leave;
         this.signature = signature;
-        this.onKills = new LinkedList<>();
     }
 
     @Override
@@ -41,9 +41,6 @@ public class Monster extends TalkingObject implements Something {
         if (message.equals(answer)) {
             say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
             Something gold = leaveAfter();
-            for (Action onKill : onKills) {
-                onKill.act(this);
-            }
             gold.askMe();
         } else {
             say(help);
@@ -85,10 +82,14 @@ public class Monster extends TalkingObject implements Something {
         say(leave);
     }
 
-    @Override
     public void onKill(Action action) {
-        if (action != null) {
-            onKills.add(action);
+        onKill = action;
+    }
+
+    @Override
+    public void die() {
+        if (onKill != null) {
+            onKill.act(this);
         }
     }
 

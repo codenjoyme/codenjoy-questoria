@@ -30,6 +30,4 @@ public interface Something extends CodeHelper {
     boolean isAt(Point point);
 
     void meetWith(Me me);
-
-    void onKill(Action action);
 }

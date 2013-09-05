@@ -113,16 +113,10 @@ public class ManyInputCodeRunnerMonsterTest {
 
     private void buildMonster(String question, String help) {
         monster = new LongDivisionMonster();
-        monster.onKill(
-                new Action() {
-                    @Override
-                    public void act(Something object) {
-                        die = true;
-                    }
-                });
         monster.setFactory(new ObjectFactory() {
             @Override
             public Something get(Place place) {
+                die = true;
                 Gold gold = new Gold();
                 gold.add(messages);
                 gold.setFactory(this);

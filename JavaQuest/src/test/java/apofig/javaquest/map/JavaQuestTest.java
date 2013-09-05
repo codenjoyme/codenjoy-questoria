@@ -1,11 +1,16 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
+import apofig.javaquest.map.object.ObjectFactory;
+import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
+import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static apofig.javaquest.map.Messages.withoutSeparator;
 import static junit.framework.Assert.assertEquals;
@@ -20,6 +25,7 @@ public class JavaQuestTest {
     private JavaQuest game;
     private TerritoryMapImpl map;
     private Me player;
+    private ObjectFactory objects;
 
     public int getSize() {
         return 100;
@@ -92,6 +98,7 @@ public class JavaQuestTest {
             }
         };
         game = new JavaQuest(settings);
+        objects = Reflection.field("objects").ofType(ObjectFactory.class).in(game).get(); // TODO ой вей! Нарушаем инкапсуляцию
         map = (TerritoryMapImpl) game.getTerritoryMap();
         player = game.newPlayer("Player");
     }
@@ -1447,7 +1454,11 @@ public class JavaQuestTest {
 
         assertMessage(player, "DronMentor: " + DronMentor.MESSAGE);
 
+        assertObjects("[[object Me at map[59,60]='A'], [object DronMentor at map[60,60]='M']]");
+
         player.attack("Ok!");
+
+        assertObjects("[[object Me at map[59,60]='A'], [object Dron at map[60,60]='*']]");
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║????????            #   ??║\n" +
@@ -1650,6 +1661,14 @@ public class JavaQuestTest {
                 "java.lang.reflect.InvocationTargetException: " +
                 "java.lang.RuntimeException: \"     #  \"' не принята! Остановка!!!");
 
+    }
+
+    private void assertObjects(String expected) {
+        assertEquals(expected, getObjects().toString());
+    }
+
+    private List<Something> getObjects() {
+        return Reflection.field("objects").ofType(List.class).in(objects).get();
     }
 
     private void assertCode(String expected) {

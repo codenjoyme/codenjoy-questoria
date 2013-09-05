@@ -199,11 +199,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     @Override
-    public void onKill(Action action) {
-
-    }
-
-    @Override
     public String getCode() {
         return "";
     }

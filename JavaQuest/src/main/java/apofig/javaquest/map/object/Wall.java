@@ -51,11 +51,6 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public void onKill(Action action) {
-        // do nothing
-    }
-
-    @Override
     public String getCode() {
         return "";
     }

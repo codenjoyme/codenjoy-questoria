@@ -6,6 +6,8 @@ import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.Place;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
@@ -156,15 +158,21 @@ public class MonsterFactoryImplTest {
         return captor.getAllValues().toString();
     }
 
-    private void setupMonster(Monster monster) {
+    private void setupMonster(final Monster monster) {
         captor = ArgumentCaptor.forClass(String.class);
         messages = mock(Messages.class);
         monster.add(messages);
         ObjectFactory objects = mock(ObjectFactory.class);
         Place place = mock(Place.class);
-        Gold gold = new Gold();
+        final Gold gold = new Gold();
         gold.add(messages);
-        when(objects.get(place)).thenReturn(gold);
+        when(objects.get(place)).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                monster.die();
+                return gold;
+            }
+        });
         monster.setFactory(objects);
         monster.setPlace(place);
     }

@@ -69,11 +69,6 @@ public class Dron extends TalkingObject implements Something, Tickable {
     }
 
     @Override
-    public void onKill(Action action) {
-        // do nothing
-    }
-
-    @Override
     public String getCode() {
         return code;
     }
