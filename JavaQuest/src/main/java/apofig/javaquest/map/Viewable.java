@@ -7,6 +7,4 @@ package apofig.javaquest.map;
  */
 public interface Viewable extends Point {
     PlayerView view();
-
-
 }

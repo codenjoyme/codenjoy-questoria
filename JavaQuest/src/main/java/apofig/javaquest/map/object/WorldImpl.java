@@ -30,13 +30,8 @@ public class WorldImpl implements World {
     public void move(int x, int y) {
         char ch = place.getChar();
         place.update(' ');
-        place = new MapPlace(place, x, y);
+        place.showMe(x, y);
         place.update(ch);
-    }
-
-    @Override
-    public boolean isAt(Point point) {
-        return place.getX() == point.getX() && place.getY() == point.getY();
     }
 
     @Override

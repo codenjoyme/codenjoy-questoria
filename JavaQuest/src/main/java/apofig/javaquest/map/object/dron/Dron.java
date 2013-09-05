@@ -12,7 +12,7 @@ import apofig.javaquest.services.Tickable;
  * Date: 01.09.13
  * Time: 2:25
  */
-public class Dron extends TalkingObject implements Something, Tickable {
+public class Dron extends TalkingObject implements Something, Tickable, SetPlace {
 
     public static final char CHAR = '*';
     private Me hero;
@@ -23,6 +23,13 @@ public class Dron extends TalkingObject implements Something, Tickable {
             "}";
 
     private boolean active = false;
+
+    private Place place;
+
+    @Override
+    public void setPlace(Place place) {
+        this.place = place;
+    }
 
     @Override
     public void answer(String message) {
@@ -76,8 +83,6 @@ public class Dron extends TalkingObject implements Something, Tickable {
     @Override
     public void tick() {
         if (active) {
-            Place place = getPlace();
-
             String whereToGo = runCode(code, place.near());   // TODO дрон может зависнуть, и вообще любой клиентский код может зависнуть
             int dx = 0;
             int dy = 0;

@@ -2,7 +2,6 @@ package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.ObjectFactory;
-import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
@@ -10,10 +9,10 @@ import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static apofig.javaquest.map.Messages.withoutSeparator;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * User: oleksandr.baglai
@@ -1432,6 +1431,7 @@ public class JavaQuestTest {
     @Test
     public void shouldMeetWithDronMentor() {
         moveTo(getDronMentorX() - 2, getDronMentorY() + 2);
+
         moveDown();
         moveDown();
         moveRight();
@@ -1454,11 +1454,11 @@ public class JavaQuestTest {
 
         assertMessage(player, "DronMentor: " + DronMentor.MESSAGE);
 
-        assertObjects("[[object Me at map[59,60]='A'], [object DronMentor at map[60,60]='M']]");
+        assertTrue(objects.toString().contains("[object DronMentor at map[60,60]='M']"));
 
         player.attack("Ok!");
 
-        assertObjects("[[object Me at map[59,60]='A'], [object Dron at map[60,60]='*']]");
+        assertFalse(objects.toString().contains("[object DronMentor"));
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║????????            #   ??║\n" +
@@ -1661,10 +1661,6 @@ public class JavaQuestTest {
                 "java.lang.reflect.InvocationTargetException: " +
                 "java.lang.RuntimeException: \"     #  \"' не принята! Остановка!!!");
 
-    }
-
-    private void assertObjects(String expected) {
-        assertEquals(expected, objects.toString());
     }
 
     private void assertCode(String expected) {

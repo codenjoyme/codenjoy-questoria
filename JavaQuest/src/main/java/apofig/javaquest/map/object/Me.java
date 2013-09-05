@@ -42,6 +42,11 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         return x;
     }
 
+    @Override
+    public boolean isAt(Point point) {
+        return this.x == point.getX() && this.y == point.getY();
+    }
+
     private void tryToGo(int dx, int dy) {
         if (dx == 0 && dy == 0) return;
 
@@ -203,4 +208,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         return "";
     }
 
+    public World getWorld() {
+        return world;
+    }
 }

@@ -15,4 +15,6 @@ public interface Place extends Point {
     String near();
 
     char near(int dx, int dy);
+
+    void showMe(int x, int y);
 }

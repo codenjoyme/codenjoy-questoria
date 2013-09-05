@@ -122,11 +122,6 @@ public class ManyInputCodeRunnerMonsterTest {
             }
 
             @Override
-            public boolean isAt(Point point) {
-                return false;
-            }
-
-            @Override
             public void move(int x, int y) {
             }
 

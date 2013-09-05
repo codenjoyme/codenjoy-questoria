@@ -27,7 +27,5 @@ public interface Something extends CodeHelper {
 
     void tryToLeave();
 
-    boolean isAt(Point point);
-
     void meetWith(Me me);
 }

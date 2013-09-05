@@ -1,15 +1,14 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Dieble;
+import apofig.javaquest.map.Point;
 import apofig.javaquest.map.object.dron.Dron;
 import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.services.Tickable;
 import org.fest.reflect.core.Reflection;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: oleksandr.baglai
@@ -19,17 +18,17 @@ import java.util.List;
 public class ObjectFactoryImpl implements ObjectFactory {
 
     private MonsterPool monsters;
-    private List<Something> objects;
+    private Map<Something, World> objects;
 
     public ObjectFactoryImpl(MonsterPool monsters) {
         this.monsters = monsters;
-        objects = new LinkedList<Something>();
+        objects = new HashMap<Something, World>();
     }
 
     @Override
     public Something get(Place place) {
-        for (Something smth : objects) {
-            if (smth.isAt(place)) {
+        for (Something smth : getObjects()) {
+            if (isAt(smth, place)) {
                 if (smth.symbol() != place.getChar()) {
                     killSomething(smth);
                 } else {
@@ -38,15 +37,41 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
 
-        ObjectSettings object = getObject(place.getChar());
-        object.setWorld(new WorldImpl(this, place, object));
+        ObjectSettings object = initObject(place);
 
         Something smth = (Something)object;
 
-        if (!(smth instanceof Nothing)) {
-            objects.add(smth);
-        }
         return smth;
+    }
+
+    private Collection<Something> getObjects() {
+        return new LinkedList<>(objects.keySet());
+    }
+
+    @Override
+    public boolean isAt(Something smth, Point place) {
+        if (smth instanceof Me) {
+            return ((Me)smth).isAt(place);
+        }
+        return objects.get(smth).getPlace().isAt(place);
+    }
+
+    private ObjectSettings initObject(Place place) {
+        ObjectSettings result = newObject(place.getChar());
+
+        WorldImpl world = new WorldImpl(this, place, result);
+
+        result.setWorld(world);
+
+        if (SetPlace.class.isAssignableFrom(result.getClass())) {
+            ((SetPlace)result).setPlace(place);
+        }
+
+        if (!(result instanceof Nothing)) {
+            objects.put((Something)result, world);
+        }
+
+        return result;
     }
 
     private void killSomething(Something smth) {
@@ -58,10 +83,10 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
     @Override
     public void add(Me me) {
-        objects.add(me);
+        objects.put(me, me.getWorld());
     }
 
-    private ObjectSettings getObject(char c) {
+    private ObjectSettings newObject(char c) {
         if (c == ' ' || c == 'I') {
             return new Nothing();
         } else if (c == 'A') {
@@ -88,7 +113,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     @Override
     public String toString() {  // TODO для целей тстирования - найти способ удалить!
         List<String> result = new ArrayList<>();
-        for (Something smth : objects) {
+        for (Something smth : getObjects()) {
             result.add(Reflection.field("world").ofType(World.class).in(smth).get().toString());
         }
         return result.toString();
@@ -99,7 +124,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
      */
     @Override
     public void tick() {
-        for (Something smth : objects) {
+        for (Something smth : getObjects()) {
             if (Tickable.class.isAssignableFrom(smth.getClass())) {
                 ((Tickable)smth).tick();
             }

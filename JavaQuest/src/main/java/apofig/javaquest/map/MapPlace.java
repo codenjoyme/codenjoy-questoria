@@ -10,17 +10,11 @@ import apofig.javaquest.map.object.Place;
  */
 public class MapPlace implements Place {
     private Map map;
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
 
     public MapPlace(Map map, int x, int y) {
         this.map = map;
-        this.x = x;
-        this.y = y;
-    }
-
-    public MapPlace(Place place, int x, int y) {
-        this.map = ((MapPlace)place).map;
         this.x = x;
         this.y = y;
     }
@@ -45,6 +39,12 @@ public class MapPlace implements Place {
     @Override
     public char near(int dx, int dy) {
         return map.get(x + dx, y + dy);
+    }
+
+    @Override
+    public void showMe(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override

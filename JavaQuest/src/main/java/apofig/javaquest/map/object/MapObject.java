@@ -10,7 +10,7 @@ import apofig.javaquest.map.Point;
  */
 public abstract class MapObject implements ObjectSettings {
 
-    private World world;
+    protected World world;
 
     @Override
     public void setWorld(World world) {
@@ -25,13 +25,4 @@ public abstract class MapObject implements ObjectSettings {
         world.move(x, y);
     }
 
-    public boolean isAt(Point point) {
-        return world.isAt(point);
-    }
-
-
-
-    public Place getPlace() {
-        return world.getPlace();
-    }
 }

@@ -10,8 +10,6 @@ import apofig.javaquest.map.Point;
 public interface World {
     Place getPlace();
 
-    boolean isAt(Point point);
-
     void move(int x, int y);
 
     Something make(char c);

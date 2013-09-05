@@ -69,7 +69,7 @@ public class JavaQuest implements Tickable {
 
         for (Something smth : map.getSomethingNear(me)) {
             if (smth.iCanLeave()) {
-                if (!map.isNear(me.atNewPlace(), smth) && !smth.isAt(whereToGo)) {
+                if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
                     smth.tryToLeave();
                     if (smth instanceof Me) {   // TODO testme
                         Me another = (Me) smth;
