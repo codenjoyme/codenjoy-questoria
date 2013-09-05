@@ -106,7 +106,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         return view;
     }
 
-    public Viewable atNewPlace() {    // TODO cheat
+    public Viewable atNewPlace() {
         return new Viewable() {
             @Override
             public PlayerView view() {

@@ -4,7 +4,6 @@ import apofig.javaquest.map.Messages;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * User: oleksandr.baglai
@@ -25,9 +24,9 @@ public class TalkingObject extends MapObject implements ObjectSettings {
         }
     }
 
-    public void sayOnce(String message) {  // TODO подумать об этом
+    public void sayOnce(String message) {
         for (Messages m : messages) {
-            m.addUnique(getName() + ": " + message);
+            m.addOnce(getName() + ": " + message);
         }
     }
 

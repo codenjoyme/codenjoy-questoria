@@ -54,7 +54,7 @@ public class Messages {
         return toString();
     }
 
-    public void addUnique(String message) {
+    public void addOnce(String message) {
         if (!isLast(message)) {
             messages.add(message);
         }
