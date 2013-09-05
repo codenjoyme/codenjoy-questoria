@@ -118,7 +118,7 @@ public class OneIntCodeRunnerMonsterTest {
         monster.setWorld(new World() {
 
             @Override
-            public Place getPlace() {
+            public Place place() {
                 return mock(Place.class);
             }
 

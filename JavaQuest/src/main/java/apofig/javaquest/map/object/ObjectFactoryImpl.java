@@ -53,7 +53,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         if (smth instanceof Me) {
             return ((Me)smth).isAt(place);
         }
-        return objects.get(smth).getPlace().isAt(place);
+        return objects.get(smth).place().isAt(place);
     }
 
     private ObjectSettings initObject(Place place) {

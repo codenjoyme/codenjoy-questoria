@@ -1,8 +1,5 @@
 package apofig.javaquest.map.object;
 
-import apofig.javaquest.map.MapPlace;
-import apofig.javaquest.map.Point;
-
 /**
  * User: oleksandr.baglai
  * Date: 1/31/13
@@ -30,7 +27,7 @@ public class WorldImpl implements World {
     public void move(int x, int y) {
         char ch = place.getChar();
         place.update(' ');
-        place.showMe(x, y);
+        place.move(x, y);
         place.update(ch);
     }
 
@@ -40,7 +37,7 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public Place getPlace() {
+    public Place place() {
         return place;
     }
 }

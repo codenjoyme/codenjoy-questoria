@@ -16,5 +16,5 @@ public interface Place extends Point {
 
     char near(int dx, int dy);
 
-    void showMe(int x, int y);
+    void move(int x, int y);
 }

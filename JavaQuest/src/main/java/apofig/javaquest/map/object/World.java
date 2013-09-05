@@ -8,7 +8,7 @@ import apofig.javaquest.map.Point;
  * Time: 23:18
  */
 public interface World {
-    Place getPlace();
+    Place place();
 
     void move(int x, int y);
 
