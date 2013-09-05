@@ -8,7 +8,7 @@ import apofig.javaquest.map.object.*;
  * Date: 01.09.13
  * Time: 2:02
  */
-public class DronMentor extends TalkingObject implements Something, SetWorld {
+public class DronMentor extends TalkingObject implements Something, SetWorld, MeetWithHero {
 
     public static final String MESSAGE = "Видишь все это золото? Оно твое. Ты можешь собрать его намного быстрее, \n" +
             "если воспользуешься помощником. Я научу тебя его делать. \n" +
@@ -33,7 +33,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld {
     @Override
     public void answer(String message) {
         Dron dron = leaveAfter();
-        dron.askMe();
+        dron.ask();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
         sayOnce(MESSAGE);
     }
 
@@ -61,8 +61,12 @@ public class DronMentor extends TalkingObject implements Something, SetWorld {
 
     @Override
     public void meetWith(Me hero) {
-        super.meetWith(hero);
         this.hero = hero;
+    }
+
+    @Override
+    public void leave(Me hero) {
+        // do nothing
     }
 
     @Override

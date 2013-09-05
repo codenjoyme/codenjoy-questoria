@@ -5,9 +5,6 @@ import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.*;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13
@@ -39,7 +36,7 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
         if (message.equals(answer)) {
             say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
             Something gold = leaveAfter();
-            gold.askMe();
+            gold.ask();
         } else {
             say(help);
         }
@@ -51,7 +48,7 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
         say(question);
     }
 

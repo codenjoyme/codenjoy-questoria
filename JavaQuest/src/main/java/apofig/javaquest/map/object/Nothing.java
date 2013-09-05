@@ -23,7 +23,7 @@ public class Nothing extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
 //        clearLog();  // TODO реализовать очистку лога после двух подряд Nothing
     }
 

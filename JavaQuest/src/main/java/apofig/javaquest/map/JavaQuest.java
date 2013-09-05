@@ -73,7 +73,6 @@ public class JavaQuest implements Tickable {
                     smth.tryToLeave();
                     if (smth instanceof Me) {   // TODO testme
                         Me another = (Me) smth;
-                        another.leave(me);
                         me.leave(another);
                     }
                 }
@@ -81,7 +80,7 @@ public class JavaQuest implements Tickable {
         }
 
         Something smthAtWay = map.getAt(whereToGo);
-        smthAtWay.askMe();
+        smthAtWay.ask();
         if (smthAtWay.iCanUse()) {
             smthAtWay.getBy(me.getInfo());
             me.go();
@@ -91,13 +90,13 @@ public class JavaQuest implements Tickable {
 
     private void meetWith(Me me) {
         for (Something object : map.getAllNear(me)) {
-            ((TalkingObject)object).meetWith(me);
+            me.meetWith(object);
         }
 
         for (Something object : map.getSomethingNear(me)) {
-            object.askMe();
+            object.ask();
             if (object instanceof Me) {
-                me.askMe();
+                me.ask();
             }
         }
     }

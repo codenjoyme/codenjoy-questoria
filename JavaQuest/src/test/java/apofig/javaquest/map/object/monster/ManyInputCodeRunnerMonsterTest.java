@@ -1,8 +1,6 @@
 package apofig.javaquest.map.object.monster;
 
-import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
-import apofig.javaquest.map.Point;
 import apofig.javaquest.map.object.*;
 import org.junit.Test;
 
@@ -107,7 +105,7 @@ public class ManyInputCodeRunnerMonsterTest {
     }
 
     private void assertMonsterAskMe(String expected) {
-        monster.askMe();
+        monster.ask();
         assertEquals(expected, messages.get());
         messages.clear();
     }

@@ -44,7 +44,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
         sayOnce("Я твой робот! Запрограммируй меня.");
         active = false;
     }

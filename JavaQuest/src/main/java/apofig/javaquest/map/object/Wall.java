@@ -21,7 +21,7 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
         say("Пожалуйста, остановись!");
     }
 

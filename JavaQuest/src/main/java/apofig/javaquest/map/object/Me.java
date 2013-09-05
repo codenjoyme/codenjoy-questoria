@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.*;
+import apofig.javaquest.map.object.dron.MeetWithHero;
 
 /**
  * User: sanja
@@ -176,7 +177,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
         sayOnce("Привет, я такой же как и ты игрок!");
     }
 
@@ -212,5 +213,31 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     public World getWorld() {
         return world;
+    }
+
+    public void meetWith(Something object) {
+        TalkingObject talking = (TalkingObject) object;
+        talking.add(this.getMessages());
+
+        if (object instanceof Me) {
+            this.add(talking.getMessages());
+        }
+
+        if (object instanceof MeetWithHero) {
+            ((MeetWithHero) object).meetWith(this);
+        }
+    }
+
+    public void leave(Something object) {
+        TalkingObject talking = (TalkingObject) object;
+        talking.remove(this.getMessages());
+
+        if (object instanceof Me) {
+            this.remove(talking.getMessages());
+        }
+
+        if (object instanceof MeetWithHero) {
+            ((MeetWithHero) object).leave(this);
+        }
     }
 }

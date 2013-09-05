@@ -23,7 +23,7 @@ public class Gold extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public void askMe() {
+    public void ask() {
         sayOnce("Привет, я - 10$");
     }
 

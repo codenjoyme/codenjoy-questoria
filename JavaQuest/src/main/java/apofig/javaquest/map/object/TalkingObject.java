@@ -14,13 +14,6 @@ public class TalkingObject {
 
     private Messenger messenger;
 
-    public void meetWith(Me hero) {
-        this.add(hero.getMessages());
-        if (this instanceof Me) {
-            hero.add(this.getMessages());
-        }
-    }
-
     public Messenger getMessenger() {
         return messenger;
     }
@@ -41,8 +34,8 @@ public class TalkingObject {
         messenger.add(messages);
     }
 
-    public void leave(Me me) {
-        messenger.remove(me.getMessages());
+    public void remove(Messages messages) {
+        messenger.remove(messages);
     }
 
     public void init(Messenger messenger) {

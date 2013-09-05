@@ -15,7 +15,7 @@ public interface Something extends CodeHelper {
 
     boolean iCanLeave();
 
-    void askMe();
+    void ask();
 
     boolean iCanUse();
 
