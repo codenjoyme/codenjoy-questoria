@@ -79,7 +79,7 @@ public class JavaCompiler {
     }
 
     private void stealSystemOut() {
-        out = new StringBufferOutputStream();  // TODO fixme
+        out = new StringBufferOutputStream();
         old = System.err;
         System.setErr(new PrintStream(out, true));
     }
