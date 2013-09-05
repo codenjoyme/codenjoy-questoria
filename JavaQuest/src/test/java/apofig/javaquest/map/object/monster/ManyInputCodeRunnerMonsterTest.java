@@ -130,6 +130,8 @@ public class ManyInputCodeRunnerMonsterTest {
             }
 
             @Override public void add(Me me) { }
+
+            @Override public void tick() { }
         });
         monster.setPlace(mock(Place.class));
         messages = new Messages();

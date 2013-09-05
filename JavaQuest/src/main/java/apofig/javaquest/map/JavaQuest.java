@@ -120,8 +120,8 @@ public class JavaQuest implements Tickable {
         for (Me player : players) {
             move(player);
             player.stop();
-            player.tick();
         }
+        objects.tick();
     }
 
     public String printView(Me player) {

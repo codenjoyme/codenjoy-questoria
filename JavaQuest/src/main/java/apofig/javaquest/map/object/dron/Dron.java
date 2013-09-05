@@ -132,6 +132,5 @@ public class Dron extends TalkingObject implements Something, Tickable {
 
     public void setHero(Me hero) {
         this.hero = hero;
-        hero.subscribe(this);
     }
 }

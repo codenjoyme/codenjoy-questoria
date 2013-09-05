@@ -1,10 +1,10 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Action;
-import apofig.javaquest.map.Viewable;
 import apofig.javaquest.map.object.dron.Dron;
 import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.MonsterPool;
+import apofig.javaquest.services.Tickable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -84,5 +84,17 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
     public static UnsupportedOperationException newObjectError(String c) {
         throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: '" + c + "'");
+    }
+
+    /**
+     * Любой объект мира (Something) маркированный как Tickable будет каждый тик оповещаться от JavaQuest
+     */
+    @Override
+    public void tick() {
+        for (Something smth : objects) {
+            if (Tickable.class.isAssignableFrom(smth.getClass())) {
+                ((Tickable)smth).tick();
+            }
+        }
     }
 }
