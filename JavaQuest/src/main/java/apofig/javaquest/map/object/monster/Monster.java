@@ -34,11 +34,11 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
     @Override
     public void answer(String message) {
         if (message.equals(answer)) {
-            say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
+            messenger.say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
             Something gold = leaveAfter();
             gold.ask();
         } else {
-            say(help);
+            messenger.say(help);
         }
     }
 
@@ -49,7 +49,7 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
 
     @Override
     public void ask() {
-        say(question);
+        messenger.say(question);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
 
     @Override
     public void tryToLeave() {
-        say(leave);
+        messenger.say(leave);
     }
 
     public void onKill(Action action) {

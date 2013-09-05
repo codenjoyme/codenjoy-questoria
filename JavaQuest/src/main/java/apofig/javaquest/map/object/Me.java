@@ -25,8 +25,8 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         this.y = y;
         this.info = info;
 
-        init(new MessengerImpl());
-        add(messages);
+        setMessenger(new MessengerImpl());
+        messenger.add(messages);
 
         world = new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this);  // TODO тут как-то заумно очень!
         map.getMap().set(x, y, 'A');
@@ -98,7 +98,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public void attack(String message) {
-        say(message);
+        messenger.say(message);
         if (map.getSomethingNear(this).isEmpty()) {
             Something whereIAm = map.getAt(this);
             whereIAm.answer(message);
@@ -178,7 +178,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public void ask() {
-        sayOnce("Привет, я такой же как и ты игрок!");
+        messenger.sayOnce("Привет, я такой же как и ты игрок!");
     }
 
     @Override
@@ -203,7 +203,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public void tryToLeave() {
-        say("Ну пока!");
+        messenger.say("Ну пока!");
     }
 
     @Override
@@ -217,10 +217,10 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     public void meetWith(Something object) {
         TalkingObject talking = (TalkingObject) object;
-        talking.add(this.getMessages());
+        talking.getMessenger().add(messenger.getMessages());  // TODO выделить это в мессенджер
 
         if (object instanceof Me) {
-            this.add(talking.getMessages());
+            messenger.add(talking.getMessenger().getMessages());
         }
 
         if (object instanceof MeetWithHero) {
@@ -230,10 +230,10 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     public void leave(Something object) {
         TalkingObject talking = (TalkingObject) object;
-        talking.remove(this.getMessages());
+        talking.getMessenger().remove(messenger.getMessages());   // TODO выделить это в мессенджер
 
         if (object instanceof Me) {
-            this.remove(talking.getMessages());
+            messenger.remove(talking.getMessenger().getMessages());
         }
 
         if (object instanceof MeetWithHero) {

@@ -35,7 +35,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
     @Override
     public void answer(String message) {
         this.code = message;
-        sayOnce("Команда принята! Обработка начнется после того как ты отойдешь.");
+        messenger.sayOnce("Команда принята! Обработка начнется после того как ты отойдешь.");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
 
     @Override
     public void ask() {
-        sayOnce("Я твой робот! Запрограммируй меня.");
+        messenger.sayOnce("Я твой робот! Запрограммируй меня.");
         active = false;
     }
 
@@ -71,7 +71,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
 
     @Override
     public void tryToLeave() {
-        sayOnce("Обработка началась!");
+        messenger.sayOnce("Обработка началась!");
         active = true;
 
     }
@@ -98,20 +98,20 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
                 dy = 1;
             } else {
                 active = false;
-                sayOnce("Команда '" + whereToGo + "' не принята! Остановка!!!");
+                messenger.sayOnce("Команда '" + whereToGo + "' не принята! Остановка!!!");
                 return;
             }
 
             char atWay = place.near(dx, dy);
             if (atWay == '$') {
-                say("Дрон подобрал золото!");
+                messenger.say("Дрон подобрал золото!");
                 hero.getInfo().addGold(10); // TODO тут хардкод, это должно решать золото а не дрон
             }
             if (atWay == ' ' || atWay == '$') {
                 world.move(place.getX() + dx, place.getY() + dy);
             } else {
                 active = false;
-                sayOnce("Дрон уперся в неопознанный объект! Остановка!!!");
+                messenger.sayOnce("Дрон уперся в неопознанный объект! Остановка!!!");
             }
         }
     }

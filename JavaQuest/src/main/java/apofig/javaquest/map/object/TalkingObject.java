@@ -10,40 +10,21 @@ import java.util.List;
  * Date: 1/31/13
  * Time: 12:35 AM
  */
-public class TalkingObject {
+public class TalkingObject implements SetMessenger {
 
-    private Messenger messenger;
+    protected Messenger messenger;
 
     public Messenger getMessenger() {
         return messenger;
     }
 
-    public void say(String message) {
-        messenger.say(message);
-    }
-
-    public void sayOnce(String message) {
-        messenger.sayOnce(message);
-    }
-
-    public Messages getMessages() {
-        return messenger.getMessages();
-    }
-
-    public void add(Messages messages) {
-        messenger.add(messages);
-    }
-
-    public void remove(Messages messages) {
-        messenger.remove(messages);
-    }
-
-    public void init(Messenger messenger) {
-        this.messenger = messenger;
-        this.messenger.changeName(getName());
-    }
-
     public String getName() {
         return getClass().getSimpleName();
+    }
+
+    @Override
+    public void setMessenger(Messenger messenger) {
+        this.messenger = messenger;
+        this.messenger.changeName(getName());
     }
 }

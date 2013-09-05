@@ -160,12 +160,12 @@ public class MonsterFactoryImplTest {
         captor = ArgumentCaptor.forClass(String.class);
         messages = mock(Messages.class);
         Messenger messenger = new MessengerImpl();
-        monster.init(messenger);
-        monster.add(messages);
+        monster.setMessenger(messenger);
+        monster.getMessenger().add(messages);
         ObjectFactory objects = mock(ObjectFactory.class);
         Place place = mock(Place.class);
         final Gold gold = new Gold();
-        gold.init(new MessengerImpl());
+        gold.setMessenger(new MessengerImpl());
         when(objects.get(place)).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {

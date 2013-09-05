@@ -979,8 +979,12 @@ public class JavaQuestTest {
     }
 
     private void assertMessage(Me me, String message) {
-        assertEquals(message, withoutSeparator(me.getMessages().get()));
-        me.getMessages().clear();
+        assertEquals(message, withoutSeparator(me.getMessenger().getMessages().get()));
+        clearMessages(me);
+    }
+
+    private void clearMessages(Me me) {
+        me.getMessenger().getMessages().clear();
     }
 
     @Test
@@ -1653,7 +1657,7 @@ public class JavaQuestTest {
         player.attack("public String whereToGo(String nearMe) {\n" +
                 "    throw new java.lang.RuntimeException(\"\\\"\" + nearMe + \"\\\"\");\n" +
                 "}");
-        player.getMessages().clear();
+        clearMessages(player);
 
         moveDown();
         assertMessage(player, "Dron: Обработка началась!\n" +

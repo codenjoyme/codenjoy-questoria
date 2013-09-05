@@ -19,7 +19,7 @@ public class JavaQuestSinglePlayer {
     }
 
     public String getMessage() {
-        return player.getMessages().getLast(60);
+        return player.getMessenger().getMessages().getLast(60);
     }
 
     public Player getPlayerInfo() {

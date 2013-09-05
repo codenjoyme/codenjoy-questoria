@@ -14,7 +14,7 @@ public class Gold extends TalkingObject implements Something, SetWorld {
 
     @Override
     public void answer(String message) {
-        sayOnce("Ты не можешь делать это со мной!");
+        messenger.sayOnce("Ты не можешь делать это со мной!");
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Gold extends TalkingObject implements Something, SetWorld {
 
     @Override
     public void ask() {
-        sayOnce("Привет, я - 10$");
+        messenger.sayOnce("Привет, я - 10$");
     }
 
     @Override
@@ -46,12 +46,12 @@ public class Gold extends TalkingObject implements Something, SetWorld {
     public void getBy(Player player) {
         player.addGold(10);
         leaveAfter();
-        say("Ты подобрал меня! Спасибо!!");
+        messenger.say("Ты подобрал меня! Спасибо!!");
     }
 
     @Override
     public void tryToLeave() {
-        sayOnce("Ну и ладно! Достанусь кому-то другому!!");
+        messenger.sayOnce("Ну и ладно! Достанусь кому-то другому!!");
     }
 
     @Override

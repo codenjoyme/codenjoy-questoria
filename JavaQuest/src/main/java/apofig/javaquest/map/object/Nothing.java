@@ -14,7 +14,7 @@ public class Nothing extends TalkingObject implements Something, SetWorld {
 
     @Override
     public void answer(String message) {
-        say("Ну и?..");
+        messenger.say("Ну и?..");
     }
 
     @Override

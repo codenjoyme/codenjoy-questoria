@@ -27,8 +27,8 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
         if (message.equals("OK")) {
             super.answer("4E0A");
         } else {
-            say(message);
-            say(help);
+            messenger.say(message);
+            messenger.say(help);
         }
     }
 

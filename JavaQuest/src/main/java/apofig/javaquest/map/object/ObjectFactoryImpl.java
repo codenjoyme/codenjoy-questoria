@@ -69,7 +69,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         if (messenger == null) {
             messenger = new MessengerImpl();
         }
-        ((TalkingObject)result).init(messenger);
+        ((SetMessenger)result).setMessenger(messenger);
 
         if (SetPlace.class.isAssignableFrom(result.getClass())) {
             ((SetPlace)result).setPlace(place);

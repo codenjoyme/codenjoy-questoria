@@ -43,7 +43,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
 
     @Override
     public void ask() {
-        sayOnce(MESSAGE);
+        messenger.sayOnce(MESSAGE);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     public Dron leaveAfter() {
         Dron dron = (Dron)world.make(Dron.CHAR);
         dron.setHero(hero);
-        dron.add(hero.getMessages());
+        dron.getMessenger().add(hero.getMessenger().getMessages());     // TODO выделить в messenger
         return dron;
     }
 

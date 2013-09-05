@@ -128,14 +128,13 @@ public class ManyInputCodeRunnerMonsterTest {
             public Something make(char c) {
                 die = true;
                 Gold gold = new Gold();
-                gold.init(messenger);
-                gold.add(messages);
+                gold.setMessenger(messenger);
                 gold.setWorld(this);
                 return gold;
             }
         });
         messages = new Messages();
-        monster.init(messenger);
-        monster.add(messages);
+        monster.setMessenger(messenger);
+        monster.getMessenger().add(messages);
     }
 }
