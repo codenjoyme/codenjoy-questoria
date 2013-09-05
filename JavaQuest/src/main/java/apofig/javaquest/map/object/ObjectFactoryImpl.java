@@ -5,7 +5,9 @@ import apofig.javaquest.map.object.dron.Dron;
 import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.services.Tickable;
+import org.fest.reflect.core.Reflection;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,6 +83,15 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
     public static UnsupportedOperationException newObjectError(String c) {
         throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: '" + c + "'");
+    }
+
+    @Override
+    public String toString() {  // TODO для целей тстирования - найти способ удалить!
+        List<String> result = new ArrayList<>();
+        for (Something smth : objects) {
+            result.add(Reflection.field("world").ofType(World.class).in(smth).get().toString());
+        }
+        return result.toString();
     }
 
     /**

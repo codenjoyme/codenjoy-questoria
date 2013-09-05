@@ -1664,11 +1664,7 @@ public class JavaQuestTest {
     }
 
     private void assertObjects(String expected) {
-        assertEquals(expected, getObjects().toString());
-    }
-
-    private List<Something> getObjects() {
-        return Reflection.field("objects").ofType(List.class).in(objects).get();
+        assertEquals(expected, objects.toString());
     }
 
     private void assertCode(String expected) {

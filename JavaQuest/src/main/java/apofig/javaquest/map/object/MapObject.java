@@ -29,10 +29,7 @@ public abstract class MapObject implements ObjectSettings {
         return world.isAt(point);
     }
 
-    @Override
-    public String toString() {
-        return world.toString();
-    }
+
 
     public Place getPlace() {
         return world.getPlace();
