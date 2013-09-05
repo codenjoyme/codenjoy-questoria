@@ -10,41 +10,31 @@ import apofig.javaquest.map.Point;
  */
 public abstract class MapObject implements ObjectSettings {
 
-    private Place place;
-    private ObjectFactory factory;
+    private World world;
 
     @Override
-    public void setFactory(ObjectFactory factory) {
-        this.factory = factory;
-    }
-
-    @Override
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     public Something make(char c) {
-        place.update(c);
-        return factory.get(place);
+        return world.make(c);
     }
 
     public void move(int x, int y) {
-        char ch = place.getChar();
-        place.update(' ');
-        place = new MapPlace(place, x, y);
-        place.update(ch);
+        world.move(x, y);
     }
 
     public boolean isAt(Point point) {
-        return place.getX() == point.getX() && place.getY() == point.getY();
+        return world.isAt(point);
     }
 
     @Override
     public String toString() {
-        return String.format("[object %s at %s]", this.getClass().getSimpleName(), place);
+        return world.toString();
     }
 
     public Place getPlace() {
-        return place;
+        return world.getPlace();
     }
 }

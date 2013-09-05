@@ -34,8 +34,7 @@ public class JavaQuest implements Tickable {
         Player info = new Player(name);
 
         Point point = findFreePosition();
-        Me player = new Me(map, view, new Messages(), point.getX(), point.getY(), info);
-        player.setFactory(objects);
+        Me player = new Me(objects, map, view, new Messages(), point.getX(), point.getY(), info);
 
         players.add(player);
         map.openSpace(player);

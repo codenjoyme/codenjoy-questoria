@@ -8,9 +8,7 @@ import apofig.javaquest.map.Messages;
  * Time: 2:00 AM
  */
 public interface ObjectSettings {
-    void setPlace(Place place);
-
-    void setFactory(ObjectFactory factory);
-
     void add(Messages messages);
+
+    void setWorld(World world);
 }

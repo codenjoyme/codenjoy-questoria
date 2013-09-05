@@ -4,6 +4,7 @@ import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.Gold;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.Place;
+import apofig.javaquest.map.object.WorldImpl;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;
@@ -173,7 +174,6 @@ public class MonsterFactoryImplTest {
                 return gold;
             }
         });
-        monster.setFactory(objects);
-        monster.setPlace(place);
+        monster.setWorld(new WorldImpl(objects, place, monster));
     }
 }

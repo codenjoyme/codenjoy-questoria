@@ -2,6 +2,7 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Messages;
+import apofig.javaquest.map.Point;
 import apofig.javaquest.map.object.*;
 import org.junit.Test;
 
@@ -114,21 +115,31 @@ public class OneIntCodeRunnerMonsterTest {
 
     private void buildMonster(String question, String help) {
         monster = new FizzBuzzMonster();
-        monster.setFactory(new ObjectFactory() {
+        monster.setWorld(new World() {
+
             @Override
-            public Something get(Place place) {
+            public Place getPlace() {
+                return mock(Place.class);
+            }
+
+            @Override
+            public boolean isAt(Point point) {
+                return false;
+            }
+
+            @Override
+            public void move(int x, int y) {
+            }
+
+            @Override
+            public Something make(char c) {
                 die = true;
                 Gold gold = new Gold();
                 gold.add(messages);
-                gold.setFactory(this);
+                gold.setWorld(this);
                 return gold;
             }
-
-            @Override public void add(Me me) { }
-
-            @Override public void tick() { }
         });
-        monster.setPlace(mock(Place.class));
         messages = new Messages();
         monster.add(messages);
     }

@@ -37,8 +37,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         }
 
         ObjectSettings object = getObject(place.getChar());
-        object.setPlace(place);
-        object.setFactory(this);
+        object.setWorld(new WorldImpl(this, place, object));
 
         Something smth = (Something)object;
 

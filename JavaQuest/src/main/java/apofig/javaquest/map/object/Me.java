@@ -17,14 +17,14 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     private Point whereToGo;
     private TerritoryMap map;
 
-    public Me(TerritoryMap map, PlayerView view, Messages messages, int x, int y, Player info) {
+    public Me(ObjectFactory objects, TerritoryMap map, PlayerView view, Messages messages, int x, int y, Player info) {
         this.map = map;
         this.view = view;
         this.x = x;
         this.y = y;
         this.add(messages);
 
-        setPlace(new MapPlace(map.getMap(), x, y));
+        setWorld(new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this));  // TODO тут как-то заумно очень!
         map.getMap().set(x, y, 'A');
 
         this.info = info;
