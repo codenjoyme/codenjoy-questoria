@@ -2,8 +2,6 @@ package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.Point;
-import apofig.javaquest.map.object.dron.Dron;
-import apofig.javaquest.map.object.dron.DronMentor;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.services.Tickable;
 import org.fest.reflect.core.Reflection;
@@ -17,12 +15,14 @@ import java.util.*;
  */
 public class ObjectFactoryImpl implements ObjectFactory {
 
+    private ObjectLoader loader;
     private MonsterPool monsters;
     private Map<Something, World> objects;
 
     public ObjectFactoryImpl(MonsterPool monsters) {
         this.monsters = monsters;
         objects = new HashMap<Something, World>();
+        loader = new ObjectLoader();
     }
 
     @Override
@@ -98,20 +98,12 @@ public class ObjectFactoryImpl implements ObjectFactory {
         if (c == ' ' || c == 'I') {
             return new Nothing();
         } else if (c == 'A') {
-//            return new Alien();
             throw new IllegalStateException("Незареганный Alien!!!");
         } else if (c == '@') {
             return monsters.next();
-        } else if (c == '#') {
-            return new Wall();
-        } else if (c == '$') {
-            return new Gold();
-        } else if (c == 'M') {
-            return new DronMentor();
-        } else if (c == '*') {
-            return new Dron();
         }
-        throw newObjectError(""+c);
+
+        return loader.load(c);
     }
 
     public static UnsupportedOperationException newObjectError(String c) {
