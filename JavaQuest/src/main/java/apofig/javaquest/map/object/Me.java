@@ -206,11 +206,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         messenger.say("Ну пока!");
     }
 
-    @Override
-    public String getCode() {
-        return "";
-    }
-
     public World getWorld() {
         return world;
     }

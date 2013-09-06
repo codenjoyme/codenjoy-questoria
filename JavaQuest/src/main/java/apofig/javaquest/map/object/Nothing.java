@@ -2,13 +2,14 @@ package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
+import apofig.javaquest.map.object.monster.CodeHelper;
 
 /**
  * User: oleksandr.baglai
  * Date: 1/19/13
  * Time: 8:43 PM
  */
-public class Nothing extends TalkingObject implements Something, SetWorld {
+public class Nothing extends TalkingObject implements Something, CodeHelper, SetWorld {
 
     private World world;
 

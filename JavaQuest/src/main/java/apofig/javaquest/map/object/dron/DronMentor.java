@@ -84,11 +84,6 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public String getCode() {
-        return "";
-    }
-
-    @Override
     public void setWorld(World world) {
         this.world = world;
     }

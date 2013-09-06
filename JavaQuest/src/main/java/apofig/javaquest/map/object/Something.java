@@ -10,7 +10,7 @@ import apofig.javaquest.map.object.monster.CodeHelper;
  * Date: 1/19/13
  * Time: 8:29 PM
  */
-public interface Something extends CodeHelper {
+public interface Something {
     void answer(String message);
 
     boolean canLeave();

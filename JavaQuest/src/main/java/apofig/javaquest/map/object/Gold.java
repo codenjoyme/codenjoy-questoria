@@ -55,11 +55,6 @@ public class Gold extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public String getCode() {
-        return "";
-    }
-
-    @Override
     public void setWorld(World world) {
         this.world = world;
     }

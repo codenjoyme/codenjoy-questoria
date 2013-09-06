@@ -10,7 +10,7 @@ import apofig.javaquest.map.object.*;
  * Date: 1/19/13
  * Time: 8:30 PM
  */
-public class Monster extends TalkingObject implements Something, Dieble, SetWorld {
+public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld {
 
     private String question;
     private String answer;

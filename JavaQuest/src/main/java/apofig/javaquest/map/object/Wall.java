@@ -49,9 +49,4 @@ public class Wall extends TalkingObject implements Something {
     public void tryToLeave() {
         // do nothing
     }
-
-    @Override
-    public String getCode() {
-        return "";
-    }
 }

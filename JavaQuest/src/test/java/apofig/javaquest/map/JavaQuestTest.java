@@ -1668,8 +1668,7 @@ public class JavaQuestTest {
     }
 
     private void assertCode(String expected) {
-        assertEquals(expected,
-                game.getCodeHelper(player).getCode());
+        assertEquals(expected, game.getCodeHelper(player).getCode());
     }
 
     private void moveLeft(Me anotherMe) {
