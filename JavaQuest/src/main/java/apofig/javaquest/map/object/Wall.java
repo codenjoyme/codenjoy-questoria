@@ -16,7 +16,7 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public boolean iCanLeave() {
+    public boolean canLeave() {
         return true;
     }
 
@@ -26,7 +26,7 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public boolean iCanUse() {
+    public boolean canUse() {
         return false;
     }
 

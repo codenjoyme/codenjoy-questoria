@@ -13,11 +13,11 @@ import apofig.javaquest.map.object.monster.CodeHelper;
 public interface Something extends CodeHelper {
     void answer(String message);
 
-    boolean iCanLeave();
+    boolean canLeave();
 
     void ask();
 
-    boolean iCanUse();
+    boolean canUse();
 
     Something leaveAfter();
 

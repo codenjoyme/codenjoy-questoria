@@ -18,7 +18,7 @@ public class Nothing extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public boolean iCanLeave() {
+    public boolean canLeave() {
         return true;
     }
 
@@ -28,7 +28,7 @@ public class Nothing extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public boolean iCanUse() {
+    public boolean canUse() {
         return true;
     }
 

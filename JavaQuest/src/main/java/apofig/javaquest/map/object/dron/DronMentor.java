@@ -37,7 +37,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public boolean iCanLeave() {
+    public boolean canLeave() {
         return true;
     }
 
@@ -47,7 +47,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public boolean iCanUse() {
+    public boolean canUse() {
         return false;  
     }
 

@@ -43,7 +43,7 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
     }
 
     @Override
-    public boolean iCanLeave() {
+    public boolean canLeave() {
         return false;
     }
 
@@ -53,7 +53,7 @@ public class Monster extends TalkingObject implements Something, Dieble, SetWorl
     }
 
     @Override
-    public boolean iCanUse() {
+    public boolean canUse() {
         return false;
     }
 

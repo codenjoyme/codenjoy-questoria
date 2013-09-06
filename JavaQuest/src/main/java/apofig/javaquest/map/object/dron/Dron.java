@@ -39,7 +39,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
     }
 
     @Override
-    public boolean iCanLeave() {
+    public boolean canLeave() {
         return true;
     }
 
@@ -50,7 +50,7 @@ public class Dron extends TalkingObject implements Something, Tickable, SetPlace
     }
 
     @Override
-    public boolean iCanUse() {
+    public boolean canUse() {
         return false;
     }
 

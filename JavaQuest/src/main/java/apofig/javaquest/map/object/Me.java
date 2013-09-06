@@ -172,7 +172,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     @Override
-    public boolean iCanLeave() {
+    public boolean canLeave() {
         return true;
     }
 
@@ -182,7 +182,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     @Override
-    public boolean iCanUse() {
+    public boolean canUse() {
         return false;
     }
 

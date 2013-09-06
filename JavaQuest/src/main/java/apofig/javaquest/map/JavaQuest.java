@@ -62,14 +62,14 @@ public class JavaQuest implements Tickable {
         }
 
         for (Something smthNear : map.getSomethingNear(me)) {
-            if (!smthNear.iCanLeave()) {
+            if (!smthNear.canLeave()) {
                 smthNear.tryToLeave();
                 return;
             }
         }
 
         for (Something smth : map.getSomethingNear(me)) {
-            if (smth.iCanLeave()) {
+            if (smth.canLeave()) {
                 if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
                     smth.tryToLeave();
                     if (smth instanceof Me) {   // TODO testme
@@ -81,7 +81,7 @@ public class JavaQuest implements Tickable {
 
         Something smthAtWay = map.getAt(whereToGo);
         smthAtWay.ask();
-        if (smthAtWay.iCanUse()) {
+        if (smthAtWay.canUse()) {
             smthAtWay.getBy(me.getInfo());
             me.go();
             meetWith(me);
@@ -103,7 +103,7 @@ public class JavaQuest implements Tickable {
 
     public Something getCodeHelper(Me player) {
         for (Something smthNear : map.getSomethingNear(player)) {
-            if (!smthNear.iCanLeave() || smthNear instanceof Dron) { // TODO instanceof Dron - не ок, архитектуру надобно менять
+            if (!smthNear.canLeave() || smthNear instanceof Dron) { // TODO instanceof Dron - не ок, архитектуру надобно менять
                 return smthNear;
             }
         }
