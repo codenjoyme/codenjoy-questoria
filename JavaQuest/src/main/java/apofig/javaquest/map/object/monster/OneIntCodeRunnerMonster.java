@@ -14,8 +14,8 @@ public abstract class OneIntCodeRunnerMonster extends ManyInputCodeRunnerMonster
             "    return |;\n" +
             "}";
 
-    public OneIntCodeRunnerMonster(String question) {
-        super(question, SIGNATURE);
+    public OneIntCodeRunnerMonster(String question, int weight) {
+        super(question, SIGNATURE, weight);
     }
 
     protected Object[][] getTestData() {

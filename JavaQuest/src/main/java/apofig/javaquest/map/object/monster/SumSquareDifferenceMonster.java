@@ -47,6 +47,6 @@ public class SumSquareDifferenceMonster extends OneIntCodeRunnerMonster implemen
             "квадратов и квадратом суммы для натурального числа i.";
 
     public SumSquareDifferenceMonster() {
-        super(QUESTION);
+        super(QUESTION, 4);
     }
 }

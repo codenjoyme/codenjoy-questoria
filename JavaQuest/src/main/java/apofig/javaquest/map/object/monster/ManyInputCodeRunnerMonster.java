@@ -15,8 +15,8 @@ import java.util.List;
  */
 public abstract class ManyInputCodeRunnerMonster extends CodeRunnerMonster {
 
-    public ManyInputCodeRunnerMonster(String question, String signature) {
-        super(question, signature);
+    public ManyInputCodeRunnerMonster(String question, String signature, int weight) {
+        super(question, signature, weight);
     }
 
     private void addWarning(List<String> messages, Object[] data, String expected, Object actual) {

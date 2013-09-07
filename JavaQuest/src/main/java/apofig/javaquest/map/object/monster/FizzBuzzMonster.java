@@ -46,7 +46,7 @@ public class FizzBuzzMonster extends OneIntCodeRunnerMonster implements MonsterT
             "и на 5 - “FizzBuzz”, ну а для всех остальных - само число.";
 
     public FizzBuzzMonster() {
-        super(QUESTION);
+        super(QUESTION, 1);
     }
 
 

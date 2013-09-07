@@ -59,6 +59,6 @@ public class PrimeFactoryMonster extends OneIntCodeRunnerMonster implements Mons
                     "и так далее...";
 
     public PrimeFactoryMonster() {
-        super(QUESTION);
+        super(QUESTION, 2);
     }
 }

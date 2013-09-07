@@ -213,6 +213,6 @@ public class LongDivisionMonster extends ManyInputCodeRunnerMonster implements M
                     "87/78   = 1.1(153846)";
 
     public LongDivisionMonster() {
-        super(QUESTION, SIGNATURE);
+        super(QUESTION, SIGNATURE, 8);
     }
 }

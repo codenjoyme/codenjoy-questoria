@@ -19,16 +19,18 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     private String signature;
     private Action onKill;
     private World world;
+    private int weight;
 
     public Monster(String question, String answer,
                    String help, String leave,
-                   String signature)
+                   String signature, int weight)
     {
         this.question = question;
         this.answer = answer;
         this.help = help;
         this.leave = leave;
         this.signature = signature;
+        this.weight = weight;
     }
 
     @Override
@@ -96,5 +98,9 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     @Override
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }

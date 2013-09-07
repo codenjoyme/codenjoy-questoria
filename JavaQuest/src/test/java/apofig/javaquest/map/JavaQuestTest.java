@@ -90,7 +90,7 @@ public class JavaQuestTest {
                                 "die!",
                                 "Я убью тебя!",
                                 "Никуда ты не уйдешь!",
-                                "немногоКода('для подсказки');");
+                                "немногоКода('для подсказки');", 0);
 
                     }
                 };
@@ -107,7 +107,7 @@ public class JavaQuestTest {
         mapLoader.setGold(getDronMentorX(), getDronMentorY() + 2);
         mapLoader.setGold(getDronMentorX(), getDronMentorY() + 3);
 
-        mapLoader.set(getDronMentorX()    , getDronMentorY() + 5, '#');
+        mapLoader.set(getDronMentorX(), getDronMentorY() + 5, '#');
     }
 
     @Test

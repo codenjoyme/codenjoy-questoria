@@ -1,7 +1,6 @@
 package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
-import apofig.javaquest.map.object.Place;
 import apofig.javaquest.map.object.Something;
 
 import java.util.LinkedList;
@@ -18,18 +17,8 @@ public class MonsterFactoryImpl implements MonsterPool {
     private Monster monster;
     private int count;
 
-    // TODO автоматизировать загрузку классов монстров по маркер интерфейсу и выстроить их в порядке сложности
     public MonsterFactoryImpl() {
-        monsters = new LinkedList<Monster>();
-        monsters.add(new FizzBuzzMonster());
-        monsters.add(new PrimeFactoryMonster());
-        monsters.add(new FibonacciNumbersMonster());
-        monsters.add(new SumSquareDifferenceMonster());
-        monsters.add(new XthPrimeMonster());
-        monsters.add(new PowerDigitSumMonster());
-        monsters.add(new FactorialMonster());
-        monsters.add(new LongDivisionMonster());
-        monsters.add(new MakeBricksMonster());
+        monsters = new MonsterLoader().getMonsters();
         count = monsters.size() + 1;
     }
 
@@ -45,7 +34,7 @@ public class MonsterFactoryImpl implements MonsterPool {
                     "die!",
                     "Я убью тебя!",
                     "Никуда ты не уйдешь!",
-                    "");
+                    "", count);
             count++;
         }
         monster.onKill(new Action() {

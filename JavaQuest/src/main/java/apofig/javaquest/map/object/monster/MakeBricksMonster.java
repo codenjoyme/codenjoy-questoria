@@ -20,7 +20,7 @@ public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements Mon
             "}";
 
     public MakeBricksMonster() {
-        super(QUESTION, SIGNATURE);
+        super(QUESTION, SIGNATURE, 9);
     }
 
     @Override

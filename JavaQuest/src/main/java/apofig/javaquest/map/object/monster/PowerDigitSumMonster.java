@@ -37,6 +37,6 @@ public class PowerDigitSumMonster extends OneIntCodeRunnerMonster implements Mon
             "и возвращающий результат в виде String";
 
     public PowerDigitSumMonster() {
-        super(QUESTION);
+        super(QUESTION, 6);
     }
 }

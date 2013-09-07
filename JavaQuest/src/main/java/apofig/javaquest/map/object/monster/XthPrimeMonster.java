@@ -93,6 +93,6 @@ public class XthPrimeMonster extends OneIntCodeRunnerMonster implements MonsterT
             "Напиши метод, который вернет i-тое простое число.";
 
     public XthPrimeMonster() {
-        super(QUESTION);
+        super(QUESTION, 5);
     }
 }

@@ -45,7 +45,7 @@ public class FactorialMonster extends OneIntCodeRunnerMonster implements Monster
             "Внимание! Возможно переполнение int/long.";
 
     public FactorialMonster() {
-        super(QUESTION);
+        super(QUESTION, 7);
     }
 
 

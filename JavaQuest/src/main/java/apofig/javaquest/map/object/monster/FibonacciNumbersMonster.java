@@ -50,6 +50,6 @@ public class FibonacciNumbersMonster extends OneIntCodeRunnerMonster implements 
             "и так далее...";
 
     public FibonacciNumbersMonster() {
-        super(QUESTION);
+        super(QUESTION, 3);
     }
 }

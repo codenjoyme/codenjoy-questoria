@@ -2,7 +2,6 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.compiler.JavaCompiler;
 import apofig.compiler.JavaMethod;
-import apofig.javaquest.map.Action;
 
 /**
  * User: oleksandr.baglai
@@ -16,8 +15,8 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
 
     private MonsterTest test;
 
-    public CodeRunnerMonster(String question, String signature) {
-        super(question, "4E0A", HELP, LEAVE, signature);
+    public CodeRunnerMonster(String question, String signature, int weight) {
+        super(question, "4E0A", HELP, LEAVE, signature, weight);
         this.test = this;
     }
 
