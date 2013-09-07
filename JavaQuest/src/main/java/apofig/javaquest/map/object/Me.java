@@ -1,7 +1,6 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.dron.MeetWithHero;
 
 /**
  * User: sanja
