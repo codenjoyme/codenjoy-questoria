@@ -1,5 +1,7 @@
-package apofig.javaquest.map.object.monster;
+package apofig.javaquest.map.object.monster.impl;
 
+import apofig.javaquest.map.object.monster.Assertions;
+import apofig.javaquest.map.object.monster.impl.XthPrimeMonster;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

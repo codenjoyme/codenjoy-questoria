@@ -2,10 +2,11 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.monster.impl.LongDivisionMonster;
 import org.junit.Test;
 
 import static apofig.javaquest.map.Messages.withoutSeparator;
-import static apofig.javaquest.map.object.monster.LongDivisionMonster.*;
+import static apofig.javaquest.map.object.monster.impl.LongDivisionMonster.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

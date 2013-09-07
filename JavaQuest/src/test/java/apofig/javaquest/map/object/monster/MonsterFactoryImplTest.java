@@ -2,6 +2,7 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.monster.impl.*;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;

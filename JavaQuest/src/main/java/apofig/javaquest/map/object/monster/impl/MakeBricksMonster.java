@@ -1,6 +1,8 @@
-package apofig.javaquest.map.object.monster;
+package apofig.javaquest.map.object.monster.impl;
 
 import apofig.javaquest.map.Action;
+import apofig.javaquest.map.object.monster.ManyInputCodeRunnerMonster;
+import apofig.javaquest.map.object.monster.MonsterTest;
 
 /**
  * User: sanja

@@ -1,5 +1,6 @@
-package apofig.javaquest.map.object.monster;
+package apofig.javaquest.map.object.monster.impl;
 
+import apofig.javaquest.map.object.monster.impl.LongDivisionMonster;
 import org.approvaltests.legacycode.LegacyApprovals;
 import org.approvaltests.legacycode.Range;
 import org.junit.Test;
