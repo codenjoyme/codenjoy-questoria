@@ -5,6 +5,7 @@ import apofig.javaquest.console.ConsoleImpl;
 import apofig.javaquest.console.Runner;
 import apofig.javaquest.map.*;
 import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
+import apofig.javaquest.map.object.monster.MonsterLoader;
 import apofig.javaquest.map.object.monster.MonsterPool;
 
 /**
@@ -28,7 +29,7 @@ public class Main {
 
             @Override
             public MonsterPool monsters() {
-                return new MonsterFactoryImpl();
+                return new MonsterFactoryImpl(new MonsterLoader());
             }
         };
         JavaQuestSinglePlayer game = new JavaQuestSinglePlayer(new JavaQuest(settings), "You");

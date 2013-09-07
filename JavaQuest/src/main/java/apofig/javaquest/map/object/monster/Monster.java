@@ -103,4 +103,9 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     public int getWeight() {
         return weight;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[Monster: %s with weight: %s]", this.getClass().getSimpleName(), weight);
+    }
 }

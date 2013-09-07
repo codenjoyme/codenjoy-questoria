@@ -12,7 +12,7 @@ import java.util.*;
  * Date: 06.09.13
  * Time: 3:12
  */
-public class MonsterLoader {
+public class MonsterLoader implements Iterable<Monster> {
 
     private Map<Class<? extends Monster>, Integer> monsters;
 
@@ -39,7 +39,7 @@ public class MonsterLoader {
         return Reflection.constructor().in(clazz).newInstance();
     }
 
-    public List<Class<? extends Monster>> sortedList() {
+    private List<Class<? extends Monster>> sortedList() {
         List<Class<? extends Monster>> result = new LinkedList<>(monsters.keySet());
 
         Collections.sort(result, new Comparator<Class<? extends Monster>>() {
@@ -52,13 +52,14 @@ public class MonsterLoader {
         return result;
     }
 
-    public List<Monster> getMonsters() {
+    @Override
+    public Iterator<Monster> iterator() {
         List<Monster> result = new LinkedList<>();
 
         for (Class<? extends Monster> clazz : sortedList()) {
             result.add(newInstance(clazz));
         }
 
-        return result;
+        return result.iterator();
     }
 }

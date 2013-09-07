@@ -2,6 +2,7 @@ package apofig.javaquest.services;
 
 import apofig.javaquest.map.*;
 import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
+import apofig.javaquest.map.object.monster.MonsterLoader;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +34,7 @@ public class PlayerServiceImpl implements PlayerService {
 
             @Override
             public MonsterPool monsters() {
-                return new MonsterFactoryImpl();
+                return new MonsterFactoryImpl(new MonsterLoader());
             }
         };
     }

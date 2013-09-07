@@ -2,7 +2,9 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.object.Something;
+import com.google.common.collect.Lists;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class MonsterFactoryImpl implements MonsterPool {
     private Monster monster;
     private int count;
 
-    public MonsterFactoryImpl() {
-        monsters = new MonsterLoader().getMonsters();
+    public MonsterFactoryImpl(Iterable<Monster> otherMonsters) {
+        monsters = Lists.newArrayList(otherMonsters);
         count = monsters.size() + 1;
     }
 

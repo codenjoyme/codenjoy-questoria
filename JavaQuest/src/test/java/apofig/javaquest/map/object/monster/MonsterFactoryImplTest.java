@@ -3,10 +3,13 @@ package apofig.javaquest.map.object.monster;
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.monster.impl.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import java.util.Iterator;
 
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
@@ -18,10 +21,21 @@ import static org.mockito.Mockito.*;
  */
 public class MonsterFactoryImplTest {
 
-    private MonsterPool factory = new MonsterFactoryImpl();
+    private MonsterPool factory;
     private ArgumentCaptor<String> captor;
     private Messages messages;
     private Monster monster;
+
+    @Before
+    public void setup() {
+        Iterable<Monster> monsters = mock(Iterable.class);
+        Iterator<Monster> iterator = mock(Iterator.class);
+        when(monsters.iterator()).thenReturn(iterator);
+        when(iterator.hasNext()).thenReturn(true, true, true, true, false);
+        when(iterator.next()).thenReturn(new FizzBuzzMonster(), new PrimeFactoryMonster(), new LongDivisionMonster(), new MakeBricksMonster());
+
+        factory = new MonsterFactoryImpl(monsters);
+    }
 
     @Test
     public void shouldReturnSameMonsterIfNoKill() {
@@ -56,61 +70,6 @@ public class MonsterFactoryImplTest {
                 "Для [7] метод должен вернуть “[7]”, но ты вернул “-”\n" +
                 "..., PrimeFactoryMonster: Попробуй еще раз!]", getMessage());
         assertMonster(PrimeFactoryMonster.class, PrimeFactoryMonster.OK_CODE);
-
-        assertMonster(FibonacciNumbersMonster.class, BAD_CODE_WITH_ONE_PARAMETER);
-        assertEquals("[FibonacciNumbersMonster: Для [1] метод должен вернуть “1”, но ты вернул “-”\n" +
-                "Для [2] метод должен вернуть “1”, но ты вернул “-”\n" +
-                "Для [3] метод должен вернуть “2”, но ты вернул “-”\n" +
-                "Для [4] метод должен вернуть “3”, но ты вернул “-”\n" +
-                "Для [5] метод должен вернуть “5”, но ты вернул “-”\n" +
-                "Для [6] метод должен вернуть “8”, но ты вернул “-”\n" +
-                "Для [7] метод должен вернуть “13”, но ты вернул “-”\n" +
-                "..., FibonacciNumbersMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(FibonacciNumbersMonster.class, FibonacciNumbersMonster.OK_CODE);
-
-        assertMonster(SumSquareDifferenceMonster.class, BAD_CODE_WITH_ONE_PARAMETER);
-        assertEquals("[SumSquareDifferenceMonster: Для [1] метод должен вернуть “0”, но ты вернул “-”\n" +
-                "Для [2] метод должен вернуть “4”, но ты вернул “-”\n" +
-                "Для [3] метод должен вернуть “22”, но ты вернул “-”\n" +
-                "Для [4] метод должен вернуть “70”, но ты вернул “-”\n" +
-                "Для [5] метод должен вернуть “170”, но ты вернул “-”\n" +
-                "Для [6] метод должен вернуть “350”, но ты вернул “-”\n" +
-                "Для [7] метод должен вернуть “644”, но ты вернул “-”\n" +
-                "..., SumSquareDifferenceMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(SumSquareDifferenceMonster.class, SumSquareDifferenceMonster.OK_CODE);
-
-        assertMonster(XthPrimeMonster.class, BAD_CODE_WITH_ONE_PARAMETER);
-        assertEquals("[XthPrimeMonster: Для [1] метод должен вернуть “2”, но ты вернул “-”\n" +
-                "Для [2] метод должен вернуть “3”, но ты вернул “-”\n" +
-                "Для [3] метод должен вернуть “5”, но ты вернул “-”\n" +
-                "Для [4] метод должен вернуть “7”, но ты вернул “-”\n" +
-                "Для [5] метод должен вернуть “11”, но ты вернул “-”\n" +
-                "Для [6] метод должен вернуть “13”, но ты вернул “-”\n" +
-                "Для [7] метод должен вернуть “17”, но ты вернул “-”\n" +
-                "..., XthPrimeMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(XthPrimeMonster.class, XthPrimeMonster.OK_CODE);
-
-        assertMonster(PowerDigitSumMonster.class, BAD_CODE_WITH_ONE_PARAMETER);
-        assertEquals("[PowerDigitSumMonster: Для [1] метод должен вернуть “2”, но ты вернул “-”\n" +
-                "Для [2] метод должен вернуть “4”, но ты вернул “-”\n" +
-                "Для [3] метод должен вернуть “8”, но ты вернул “-”\n" +
-                "Для [4] метод должен вернуть “7”, но ты вернул “-”\n" +
-                "Для [5] метод должен вернуть “5”, но ты вернул “-”\n" +
-                "Для [6] метод должен вернуть “10”, но ты вернул “-”\n" +
-                "Для [7] метод должен вернуть “11”, но ты вернул “-”\n" +
-                "..., PowerDigitSumMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(PowerDigitSumMonster.class, PowerDigitSumMonster.OK_CODE);
-
-        assertMonster(FactorialMonster.class, BAD_CODE_WITH_ONE_PARAMETER);
-        assertEquals("[FactorialMonster: Для [1] метод должен вернуть “1”, но ты вернул “-”\n" +
-                "Для [2] метод должен вернуть “2”, но ты вернул “-”\n" +
-                "Для [3] метод должен вернуть “6”, но ты вернул “-”\n" +
-                "Для [4] метод должен вернуть “24”, но ты вернул “-”\n" +
-                "Для [5] метод должен вернуть “120”, но ты вернул “-”\n" +
-                "Для [6] метод должен вернуть “720”, но ты вернул “-”\n" +
-                "Для [7] метод должен вернуть “5040”, но ты вернул “-”\n" +
-                "..., FactorialMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(FactorialMonster.class, FactorialMonster.OK_CODE);
 
         assertMonster(LongDivisionMonster.class, BAD_CODE_WITH_TWO_PARAMETERS);
         assertEquals("[LongDivisionMonster: Для [1, 2] метод должен вернуть “0.5”, но ты вернул “-”\n" +
