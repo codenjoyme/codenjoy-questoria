@@ -1,7 +1,7 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.*;
-import apofig.javaquest.map.object.dron.Dron;
+import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
 

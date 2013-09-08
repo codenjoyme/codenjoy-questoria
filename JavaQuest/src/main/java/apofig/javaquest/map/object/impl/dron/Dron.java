@@ -1,10 +1,10 @@
-package apofig.javaquest.map.object.dron;
+package apofig.javaquest.map.object.impl.dron;
 
 import apofig.compiler.JavaCompiler;
 import apofig.compiler.JavaMethod;
-import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
 

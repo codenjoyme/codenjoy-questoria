@@ -2,7 +2,7 @@ package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.ObjectFactory;
-import apofig.javaquest.map.object.dron.DronMentor;
+import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.fest.reflect.core.Reflection;

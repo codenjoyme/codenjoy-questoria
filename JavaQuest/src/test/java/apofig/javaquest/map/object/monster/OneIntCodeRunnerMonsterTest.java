@@ -2,6 +2,7 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Messages;
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.impl.Gold;
 import apofig.javaquest.map.object.monster.impl.FizzBuzzMonster;
 import org.junit.Test;
 

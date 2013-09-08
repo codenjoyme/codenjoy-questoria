@@ -1,5 +1,6 @@
 package apofig.javaquest.map.object;
 
+import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.Monster;
 import org.fest.reflect.core.Reflection;
 import org.reflections.Reflections;

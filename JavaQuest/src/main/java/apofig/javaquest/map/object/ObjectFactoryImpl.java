@@ -2,6 +2,7 @@ package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.Point;
+import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.services.Tickable;
 import org.fest.reflect.core.Reflection;

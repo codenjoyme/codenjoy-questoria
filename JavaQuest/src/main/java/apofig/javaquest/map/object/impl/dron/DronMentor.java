@@ -1,4 +1,4 @@
-package apofig.javaquest.map.object.dron;
+package apofig.javaquest.map.object.impl.dron;
 
 import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.*;
