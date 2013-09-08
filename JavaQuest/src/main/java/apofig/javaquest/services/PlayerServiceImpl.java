@@ -6,6 +6,9 @@ import apofig.javaquest.map.object.monster.MonsterLoader;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+import java.util.Map;
+
 /**
  * User: sanja
  * Date: 02.07.13
@@ -15,9 +18,11 @@ import org.springframework.stereotype.Component;
 public class PlayerServiceImpl implements PlayerService {
 
     private JavaQuest game;
+    private java.util.Map<String, Player> players;
 
     public PlayerServiceImpl() {
         game = new JavaQuest(settings());
+        players = new HashMap<>();
     }
 
     private Settings settings() {
@@ -45,8 +50,25 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public JavaQuestSinglePlayer newGame(String playerName) {
-        return new JavaQuestSinglePlayer(game, playerName);
+    public Player loadGame(String playerGameCode) {
+        return players.get(playerGameCode);
+    }
+
+    @Override
+    public boolean alreadyRegistered(String playerName) {
+        for (Map.Entry<String, Player> entry : players.entrySet()) {
+            if (entry.getValue().getName().equals(playerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String register(String playerName) {
+        Player player = new Player(playerName, game);
+        players.put(player.getGameCode(), player);
+        return player.getGameCode();
     }
 
 }

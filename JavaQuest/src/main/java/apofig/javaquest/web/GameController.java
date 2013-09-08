@@ -2,20 +2,18 @@ package apofig.javaquest.web;
 
 import apofig.javaquest.map.JavaQuestSinglePlayer;
 import apofig.javaquest.map.Joystick;
-import apofig.javaquest.map.Player;
+import apofig.javaquest.services.Player;
 import apofig.javaquest.services.PlayerService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import java.util.Random;
 
 /**
  * User: oleksandr.baglai
@@ -29,13 +27,32 @@ public class GameController {
     private PlayerService playerService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String post(Model model, HttpSession session) {
-        return printGame(model, session);
+    public String home() {
+        return "redirect:/register";
+    }
+
+    @RequestMapping(value = "/user/{playerGameCode}", method = RequestMethod.GET)
+    public String loadPlayerGame(Model model, @PathVariable("playerGameCode") String playerGameCode) {
+        Player player = playerService.loadGame(playerGameCode);
+        if (player == null) {
+            return "redirect:/register";
+        } else {
+            model.addAttribute("map", getMap(player.getGame()));
+            model.addAttribute("message", "");
+            model.addAttribute("info", player.getGame().getPlayerInfo().toString());
+            model.addAttribute("playerGameCode", playerGameCode);
+
+            return "game";
+        }
     }
 
     @RequestMapping(value = "/answer", method = RequestMethod.GET)
-    public ModelAndView command(Model model, HttpSession session, @RequestParam String command) throws JSONException {
-        JavaQuestSinglePlayer game = getGameFrom(session);
+    public ModelAndView command(@RequestParam String command, @RequestParam String playerGameCode) throws JSONException {
+        JavaQuestSinglePlayer game = playerService.loadGame(playerGameCode).getGame();
+        if (game == null) {
+            buildResponse("{}"); // TODO потестить а может как-то избавиться, а то некрасиво
+        }
+
         Joystick joystick = game.getJoystick();
         if (command.equals("up")) {
             joystick.moveUp();
@@ -58,38 +75,17 @@ public class GameController {
         result.put("info", game.getPlayerInfo());
         String json = result.toString();
 
-        ModelAndView mav = new ModelAndView("html_utf8");
-        mav.addObject("responseBody", json);
-        return mav;
+        return buildResponse(json);
     }
 
-    private String printGame(Model model, HttpSession session) {
-        JavaQuestSinglePlayer game = getGameFrom(session);
-        return print(model, getMap(game), game.getPlayerInfo());
+    private ModelAndView buildResponse(String json) {
+        ModelAndView result = new ModelAndView("html_utf8");
+        result.addObject("responseBody", json);
+        return result;
     }
 
     private String getMap(JavaQuestSinglePlayer game) {
         return Colorizer.process(game.toString());
-    }
-
-    private String print(Model model, String map, Player playerInfo) {
-        model.addAttribute("map", map);
-        model.addAttribute("message", "");
-        model.addAttribute("info", playerInfo.toString());
-        return "game";
-    }
-
-    private JavaQuestSinglePlayer getGameFrom(HttpSession session) {
-        JavaQuestSinglePlayer game = (JavaQuestSinglePlayer)session.getAttribute("game");
-        if (game == null) {
-            game = playerService.newGame(getName());
-            session.setAttribute("game", game);
-        }
-        return game;
-    }
-
-    private String getName() {   // TODO исправить это
-        return String.valueOf("Player_" + new Random().nextInt(1000));
     }
 
 }

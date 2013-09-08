@@ -1,4 +1,4 @@
-function initGame(contextPath) {
+function initGame(contextPath, playerGameCode) {
 
     var serverAnswered = true;
 
@@ -66,7 +66,7 @@ function initGame(contextPath) {
         serverAnswered = false;
 
         command = command.split("\n").join("</br>");
-        $.getJSON(contextPath + 'answer', {command:command, time:$.now()}, drawMap);
+        $.getJSON(contextPath + 'answer', {command:command, playerGameCode:playerGameCode, time:$.now()}, drawMap);
     }
 
     function onTextArea() {

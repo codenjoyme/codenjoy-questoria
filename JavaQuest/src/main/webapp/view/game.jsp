@@ -34,7 +34,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/game.js"></script>
     <script>
         $(document).ready(function () {
-            initGame('${pageContext.request.contextPath}/');
+            initGame('${pageContext.request.contextPath}/', '${playerGameCode}');
         });
     </script>
 </head>

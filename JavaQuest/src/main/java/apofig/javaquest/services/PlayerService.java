@@ -13,5 +13,9 @@ public interface PlayerService {
 
     void nextStepForAllGames();
 
-    JavaQuestSinglePlayer newGame(String playerName);
+    Player loadGame(String playerGameCode);
+
+    boolean alreadyRegistered(String playerName);
+
+    String register(String name);
 }
