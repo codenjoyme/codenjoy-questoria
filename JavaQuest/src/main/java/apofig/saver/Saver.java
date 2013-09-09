@@ -1,5 +1,6 @@
 package apofig.saver;
 
+import apofig.javaquest.map.object.monster.Monster;
 import org.fest.reflect.core.Reflection;
 
 import java.lang.reflect.Field;
@@ -14,6 +15,7 @@ public class Saver {
     private List<Entry> data = new LinkedList<>();
     private List<Integer> ids = new LinkedList<>();
     private List<Class<?>> exclude;
+    private List<Class<?>> excludeParent;
 
     public Saver exclude(Class<?>... classes) {
         this.exclude = Arrays.asList(classes);
@@ -93,6 +95,11 @@ public class Saver {
         return object.getClass().getSimpleName() + "@" + ids.indexOf(System.identityHashCode(object));
     }
 
+    public Saver excludeChildren(Class<?>... classes) {
+        this.excludeParent = Arrays.asList(classes);
+        return this;
+    }
+
     static class Key {
         private Object object;
         public Key(Object object) {
@@ -151,12 +158,21 @@ public class Saver {
     private void parse(Object object) {
         if (object == null) return;
         if (dataContainsKey(object)) return;
-        if (exclude.contains(object.getClass())) {
+
+        boolean isExclude = false;
+        for (Class<?> clazz : excludeParent) {
+            if (clazz.isAssignableFrom(object.getClass())) {
+                isExclude = true;
+            }
+        }
+        isExclude |= exclude.contains(object.getClass());
+
+        if (isExclude) {
             if (!dataContainsKey(object)) {
                 data.add(new Entry(object, null));
             }
             return;
-        };
+        }
 
         boolean isArray =
                 object instanceof Object[] ||

@@ -1,5 +1,6 @@
 package apofig.saver;
 
+import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.services.Player;
 import apofig.javaquest.services.PlayerService;
 import apofig.javaquest.services.PlayerServiceImpl;
@@ -373,7 +374,7 @@ public class SaverTest {
         player2.getGame().getJoystick().moveLeft();
         service.nextStepForAllGames();
 
-        String actual = new Saver().exclude(char[][].class, char[].class).save(service);
+        String actual = new Saver().exclude(char[][].class, char[].class).excludeChildren(Monster.class).save(service);
 
         Approvals.verify(actual);
     }

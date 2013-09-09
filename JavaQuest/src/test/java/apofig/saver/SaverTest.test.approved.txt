@@ -1,0 +1,174 @@
+PlayerServiceImpl@0 = {
+    game = JavaQuest@1
+    players = HashMap@2
+}
+JavaQuest@1 = {
+    initPosition = PointImpl@4
+    map = TerritoryMapImpl@5
+    objects = ObjectFactoryImpl@6
+    players = LinkedList@7
+    viewSize = 41
+}
+HashMap@2 = {
+    [player1-493567632] = Player@3
+    [player2-493567631] = Player@44
+}
+Player@3 = {
+    game = JavaQuestSinglePlayer@9
+    gameCode = player1-493567632
+    name = player1
+}
+PointImpl@4 = {
+    x = 93
+    y = 482
+}
+TerritoryMapImpl@5 = {
+    map = Map@10
+    objects = ObjectFactoryImpl@6
+    fogs = HashMap@11
+    height = 564
+    width = 660
+}
+ObjectFactoryImpl@6 = {
+    loader = ObjectLoader@13
+    monsters = MonsterFactoryImpl@14
+    objects = HashMap@15
+}
+LinkedList@7 = {
+    [0] = Me@8
+    [1] = Me@17
+}
+Me@8 = {
+    view = PlayerView@18
+    info = Player@19
+    whereToGo = null
+    map = TerritoryMapImpl@5
+    world = WorldImpl@16
+    x = 93
+    y = 481
+}
+JavaQuestSinglePlayer@9 = {
+    game = JavaQuest@1
+    player = Me@8
+}
+Map@10 = {
+    map = char[][]@20
+}
+HashMap@11 = {
+    [Me@8] = Map@12
+    [Me@17] = Map@42
+}
+Map@12 = {
+    map = char[][]@21
+}
+ObjectLoader@13 = {
+    except = ArrayList@22
+    cache = HashMap@23
+}
+MonsterFactoryImpl@14 = {
+    monster = null
+    count = 10
+    monsters = ArrayList@24
+}
+HashMap@15 = {
+    [Me@8] = WorldImpl@16
+    [Me@17] = WorldImpl@37
+}
+WorldImpl@16 = {
+    name = Me
+    factory = ObjectFactoryImpl@6
+    place = MapPlace@34
+}
+Me@17 = {
+    view = PlayerView@35
+    info = Player@36
+    whereToGo = null
+    map = TerritoryMapImpl@5
+    world = WorldImpl@37
+    x = 93
+    y = 482
+}
+PlayerView@18 = {
+    VIEW_CIRCLE = String[]@38
+    mask = char[][]@39
+    size = 41
+    vx = 73
+    vy = 462
+}
+Player@19 = {
+    name = player1
+    gold = 0
+}
+ArrayList@22 = {
+    [0] = class apofig.javaquest.map.object.monster.Monster
+    [1] = class apofig.javaquest.map.object.Me
+    [2] = class apofig.javaquest.map.object.impl.Nothing
+}
+HashMap@23 = {
+    [#] = class apofig.javaquest.map.object.impl.Wall
+    [$] = class apofig.javaquest.map.object.impl.Gold
+    [*] = class apofig.javaquest.map.object.impl.dron.Dron
+    [M] = class apofig.javaquest.map.object.impl.dron.DronMentor
+}
+ArrayList@24 = {
+    [0] = FizzBuzzMonster@25
+    [1] = PrimeFactoryMonster@26
+    [2] = FibonacciNumbersMonster@27
+    [3] = SumSquareDifferenceMonster@28
+    [4] = XthPrimeMonster@29
+    [5] = PowerDigitSumMonster@30
+    [6] = FactorialMonster@31
+    [7] = LongDivisionMonster@32
+    [8] = MakeBricksMonster@33
+}
+MapPlace@34 = {
+    map = Map@10
+    x = 93
+    y = 481
+}
+PlayerView@35 = {
+    VIEW_CIRCLE = String[]@38
+    mask = char[][]@40
+    size = 41
+    vx = 74
+    vy = 462
+}
+Player@36 = {
+    name = player2
+    gold = 0
+}
+WorldImpl@37 = {
+    name = Me
+    factory = ObjectFactoryImpl@6
+    place = MapPlace@41
+}
+String[]@38 = {
+    [0] = ????   ????
+    [1] = ??       ??
+    [2] = ?         ?
+    [3] = ?         ?
+    [4] =            
+    [5] =            
+    [6] =            
+    [7] = ?         ?
+    [8] = ?         ?
+    [9] = ??       ??
+    [10] = ????   ????
+}
+MapPlace@41 = {
+    map = Map@10
+    x = 93
+    y = 482
+}
+Map@42 = {
+    map = char[][]@43
+}
+Player@44 = {
+    game = JavaQuestSinglePlayer@45
+    gameCode = player2-493567631
+    name = player2
+}
+JavaQuestSinglePlayer@45 = {
+    game = JavaQuest@1
+    player = Me@17
+}
