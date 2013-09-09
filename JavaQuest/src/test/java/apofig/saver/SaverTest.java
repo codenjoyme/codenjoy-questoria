@@ -148,8 +148,8 @@ public class SaverTest {
                 "HashMap@1 = {\n" +
                 "    [1] = B@2\n" +
                 "    [3] = B@3\n" +
-                "    [B@4] = B@5\n" +
                 "    [4] = null\n" +
+                "    [B@4] = B@5\n" +
                 "}\n" +
                 "B@2 = {\n" +
                 "    c = 11\n" +
@@ -199,6 +199,167 @@ public class SaverTest {
                 "}\n" +
                 "B@4 = {\n" +
                 "    c = 33\n" +
+                "}\n", new Saver().save(a));
+    }
+
+
+    @Test
+    public void primitiveIntArray() {
+        class A {
+            int[] bs;
+        }
+
+        A a = new A();
+        a.bs = new int[] {10, 11, 12};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = int[]@1\n" +
+                "}\n" +
+                "int[]@1 = {\n" +
+                "    [0] = 10\n" +
+                "    [1] = 11\n" +
+                "    [2] = 12\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveCharArray() {
+        class A {
+            char[] bs;
+        }
+
+        A a = new A();
+        a.bs = new char[] {'A', 'B', 'C'};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = char[]@1\n" +
+                "}\n" +
+                "char[]@1 = {\n" +
+                "    [0] = A\n" +
+                "    [1] = B\n" +
+                "    [2] = C\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveBooleanArray() {
+        class A {
+            boolean[] bs;
+        }
+
+        A a = new A();
+        a.bs = new boolean[] {true, false, true};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = boolean[]@1\n" +
+                "}\n" +
+                "boolean[]@1 = {\n" +
+                "    [0] = true\n" +
+                "    [1] = false\n" +
+                "    [2] = true\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveLongArray() {
+        class A {
+            long[] bs;
+        }
+
+        A a = new A();
+        a.bs = new long[] {1L, 2L, 3l};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = long[]@1\n" +
+                "}\n" +
+                "long[]@1 = {\n" +
+                "    [0] = 1\n" +
+                "    [1] = 2\n" +
+                "    [2] = 3\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveByteArray() {
+        class A {
+            byte[] bs;
+        }
+
+        A a = new A();
+        a.bs = new byte[] {1, 2, 3};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = byte[]@1\n" +
+                "}\n" +
+                "byte[]@1 = {\n" +
+                "    [0] = 1\n" +
+                "    [1] = 2\n" +
+                "    [2] = 3\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveDoubleArray() {
+        class A {
+            double[] bs;
+        }
+
+        A a = new A();
+        a.bs = new double[] {1, 2, 3};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = double[]@1\n" +
+                "}\n" +
+                "double[]@1 = {\n" +
+                "    [0] = 1.0\n" +
+                "    [1] = 2.0\n" +
+                "    [2] = 3.0\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveFloatArray() {
+        class A {
+            float[] bs;
+        }
+
+        A a = new A();
+        a.bs = new float[] {1, 2, 3};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = float[]@1\n" +
+                "}\n" +
+                "float[]@1 = {\n" +
+                "    [0] = 1.0\n" +
+                "    [1] = 2.0\n" +
+                "    [2] = 3.0\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void primitiveShortArray() {
+        class A {
+            short[] bs;
+        }
+
+        A a = new A();
+        a.bs = new short[] {1, 2, 3};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = short[]@1\n" +
+                "}\n" +
+                "short[]@1 = {\n" +
+                "    [0] = 1\n" +
+                "    [1] = 2\n" +
+                "    [2] = 3\n" +
                 "}\n", new Saver().save(a));
     }
 

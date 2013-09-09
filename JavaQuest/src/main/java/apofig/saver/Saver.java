@@ -141,7 +141,16 @@ public class Saver {
         if (object == null) return;
         if (dataContainsKey(object)) return;
 
-        boolean isArray = object instanceof Object[];
+        boolean isArray =
+                object instanceof Object[] ||
+                object instanceof int[] ||
+                object instanceof char[] ||
+                object instanceof short[] ||
+                object instanceof float[] ||
+                object instanceof long[] ||
+                object instanceof byte[] ||
+                object instanceof double[] ||
+                object instanceof boolean[];
         if (object.getClass().getPackage() == null && !isArray) return;
 
         boolean isMap = Map.class.isAssignableFrom(object.getClass());
@@ -168,14 +177,65 @@ public class Saver {
 
         if (isArray) {
             LinkedList<Fld> list = new LinkedList<>();
-            Object[] array = (Object[]) object;
-            for (int index = 0; index < array.length; index++) {
-                list.add(new Fld("[" + index + "]", array[index]));
+        if (object instanceof  int[]) {    // TODO как я не люблю массивы в джаве
+                int[] array = (int[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
             }
+            if (object instanceof  boolean[]) {
+                boolean[] array = (boolean[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof  byte[]) {
+                byte[] array = (byte[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof  long[]) {
+                long[] array = (long[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof  char[]) {
+                char[] array = (char[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof  double[]) {
+                double[] array = (double[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof  short[]) {
+                short[] array = (short[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof float[]) {
+                float[] array = (float[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+            if (object instanceof Object[]) {
+                Object[] array = (Object[])object;
+                for (int index = 0; index < array.length; index++) {
+                    list.add(new Fld("[" + index + "]", array[index]));
+                }
+            }
+
             data.add(new Entry(object, list));
 
-            for (Object o : array) {
-                process(o);
+            for (Fld fld : list) {
+                process(fld.value);
             }
             return;
         }
