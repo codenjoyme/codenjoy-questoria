@@ -1,5 +1,8 @@
 package apofig.saver;
 
+import apofig.javaquest.services.Player;
+import apofig.javaquest.services.PlayerService;
+import apofig.javaquest.services.PlayerServiceImpl;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -128,13 +131,13 @@ public class SaverTest {
         }
 
         class A {
-            Map<Integer, B> bmap;
+            Map<Object, B> bmap;
         }
 
         A a = new A();
         a.bmap = new HashMap<>();
         a.bmap.put(1, new B(11));
-        a.bmap.put(2, new B(22));
+        a.bmap.put(new B(22), new B(23));
         a.bmap.put(3, new B(null));
         a.bmap.put(4, null);
 
@@ -144,9 +147,49 @@ public class SaverTest {
                 "}\n" +
                 "HashMap@1 = {\n" +
                 "    [1] = B@2\n" +
-                "    [2] = B@3\n" +
-                "    [3] = B@4\n" +
+                "    [3] = B@3\n" +
+                "    [B@4] = B@5\n" +
                 "    [4] = null\n" +
+                "}\n" +
+                "B@2 = {\n" +
+                "    c = 11\n" +
+                "}\n" +
+                "B@3 = {\n" +
+                "    c = null\n" +
+                "}\n" +
+                "B@4 = {\n" +
+                "    c = 22\n" +
+                "}\n" +
+                "B@5 = {\n" +
+                "    c = 23\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void array() {
+        class B {
+            String c;
+
+            public B(String c) {
+                this.c = c;
+            }
+        }
+
+        class A {
+            B[] bs;
+        }
+
+        A a = new A();
+        a.bs = new B[] {new B("11"), new B("22"), new B("33")};
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = B[]@1\n" +
+                "}\n" +
+                "B[]@1 = {\n" +
+                "    [0] = B@2\n" +
+                "    [1] = B@3\n" +
+                "    [2] = B@4\n" +
                 "}\n" +
                 "B@2 = {\n" +
                 "    c = 11\n" +
@@ -155,7 +198,21 @@ public class SaverTest {
                 "    c = 22\n" +
                 "}\n" +
                 "B@4 = {\n" +
-                "    c = null\n" +
+                "    c = 33\n" +
                 "}\n", new Saver().save(a));
     }
+
+//    @Test
+//    public void test() {
+//        PlayerService service = new PlayerServiceImpl();
+//        Player player1 = service.loadGame(service.register("player1"));
+//        Player player2 = service.loadGame(service.register("player2"));
+//
+//        player1.getGame().getJoystick().moveDown();
+//        player2.getGame().getJoystick().moveLeft();
+//        service.nextStepForAllGames();
+//
+//        assertEquals(
+//                " ", new Saver().save(service));
+//    }
 }

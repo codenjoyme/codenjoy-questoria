@@ -3,7 +3,6 @@ package apofig.saver;
 import org.fest.reflect.core.Reflection;
 
 import java.lang.reflect.Field;
-import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -16,17 +15,6 @@ public class Saver {
     List<Integer> ids = new LinkedList<>();
 
     public String save(Object object) {
-
-
-//        PlayerService service = new PlayerServiceImpl();
-//        Player player1 = service.loadGame(service.register("player1"));
-//        Player player2 = service.loadGame(service.register("player2"));
-//
-//        player1.getGame().getJoystick().moveDown();
-//        player2.getGame().getJoystick().moveLeft();
-//        service.nextStepForAllGames();
-
-
         process(object);
 
         for (Entry entry : data) {
@@ -49,7 +37,7 @@ public class Saver {
     private String getString(Fld fld) {
         if ("Map.Entry".equals(fld.name)) {
             Map.Entry entry = (Map.Entry)fld.value;
-            return "    [" + entry.getKey() + "] = " + getValue(entry.getValue()) + "\n";
+            return "    [" + getValue(entry.getKey()) + "] = " + getValue(entry.getValue()) + "\n";
         }
         return "    " + fld.name + " = " + getValue(fld.value) + "\n";
     }
@@ -153,20 +141,22 @@ public class Saver {
         if (object == null) return;
         if (dataContainsKey(object)) return;
 
-        if (object.getClass().getPackage() == null) return;
+        boolean isArray = object instanceof Object[];
+        if (object.getClass().getPackage() == null && !isArray) return;
 
         boolean isMap = Map.class.isAssignableFrom(object.getClass());
         boolean isList = List.class.isAssignableFrom(object.getClass());
-        if (!object.getClass().getPackage().getName().contains("apofig") && !isMap && !isList) {
+        if (!isArray && !object.getClass().getPackage().getName().contains("apofig") && !isMap && !isList) {
             return;
         }
 
         if (isMap) {
             Set<Map.Entry<Object, Object>> entries = ((Map<Object, Object>) object).entrySet();
-            LinkedList<Fld> list = new LinkedList<>();
+            List<Fld> list = new LinkedList<>();
             for (Map.Entry<?, ?> entry : entries) {
                 list.add(new Fld("Map.Entry", entry));
             }
+            Collections.sort(list, getFldComparator());
             data.add(new Entry(object, list));
 
             for (Map.Entry<?, ?> entry : entries) {
@@ -176,14 +166,29 @@ public class Saver {
             return;
         }
 
-        if (isList) {
+        if (isArray) {
             LinkedList<Fld> list = new LinkedList<>();
-            for (int index = 0; index < ((List)object).size(); index++) {
-                list.add(new Fld("[" + index + "]", ((List)object).get(index)));
+            Object[] array = (Object[]) object;
+            for (int index = 0; index < array.length; index++) {
+                list.add(new Fld("[" + index + "]", array[index]));
             }
             data.add(new Entry(object, list));
 
-            for (Object o : (List)object) {
+            for (Object o : array) {
+                process(o);
+            }
+            return;
+        }
+
+        if (isList) {
+            LinkedList<Fld> list = new LinkedList<>();
+            List container = (List) object;
+            for (int index = 0; index < container.size(); index++) {
+                list.add(new Fld("[" + index + "]", container.get(index)));
+            }
+            data.add(new Entry(object, list));
+
+            for (Object o : container) {
                 process(o);
             }
             return;
@@ -220,12 +225,27 @@ public class Saver {
 
     private Field[] getFields(Object object) {
         Field[] result = object.getClass().getDeclaredFields();
-        Arrays.sort(result, new Comparator<Field>() {
+        Arrays.sort(result, getFieldComparator());
+        return result;
+    }
+
+    private Comparator<Field> getFieldComparator() {
+        return new Comparator<Field>() {
             @Override
             public int compare(Field o1, Field o2) {
                 return (o1.getType() + o1.getName()).compareTo(o2.getType() + o2.getName());
             }
-        });
-        return result;
+        };
+    }
+
+
+    private Comparator<Fld> getFldComparator() {
+        return new Comparator<Fld>() {
+            @Override
+            public int compare(Fld o1, Fld o2) {
+                return (o1.value.getClass().getSimpleName() + o1.name).compareTo(
+                        o2.value.getClass().getSimpleName() + o2.name);
+            }
+        };
     }
 }
