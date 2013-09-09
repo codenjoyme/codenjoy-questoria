@@ -3,6 +3,7 @@ package apofig.saver;
 import apofig.javaquest.services.Player;
 import apofig.javaquest.services.PlayerService;
 import apofig.javaquest.services.PlayerServiceImpl;
+import org.approvaltests.Approvals;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -363,21 +364,17 @@ public class SaverTest {
     }
 
     @Test
-    public void test() {
-//        PlayerService service = new PlayerServiceImpl();
-//        Player player1 = service.loadGame(service.register("player1"));
-//        Player player2 = service.loadGame(service.register("player2"));
-//
-//        player1.getGame().getJoystick().moveDown();
-//        player2.getGame().getJoystick().moveLeft();
-//        service.nextStepForAllGames();
-//
-//        String actual = new Saver().save(service);
-//
-//        assertTrue(actual.contains("PlayerServiceImpl@0 = {\n" +
-//                "    game = JavaQuest@1\n" +
-//                "    players = HashMap@2\n" +
-//                "}"));
+    public void test() throws Exception {
+        PlayerService service = new PlayerServiceImpl();
+        Player player1 = service.loadGame(service.register("player1"));
+        Player player2 = service.loadGame(service.register("player2"));
 
+        player1.getGame().getJoystick().moveDown();
+        player2.getGame().getJoystick().moveLeft();
+        service.nextStepForAllGames();
+
+        String actual = new Saver().exclude(char[][].class, char[].class).save(service);
+
+        Approvals.verify(actual);
     }
 }

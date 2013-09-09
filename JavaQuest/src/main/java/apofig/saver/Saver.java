@@ -11,18 +11,29 @@ import java.util.*;
  * Time: 2:40
  */
 public class Saver {
-    List<Entry> data = new LinkedList<>();
-    List<Integer> ids = new LinkedList<>();
+    private List<Entry> data = new LinkedList<>();
+    private List<Integer> ids = new LinkedList<>();
+    private List<Class<?>> exclude;
+
+    public Saver exclude(Class<?>... classes) {
+        this.exclude = Arrays.asList(classes);
+        return this;
+    }
 
     public String save(Object object) {
-        process(object);
+        parse(object);
 
+        return buildString();
+    }
+
+    private String buildString() {
         for (Entry entry : data) {
             ids.add(System.identityHashCode(entry.getKey().object));
         }
 
         String result = "";
         for (Entry entry : data) {
+            if (entry.value == null) continue;
             result += string(entry.getKey().object);
             result += " = {\n";
             for (Fld fld : entry.getValue()) {
@@ -137,9 +148,15 @@ public class Saver {
         }
     }
 
-    private void process(Object object) {
+    private void parse(Object object) {
         if (object == null) return;
         if (dataContainsKey(object)) return;
+        if (exclude.contains(object.getClass())) {
+            if (!dataContainsKey(object)) {
+                data.add(new Entry(object, null));
+            }
+            return;
+        };
 
         boolean isArray =
                 object instanceof Object[] ||
@@ -169,8 +186,8 @@ public class Saver {
             data.add(new Entry(object, list));
 
             for (Map.Entry<?, ?> entry : container) {
-                process(entry.getKey());
-                process(entry.getValue());
+                parse(entry.getKey());
+                parse(entry.getValue());
             }
             return;
         }
@@ -233,7 +250,7 @@ public class Saver {
             data.add(new Entry(object, list));
 
             for (Fld fld : list) {
-                process(fld.value);
+                parse(fld.value);
             }
             return;
         }
@@ -247,7 +264,7 @@ public class Saver {
             data.add(new Entry(object, list));
 
             for (Object o : container) {
-                process(o);
+                parse(o);
             }
             return;
         }
@@ -262,10 +279,11 @@ public class Saver {
         }
 
         for (Entry entry : data.toArray(new Entry[0])) {
+            if (entry.getValue() == null) continue;
             for (Fld fld : entry.getValue()) {
                 Object o = fld.value;
                 if (!dataContainsKey(o)) {
-                    process(o);
+                    parse(o);
                 }
             }
         }
