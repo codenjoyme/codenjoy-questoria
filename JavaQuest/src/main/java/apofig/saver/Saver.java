@@ -161,14 +161,14 @@ public class Saver {
 
         if (isMap) {
             Set<Map.Entry<Object, Object>> entries = ((Map<Object, Object>) object).entrySet();
+            List<Map.Entry<Object, Object>> container = sort(entries);
             List<Fld> list = new LinkedList<>();
-            for (Map.Entry<?, ?> entry : entries) {
+            for (Map.Entry<?, ?> entry : container) {
                 list.add(new Fld("Map.Entry", entry));
             }
-            Collections.sort(list, getFldComparator());
             data.add(new Entry(object, list));
 
-            for (Map.Entry<?, ?> entry : entries) {
+            for (Map.Entry<?, ?> entry : container) {
                 process(entry.getKey());
                 process(entry.getValue());
             }
@@ -177,7 +177,7 @@ public class Saver {
 
         if (isArray) {
             LinkedList<Fld> list = new LinkedList<>();
-        if (object instanceof  int[]) {    // TODO как я не люблю массивы в джаве
+            if (object instanceof  int[]) {    // TODO как я не люблю массивы в джаве
                 int[] array = (int[])object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
@@ -273,6 +273,17 @@ public class Saver {
         }
     }
 
+    private List<Map.Entry<Object, Object>> sort(Set<Map.Entry<Object, Object>> entries) {
+        List<Map.Entry<Object, Object>> result = new LinkedList<> (entries);
+        Collections.sort(result, new Comparator<Map.Entry<Object, Object>>() {
+            @Override
+            public int compare(Map.Entry<Object, Object> o1, Map.Entry<Object, Object> o2) {
+                return o1.getKey().toString().compareTo(o2.getKey().toString());
+            }
+        });
+        return result;
+    }
+
     private List<Fld> dataGet(Object object) {
         Key key = new Key(object);
         for (Entry entry : data) {
@@ -285,27 +296,13 @@ public class Saver {
 
     private Field[] getFields(Object object) {
         Field[] result = object.getClass().getDeclaredFields();
-        Arrays.sort(result, getFieldComparator());
-        return result;
-    }
-
-    private Comparator<Field> getFieldComparator() {
-        return new Comparator<Field>() {
+        Arrays.sort(result, new Comparator<Field>() {
             @Override
             public int compare(Field o1, Field o2) {
                 return (o1.getType() + o1.getName()).compareTo(o2.getType() + o2.getName());
             }
-        };
+        });
+        return result;
     }
 
-
-    private Comparator<Fld> getFldComparator() {
-        return new Comparator<Fld>() {
-            @Override
-            public int compare(Fld o1, Fld o2) {
-                return (o1.value.getClass().getSimpleName() + o1.name).compareTo(
-                        o2.value.getClass().getSimpleName() + o2.name);
-            }
-        };
-    }
 }
