@@ -19,6 +19,8 @@ public class MonsterFactoryImpl implements MonsterPool {
     private Monster monster;
     private int count;
 
+    private MonsterFactoryImpl() {}
+
     public MonsterFactoryImpl(Iterable<Monster> otherMonsters) {
         monsters = Lists.newArrayList(otherMonsters);
         count = monsters.size() + 1;

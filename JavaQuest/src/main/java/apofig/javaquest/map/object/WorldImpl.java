@@ -11,6 +11,8 @@ public class WorldImpl implements World {
     private String name;
     private ObjectFactory factory;
 
+    private WorldImpl() {}
+
     public WorldImpl(ObjectFactory factory, Place place, Object owner) {
         this.factory = factory;
         this.place = place;

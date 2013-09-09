@@ -28,6 +28,8 @@ public class PlayerView {
     private int vx = Integer.MIN_VALUE;
     private int vy;
 
+    private PlayerView() {}
+
     public PlayerView(int size) {
         if (size < VIEW_CIRCLE.length) {
             throw new IllegalArgumentException("View size must be more than 10!");

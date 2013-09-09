@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -18,6 +19,7 @@ public class Saver {
     private List<Integer> ids = new LinkedList<>();
     private List<Class<?>> exclude = new LinkedList<>();
     private List<Class<?>> excludeParent = new LinkedList<>();
+    private Object main;
 
     public Saver exclude(Class<?>... classes) {
         this.exclude.addAll(Arrays.asList(classes));
@@ -25,6 +27,7 @@ public class Saver {
     }
 
     public String save(Object object) {
+        main = object;
         parse(object);
 
         return buildString();
@@ -79,6 +82,7 @@ public class Saver {
         JSONObject json = new JSONObject();
         try {
             json.put("objects", objs);
+            json.put("main", string(main));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -292,6 +296,7 @@ public class Saver {
 
         for (Field field : getFields(object)) {
             if (field.getName().contains("this$")) continue;
+            if ((field.getModifiers() & Modifier.FINAL) != 0) continue;
             Object o = Reflection.field(field.getName()).ofType(field.getType()).in(object).get();
             if (!dataContainsKey(object)) {
                 data.add(new Entry(object, new LinkedList<Fld>()));
@@ -317,7 +322,15 @@ public class Saver {
         Collections.sort(result, new Comparator<Map.Entry<Object, Object>>() {
             @Override
             public int compare(Map.Entry<Object, Object> o1, Map.Entry<Object, Object> o2) {
-                return o1.getKey().toString().compareTo(o2.getKey().toString());
+                return getString(o1).compareTo(getString(o2));
+            }
+
+            private String getString(Map.Entry<Object, Object> o) {
+                if (o.getKey() instanceof String) {
+                    return (String) o.getKey();
+                } else {
+                    return o.getKey().getClass().getSimpleName();
+                }
             }
         });
         return result;

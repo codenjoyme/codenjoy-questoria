@@ -21,6 +21,8 @@ public class JavaQuest implements Tickable {
     private int viewSize;
     private Point initPosition;
 
+    private JavaQuest() {}
+
     public JavaQuest(Settings settings) {
         objects = new ObjectFactoryImpl(settings.monsters());
         MapLoader loader = settings.mapLoader();

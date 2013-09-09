@@ -9,6 +9,8 @@ public class PointImpl implements Point {
     private int x;
     private int y;
 
+    private PointImpl() {}
+
     public PointImpl(int x, int y) {
         this.x = x;
         this.y = y;

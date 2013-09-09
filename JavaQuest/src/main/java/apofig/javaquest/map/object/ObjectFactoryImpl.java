@@ -20,6 +20,8 @@ public class ObjectFactoryImpl implements ObjectFactory {
     private MonsterPool monsters;
     private Map<Something, World> objects;
 
+    private ObjectFactoryImpl() {}
+
     public ObjectFactoryImpl(MonsterPool monsters) {
         this.monsters = monsters;
         objects = new HashMap<Something, World>();

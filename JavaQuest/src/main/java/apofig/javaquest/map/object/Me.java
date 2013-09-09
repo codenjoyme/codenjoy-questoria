@@ -9,13 +9,15 @@ import apofig.javaquest.map.*;
  */
 public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
-    private final World world;
+    private World world;
     private PlayerView view;
     private int x;
     private int y;
     private Player info;
     private Point whereToGo;
     private TerritoryMap map;
+
+    private Me() {}
 
     public Me(ObjectFactory objects, TerritoryMap map, PlayerView view, Messages messages, int x, int y, Player info) {
         this.map = map;

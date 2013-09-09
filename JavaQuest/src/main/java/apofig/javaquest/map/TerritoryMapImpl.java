@@ -24,6 +24,8 @@ public class TerritoryMapImpl implements TerritoryMap {
     private java.util.Map<Viewable, Map> fogs;
     private ObjectFactory objects;
 
+    private TerritoryMapImpl() {}
+
     public TerritoryMapImpl(MapLoader loader, ObjectFactory objects) {
         this.objects = objects;
         width = loader.width();
