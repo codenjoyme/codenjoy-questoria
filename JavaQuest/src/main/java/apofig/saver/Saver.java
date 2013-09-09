@@ -38,19 +38,38 @@ public class Saver {
             result += string(entry.getKey().object);
             result += " = {\n";
             for (Fld fld : entry.getValue()) {
-                String value = "";
-                if (dataContainsKey(fld.value)) {
-                    value = string(fld.value);
-                } else {
-                    value = (fld.value == null) ? "null" : fld.value.toString();
-                }
-
-                result += "    " + fld.name + " = " + value + "\n";
+                result += getString(fld);
             }
             result += "}\n";
         }
 
         return result;
+    }
+
+    private String getString(Fld fld) {
+        return "    " + fld.name + " = " + getValue(fld.value) + "\n";
+    }
+
+    private String getValue(Object o) {
+        if (o == null) {
+            return "null";
+        }
+
+        if (dataContainsKey(o)) {
+           return string(o);
+        }
+
+        if (List.class.isAssignableFrom(o.getClass())) {
+            String result = "";
+            result += "        [\n";
+            for (Object a : (List)o) {
+                result += getValue(a);
+            }
+            result += "        ]\n";
+            return result;
+        }
+
+        return o.toString();
     }
 
     private boolean dataContainsKey(Object object) {
@@ -127,12 +146,14 @@ public class Saver {
         if (dataContainsKey(object)) return;
 
         if (object.getClass().getPackage() == null) return;
-        if (!object.getClass().getPackage().getName().contains("apofig") &&
-                !Arrays.asList(HashMap.class, LinkedList.class).contains(object.getClass())) {
+
+        boolean isMap = Map.class.isAssignableFrom(object.getClass());
+        boolean isList = List.class.isAssignableFrom(object.getClass());
+        if (!object.getClass().getPackage().getName().contains("apofig") && !isMap && !isList) {
             return;
         }
 
-        if (object.getClass().equals(HashMap.class)) {
+        if (isMap) {
             Set<Map.Entry<Object, Object>> entries = ((Map<Object, Object>) object).entrySet();
             LinkedList<Fld> list = new LinkedList<>();
             for (Map.Entry<?, ?> entry : entries) {
@@ -147,7 +168,7 @@ public class Saver {
             return;
         }
 
-        if (object.getClass().equals(LinkedList.class)) {
+        if (isList) {
             LinkedList<Fld> list = new LinkedList<>();
             for (int index = 0; index < ((List)object).size(); index++) {
                 list.add(new Fld("[" + index + "]", ((List)object).get(index)));

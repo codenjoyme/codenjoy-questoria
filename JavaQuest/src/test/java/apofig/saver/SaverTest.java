@@ -2,6 +2,9 @@ package apofig.saver;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -71,6 +74,44 @@ public class SaverTest {
                 "C@4 = {\n" +
                 "    d = null\n" +
                 "    i = 0\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void list() {
+        class B {
+            int c;
+
+            public B(int c) {
+                this.c = c;
+            }
+        }
+
+        class A {
+            List<B> bs;
+        }
+
+        A a = new A();
+        a.bs = Arrays.asList(new B(12), new B(23), new B(34));
+
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bs = ArrayList@1\n" +
+                "}\n" +
+                "ArrayList@1 = {\n" +
+                "    [0] = B@2\n" +
+                "    [1] = B@3\n" +
+                "    [2] = B@4\n" +
+                "}\n" +
+                "B@2 = {\n" +
+                "    c = 12\n" +
+                "}\n" +
+                "B@3 = {\n" +
+                "    c = 23\n" +
+                "}\n" +
+                "B@4 = {\n" +
+                "    c = 34\n" +
                 "}\n", new Saver().save(a));
     }
 }
