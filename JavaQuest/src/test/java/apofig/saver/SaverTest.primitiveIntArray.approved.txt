@@ -1,1 +1,1 @@
-{"objects":[{"id":"A@0","type":"apofig.saver.SaverTest$5A","fields":[{"bs":"int[]@1"}]},{"id":"int[]@1","type":"[I","fields":[{"[0]":"10"},{"[1]":"11"},{"[2]":"12"}]}]}
+{"objects":[{"id":"A@0","type":"apofig.saver.SaverTest$5A","fields":[{"bs":"int[]@1"}]},{"id":"int[]@1","type":"[I","fields":["10","11","12"]}]}

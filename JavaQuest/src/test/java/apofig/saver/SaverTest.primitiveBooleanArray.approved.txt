@@ -1,1 +1,1 @@
-{"objects":[{"id":"A@0","type":"apofig.saver.SaverTest$7A","fields":[{"bs":"boolean[]@1"}]},{"id":"boolean[]@1","type":"[Z","fields":[{"[0]":"true"},{"[1]":"false"},{"[2]":"true"}]}]}
+{"objects":[{"id":"A@0","type":"apofig.saver.SaverTest$7A","fields":[{"bs":"boolean[]@1"}]},{"id":"boolean[]@1","type":"[Z","fields":["true","false","true"]}]}

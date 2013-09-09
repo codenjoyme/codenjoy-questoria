@@ -1,5 +1,6 @@
 package apofig.saver;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.fest.reflect.core.Reflection;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,20 +57,20 @@ public class Saver {
         return result;
     }
 
-    private List<Map<String, Object>> getFieldDOM(Entry entry) {
-        List<Map<String, Object>> result = new LinkedList<>();
+    private List<Object> getFieldDOM(Entry entry) {
+        List<Object> result = new LinkedList<>();
 
-        for (Fld fld : entry.getValue()) {
+        for (Object o : entry.getValue()) {
             Map<String, Object> map = new HashMap<>();
+            if (o instanceof Fld) {
+                Fld fld = (Fld) o;
 
-            if ("Map.Entry".equals(fld.name)) {
-                Map.Entry mapEntry = (Map.Entry) fld.value;
-                map.put((String)getValue(mapEntry.getKey()), getValue(mapEntry.getValue()));
+                map.put((String) getValue(fld.name), getValue(fld.value));
+
+                result.add(map);
             } else {
-                map.put(fld.name, getValue(fld.value));
+                result.add(getValue(o));
             }
-
-            result.add(map);
         }
         return result;
     }
@@ -149,14 +150,13 @@ public class Saver {
             }
             return object.hashCode();
         }
-
     }
 
     static class Fld {
-        private String name;
+        private Object name;
         private Object value;
 
-        public Fld(String name, Object value) {
+        public Fld(Object name, Object value) {
             this.name = name;
             this.value = value;
         }
@@ -164,9 +164,9 @@ public class Saver {
 
     static class Entry {
         Key key;
-        List<Fld> value;
+        List<?> value;
 
-        public Entry(Object object, List<Fld> value) {
+        public Entry(Object object, List<?> value) {
             this.key = new Key(object);
             this.value = value;
         }
@@ -175,7 +175,7 @@ public class Saver {
             return key;
         }
 
-        public List<Fld> getValue() {
+        public List<?> getValue() {
             return value;
         }
     }
@@ -222,7 +222,7 @@ public class Saver {
             List<Map.Entry<Object, Object>> container = sort(entries);
             List<Fld> list = new LinkedList<>();
             for (Map.Entry<?, ?> entry : container) {
-                list.add(new Fld("Map.Entry", entry));
+                list.add(new Fld(entry.getKey(), entry.getValue()));
             }
             data.add(new Entry(object, list));
 
@@ -234,75 +234,55 @@ public class Saver {
         }
 
         if (isArray) {
-            LinkedList<Fld> list = new LinkedList<>();
+            List<Object> list = null;
             if (object instanceof int[]) {    // TODO как я не люблю массивы в джаве
                 int[] array = (int[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof boolean[]) {
                 boolean[] array = (boolean[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof byte[]) {
                 byte[] array = (byte[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof long[]) {
                 long[] array = (long[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof char[]) {
                 char[] array = (char[]) object;
-                list.add(new Fld("value", String.valueOf(array)));
+                list = (List)Arrays.asList(String.valueOf(array));
             }
             if (object instanceof double[]) {
                 double[] array = (double[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof short[]) {
                 short[] array = (short[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof float[]) {
                 float[] array = (float[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(ArrayUtils.toObject(array));
             }
             if (object instanceof Object[]) {
                 Object[] array = (Object[]) object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list = (List)Arrays.asList(array);
             }
 
             data.add(new Entry(object, list));
 
-            for (Fld fld : list) {
-                parse(fld.value);
+            for (Object o : list) {
+                parse(o);
             }
             return;
         }
 
         if (isList) {
-            LinkedList<Fld> list = new LinkedList<>();
             List container = (List) object;
-            for (int index = 0; index < container.size(); index++) {
-                list.add(new Fld("[" + index + "]", container.get(index)));
-            }
-            data.add(new Entry(object, list));
+            data.add(new Entry(object, container));
 
             for (Object o : container) {
                 parse(o);
@@ -321,10 +301,12 @@ public class Saver {
 
         for (Entry entry : data.toArray(new Entry[0])) {
             if (entry.getValue() == null) continue;
-            for (Fld fld : entry.getValue()) {
-                Object o = fld.value;
-                if (!dataContainsKey(o)) {
-                    parse(o);
+            for (Object obj : entry.getValue()) {
+                if (obj instanceof Fld) {
+                    Object o = ((Fld)obj).value;
+                    if (!dataContainsKey(o)) {
+                        parse(o);
+                    }
                 }
             }
         }
@@ -341,11 +323,11 @@ public class Saver {
         return result;
     }
 
-    private List<Fld> dataGet(Object object) {
+    private List<Object> dataGet(Object object) {
         Key key = new Key(object);
         for (Entry entry : data) {
             if (entry.getKey().equals(key)) {
-                return entry.getValue();
+                return (List)entry.getValue();
             }
         }
         throw new RuntimeException("не найдено!");
