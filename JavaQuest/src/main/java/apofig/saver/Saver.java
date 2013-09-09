@@ -203,9 +203,7 @@ public class Saver {
             }
             if (object instanceof  char[]) {
                 char[] array = (char[])object;
-                for (int index = 0; index < array.length; index++) {
-                    list.add(new Fld("[" + index + "]", array[index]));
-                }
+                list.add(new Fld("value", String.valueOf(array)));
             }
             if (object instanceof  double[]) {
                 double[] array = (double[])object;

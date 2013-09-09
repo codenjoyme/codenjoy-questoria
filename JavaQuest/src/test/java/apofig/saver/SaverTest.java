@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * User: sanja
@@ -237,9 +238,7 @@ public class SaverTest {
                 "    bs = char[]@1\n" +
                 "}\n" +
                 "char[]@1 = {\n" +
-                "    [0] = A\n" +
-                "    [1] = B\n" +
-                "    [2] = C\n" +
+                "    value = ABC\n" +
                 "}\n", new Saver().save(a));
     }
 
@@ -363,8 +362,8 @@ public class SaverTest {
                 "}\n", new Saver().save(a));
     }
 
-//    @Test
-//    public void test() {
+    @Test
+    public void test() {
 //        PlayerService service = new PlayerServiceImpl();
 //        Player player1 = service.loadGame(service.register("player1"));
 //        Player player2 = service.loadGame(service.register("player2"));
@@ -373,7 +372,12 @@ public class SaverTest {
 //        player2.getGame().getJoystick().moveLeft();
 //        service.nextStepForAllGames();
 //
-//        assertEquals(
-//                " ", new Saver().save(service));
-//    }
+//        String actual = new Saver().save(service);
+//
+//        assertTrue(actual.contains("PlayerServiceImpl@0 = {\n" +
+//                "    game = JavaQuest@1\n" +
+//                "    players = HashMap@2\n" +
+//                "}"));
+
+    }
 }
