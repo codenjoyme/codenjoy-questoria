@@ -13,6 +13,8 @@ public class MapPlace implements Place {
     private int x;
     private int y;
 
+    private MapPlace() {}
+
     public MapPlace(Map map, int x, int y) {
         this.map = map;
         this.x = x;

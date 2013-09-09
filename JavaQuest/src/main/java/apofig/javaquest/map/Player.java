@@ -10,6 +10,8 @@ public class Player implements PlayerInfo {
     private int gold;
     private String name;
 
+    private Player() {}
+
     public Player(String name) {
         this.name = name;
     }

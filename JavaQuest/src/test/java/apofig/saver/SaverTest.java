@@ -227,16 +227,16 @@ public class SaverTest {
 
     @Test
     public void test() throws Exception {
-//        PlayerService service = new PlayerServiceImpl();
-//        Player player1 = service.loadGame(service.register("player1"));
-//        Player player2 = service.loadGame(service.register("player2"));
-//
-//        player1.getGame().getJoystick().moveDown();
-//        player2.getGame().getJoystick().moveLeft();
-//        service.nextStepForAllGames();
-//
-//        String actual = new Saver().exclude(char[][].class, char[].class).excludeChildren(Monster.class).save(service);
-//
-//        Approvals.verify(actual);
+        PlayerService service = new PlayerServiceImpl();
+        Player player1 = service.loadGame(service.register("player1"));
+        Player player2 = service.loadGame(service.register("player2"));
+
+        player1.getGame().getJoystick().moveDown();
+        player2.getGame().getJoystick().moveLeft();
+        service.nextStepForAllGames();
+
+        String actual = new Saver().exclude(char[][].class, char[].class).excludeChildren(Monster.class).save(service);
+
+        Approvals.verify(actual);
     }
 }

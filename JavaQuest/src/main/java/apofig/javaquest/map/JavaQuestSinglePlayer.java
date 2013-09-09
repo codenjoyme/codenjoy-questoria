@@ -13,6 +13,8 @@ public class JavaQuestSinglePlayer {
     private JavaQuest game;
     private Me player;
 
+    private JavaQuestSinglePlayer() {}
+
     public JavaQuestSinglePlayer(JavaQuest game, String name) {
         this.game = game;
         player = game.newPlayer(name);

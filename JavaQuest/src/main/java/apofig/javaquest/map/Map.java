@@ -10,6 +10,8 @@ import java.util.Arrays;
 public class Map {
     private char[][] map;
 
+    private Map() {}
+
     public Map(int width, int height) {
         map = new char[width][height];
     }
