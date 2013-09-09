@@ -23,7 +23,7 @@ import static junit.framework.Assert.assertTrue;
 public class SaverTest {
 
     @Test
-    public void simple() {
+    public void simple() throws Exception {
         class D {
             int a, b;
         }
@@ -61,32 +61,11 @@ public class SaverTest {
         a.c = c;
         a.d = d;
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    b = B@1\n" +
-                "    c = C@2\n" +
-                "    d = D@3\n" +
-                "}\n" +
-                "B@1 = {\n" +
-                "    a = C@2\n" +
-                "    c = C@4\n" +
-                "}\n" +
-                "C@2 = {\n" +
-                "    d = D@3\n" +
-                "    i = 4\n" +
-                "}\n" +
-                "D@3 = {\n" +
-                "    a = 5\n" +
-                "    b = 6\n" +
-                "}\n" +
-                "C@4 = {\n" +
-                "    d = null\n" +
-                "    i = 0\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void list() {
+    public void list() throws Exception {
         class B {
             int c;
 
@@ -102,29 +81,11 @@ public class SaverTest {
         A a = new A();
         a.bs = Arrays.asList(new B(12), new B(23), new B(34));
 
-
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = ArrayList@1\n" +
-                "}\n" +
-                "ArrayList@1 = {\n" +
-                "    [0] = B@2\n" +
-                "    [1] = B@3\n" +
-                "    [2] = B@4\n" +
-                "}\n" +
-                "B@2 = {\n" +
-                "    c = 12\n" +
-                "}\n" +
-                "B@3 = {\n" +
-                "    c = 23\n" +
-                "}\n" +
-                "B@4 = {\n" +
-                "    c = 34\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void map() {
+    public void map() throws Exception {
         class B {
             Integer c;
 
@@ -144,32 +105,11 @@ public class SaverTest {
         a.bmap.put(3, new B(null));
         a.bmap.put(4, null);
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bmap = HashMap@1\n" +
-                "}\n" +
-                "HashMap@1 = {\n" +
-                "    [1] = B@2\n" +
-                "    [3] = B@3\n" +
-                "    [4] = null\n" +
-                "    [B@4] = B@5\n" +
-                "}\n" +
-                "B@2 = {\n" +
-                "    c = 11\n" +
-                "}\n" +
-                "B@3 = {\n" +
-                "    c = null\n" +
-                "}\n" +
-                "B@4 = {\n" +
-                "    c = 22\n" +
-                "}\n" +
-                "B@5 = {\n" +
-                "    c = 23\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void array() {
+    public void array() throws Exception {
         class B {
             String c;
 
@@ -185,29 +125,12 @@ public class SaverTest {
         A a = new A();
         a.bs = new B[] {new B("11"), new B("22"), new B("33")};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = B[]@1\n" +
-                "}\n" +
-                "B[]@1 = {\n" +
-                "    [0] = B@2\n" +
-                "    [1] = B@3\n" +
-                "    [2] = B@4\n" +
-                "}\n" +
-                "B@2 = {\n" +
-                "    c = 11\n" +
-                "}\n" +
-                "B@3 = {\n" +
-                "    c = 22\n" +
-                "}\n" +
-                "B@4 = {\n" +
-                "    c = 33\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
 
     @Test
-    public void primitiveIntArray() {
+    public void primitiveIntArray() throws Exception {
         class A {
             int[] bs;
         }
@@ -215,19 +138,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new int[] {10, 11, 12};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = int[]@1\n" +
-                "}\n" +
-                "int[]@1 = {\n" +
-                "    [0] = 10\n" +
-                "    [1] = 11\n" +
-                "    [2] = 12\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveCharArray() {
+    public void primitiveCharArray() throws Exception {
         class A {
             char[] bs;
         }
@@ -235,17 +150,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new char[] {'A', 'B', 'C'};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = char[]@1\n" +
-                "}\n" +
-                "char[]@1 = {\n" +
-                "    value = ABC\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveBooleanArray() {
+    public void primitiveBooleanArray() throws Exception {
         class A {
             boolean[] bs;
         }
@@ -253,19 +162,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new boolean[] {true, false, true};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = boolean[]@1\n" +
-                "}\n" +
-                "boolean[]@1 = {\n" +
-                "    [0] = true\n" +
-                "    [1] = false\n" +
-                "    [2] = true\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveLongArray() {
+    public void primitiveLongArray() throws Exception {
         class A {
             long[] bs;
         }
@@ -273,19 +174,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new long[] {1L, 2L, 3l};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = long[]@1\n" +
-                "}\n" +
-                "long[]@1 = {\n" +
-                "    [0] = 1\n" +
-                "    [1] = 2\n" +
-                "    [2] = 3\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveByteArray() {
+    public void primitiveByteArray() throws Exception {
         class A {
             byte[] bs;
         }
@@ -293,19 +186,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new byte[] {1, 2, 3};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = byte[]@1\n" +
-                "}\n" +
-                "byte[]@1 = {\n" +
-                "    [0] = 1\n" +
-                "    [1] = 2\n" +
-                "    [2] = 3\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveDoubleArray() {
+    public void primitiveDoubleArray() throws Exception {
         class A {
             double[] bs;
         }
@@ -313,19 +198,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new double[] {1, 2, 3};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = double[]@1\n" +
-                "}\n" +
-                "double[]@1 = {\n" +
-                "    [0] = 1.0\n" +
-                "    [1] = 2.0\n" +
-                "    [2] = 3.0\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveFloatArray() {
+    public void primitiveFloatArray() throws Exception {
         class A {
             float[] bs;
         }
@@ -333,19 +210,11 @@ public class SaverTest {
         A a = new A();
         a.bs = new float[] {1, 2, 3};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = float[]@1\n" +
-                "}\n" +
-                "float[]@1 = {\n" +
-                "    [0] = 1.0\n" +
-                "    [1] = 2.0\n" +
-                "    [2] = 3.0\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test
-    public void primitiveShortArray() {
+    public void primitiveShortArray() throws Exception {
         class A {
             short[] bs;
         }
@@ -353,15 +222,7 @@ public class SaverTest {
         A a = new A();
         a.bs = new short[] {1, 2, 3};
 
-        assertEquals(
-                "A@0 = {\n" +
-                "    bs = short[]@1\n" +
-                "}\n" +
-                "short[]@1 = {\n" +
-                "    [0] = 1\n" +
-                "    [1] = 2\n" +
-                "    [2] = 3\n" +
-                "}\n", new Saver().save(a));
+        Approvals.verify(new Saver().save(a));
     }
 
     @Test

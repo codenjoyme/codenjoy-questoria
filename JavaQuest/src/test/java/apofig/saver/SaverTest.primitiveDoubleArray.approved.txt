@@ -1,0 +1,1 @@
+{"objects":[{"id":"A@0","type":"apofig.saver.SaverTest$10A","fields":[{"bs":"double[]@1"}]},{"id":"double[]@1","type":"[D","fields":[{"[0]":"1.0"},{"[1]":"2.0"},{"[2]":"3.0"}]}]}

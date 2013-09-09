@@ -1,7 +1,8 @@
 package apofig.saver;
 
-import apofig.javaquest.map.object.monster.Monster;
 import org.fest.reflect.core.Reflection;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -14,11 +15,11 @@ import java.util.*;
 public class Saver {
     private List<Entry> data = new LinkedList<>();
     private List<Integer> ids = new LinkedList<>();
-    private List<Class<?>> exclude;
-    private List<Class<?>> excludeParent;
+    private List<Class<?>> exclude = new LinkedList<>();
+    private List<Class<?>> excludeParent = new LinkedList<>();
 
     public Saver exclude(Class<?>... classes) {
-        this.exclude = Arrays.asList(classes);
+        this.exclude.addAll(Arrays.asList(classes));
         return this;
     }
 
@@ -33,49 +34,72 @@ public class Saver {
             ids.add(System.identityHashCode(entry.getKey().object));
         }
 
-        String result = "";
+        List<Map<String, Object>> objects = getDOM();
+
+        return getJSON(objects);
+    }
+
+    private List<Map<String, Object>> getDOM() {
+        List<Map<String, Object>> result = new LinkedList<>();
+
         for (Entry entry : data) {
             if (entry.value == null) continue;
-            result += string(entry.getKey().object);
-            result += " = {\n";
-            for (Fld fld : entry.getValue()) {
-                result += getString(fld);
-            }
-            result += "}\n";
-        }
+            Object object = entry.getKey().object;
 
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", object.getClass().getName());
+            map.put("id", string(object));
+            map.put("fields", getFieldDOM(entry));
+
+            result.add(map);
+        }
         return result;
     }
 
-    private String getString(Fld fld) {
-        if ("Map.Entry".equals(fld.name)) {
-            Map.Entry entry = (Map.Entry)fld.value;
-            return "    [" + getValue(entry.getKey()) + "] = " + getValue(entry.getValue()) + "\n";
+    private List<Map<String, Object>> getFieldDOM(Entry entry) {
+        List<Map<String, Object>> result = new LinkedList<>();
+
+        for (Fld fld : entry.getValue()) {
+            Map<String, Object> map = new HashMap<>();
+
+            if ("Map.Entry".equals(fld.name)) {
+                Map.Entry mapEntry = (Map.Entry) fld.value;
+                map.put((String)getValue(mapEntry.getKey()), getValue(mapEntry.getValue()));
+            } else {
+                map.put(fld.name, getValue(fld.value));
+            }
+
+            result.add(map);
         }
-        return "    " + fld.name + " = " + getValue(fld.value) + "\n";
+        return result;
     }
 
-    private String getValue(Object o) {
+    private String getJSON(List<Map<String, Object>> objs) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("objects", objs);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return json.toString();
+    }
+
+    private Object getValue(Object o) {
         if (o == null) {
-            return "null";
+            return null;
         }
 
         if (dataContainsKey(o)) {
-           return string(o);
+            return string(o);
         }
 
         if (Collection.class.isAssignableFrom(o.getClass())) {
-            String result = "";
-            result += "        [\n";
-            for (Object a : (List)o) {
-                result += getValue(a);
+            List<Object> result = new LinkedList<>();
+            for (Object a : (List) o) {
+                result.add(getValue(a));
             }
-            result += "        ]\n";
             return result;
-        }
-
-        if (Map.Entry.class.isAssignableFrom(o.getClass())) {
-            return o.toString();
         }
 
         return o.toString();
@@ -96,12 +120,13 @@ public class Saver {
     }
 
     public Saver excludeChildren(Class<?>... classes) {
-        this.excludeParent = Arrays.asList(classes);
+        this.excludeParent.addAll(Arrays.asList(classes));
         return this;
     }
 
     static class Key {
         private Object object;
+
         public Key(Object object) {
             this.object = object;
         }
@@ -112,7 +137,7 @@ public class Saver {
                 throw new IllegalStateException("");
             }
 
-            Key k = (Key)o;
+            Key k = (Key) o;
 
             return k.object == this.object;
         }
@@ -176,14 +201,14 @@ public class Saver {
 
         boolean isArray =
                 object instanceof Object[] ||
-                object instanceof int[] ||
-                object instanceof char[] ||
-                object instanceof short[] ||
-                object instanceof float[] ||
-                object instanceof long[] ||
-                object instanceof byte[] ||
-                object instanceof double[] ||
-                object instanceof boolean[];
+                        object instanceof int[] ||
+                        object instanceof char[] ||
+                        object instanceof short[] ||
+                        object instanceof float[] ||
+                        object instanceof long[] ||
+                        object instanceof byte[] ||
+                        object instanceof double[] ||
+                        object instanceof boolean[];
         if (object.getClass().getPackage() == null && !isArray) return;
 
         boolean isMap = Map.class.isAssignableFrom(object.getClass());
@@ -210,54 +235,54 @@ public class Saver {
 
         if (isArray) {
             LinkedList<Fld> list = new LinkedList<>();
-            if (object instanceof  int[]) {    // TODO как я не люблю массивы в джаве
-                int[] array = (int[])object;
+            if (object instanceof int[]) {    // TODO как я не люблю массивы в джаве
+                int[] array = (int[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
-            if (object instanceof  boolean[]) {
-                boolean[] array = (boolean[])object;
+            if (object instanceof boolean[]) {
+                boolean[] array = (boolean[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
-            if (object instanceof  byte[]) {
-                byte[] array = (byte[])object;
+            if (object instanceof byte[]) {
+                byte[] array = (byte[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
-            if (object instanceof  long[]) {
-                long[] array = (long[])object;
+            if (object instanceof long[]) {
+                long[] array = (long[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
-            if (object instanceof  char[]) {
-                char[] array = (char[])object;
+            if (object instanceof char[]) {
+                char[] array = (char[]) object;
                 list.add(new Fld("value", String.valueOf(array)));
             }
-            if (object instanceof  double[]) {
-                double[] array = (double[])object;
+            if (object instanceof double[]) {
+                double[] array = (double[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
-            if (object instanceof  short[]) {
-                short[] array = (short[])object;
+            if (object instanceof short[]) {
+                short[] array = (short[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
             if (object instanceof float[]) {
-                float[] array = (float[])object;
+                float[] array = (float[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
             }
             if (object instanceof Object[]) {
-                Object[] array = (Object[])object;
+                Object[] array = (Object[]) object;
                 for (int index = 0; index < array.length; index++) {
                     list.add(new Fld("[" + index + "]", array[index]));
                 }
@@ -306,7 +331,7 @@ public class Saver {
     }
 
     private List<Map.Entry<Object, Object>> sort(Set<Map.Entry<Object, Object>> entries) {
-        List<Map.Entry<Object, Object>> result = new LinkedList<> (entries);
+        List<Map.Entry<Object, Object>> result = new LinkedList<>(entries);
         Collections.sort(result, new Comparator<Map.Entry<Object, Object>>() {
             @Override
             public int compare(Map.Entry<Object, Object> o1, Map.Entry<Object, Object> o2) {
