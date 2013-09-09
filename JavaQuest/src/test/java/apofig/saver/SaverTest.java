@@ -3,7 +3,9 @@ package apofig.saver;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -112,6 +114,48 @@ public class SaverTest {
                 "}\n" +
                 "B@4 = {\n" +
                 "    c = 34\n" +
+                "}\n", new Saver().save(a));
+    }
+
+    @Test
+    public void map() {
+        class B {
+            Integer c;
+
+            public B(Integer c) {
+                this.c = c;
+            }
+        }
+
+        class A {
+            Map<Integer, B> bmap;
+        }
+
+        A a = new A();
+        a.bmap = new HashMap<>();
+        a.bmap.put(1, new B(11));
+        a.bmap.put(2, new B(22));
+        a.bmap.put(3, new B(null));
+        a.bmap.put(4, null);
+
+        assertEquals(
+                "A@0 = {\n" +
+                "    bmap = HashMap@1\n" +
+                "}\n" +
+                "HashMap@1 = {\n" +
+                "    [1] = B@2\n" +
+                "    [2] = B@3\n" +
+                "    [3] = B@4\n" +
+                "    [4] = null\n" +
+                "}\n" +
+                "B@2 = {\n" +
+                "    c = 11\n" +
+                "}\n" +
+                "B@3 = {\n" +
+                "    c = 22\n" +
+                "}\n" +
+                "B@4 = {\n" +
+                "    c = null\n" +
                 "}\n", new Saver().save(a));
     }
 }

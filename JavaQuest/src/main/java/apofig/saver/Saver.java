@@ -47,6 +47,10 @@ public class Saver {
     }
 
     private String getString(Fld fld) {
+        if ("Map.Entry".equals(fld.name)) {
+            Map.Entry entry = (Map.Entry)fld.value;
+            return "    [" + entry.getKey() + "] = " + getValue(entry.getValue()) + "\n";
+        }
         return "    " + fld.name + " = " + getValue(fld.value) + "\n";
     }
 
@@ -59,7 +63,7 @@ public class Saver {
            return string(o);
         }
 
-        if (List.class.isAssignableFrom(o.getClass())) {
+        if (Collection.class.isAssignableFrom(o.getClass())) {
             String result = "";
             result += "        [\n";
             for (Object a : (List)o) {
@@ -67,6 +71,10 @@ public class Saver {
             }
             result += "        ]\n";
             return result;
+        }
+
+        if (Map.Entry.class.isAssignableFrom(o.getClass())) {
+            return o.toString();
         }
 
         return o.toString();
