@@ -145,6 +145,9 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public int hashCode() {
+        if (info == null || info.getName() == null) {    // TODO это надо для Load/Saver классов
+            return 0;
+        }
         return info.getName().hashCode();
     }
 
@@ -159,6 +162,10 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         }
 
         Me me = (Me)o;
+
+        if (me.getInfo() == null || me.getInfo().getName() == null) {  // TODO это надо для Load/Saver классов
+            return (info == null || info.getName() == null);
+        }
 
         return me.getInfo().getName().equals(info.getName());
     }

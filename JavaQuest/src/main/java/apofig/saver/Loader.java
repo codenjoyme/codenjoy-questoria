@@ -26,7 +26,7 @@ public class Loader {
             JSONArray objects = (JSONArray) json.get((String) keys.next());
             String mainObjectId = (String)json.get((String)keys.next());
 
-            for (int index = objects.length() - 1; index >= 0; index--) {
+            for (int index = 0; index < objects.length(); index++) {
                 JSONObject object = (JSONObject) objects.get(index);
                 String id = (String) object.get("id");
                 String className = (String) object.get("type");
@@ -38,7 +38,7 @@ public class Loader {
                 } else if (isList(className)) {
                     newInstance = new LinkedList();
                 } else if (isMap(className)) {
-                    newInstance = new MyMap() {};
+                    newInstance = new HashMap();
                 } else {
                     Class<?> aClass = loadClass(className);
                     newInstance = Reflection.constructor().in(aClass).newInstance();
@@ -46,7 +46,7 @@ public class Loader {
                 instances.put(id, newInstance);
             }
 
-            for (int index = objects.length() - 1; index >= 0; index--) {
+            for (int index = 0; index < objects.length(); index++) {
                 JSONObject object = (JSONObject) objects.get(index);
                 String id = (String) object.get("id");
                 JSONArray fields = (JSONArray) object.get("fields");
@@ -68,32 +68,37 @@ public class Loader {
                             value = (String) o;
                         }
 
-                        if (instances.containsKey(value)) {
-                            Object parent = instances.get(id);
-
-                            if (Map.class.isAssignableFrom(parent.getClass())) {
-                                Map map = (Map)parent;
-                                Object key = name;
-                                if (name.contains("@")) {
-                                    key = instances.get(key);
-                                }
-                                Object val = value;
-                                if (value.contains("@")) {
-                                    val = instances.get(val);
-                                }
-                                map.put(key, val);
-                            } else {
+                        Object parent = instances.get(id);
+                        if (Map.class.isAssignableFrom(parent.getClass())) {
+                            Map map = (Map)parent;
+                            Object key = name;
+                            if (name.contains("@")) {
+                                key = instances.get(key);
+                            }
+                            Object val = value;
+                            if (value.contains("@")) {
+                                val = instances.get(val);
+                            }
+                            map.put(key, val);
+                        } else if (!instances.containsKey(value)) {
+                            if ((value instanceof String) && !value.contains("@")) {
+                                Field declaredField = null;
                                 try {
-                                    Field declaredField = parent.getClass().getDeclaredField(name);
-                                    declaredField.setAccessible(true);
-                                    declaredField.set(parent, instances.get(value));
-                                    declaredField.setAccessible(false);
-                                } catch (IllegalAccessException e) {
-                                    throw new RuntimeException(e + ": for field " + name);
+                                    declaredField = parent.getClass().getDeclaredField(name);
                                 } catch (NoSuchFieldException e) {
-                                    throw new RuntimeException(e + ": for field " + name);
+                                    throw new RuntimeException(e);
+                                }
+                                if (declaredField.getType().equals(int.class)) { // TODO как на счет других примитивов?
+                                    setFieldValue(parent, name, Integer.valueOf(value));
+                                } else if (declaredField.getType().equals(boolean.class)) {
+                                    setFieldValue(parent, name, Boolean.valueOf(value));
+                                } else {
+                                    setFieldValue(parent, name, value);
                                 }
                             }
+                        } else {
+                            Object objectValue = instances.get(value);
+                            setFieldValue(parent, name, objectValue);
                         }
                     }
                 }
@@ -102,6 +107,19 @@ public class Loader {
             return instances.get(mainObjectId);
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void setFieldValue(Object parent, String name, Object fieldValue) {
+        try {
+            Field declaredField = parent.getClass().getDeclaredField(name);
+            declaredField.setAccessible(true);
+            declaredField.set(parent, fieldValue);
+            declaredField.setAccessible(false);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e + ": for field " + name);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e + ": for field " + name);
         }
     }
 
