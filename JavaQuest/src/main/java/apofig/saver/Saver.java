@@ -306,22 +306,11 @@ public class Saver {
                 if (field.getName().contains("this$")) continue;
                 if ((field.getModifiers() & Modifier.FINAL) != 0) continue;
                 Object o = Reflection.field(field.getName()).ofType(field.getType()).in(object).get();
+                toProcess.add(o);
                 if (!dataContainsKey(object)) {
                     data.add(new Entry(object, new LinkedList<Fld>()));
                 }
                 dataGet(object).add(new Fld(field.getName(), o));
-            }
-
-            for (Entry entry : data.toArray(new Entry[0])) {
-                if (entry.getValue() == null) continue;
-                for (Object obj : entry.getValue()) {
-                    if (obj instanceof Fld) {
-                        Object o = ((Fld)obj).value;
-                        if (!dataContainsKey(o)) {
-                            toProcess.add(o);
-                        }
-                    }
-                }
             }
         }
         return toProcess;
