@@ -238,7 +238,7 @@ public class SaverTest {
     }
 
     @Test
-    public void onlyOneFinalField() throws Exception {
+     public void onlyOneFinalField() throws Exception {
         class A {
             final int b = 4;
         }
@@ -246,6 +246,24 @@ public class SaverTest {
         A a = new A();
 
         assertEquals("{\"objects\":[{\"id\":\"A@0\",\"type\":\"apofig.saver.SaverTest$13A\",\"fields\":[]}],\"main\":\"A@0\"}",
+                new Saver().save(a));
+    }
+
+    @Test
+    public void oneFieldInSuperClass() throws Exception {
+        class B {
+            int b;
+        }
+
+        class A extends B {
+            int c;
+        }
+
+        A a = new A();
+        a.b = 1;
+        a.c = 2;
+
+        assertEquals("{\"objects\":[{\"id\":\"A@0\",\"type\":\"apofig.saver.SaverTest$14A\",\"fields\":[{\"b\":\"1\"},{\"c\":\"2\"}]}],\"main\":\"A@0\"}",
                 new Saver().save(a));
     }
 }

@@ -1,4 +1,4 @@
-package apofig.saver;
+package apofig.saver.dummy;
 
 /**
  * User: sanja

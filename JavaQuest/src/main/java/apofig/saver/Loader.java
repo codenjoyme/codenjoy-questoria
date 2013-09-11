@@ -5,9 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -62,7 +60,11 @@ public class Loader {
                     if (fld instanceof String) {
                         Object container = instances.get(id);
                         if (List.class.isAssignableFrom(container.getClass())) {
-                            ((List) container).add(instances.get(fld));
+                            if (instances.get(fld) == null) {
+                                ((List) container).add(fld);
+                            } else {
+                                ((List) container).add(instances.get(fld));
+                            }
                         }
                         if (container.getClass().getName().startsWith("[[C")) {     // TODO добавить все другие виды массивов и массивов массивов
                             char[][] array = (char[][])instances.get(id);
@@ -99,12 +101,7 @@ public class Loader {
                             map.put(key, val);
                         } else if (!instances.containsKey(value)) {
                             if ((value instanceof String) && !value.contains("@")) {
-                                Field declaredField = null;
-                                try {
-                                    declaredField = parent.getClass().getDeclaredField(name);
-                                } catch (NoSuchFieldException e) {
-                                    throw new RuntimeException(e);
-                                }
+                                Field declaredField = getField(parent.getClass(), name);
                                 if (declaredField.getType().equals(int.class)) { // TODO как на счет других примитивов?
                                     setFieldValue(parent, name, Integer.valueOf(value));
                                 } else if (declaredField.getType().equals(boolean.class)) {
@@ -127,16 +124,27 @@ public class Loader {
         }
     }
 
-    private void setFieldValue(Object parent, String name, Object fieldValue) {
+    private Field getField(Class<?> clazz, String name) {
+        if (Object.class.equals(clazz)) {
+            throw new RuntimeException(String.format("Поле %s не найдено нигде в иерархии класса.", name));
+        }
+        Field declaredField = null;
         try {
-            Field declaredField = parent.getClass().getDeclaredField(name);
-            declaredField.setAccessible(true);
-            declaredField.set(parent, fieldValue);
-            declaredField.setAccessible(false);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e + ": for field " + name);
+            declaredField = clazz.getDeclaredField(name);
         } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e + ": for field " + name);
+            return getField(clazz.getSuperclass(), name);
+        }
+        return declaredField;
+    }
+
+    private void setFieldValue(Object object, String name, Object fieldValue) {
+        try {
+            Field field = getField(object.getClass(), name);
+            field.setAccessible(true);
+            field.set(object, fieldValue);
+            field.setAccessible(false);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 

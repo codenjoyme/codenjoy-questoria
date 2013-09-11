@@ -345,9 +345,17 @@ public class Saver {
         throw new RuntimeException("не найдено!");
     }
 
-    private Field[] getFields(Object object) {
-        Field[] result = object.getClass().getDeclaredFields();
-        Arrays.sort(result, new Comparator<Field>() {
+    private List<Field> getFields(Object object) {
+        List<Field> result = new LinkedList<>();
+
+        Class<?> clazz = object.getClass();
+        do {
+            Field[] fields = clazz.getDeclaredFields();
+            result.addAll(Arrays.asList(fields));
+            clazz = clazz.getSuperclass();
+        } while (!Object.class.equals(clazz));
+
+        Collections.sort(result, new Comparator<Field>() {
             @Override
             public int compare(Field o1, Field o2) {
                 return (o1.getType() + o1.getName()).compareTo(o2.getType() + o2.getName());

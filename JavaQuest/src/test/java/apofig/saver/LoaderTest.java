@@ -1,9 +1,10 @@
 package apofig.saver;
 
-import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.services.Player;
 import apofig.javaquest.services.PlayerService;
 import apofig.javaquest.services.PlayerServiceImpl;
+import apofig.saver.dummy.ArrayOfArrayOfCharContainer;
+import apofig.saver.dummy.ChildForIntContainer;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -54,14 +55,21 @@ public class LoaderTest {
 
     @Test
     public void arrayOfArrayOfChar() {
-        ArrayOfArrayOfCharContainer object = new ArrayOfArrayOfCharContainer(6);
-        String expected = new Saver().save(object);
-        assertEquals("{\"objects\":[{\"id\":\"ArrayOfArrayOfCharContainer@0\",\"type\":\"apofig.saver.ArrayOfArrayOfCharContainer\",\"fields\":[{\"array\":\"char[][]@1\"}]},{\"id\":\"char[][]@1\",\"type\":\"[[C\",\"fields\":[\"char[]@2\",\"char[]@3\"]},{\"id\":\"char[]@2\",\"type\":\"[C\",\"fields\":[\"abc\"]},{\"id\":\"char[]@3\",\"type\":\"[C\",\"fields\":[\"qwe\"]}],\"main\":\"ArrayOfArrayOfCharContainer@0\"}", expected);
+        checkSaveAndLoad(new ArrayOfArrayOfCharContainer(6),
+                "{\"objects\":[{\"id\":\"ArrayOfArrayOfCharContainer@0\",\"type\":\"apofig.saver.dummy.ArrayOfArrayOfCharContainer\",\"fields\":[{\"array\":\"char[][]@1\"}]},{\"id\":\"char[][]@1\",\"type\":\"[[C\",\"fields\":[\"char[]@2\",\"char[]@3\"]},{\"id\":\"char[]@2\",\"type\":\"[C\",\"fields\":[\"abc\"]},{\"id\":\"char[]@3\",\"type\":\"[C\",\"fields\":[\"qwe\"]}],\"main\":\"ArrayOfArrayOfCharContainer@0\"}");
+    }
 
-        Object load = new Loader().load(expected);
+    @Test
+    public void oneFieldInSuperClass() {
+        checkSaveAndLoad(new ChildForIntContainer(1, 2),
+                "{\"objects\":[{\"id\":\"ChildForIntContainer@0\",\"type\":\"apofig.saver.dummy.ChildForIntContainer\",\"fields\":[{\"a\":\"1\"},{\"b\":\"2\"}]}],\"main\":\"ChildForIntContainer@0\"}");
+    }
 
-        String actual = new Saver().save(load);
+    private void checkSaveAndLoad(Object object, String expected) {
+        String saved = new Saver().save(object);
+        assertEquals(expected, saved);
 
-        assertEquals(expected, actual);
+        String loaded = new Saver().save(new Loader().load(expected));
+        assertEquals(saved, loaded);
     }
 }
