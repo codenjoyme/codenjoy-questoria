@@ -1,6 +1,9 @@
 package apofig.saver;
 
 import apofig.javaquest.map.object.monster.Monster;
+import apofig.javaquest.services.Player;
+import apofig.javaquest.services.PlayerService;
+import apofig.javaquest.services.PlayerServiceImpl;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -14,10 +17,51 @@ public class LoaderTest {
 
     @Test
     public void test() {
-        String saved = "{\"objects\":[{\"id\":\"PlayerServiceImpl@0\",\"type\":\"apofig.javaquest.services.PlayerServiceImpl\",\"fields\":[{\"game\":\"JavaQuest@1\"},{\"players\":\"HashMap@2\"}]},{\"id\":\"JavaQuest@1\",\"type\":\"apofig.javaquest.map.JavaQuest\",\"fields\":[{\"initPosition\":\"PointImpl@4\"},{\"map\":\"TerritoryMapImpl@5\"},{\"objects\":\"ObjectFactoryImpl@6\"},{\"players\":\"LinkedList@7\"},{\"viewSize\":\"41\"}]},{\"id\":\"HashMap@2\",\"type\":\"java.util.HashMap\",\"fields\":[{\"player1-493567632\":\"Player@3\"},{\"player2-493567631\":\"Player@9\"}]},{\"id\":\"Player@3\",\"type\":\"apofig.javaquest.services.Player\",\"fields\":[{\"game\":\"JavaQuestSinglePlayer@10\"},{\"gameCode\":\"player1-493567632\"},{\"name\":\"player1\"}]},{\"id\":\"PointImpl@4\",\"type\":\"apofig.javaquest.map.PointImpl\",\"fields\":[{\"x\":\"93\"},{\"y\":\"482\"}]},{\"id\":\"TerritoryMapImpl@5\",\"type\":\"apofig.javaquest.map.TerritoryMapImpl\",\"fields\":[{\"map\":\"Map@11\"},{\"objects\":\"ObjectFactoryImpl@6\"},{\"fogs\":\"HashMap@12\"},{\"height\":\"564\"},{\"width\":\"660\"}]},{\"id\":\"ObjectFactoryImpl@6\",\"type\":\"apofig.javaquest.map.object.ObjectFactoryImpl\",\"fields\":[{\"loader\":\"ObjectLoader@14\"},{\"monsters\":\"MonsterFactoryImpl@15\"},{\"objects\":\"HashMap@16\"}]},{\"id\":\"LinkedList@7\",\"type\":\"java.util.LinkedList\",\"fields\":[\"Me@8\",\"Me@38\"]},{\"id\":\"Me@8\",\"type\":\"apofig.javaquest.map.object.Me\",\"fields\":[{\"view\":\"PlayerView@18\"},{\"info\":\"Player@19\"},{\"whereToGo\":null},{\"map\":\"TerritoryMapImpl@5\"},{\"world\":\"WorldImpl@17\"},{\"x\":\"93\"},{\"y\":\"481\"}]},{\"id\":\"Player@9\",\"type\":\"apofig.javaquest.services.Player\",\"fields\":[{\"game\":\"JavaQuestSinglePlayer@20\"},{\"gameCode\":\"player2-493567631\"},{\"name\":\"player2\"}]},{\"id\":\"JavaQuestSinglePlayer@10\",\"type\":\"apofig.javaquest.map.JavaQuestSinglePlayer\",\"fields\":[{\"game\":\"JavaQuest@1\"},{\"player\":\"Me@8\"}]},{\"id\":\"Map@11\",\"type\":\"apofig.javaquest.map.Map\",\"fields\":[{\"map\":\"char[][]@21\"}]},{\"id\":\"HashMap@12\",\"type\":\"java.util.HashMap\",\"fields\":[{\"Me@8\":\"Map@13\"},{\"Me@38\":\"Map@22\"}]},{\"id\":\"Map@13\",\"type\":\"apofig.javaquest.map.Map\",\"fields\":[{\"map\":\"char[][]@23\"}]},{\"id\":\"ObjectLoader@14\",\"type\":\"apofig.javaquest.map.object.ObjectLoader\",\"fields\":[{\"cache\":\"HashMap@24\"}]},{\"id\":\"MonsterFactoryImpl@15\",\"type\":\"apofig.javaquest.map.object.monster.MonsterFactoryImpl\",\"fields\":[{\"monster\":null},{\"count\":\"10\"},{\"monsters\":\"ArrayList@25\"}]},{\"id\":\"HashMap@16\",\"type\":\"java.util.HashMap\",\"fields\":[{\"Me@8\":\"WorldImpl@17\"},{\"Me@38\":\"WorldImpl@35\"}]},{\"id\":\"WorldImpl@17\",\"type\":\"apofig.javaquest.map.object.WorldImpl\",\"fields\":[{\"name\":\"Me\"},{\"factory\":\"ObjectFactoryImpl@6\"},{\"place\":\"MapPlace@36\"}]},{\"id\":\"PlayerView@18\",\"type\":\"apofig.javaquest.map.PlayerView\",\"fields\":[{\"mask\":\"char[][]@37\"},{\"size\":\"41\"},{\"vx\":\"73\"},{\"vy\":\"462\"}]},{\"id\":\"Player@19\",\"type\":\"apofig.javaquest.map.Player\",\"fields\":[{\"name\":\"player1\"},{\"gold\":\"0\"}]},{\"id\":\"JavaQuestSinglePlayer@20\",\"type\":\"apofig.javaquest.map.JavaQuestSinglePlayer\",\"fields\":[{\"game\":\"JavaQuest@1\"},{\"player\":\"Me@38\"}]},{\"id\":\"Map@22\",\"type\":\"apofig.javaquest.map.Map\",\"fields\":[{\"map\":\"char[][]@39\"}]},{\"id\":\"HashMap@24\",\"type\":\"java.util.HashMap\",\"fields\":[{\"#\":\"class apofig.javaquest.map.object.impl.Wall\"},{\"$\":\"class apofig.javaquest.map.object.impl.Gold\"},{\"*\":\"class apofig.javaquest.map.object.impl.dron.Dron\"},{\"M\":\"class apofig.javaquest.map.object.impl.dron.DronMentor\"}]},{\"id\":\"ArrayList@25\",\"type\":\"java.util.ArrayList\",\"fields\":[\"FizzBuzzMonster@26\",\"PrimeFactoryMonster@27\",\"FibonacciNumbersMonster@28\",\"SumSquareDifferenceMonster@29\",\"XthPrimeMonster@30\",\"PowerDigitSumMonster@31\",\"FactorialMonster@32\",\"LongDivisionMonster@33\",\"MakeBricksMonster@34\"]},{\"id\":\"WorldImpl@35\",\"type\":\"apofig.javaquest.map.object.WorldImpl\",\"fields\":[{\"name\":\"Me\"},{\"factory\":\"ObjectFactoryImpl@6\"},{\"place\":\"MapPlace@40\"}]},{\"id\":\"MapPlace@36\",\"type\":\"apofig.javaquest.map.MapPlace\",\"fields\":[{\"map\":\"Map@11\"},{\"x\":\"93\"},{\"y\":\"481\"}]},{\"id\":\"Me@38\",\"type\":\"apofig.javaquest.map.object.Me\",\"fields\":[{\"view\":\"PlayerView@41\"},{\"info\":\"Player@42\"},{\"whereToGo\":null},{\"map\":\"TerritoryMapImpl@5\"},{\"world\":\"WorldImpl@35\"},{\"x\":\"93\"},{\"y\":\"482\"}]},{\"id\":\"MapPlace@40\",\"type\":\"apofig.javaquest.map.MapPlace\",\"fields\":[{\"map\":\"Map@11\"},{\"x\":\"93\"},{\"y\":\"482\"}]},{\"id\":\"PlayerView@41\",\"type\":\"apofig.javaquest.map.PlayerView\",\"fields\":[{\"mask\":\"char[][]@43\"},{\"size\":\"41\"},{\"vx\":\"74\"},{\"vy\":\"462\"}]},{\"id\":\"Player@42\",\"type\":\"apofig.javaquest.map.Player\",\"fields\":[{\"name\":\"player2\"},{\"gold\":\"0\"}]}],\"main\":\"PlayerServiceImpl@0\"}";
-        Object object = new Loader().load(saved);
-        String test = new Saver().exclude(char[][].class, char[].class).excludeChildren(Monster.class).save(object);
-        assertEquals(saved, test);
+        Object object = getObjectTree();
 
+        String expected = toString(object);
+
+        Object newObject = load(expected);
+
+        String actual = toString(newObject);
+        assertEquals(ln(expected), ln(actual));
+
+    }
+
+    private PlayerService getObjectTree() {
+        PlayerService result = new PlayerServiceImpl();
+        Player player1 = result.loadGame(result.register("player1"));
+        Player player2 = result.loadGame(result.register("player2"));
+
+        player1.getGame().getJoystick().moveDown();
+        player2.getGame().getJoystick().moveLeft();
+
+        result.nextStepForAllGames();
+        return result;
+    }
+
+    private Object load(String expected) {
+        return new Loader().load(expected);
+    }
+
+    private String toString(Object object) {
+        return new Saver()./*exclude(char[][].class, char[].class).excludeChildren(Monster.class).*/save(object);
+    }
+
+    private String ln(String test) {
+        return test.replaceAll("\\{\"id\"", "\n{\"id\"");
+    }
+
+    @Test
+    public void arrayOfArrayOfChar() {
+        ArrayOfArrayOfCharContainer object = new ArrayOfArrayOfCharContainer(6);
+        String expected = new Saver().save(object);
+        assertEquals("{\"objects\":[{\"id\":\"ArrayOfArrayOfCharContainer@0\",\"type\":\"apofig.saver.ArrayOfArrayOfCharContainer\",\"fields\":[{\"array\":\"char[][]@1\"}]},{\"id\":\"char[][]@1\",\"type\":\"[[C\",\"fields\":[\"char[]@2\",\"char[]@3\"]},{\"id\":\"char[]@2\",\"type\":\"[C\",\"fields\":[\"abc\"]},{\"id\":\"char[]@3\",\"type\":\"[C\",\"fields\":[\"qwe\"]}],\"main\":\"ArrayOfArrayOfCharContainer@0\"}", expected);
+
+        Object load = new Loader().load(expected);
+
+        String actual = new Saver().save(load);
+
+        assertEquals(expected, actual);
     }
 }

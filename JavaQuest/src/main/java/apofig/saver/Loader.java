@@ -34,7 +34,13 @@ public class Loader {
                 Object newInstance = null;
                 if (isArray(className)) {
                     JSONArray fields = (JSONArray) object.get("fields");
-                    newInstance = new Object[fields.length()];
+                    if (className.equals("[C")) {     // TODO добавить все другие виды массивов и массивов массивов
+                        newInstance = new char[((String)(fields.get(0))).length()];
+                    } else if (className.equals("[[C")) {
+                        newInstance = new char[fields.length()][];
+                    } else {
+                        newInstance = new Object[fields.length()];
+                    }
                 } else if (isList(className)) {
                     newInstance = new LinkedList();
                 } else if (isMap(className)) {
@@ -57,6 +63,17 @@ public class Loader {
                         Object container = instances.get(id);
                         if (List.class.isAssignableFrom(container.getClass())) {
                             ((List) container).add(fld);
+                        }
+                        if (container.getClass().getName().startsWith("[[C")) {     // TODO добавить все другие виды массивов и массивов массивов
+                            char[][] array = (char[][])instances.get(id);
+                            array[jndex] = (char[])instances.get(fld);
+                        }
+                        if (container.getClass().getName().startsWith("[C")) {
+                            char[] dest = (char[])container;
+                            char[] source = ((String) fld).toCharArray();
+                            for (int i = 0; i < source.length; i++) {
+                                dest[i] = source[i];
+                            }
                         }
                     } else {
                         JSONObject field = (JSONObject) fld;
@@ -141,7 +158,7 @@ public class Loader {
     }
 
     private boolean isArray(String className) {
-        return className.startsWith("[L");
+        return className.startsWith("[");
     }
 
     private Class<?> getClass(String className) {
