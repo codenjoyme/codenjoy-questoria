@@ -14,4 +14,6 @@ public interface ObjectFactory extends Tickable {
     void add(Me me);
 
     boolean isAt(Something smth, Point point);
+
+    void remove(Me me);
 }

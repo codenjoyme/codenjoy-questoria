@@ -25,4 +25,6 @@ public interface TerritoryMap {
     List<Something> getAllNear(Viewable me);
 
     Map getMap();
+
+    void remove(Viewable me);
 }

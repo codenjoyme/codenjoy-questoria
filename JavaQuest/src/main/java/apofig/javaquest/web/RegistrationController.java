@@ -20,28 +20,29 @@ import javax.servlet.http.HttpSession;
  * Time: 4:00
  */
 @Controller
+@RequestMapping(value = "/register")
 public class RegistrationController {
 
     @Autowired
     private PlayerService playerService;
 
-
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String openRegistrationForm(HttpServletRequest request) {
         request.setAttribute("player", new Player());
         return "register";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String submitRegistrationForm(Player player, HttpServletRequest request) {
         if (playerService.alreadyRegistered(player.getName())) {
             request.setAttribute("busy", true);
         } else {
             String playerGameCode = playerService.register(player.getName());
             request.getSession().setAttribute("playerGameCode", playerGameCode);
-            request.setAttribute("gameLink", "/user/" + playerGameCode);
+            request.setAttribute("playerGameCode", playerGameCode);
+            request.setAttribute("registered", true);
         }
+        request.setAttribute("player", null);
         return "register";
     }
 }

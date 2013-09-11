@@ -126,4 +126,21 @@ public class JavaQuest implements Tickable {
         return map.getViewArea(player);
     }
 
+    public void remove(String name) {  // TODO test me
+        Me foundPlayer = null;
+        for (Me player : players) {
+            if (player.getName().equals(name)) {
+                foundPlayer = player;
+                break;
+            }
+        }
+
+        if (foundPlayer == null) {
+            throw new IllegalArgumentException(String.format("Игрок с именем %s не найден", name));
+        }
+
+        players.remove(foundPlayer);
+        objects.remove(foundPlayer);
+        map.remove(foundPlayer);
+    }
 }

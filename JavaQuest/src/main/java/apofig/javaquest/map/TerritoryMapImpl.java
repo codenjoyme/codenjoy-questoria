@@ -157,6 +157,11 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
+    public void remove(Viewable me) {
+        fogs.remove(me);
+    }
+
+    @Override
     public Something getAt(Point point) {
         return objects.get(map.get(point));
     }

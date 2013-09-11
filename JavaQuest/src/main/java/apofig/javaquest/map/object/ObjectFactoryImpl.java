@@ -58,6 +58,11 @@ public class ObjectFactoryImpl implements ObjectFactory {
         return objects.get(smth).place().isAt(place);
     }
 
+    @Override
+    public void remove(Me me) {
+        objects.remove(me);
+    }
+
     private Something initObject(Place place, Messenger messenger) {
         Something result = newObject(place.getChar());
 
