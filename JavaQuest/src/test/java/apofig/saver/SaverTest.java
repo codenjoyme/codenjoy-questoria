@@ -107,7 +107,7 @@ public class SaverTest {
         a.bmap.put(3, new B(null));
         a.bmap.put(4, null);
 
-        assertEquals("{\"objects\":[{\"id\":\"A@0\",\"type\":\"apofig.saver.SaverTest$3A\",\"fields\":[{\"bmap\":\"HashMap@1\"}]},{\"id\":\"HashMap@1\",\"type\":\"java.util.HashMap\",\"fields\":[{\"1\":\"B@2\"},{\"3\":\"B@3\"},{\"4\":null},{\"B@5\":\"B@4\"}]},{\"id\":\"B@2\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":\"11\"}]},{\"id\":\"B@3\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":null}]},{\"id\":\"B@4\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":\"23\"}]},{\"id\":\"B@5\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":\"22\"}]}],\"main\":\"A@0\"}",
+        assertEquals("{\"objects\":[{\"id\":\"A@0\",\"type\":\"apofig.saver.SaverTest$3A\",\"fields\":[{\"bmap\":\"HashMap@1\"}]},{\"id\":\"HashMap@1\",\"type\":\"java.util.HashMap\",\"fields\":[{\"B@2\":\"B@3\"},{\"1\":\"B@4\"},{\"3\":\"B@5\"},{\"4\":null}]},{\"id\":\"B@2\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":\"22\"}]},{\"id\":\"B@3\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":\"23\"}]},{\"id\":\"B@4\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":\"11\"}]},{\"id\":\"B@5\",\"type\":\"apofig.saver.SaverTest$3B\",\"fields\":[{\"c\":null}]}],\"main\":\"A@0\"}",
                 new Saver().save(a));
     }
 

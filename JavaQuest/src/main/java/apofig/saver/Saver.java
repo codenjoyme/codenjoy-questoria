@@ -28,7 +28,12 @@ public class Saver {
 
     public String save(Object object) {
         main = object;
-        parse(object);
+
+        List<Object> objects = Arrays.asList(main);
+
+        do {
+            objects = parse(objects);
+        } while (!objects.isEmpty());
 
         return buildString();
     }
@@ -184,137 +189,142 @@ public class Saver {
         }
     }
 
-    private void parse(Object object) {
-        if (object == null) return;
-        if (dataContainsKey(object)) return;
+    private List<Object> parse(List<Object> objects) {
+        List<Object> toProcess = new LinkedList<>();
+        for (Object object : objects) {
 
-        boolean isExclude = false;
-        for (Class<?> clazz : excludeParent) {
-            if (clazz.isAssignableFrom(object.getClass())) {
-                isExclude = true;
-            }
-        }
-        isExclude |= exclude.contains(object.getClass());
+            if (object == null) continue;
+            if (dataContainsKey(object)) continue;
 
-        if (isExclude) {
-            if (!dataContainsKey(object)) {
-                data.add(new Entry(object, null));
+            boolean isExclude = false;
+            for (Class<?> clazz : excludeParent) {
+                if (clazz.isAssignableFrom(object.getClass())) {
+                    isExclude = true;
+                }
             }
-            return;
-        }
+            isExclude |= exclude.contains(object.getClass());
 
-        boolean isArray =
-                object instanceof Object[] ||
-                        object instanceof int[] ||
-                        object instanceof char[] ||
-                        object instanceof short[] ||
-                        object instanceof float[] ||
-                        object instanceof long[] ||
-                        object instanceof byte[] ||
-                        object instanceof double[] ||
-                        object instanceof boolean[];
-        if (object.getClass().getPackage() == null && !isArray) return;
-
-        boolean isMap = Map.class.isAssignableFrom(object.getClass());
-        boolean isList = List.class.isAssignableFrom(object.getClass());
-        if (!isArray && !object.getClass().getPackage().getName().contains("apofig") && !isMap && !isList) {
-            return;
-        }
-
-        if (isMap) {
-            Set<Map.Entry<Object, Object>> entries = ((Map<Object, Object>) object).entrySet();
-            List<Map.Entry<Object, Object>> container = sort(entries);
-            List<Fld> list = new LinkedList<>();
-            for (Map.Entry<?, ?> entry : container) {
-                list.add(new Fld(entry.getKey(), entry.getValue()));
-            }
-            data.add(new Entry(object, list));
-
-            for (Map.Entry<?, ?> entry : container) {
-                parse(entry.getKey());
-                parse(entry.getValue());
-            }
-            return;
-        }
-
-        if (isArray) {
-            List<Object> list = null;
-            if (object instanceof int[]) {    // TODO как я не люблю массивы в джаве
-                int[] array = (int[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof boolean[]) {
-                boolean[] array = (boolean[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof byte[]) {
-                byte[] array = (byte[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof long[]) {
-                long[] array = (long[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof char[]) {
-                char[] array = (char[]) object;
-                list = (List)Arrays.asList(String.valueOf(array));
-            }
-            if (object instanceof double[]) {
-                double[] array = (double[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof short[]) {
-                short[] array = (short[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof float[]) {
-                float[] array = (float[]) object;
-                list = (List)Arrays.asList(ArrayUtils.toObject(array));
-            }
-            if (object instanceof Object[]) {
-                Object[] array = (Object[]) object;
-                list = (List)Arrays.asList(array);
+            if (isExclude) {
+                if (!dataContainsKey(object)) {
+                    data.add(new Entry(object, null));
+                }
+                continue;
             }
 
-            data.add(new Entry(object, list));
+            boolean isArray =
+                    object instanceof Object[] ||
+                            object instanceof int[] ||
+                            object instanceof char[] ||
+                            object instanceof short[] ||
+                            object instanceof float[] ||
+                            object instanceof long[] ||
+                            object instanceof byte[] ||
+                            object instanceof double[] ||
+                            object instanceof boolean[];
+            if (object.getClass().getPackage() == null && !isArray) continue;
 
-            for (Object o : list) {
-                parse(o);
+            boolean isMap = Map.class.isAssignableFrom(object.getClass());
+            boolean isList = List.class.isAssignableFrom(object.getClass());
+            if (!isArray && !object.getClass().getPackage().getName().contains("apofig") && !isMap && !isList) {
+                continue;
             }
-            return;
-        }
 
-        if (isList) {
-            List container = (List) object;
-            data.add(new Entry(object, container));
+            if (isMap) {
+                Set<Map.Entry<Object, Object>> entries = ((Map<Object, Object>) object).entrySet();
+                List<Map.Entry<Object, Object>> container = sort(entries);
+                List<Fld> list = new LinkedList<>();
+                for (Map.Entry<?, ?> entry : container) {
+                    list.add(new Fld(entry.getKey(), entry.getValue()));
+                }
+                data.add(new Entry(object, list));
 
-            for (Object o : container) {
-                parse(o);
+                for (Map.Entry<?, ?> entry : container) {
+                    toProcess.add(entry.getKey());
+                    toProcess.add(entry.getValue());
+                }
+                continue;
             }
-            return;
-        }
 
-        for (Field field : getFields(object)) {
-            if (field.getName().contains("this$")) continue;
-            if ((field.getModifiers() & Modifier.FINAL) != 0) continue;
-            Object o = Reflection.field(field.getName()).ofType(field.getType()).in(object).get();
-            if (!dataContainsKey(object)) {
-                data.add(new Entry(object, new LinkedList<Fld>()));
+            if (isArray) {
+                List<Object> list = null;
+                if (object instanceof int[]) {    // TODO как я не люблю массивы в джаве
+                    int[] array = (int[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof boolean[]) {
+                    boolean[] array = (boolean[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof byte[]) {
+                    byte[] array = (byte[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof long[]) {
+                    long[] array = (long[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof char[]) {
+                    char[] array = (char[]) object;
+                    list = (List)Arrays.asList(String.valueOf(array));
+                }
+                if (object instanceof double[]) {
+                    double[] array = (double[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof short[]) {
+                    short[] array = (short[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof float[]) {
+                    float[] array = (float[]) object;
+                    list = (List)Arrays.asList(ArrayUtils.toObject(array));
+                }
+                if (object instanceof Object[]) {
+                    Object[] array = (Object[]) object;
+                    list = (List)Arrays.asList(array);
+                }
+
+                data.add(new Entry(object, list));
+
+                for (Object o : list) {
+                    toProcess.add(o);
+                }
+                continue;
             }
-            dataGet(object).add(new Fld(field.getName(), o));
-        }
 
-        for (Entry entry : data.toArray(new Entry[0])) {
-            if (entry.getValue() == null) continue;
-            for (Object obj : entry.getValue()) {
-                if (obj instanceof Fld) {
-                    Object o = ((Fld)obj).value;
-                    if (!dataContainsKey(o)) {
-                        parse(o);
+            if (isList) {
+                List container = (List) object;
+                data.add(new Entry(object, container));
+
+                for (Object o : container) {
+                    toProcess.add(o);
+                }
+                continue;
+            }
+
+            for (Field field : getFields(object)) {
+                if (field.getName().contains("this$")) continue;
+                if ((field.getModifiers() & Modifier.FINAL) != 0) continue;
+                Object o = Reflection.field(field.getName()).ofType(field.getType()).in(object).get();
+                if (!dataContainsKey(object)) {
+                    data.add(new Entry(object, new LinkedList<Fld>()));
+                }
+                dataGet(object).add(new Fld(field.getName(), o));
+            }
+
+            for (Entry entry : data.toArray(new Entry[0])) {
+                if (entry.getValue() == null) continue;
+                for (Object obj : entry.getValue()) {
+                    if (obj instanceof Fld) {
+                        Object o = ((Fld)obj).value;
+                        if (!dataContainsKey(o)) {
+                            toProcess.add(o);
+                        }
                     }
                 }
             }
         }
+        return toProcess;
     }
 
     private List<Map.Entry<Object, Object>> sort(Set<Map.Entry<Object, Object>> entries) {
