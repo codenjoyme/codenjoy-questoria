@@ -62,7 +62,7 @@ public class Loader {
                     if (fld instanceof String) {
                         Object container = instances.get(id);
                         if (List.class.isAssignableFrom(container.getClass())) {
-                            ((List) container).add(fld);
+                            ((List) container).add(instances.get(fld));
                         }
                         if (container.getClass().getName().startsWith("[[C")) {     // TODO добавить все другие виды массивов и массивов массивов
                             char[][] array = (char[][])instances.get(id);

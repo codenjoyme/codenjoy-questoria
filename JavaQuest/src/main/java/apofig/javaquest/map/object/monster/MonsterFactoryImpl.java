@@ -22,7 +22,7 @@ public class MonsterFactoryImpl implements MonsterPool {
     private MonsterFactoryImpl() {}
 
     public MonsterFactoryImpl(Iterable<Monster> otherMonsters) {
-        monsters = Lists.newArrayList(otherMonsters);
+        monsters = Lists.newLinkedList(otherMonsters);
         count = monsters.size() + 1;
     }
 

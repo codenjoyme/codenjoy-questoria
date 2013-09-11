@@ -164,7 +164,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         Me me = (Me)o;
 
         if (me.getInfo() == null || me.getInfo().getName() == null) {  // TODO это надо для Load/Saver классов
-            return (info == null || info.getName() == null);
+            return (o == this);
         }
 
         return me.getInfo().getName().equals(info.getName());
