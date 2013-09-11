@@ -170,6 +170,11 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         return me.getInfo().getName().equals(info.getName());
     }
 
+    @Override
+    public String toString() {
+        return String.format("Player: '%s' in place: '%s'", info, world);
+    }
+
     public void stop() {
         whereToGo = null;
     }

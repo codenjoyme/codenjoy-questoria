@@ -302,14 +302,14 @@ public class Saver {
                 continue;
             }
 
+            if (!dataContainsKey(object)) {
+                data.add(new Entry(object, new LinkedList<Fld>()));
+            }
             for (Field field : getFields(object)) {
                 if (field.getName().contains("this$")) continue;
                 if ((field.getModifiers() & Modifier.FINAL) != 0) continue;
                 Object o = Reflection.field(field.getName()).ofType(field.getType()).in(object).get();
                 toProcess.add(o);
-                if (!dataContainsKey(object)) {
-                    data.add(new Entry(object, new LinkedList<Fld>()));
-                }
                 dataGet(object).add(new Fld(field.getName(), o));
             }
         }
@@ -328,7 +328,7 @@ public class Saver {
                 if (o.getKey() instanceof String) {
                     return (String) o.getKey();
                 } else {
-                    return o.getKey().getClass().getSimpleName();
+                    return o.getKey().toString();
                 }
             }
         });
