@@ -59,7 +59,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     @Override
-    public void remove(Me me) {
+    public void remove(Me me) { // TODO test me
         objects.remove(me);
     }
 

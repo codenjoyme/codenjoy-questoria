@@ -157,7 +157,8 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public void remove(Viewable me) {
+    public void remove(Viewable me) {    // TODO test me
+        map.set(me.getX(), me.getY(), ' ');
         fogs.remove(me);
     }
 
