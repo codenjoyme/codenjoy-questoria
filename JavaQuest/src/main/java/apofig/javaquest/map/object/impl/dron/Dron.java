@@ -124,11 +124,15 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
             method = compiler.getMethod(code);
             return (String)method.run(near);
         } catch (Exception e) {  // TODO дублирование с CodeRunnerMonster
-            if (e.getClass().equals(NullPointerException.class)) {
-                return "Извини, NPE!";
+            try {
+                if (e.getClass().equals(NullPointerException.class)) {
+                    return "Извини, NPE!";
+                }
+                String details = (e.getCause() != null) ? (e.getCause().getCause().toString()) : "";
+                return (e.toString() + ": " + details).replaceAll("Dynamic[0-9]+", "Dynamic"); // TODO hotfix
+            } catch (Exception e2) {
+                return e2.toString();
             }
-            System.out.println(e.toString());
-            return (e.toString() + ": " +  e.getCause().getCause().toString()).replaceAll("Dynamic[0-9]+", "Dynamic"); // TODO hotfix
         }
     }
 
