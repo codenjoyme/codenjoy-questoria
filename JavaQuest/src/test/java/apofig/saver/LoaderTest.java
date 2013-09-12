@@ -6,6 +6,7 @@ import apofig.javaquest.services.PlayerServiceImpl;
 import apofig.saver.dummy.ArrayOfArrayOfCharContainer;
 import apofig.saver.dummy.ChildForIntContainer;
 import apofig.saver.dummy.ClassWithInnerClass;
+import apofig.saver.dummy.ClassWithStaticInnerClass;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -74,6 +75,14 @@ public class LoaderTest {
 
         checkSaveAndLoad(object,
                 "{\"objects\":[{\"id\":\"ClassWithInnerClass@0\",\"type\":\"apofig.saver.dummy.ClassWithInnerClass\",\"fields\":[{\"a\":\"Inner@1\"}]},{\"id\":\"Inner@1\",\"type\":\"apofig.saver.dummy.ClassWithInnerClass$Inner\",\"fields\":[{\"this$0\":\"ClassWithInnerClass@0\"},{\"b\":\"2\"}]}],\"main\":\"ClassWithInnerClass@0\"}");
+    }
+
+    @Test
+    public void classWithStaticInnerClass() {
+        ClassWithStaticInnerClass object = new ClassWithStaticInnerClass(new ClassWithStaticInnerClass.Inner(4));
+
+        checkSaveAndLoad(object,
+                "{\"objects\":[{\"id\":\"ClassWithStaticInnerClass@0\",\"type\":\"apofig.saver.dummy.ClassWithStaticInnerClass\",\"fields\":[{\"a\":\"Inner@1\"}]},{\"id\":\"Inner@1\",\"type\":\"apofig.saver.dummy.ClassWithStaticInnerClass$Inner\",\"fields\":[{\"b\":\"4\"}]}],\"main\":\"ClassWithStaticInnerClass@0\"}");
     }
 
     private void checkSaveAndLoad(Object object, String expected) {

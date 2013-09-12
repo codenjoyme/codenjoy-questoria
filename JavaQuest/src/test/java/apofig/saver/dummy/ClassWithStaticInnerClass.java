@@ -5,16 +5,16 @@ package apofig.saver.dummy;
  * Date: 12.09.13
  * Time: 2:28
  */
-public class ClassWithInnerClass {
+public class ClassWithStaticInnerClass {
     public Inner a;
 
-    private ClassWithInnerClass() {}
+    private ClassWithStaticInnerClass() {}
 
-    public ClassWithInnerClass(Inner a) {
+    public ClassWithStaticInnerClass(Inner a) {
         this.a = a;
     }
 
-    public class Inner {
+    public static class Inner {
         int b;
 
         private Inner() {}

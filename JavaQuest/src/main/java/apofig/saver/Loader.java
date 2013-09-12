@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -52,16 +53,19 @@ public class Loader {
                         Class<?> aClass = loadClass(mainClassName);
                         for (Class<?> innerClass : aClass.getDeclaredClasses()) {
                             if (innerClass.getSimpleName().equals(innerClassName)) {
+                                if ((innerClass.getModifiers() & Modifier.STATIC) != 0) {
+                                    newInstance = Reflection.constructor().in(innerClass).newInstance();
+                                } else {
+                                    JSONArray fields = (JSONArray) object.get("fields");
+                                    for (int i = 0; i < fields.length(); i++) {
+                                        JSONObject field = (JSONObject)fields.get(i);
+                                        String key = (String)field.keys().next();
+                                        if (key.contains("this$")) {
+                                            String value = ((String)field.get(key));
+                                            Object parent = instances.get(value);
 
-                                JSONArray fields = (JSONArray) object.get("fields");
-                                for (int i = 0; i < fields.length(); i++) {
-                                    JSONObject field = (JSONObject)fields.get(i);
-                                    String key = (String)field.keys().next();
-                                    if (key.contains("this$")) {
-                                        String value = ((String)field.get(key));
-                                        Object parent = instances.get(value);
-
-                                        newInstance = Reflection.constructor().withParameterTypes(parent.getClass()).in(innerClass).newInstance(parent);
+                                            newInstance = Reflection.constructor().withParameterTypes(parent.getClass()).in(innerClass).newInstance(parent);
+                                        }
                                     }
                                 }
                             }
