@@ -145,29 +145,12 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public int hashCode() {
-        if (info == null || info.getName() == null) {    // TODO это надо для Load/Saver классов
-            return 0;
-        }
-        return info.getName().hashCode();
+        return super.hashCode(); // так надо! Объектов не будет несколько одинаковых в системе
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-
-        if (!(o instanceof Me)) {
-            return false;
-        }
-
-        Me me = (Me)o;
-
-        if (me.getInfo() == null || me.getInfo().getName() == null) {  // TODO это надо для Load/Saver классов
-            return (o == this);
-        }
-
-        return me.getInfo().getName().equals(info.getName());
+        return super.equals(o); // так надо! Объектов не будет несколько одинаковых в системе
     }
 
     @Override
