@@ -41,12 +41,17 @@ public class MonsterFactoryImpl implements MonsterPool {
                     "", count);
             count++;
         }
-        monster.onKill(new Action() {
-            @Override
-            public void act(Something object) {
-                monster = null;
-            }
-        });
+        monster.onKill(new OnKill());
         return monster;
+    }
+
+    class OnKill implements Action {
+
+        private OnKill() {}
+
+        @Override
+        public void act(Something object) {
+            monster = null;
+        }
     }
 }

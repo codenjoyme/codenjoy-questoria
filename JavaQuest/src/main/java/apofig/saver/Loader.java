@@ -5,7 +5,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -44,8 +46,30 @@ public class Loader {
                 } else if (isMap(className)) {
                     newInstance = new HashMap();
                 } else {
-                    Class<?> aClass = loadClass(className);
-                    newInstance = Reflection.constructor().in(aClass).newInstance();
+                    if (className.contains("$")) {
+                        String mainClassName = className.substring(0, className.indexOf('$'));
+                        String innerClassName = className.substring(className.indexOf('$') + 1, className.length());
+                        Class<?> aClass = loadClass(mainClassName);
+                        for (Class<?> innerClass : aClass.getDeclaredClasses()) {
+                            if (innerClass.getSimpleName().equals(innerClassName)) {
+
+                                JSONArray fields = (JSONArray) object.get("fields");
+                                for (int i = 0; i < fields.length(); i++) {
+                                    JSONObject field = (JSONObject)fields.get(i);
+                                    String key = (String)field.keys().next();
+                                    if (key.contains("this$")) {
+                                        String value = ((String)field.get(key));
+                                        Object parent = instances.get(value);
+
+                                        newInstance = Reflection.constructor().withParameterTypes(parent.getClass()).in(innerClass).newInstance(parent);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Class<?> aClass = loadClass(className);
+                        newInstance = Reflection.constructor().in(aClass).newInstance();
+                    }
                 }
                 instances.put(id, newInstance);
             }
@@ -124,6 +148,19 @@ public class Loader {
         }
     }
 
+    private Object newInstance(Class<?> clazz) {
+        for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
+            if (constructor.getParameterTypes().length == 0) {
+                try {
+                    return constructor.newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        throw new RuntimeException("Default конструктор не найден");
+    }
+
     private Field getField(Class<?> clazz, String name) {
         if (Object.class.equals(clazz)) {
             throw new RuntimeException(String.format("Поле %s не найдено нигде в иерархии класса.", name));
@@ -140,9 +177,10 @@ public class Loader {
     private void setFieldValue(Object object, String name, Object fieldValue) {
         try {
             Field field = getField(object.getClass(), name);
+            boolean a = field.isAccessible();
             field.setAccessible(true);
             field.set(object, fieldValue);
-            field.setAccessible(false);
+            field.setAccessible(a);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

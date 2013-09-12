@@ -306,8 +306,7 @@ public class Saver {
                 data.add(new Entry(object, new LinkedList<Fld>()));
             }
             for (Field field : getFields(object)) {
-                if (field.getName().contains("this$")) continue;
-                if ((field.getModifiers() & Modifier.FINAL) != 0) continue;
+                if ((field.getModifiers() & Modifier.FINAL) != 0 && !field.getName().contains("this$")) continue;
                 Object o = Reflection.field(field.getName()).ofType(field.getType()).in(object).get();
                 toProcess.add(o);
                 dataGet(object).add(new Fld(field.getName(), o));
