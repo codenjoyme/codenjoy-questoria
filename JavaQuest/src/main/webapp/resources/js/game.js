@@ -1,4 +1,4 @@
-function initGame(contextPath, playerGameCode) {
+function initGame(contextPath, playerGameCode, editor) {
 
     var serverAnswered = true;
 
@@ -12,25 +12,26 @@ function initGame(contextPath, playerGameCode) {
 
     function showMessage(message) {
         var container = $("#message");
-        container.val(message);
-        scrollDown(container);
+        if (container.val() != message) {
+            container.val(message);
+            scrollDown(container);
+        }
     }
 
     function showAnswer(code) {
         if (code == '') {
             return;
         }
-        var container = $("#answer");
 
         if (code == 'no_code') {
-            container.val('');
+            editor.setValue('');
             return;
         }
 
-        if (container.val() == '') {
-            container.val(code.replace('|', ''));
-            if (!onTextArea()) {
-                setCaretToPos(container, code.indexOf('|'));
+        if (editor.getValue() == '') {
+            editor.setValue(code.replace('|', ''));
+            if (!onEditor()) {
+                setCaretToPos(editor, code.indexOf('|'));
             }
         }
     }
@@ -41,22 +42,11 @@ function initGame(contextPath, playerGameCode) {
         );
     }
 
-    function setSelectionRange(input, selectionStart, selectionEnd) {
-        input = input[0];
-        if (input.setSelectionRange) {
-            input.focus();
-            input.setSelectionRange(selectionStart, selectionEnd);
-        } else if (input.createTextRange) {
-            var range = input.createTextRange();
-            range.collapse(true);
-            range.moveEnd('character', selectionEnd);
-            range.moveStart('character', selectionStart);
-            range.select();
-        }
-    }
-
-    function setCaretToPos(input, pos) {
-        setSelectionRange(input, pos, pos);
+    function setCaretToPos(editor, pos) {
+        if (pos == -1) return;
+        editor.focus();
+        editor.clearSelection();
+        editor.getSession().getSelection().selectionLead.setPosition(1, 11);
     }
 
     function send(command) {
@@ -69,12 +59,12 @@ function initGame(contextPath, playerGameCode) {
         $.getJSON(contextPath + 'answer', {command:command, playerGameCode:playerGameCode, time:$.now()}, drawMap);
     }
 
-    function onTextArea() {
-        return $("#answer").is(":focus");
+    function onEditor() {
+        return $("#editor").is(":focus");
     }
 
     $("body").keydown(function(e){
-        if (onTextArea()) {
+        if (onEditor()) {
             return;
         }
 
@@ -92,7 +82,7 @@ function initGame(contextPath, playerGameCode) {
     });
 
     $("#say").click(function(){
-        send($("#answer").val());
+        send(editor.getValue());
     });
 
     function timer(delay, onTimer) {
