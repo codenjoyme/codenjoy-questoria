@@ -9,6 +9,9 @@ import apofig.saver.dummy.ClassWithInnerClass;
 import apofig.saver.dummy.ClassWithStaticInnerClass;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -83,6 +86,16 @@ public class LoaderTest {
 
         checkSaveAndLoad(object,
                 "{\"objects\":[{\"id\":\"ClassWithStaticInnerClass@0\",\"type\":\"apofig.saver.dummy.ClassWithStaticInnerClass\",\"fields\":[{\"a\":\"Inner@1\"}]},{\"id\":\"Inner@1\",\"type\":\"apofig.saver.dummy.ClassWithStaticInnerClass$Inner\",\"fields\":[{\"b\":\"4\"}]}],\"main\":\"ClassWithStaticInnerClass@0\"}");
+    }
+
+    @Test
+    public void mapWithKeyCharacter() {
+        Map<Character, Class<?>> map = new HashMap<>();
+        map.put(new Character('2'), Object.class);
+        map.put(new Character('6'), String.class);
+
+        checkSaveAndLoad(map,
+                "{\"objects\":[{\"id\":\"HashMap@0\",\"type\":\"java.util.HashMap\",\"fields\":[{\"2\":\"Class@1\"},{\"6\":\"Class@2\"}]},{\"id\":\"Class@1\",\"type\":\"java.lang.Class\",\"fields\":[\"java.lang.Object\"]},{\"id\":\"Class@2\",\"type\":\"java.lang.Class\",\"fields\":[\"java.lang.String\"]}],\"main\":\"HashMap@0\"}");
     }
 
     private void checkSaveAndLoad(Object object, String expected) {

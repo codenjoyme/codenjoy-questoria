@@ -225,8 +225,10 @@ public class Saver {
 
             boolean isMap = Map.class.isAssignableFrom(object.getClass());
             boolean isList = List.class.isAssignableFrom(object.getClass());
-            if (!isArray && !object.getClass().getPackage().getName().contains("apofig") && !isMap && !isList) {
-                continue;
+            boolean isClass = Class.class.equals(object.getClass());
+            if (!isArray && !isMap && !isList && !isClass) {
+                boolean isApofig = object.getClass().getPackage().getName().contains("apofig");
+                if (!isApofig) continue;
             }
 
             if (isMap) {
@@ -299,6 +301,12 @@ public class Saver {
                 for (Object o : container) {
                     toProcess.add(o);
                 }
+                continue;
+            }
+
+            if (isClass) {
+                Class<?> clazz = (Class)object;
+                data.add(new Entry(object, Arrays.asList(clazz.getName())));
                 continue;
             }
 

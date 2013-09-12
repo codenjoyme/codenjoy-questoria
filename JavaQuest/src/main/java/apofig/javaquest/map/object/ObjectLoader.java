@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class ObjectLoader {
 
-    private Map<Character, Class<? extends Something>> cache;
+    private Map<String, Class<? extends Something>> cache;
 
     private final List<? extends Class<? extends Something>> except = Arrays.asList(Monster.class, Me.class, Nothing.class);
 
@@ -29,7 +29,7 @@ public class ObjectLoader {
 
             Something something = newInstance(clazz);
 
-            cache.put(something.symbol(), clazz);
+            cache.put(String.valueOf(something.symbol()), clazz);
         }
     }
 
@@ -47,10 +47,11 @@ public class ObjectLoader {
     }
 
     public Something load(char ch) {
-        if (!cache.containsKey(ch)) {
+        String key = String.valueOf(ch);
+        if (!cache.containsKey(key)) {
             throw new IllegalArgumentException("Не найден элмент '" + ch + "' в базе объектов.");
         }
 
-        return newInstance(cache.get(ch));
+        return newInstance(cache.get(key));
     }
 }

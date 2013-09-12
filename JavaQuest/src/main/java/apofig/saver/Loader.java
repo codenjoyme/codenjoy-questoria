@@ -71,8 +71,14 @@ public class Loader {
                             }
                         }
                     } else {
-                        Class<?> aClass = loadClass(className);
-                        newInstance = Reflection.constructor().in(aClass).newInstance();
+                        if (Class.class.getName().equals(className)) {
+                            JSONArray fields = (JSONArray) object.get("fields");
+
+                            newInstance = loadClass((String)fields.get(0));
+                        } else {
+                            Class<?> aClass = loadClass(className);
+                            newInstance = Reflection.constructor().in(aClass).newInstance();
+                        }
                     }
                 }
                 instances.put(id, newInstance);
