@@ -40,7 +40,7 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     }
 
     @Override
-    public boolean canLeave() {
+    public boolean canLeave(Me hero) {
         return true;
     }
 
@@ -71,7 +71,7 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     }
 
     @Override
-    public void tryToLeave() {
+    public void tryToLeave(Me hero) {
         messenger.sayOnce("Обработка началась!");
         active = true;
 

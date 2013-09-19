@@ -10,20 +10,18 @@ import apofig.javaquest.map.object.monster.CodeHelper;
  * Date: 1/19/13
  * Time: 8:29 PM
  */
-public interface Something {
+public interface Something {   // TODO раздеребанить интерфейс на более мелкие по образу иподобию CanBeBusy
     void answer(String message);
-
-    boolean canLeave();
-
     void ask();
 
+    boolean canLeave(Me hero); // TODO перенеси в интерфейс Leaveable :)
+    void tryToLeave(Me hero);
+
     boolean canUse();
+    void getBy(Player info);
 
     Something leaveAfter();
 
     char symbol();
 
-    void getBy(Player info);
-
-    void tryToLeave();
 }

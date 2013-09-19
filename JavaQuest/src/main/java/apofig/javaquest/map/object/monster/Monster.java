@@ -10,7 +10,7 @@ import apofig.javaquest.map.object.*;
  * Date: 1/19/13
  * Time: 8:30 PM
  */
-public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld {
+public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld, MeetWithHero, CanBeBusy {
 
     private String question;
     private String answer;
@@ -20,6 +20,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     private Action onKill;
     private World world;
     private int weight;
+    private Me hero;
 
     public Monster(String question, String answer,
                    String help, String leave,
@@ -45,8 +46,8 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     }
 
     @Override
-    public boolean canLeave() {
-        return false;
+    public boolean canLeave(Me hero) {
+        return this.hero == null || !this.hero.equals(hero);
     }
 
     @Override
@@ -75,8 +76,20 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     }
 
     @Override
-    public void tryToLeave() {
-        messenger.say(leave);
+    public void tryToLeave(Me hero) {
+        if (hero.equals(this.hero)) {
+            messenger.say(leave);
+        }
+    }
+
+    @Override
+    public void sayWhenBusy() {
+        messenger.sayToLast("Я сейчас занят!");
+    }
+
+    @Override
+    public boolean isBusy() {
+        return hero != null;
     }
 
     public void onKill(Action action) {
@@ -107,5 +120,19 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     @Override
     public String toString() {
         return String.format("[Monster: %s with weight: %s]", this.getClass().getSimpleName(), weight);
+    }
+
+    @Override
+    public void meetWith(Me hero) {
+        if (this.hero == null) {
+            this.hero = hero;
+        }
+    }
+
+    @Override
+    public void leave(Me hero) {
+        if (hero.equals(this.hero)) {
+            this.hero = null;
+        }
     }
 }

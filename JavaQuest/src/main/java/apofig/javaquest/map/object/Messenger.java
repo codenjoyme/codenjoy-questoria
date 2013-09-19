@@ -19,4 +19,6 @@ public interface Messenger {
     void remove(Messages messages);
 
     void changeName(String name);
+
+    void sayToLast(String message);
 }

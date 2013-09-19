@@ -26,6 +26,7 @@ public class JavaQuestTest {
     private JavaQuest game;
     private TerritoryMapImpl map;
     private Me player;
+    private Me alien;
     private ObjectFactory objects;
     private int countMonsters = 0;
 
@@ -1268,7 +1269,7 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        Me alien = game.newPlayer("Alien");
+        alien = game.newPlayer("Alien");
         moveLeft(alien);
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -1360,7 +1361,7 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        Me alien = game.newPlayer("Alien");
+        alien = game.newPlayer("Alien");
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
@@ -1435,18 +1436,18 @@ public class JavaQuestTest {
         assertMessage(player, "Player: Another message!");
     }
 
-    private void moveRight(Me alien) {
-        alien.moveRight();
+    private void moveRight(Me player) {
+        player.moveRight();
         game.tick();
     }
 
-    private void moveDown(Me alien) {
-        alien.moveDown();
+    private void moveDown(Me player) {
+        player.moveDown();
         game.tick();
     }
 
-    private void moveUp(Me alien) {
-        alien.moveUp();
+    private void moveUp(Me player) {
+        player.moveUp();
         game.tick();
     }
 
@@ -1455,7 +1456,7 @@ public class JavaQuestTest {
         moveLeft();
         moveLeft();
 
-        Me alien = game.newPlayer("Alien");
+        alien = game.newPlayer("Alien");
 
         moveLeft(alien);    // meet
 
@@ -1814,7 +1815,7 @@ public class JavaQuestTest {
         moveLeft();
         moveLeft();
 
-        Me alien = game.newPlayer("Alien");
+        alien = game.newPlayer("Alien");
 
         moveTo(getMonsterX() - 1, getMonsterY());
         moveTo(alien, getMonster2X() - 2, getMonster2Y());
@@ -1911,6 +1912,74 @@ public class JavaQuestTest {
     private void moveLeft(Me anotherMe) {
         anotherMe.moveLeft();
         game.tick();
+    }
+
+    @Test
+    public void shouldMonsterBusyWhenFightWithAlien() {
+        moveLeft();
+        moveLeft();
+        moveLeft();
+
+        alien = game.newPlayer("Alien");
+
+        moveTo(alien, getMonsterX() - 1, getMonsterY());
+
+        assertMessage(alien, "Monster1: Сразись со мной!");
+
+        moveTo(getMonsterX() - 3, getMonsterY() - 2);
+        moveRight();
+        moveRight();
+        moveRight();
+        moveRight();
+        moveRight();
+        moveUp();
+        moveUp();
+
+        assertMessage(player, "");
+        assertMessage(alien, "");
+
+        moveLeft(player);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????                ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║            A @ I         ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(alien, "");
+        assertMessage(player, "Monster1: Я сейчас занят!");
+    }
+
+    @Test
+    public void shouldWhenBusyMonsterDieAnotherDontKnowThisFact() {
+        shouldMonsterBusyWhenFightWithAlien();
+
+        alien.attack("die!");
+
+        assertMessage(alien, "Alien: die!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+        assertMessage(player, "");
+    }
+
+    @Test
+    public void shouldPlayerCanLeaveBusyMonster() {
+        shouldMonsterBusyWhenFightWithAlien();
+
+        moveRight(player);
+
+        assertMessage(alien, "");
+        assertMessage(player, "");
     }
 
 }

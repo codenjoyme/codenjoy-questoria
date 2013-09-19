@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MessengerImpl implements Messenger {
 
-    private List<Messages> messages;
+    private LinkedList<Messages> messages;
     private String name;
 
     public MessengerImpl() {
@@ -22,20 +22,29 @@ public class MessengerImpl implements Messenger {
     @Override
     public void say(String message) {
         for (Messages m : messages) {
-            m.add(name + ": " + message);
+            m.add(buildMessage(message));
         }
+    }
+
+    private String buildMessage(String message) {
+        return name + ": " + message;
     }
 
     @Override
     public void sayOnce(String message) {
         for (Messages m : messages) {
-            m.addOnce(name + ": " + message);
+            m.addOnce(buildMessage(message));
         }
     }
 
     @Override
     public Messages getMessages() {
-        return messages.get(0);
+        return messages.getFirst();
+    }
+
+    @Override
+    public void sayToLast(String message) {
+        messages.getLast().add(buildMessage(message));
     }
 
     @Override

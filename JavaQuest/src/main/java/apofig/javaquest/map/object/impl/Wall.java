@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object.impl;
 
 import apofig.javaquest.map.Player;
+import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.TalkingObject;
 
@@ -17,7 +18,7 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public boolean canLeave() {
+    public boolean canLeave(Me hero) {
         return true;
     }
 
@@ -47,7 +48,7 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public void tryToLeave() {
+    public void tryToLeave(Me hero) {
         // do nothing
     }
 }

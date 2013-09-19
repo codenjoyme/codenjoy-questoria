@@ -2,10 +2,7 @@ package apofig.javaquest.map.object.impl;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
-import apofig.javaquest.map.object.SetWorld;
-import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.TalkingObject;
-import apofig.javaquest.map.object.World;
+import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.monster.CodeHelper;
 
 /**
@@ -23,7 +20,7 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
     }
 
     @Override
-    public boolean canLeave() {
+    public boolean canLeave(Me hero) {
         return true;
     }
 
@@ -53,7 +50,7 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
     }
 
     @Override
-    public void tryToLeave() {
+    public void tryToLeave(Me hero) {
         // do nothing
     }
 

@@ -177,7 +177,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     @Override
-    public boolean canLeave() {
+    public boolean canLeave(Me hero) {
         return true;
     }
 
@@ -207,7 +207,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     @Override
-    public void tryToLeave() {
+    public void tryToLeave(Me hero) {
         messenger.say("Ну пока!");
     }
 

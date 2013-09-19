@@ -37,7 +37,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public boolean canLeave() {
+    public boolean canLeave(Me hero) {
         return true;
     }
 
@@ -79,7 +79,7 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public void tryToLeave() {
+    public void tryToLeave(Me hero) {
         // do nothing
     }
 

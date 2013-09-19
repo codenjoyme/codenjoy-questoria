@@ -67,16 +67,16 @@ public class JavaQuest implements Tickable {
 
         List<Something> somethingNear = map.getNear(me);
         for (Something smthNear : somethingNear) {
-            if (!smthNear.canLeave()) {
-                smthNear.tryToLeave();
+            if (!smthNear.canLeave(me)) {
+                smthNear.tryToLeave(me);
                 return;
             }
         }
 
         for (Something smth : somethingNear) {
-            if (smth.canLeave()) {
+            if (smth.canLeave(me)) {
                 if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
-                    smth.tryToLeave();
+                    smth.tryToLeave(me);
                     if (smth instanceof Me) {   // TODO testme
                         me.leave((TalkingObject) smth);
                     }
@@ -85,7 +85,9 @@ public class JavaQuest implements Tickable {
         }
 
         Something smthAtWay = map.getAt(whereToGo, me);
-        smthAtWay.ask();
+        //if (!smthAtWay.isBusy()) { // TODO implement me
+            smthAtWay.ask();
+        //}
         if (smthAtWay.canUse()) {
             smthAtWay.getBy(me.getInfo());
             me.go();
@@ -103,10 +105,18 @@ public class JavaQuest implements Tickable {
         }
 
         for (Something object : newObjects) {
-            me.meetWith((TalkingObject) object);
-        }
+            if (object instanceof CanBeBusy) {
+                CanBeBusy canBeBusy = (CanBeBusy) object;
+                if (canBeBusy.isBusy()) {
+                    ((TalkingObject) object).connect(me);
+                    canBeBusy.sayWhenBusy();
+                    ((TalkingObject) object).disconnect(me);
+                    continue;
+                }
+            }
 
-        for (Something object : newObjects) {
+            me.meetWith((TalkingObject) object);
+
             if (object instanceof Wall) continue;
 
             object.ask();

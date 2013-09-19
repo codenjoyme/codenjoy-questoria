@@ -2,10 +2,7 @@ package apofig.javaquest.map.object.impl;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Player;
-import apofig.javaquest.map.object.SetWorld;
-import apofig.javaquest.map.object.Something;
-import apofig.javaquest.map.object.TalkingObject;
-import apofig.javaquest.map.object.World;
+import apofig.javaquest.map.object.*;
 
 /**
  * User: oleksandr.baglai
@@ -22,7 +19,7 @@ public class Gold extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public boolean canLeave() {
+    public boolean canLeave(Me hero) {
         return true;
     }
 
@@ -54,7 +51,7 @@ public class Gold extends TalkingObject implements Something, SetWorld {
     }
 
     @Override
-    public void tryToLeave() {
+    public void tryToLeave(Me hero) {
         messenger.sayOnce("Ну и ладно! Достанусь кому-то другому!!");
     }
 
