@@ -117,24 +117,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public List<Something> getSomethingNear(final Viewable me) {    // TODO вот этот метод со следующим объединить...
-        final List<Something> result = new LinkedList<Something>();
-
-        me.view().near(me, width, height, new Apply() {
-            @Override
-            public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (!isWall && map.get(x, y) != ' ' && map.get(x, y) != '#') {
-                    result.add(getAt(new PointImpl(x, y)));
-                }
-            }
-        });
-
-        return result;
-    }
-
-
-    @Override
-    public List<Something> getAllNear(final Viewable me) {
+    public List<Something> getNear(final Viewable me) {
         final List<Something> result = new LinkedList<Something>();
 
         me.view().near(me, width, height, new Apply() {
@@ -169,6 +152,6 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public boolean isNear(Viewable me, final Something object) {
-        return getAllNear(me).contains(object);
+        return getNear(me).contains(object);
     }
 }

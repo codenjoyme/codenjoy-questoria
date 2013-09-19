@@ -103,12 +103,12 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
             message = "ok";
         }
         messenger.say(message);
-        if (map.getSomethingNear(this).isEmpty()) {
+        if (map.getNear(this).isEmpty()) {   // TODO а че тут делается вообще?
             Something whereIAm = map.getAt(this);
             whereIAm.answer(message);
         }
 
-        for (Something smthNear : map.getSomethingNear(this)) {
+        for (Something smthNear : map.getNear(this)) {
             smthNear.answer(message);
         }
     }

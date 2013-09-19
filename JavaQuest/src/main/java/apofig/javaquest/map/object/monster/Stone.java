@@ -25,12 +25,12 @@ public class Stone extends TalkingObject implements Something {
     public static final String MESSAGE_2 = "Неподалеку, на юго западе есть золотое поле. Сходи, разведай. \n" +
             "Золото тебе пригодится вдальнейшем. По дороге будут встречаться монстры. \n" +
             "Чтобы избавиться от них - достаточно решить предложенную головоломку.";
+
     public static final String MESSAGE_INTRO = "На камне что-то написано (нажми say чтобы посмотреть...)";
+
     public static final String MESSAGE_GOODBYE = "Успехов, Странник!";
 
-    private Iterator<String> iterator = null;
-
-    private List<String> infos = new LinkedList<>(Arrays.asList(MESSAGE_1, MESSAGE_2));
+    private SimpleIterator<String> iterator = new SimpleIterator<>(Arrays.asList(MESSAGE_1, MESSAGE_2));
 
     @Override
     public void answer(String message) {
@@ -46,7 +46,7 @@ public class Stone extends TalkingObject implements Something {
 
     @Override
     public void ask() {
-        iterator = infos.iterator();
+        iterator.reset();
         messenger.sayOnce(MESSAGE_INTRO);
     }
 
@@ -72,7 +72,7 @@ public class Stone extends TalkingObject implements Something {
 
     @Override
     public void tryToLeave() {
-        iterator = null;
+        iterator.reset();
         messenger.sayOnce(MESSAGE_GOODBYE);
     }
 }

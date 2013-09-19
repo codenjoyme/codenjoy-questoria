@@ -12,8 +12,6 @@ import java.util.List;
  */
 public interface TerritoryMap {
 
-    List<Something> getSomethingNear(Viewable me);
-
     Something getAt(Point point);
 
     boolean isNear(Viewable me, Something object);
@@ -22,7 +20,7 @@ public interface TerritoryMap {
 
     String getViewArea(Viewable me);
 
-    List<Something> getAllNear(Viewable me);
+    List<Something> getNear(Viewable me);
 
     Map getMap();
 

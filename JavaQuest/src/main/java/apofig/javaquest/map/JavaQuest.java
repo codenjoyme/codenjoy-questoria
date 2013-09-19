@@ -65,7 +65,7 @@ public class JavaQuest implements Tickable {
             return;
         }
 
-        List<Something> somethingNear = map.getSomethingNear(me);
+        List<Something> somethingNear = map.getNear(me);
         for (Something smthNear : somethingNear) {
             if (!smthNear.canLeave()) {
                 smthNear.tryToLeave();
@@ -96,7 +96,7 @@ public class JavaQuest implements Tickable {
     private void meetWith(Me me, List<Something> alreadyMeet) {
         List<Something> newObjects = new LinkedList<>();
 
-        for (Something object : map.getAllNear(me)) {
+        for (Something object : map.getNear(me)) {
             if (!alreadyMeet.contains(object)) {
                 newObjects.add(object);
             }
@@ -117,7 +117,7 @@ public class JavaQuest implements Tickable {
     }
 
     public CodeHelper getCodeHelper(Me player) {
-        for (Something smthNear : map.getSomethingNear(player)) {
+        for (Something smthNear : map.getNear(player)) {
             if (smthNear instanceof CodeHelper) {
                 return (CodeHelper) smthNear;
             }
