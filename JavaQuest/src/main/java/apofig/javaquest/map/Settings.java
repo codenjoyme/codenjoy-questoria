@@ -1,6 +1,6 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.monster.MonsterPool;
+import apofig.javaquest.map.object.MonsterFactory;
 
 /**
  * User: oleksandr.baglai
@@ -13,5 +13,5 @@ public interface Settings {
 
     MapLoader mapLoader();
 
-    MonsterPool monsters();
+    MonsterFactory monsters();
 }

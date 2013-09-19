@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface TerritoryMap {
 
-    Something getAt(Point point);
+    Something getAt(Point point, Me founder);
 
     boolean isNear(Viewable me, Something object);
 

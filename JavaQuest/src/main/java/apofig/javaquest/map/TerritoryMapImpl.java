@@ -127,7 +127,7 @@ public class TerritoryMapImpl implements TerritoryMap {
                     return;
                 }
 
-                result.add(getAt(new PointImpl(x, y)));
+                result.add(getAt(new PointImpl(x, y), (Me)me));
             }
         });
 
@@ -146,8 +146,8 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public Something getAt(Point point) {
-        return objects.get(map.get(point));
+    public Something getAt(Point point, Me founder) {
+        return objects.get(map.get(point), founder);
     }
 
     @Override

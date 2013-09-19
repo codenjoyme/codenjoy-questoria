@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
  * Date: 2/13/13
  * Time: 10:58 PM
  */
-public class MonsterFactoryImplTest {
+public class MonsterPoolImplTest {
 
     private MonsterPool factory;
     private ArgumentCaptor<String> captor;
@@ -35,7 +35,7 @@ public class MonsterFactoryImplTest {
         when(iterator.hasNext()).thenReturn(true, true, true, true, false);
         when(iterator.next()).thenReturn(new FizzBuzzMonster(), new PrimeFactoryMonster(), new LongDivisionMonster(), new MakeBricksMonster());
 
-        factory = new MonsterFactoryImpl(monsters);
+        factory = new MonsterPoolImpl(monsters);
     }
 
     @Test
@@ -127,13 +127,13 @@ public class MonsterFactoryImplTest {
         Place place = mock(Place.class);
         final Gold gold = new Gold();
         gold.setMessenger(new MessengerImpl());
-        when(objects.get(place)).thenAnswer(new Answer<Object>() {
+        when(objects.get(eq(place), any(Me.class))).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 monster.die();
                 return gold;
             }
         });
-        monster.setWorld(new WorldImpl(objects, place, monster));
+        monster.setWorld(new WorldImpl(objects, place, monster, null));
     }
 }

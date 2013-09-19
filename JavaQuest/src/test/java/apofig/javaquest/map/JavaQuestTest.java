@@ -1,6 +1,7 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
+import apofig.javaquest.map.object.MonsterFactory;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
@@ -26,6 +27,7 @@ public class JavaQuestTest {
     private TerritoryMapImpl map;
     private Me player;
     private ObjectFactory objects;
+    private int countMonsters = 0;
 
     public int getSize() {
         return 100;
@@ -41,6 +43,30 @@ public class JavaQuestTest {
 
     public int getMonsterY() {
         return 22;
+    }
+
+    public int getMonster2X() {
+        return 60;
+    }
+
+    public int getMonster2Y() {
+        return 33;
+    }
+
+    public int getMonster3X() {
+        return getMonsterX() + 10;
+    }
+
+    public int getMonster3Y() {
+        return getMonsterY();
+    }
+
+    public int getMonster4X() {
+        return getMonster2X() + 10;
+    }
+
+    public int getMonster4Y() {
+        return getMonster2Y();
     }
 
     public int getDronMentorX() {
@@ -75,6 +101,9 @@ public class JavaQuestTest {
     public void init() {
         final RectangleMap mapLoader = getMapLoader();
         mapLoader.setMonster(getMonsterX(), getMonsterY());
+        mapLoader.setMonster(getMonster2X(), getMonster2Y());
+        mapLoader.setMonster(getMonster3X(), getMonster3Y());
+        mapLoader.setMonster(getMonster4X(), getMonster4Y());
         setupDronMentor(mapLoader);
         mapLoader.setWall(getWallX(), getWallY());
         mapLoader.setStone(getStoneX(), getStoneY());
@@ -91,17 +120,28 @@ public class JavaQuestTest {
             }
 
             @Override
-            public MonsterPool monsters() {
-                return new MonsterPool() {
+            public MonsterFactory monsters() {
+                return new MonsterFactory() {
                     @Override
-                    public Monster next() {
+                    public MonsterPool newMonsters() {
+                        return new MonsterPool() {
+                            @Override
+                            public Monster next() {
+                                countMonsters++;
+                                return new Monster("Сразись со мной!",
+                                        "die!",
+                                        "Я убью тебя!",
+                                        "Никуда ты не уйдешь!",
+                                        "немногоКода('для подсказки');", 0) {
 
-                        return new Monster("Сразись со мной!",
-                                "die!",
-                                "Я убью тебя!",
-                                "Никуда ты не уйдешь!",
-                                "немногоКода('для подсказки');", 0);
+                                    @Override
+                                    public String getName() {
+                                        return "Monster" + countMonsters;
+                                    }
+                                };
 
+                            }
+                        };
                     }
                 };
             }
@@ -654,6 +694,10 @@ public class JavaQuestTest {
     }
 
     private void verifyXY(int x, int y) {
+        verifyXY(player, x, y);
+    }
+
+    private void verifyXY(Me player, int x, int y) {
         assertEquals(x, player.getX());
         assertEquals(y, player.getY());
     }
@@ -704,6 +748,10 @@ public class JavaQuestTest {
     }
 
     private void moveTo(int x, int y) {
+        moveTo(player, x, y);
+    }
+
+    private void moveTo(Me player, int x, int y) {
         int count = 0;
         while (Math.abs(player.getX() - x) != 0 || Math.abs(player.getY() - y) != 0) {
             if (count++ > 1000) {
@@ -712,17 +760,21 @@ public class JavaQuestTest {
                         player.getX(), player.getY(), map.getViewArea(player)));
             }
             if (player.getY() < y) {
-                moveUp();
+                moveUp(player);
             } else if (player.getY() > y) {
-                moveDown();
+                moveDown(player);
             }
             if (player.getX() < x) {
-                moveRight();
+                moveRight(player);
             } else if (player.getX() > x) {
-                moveLeft();
+                moveLeft(player);
             }
         }
-        verifyXY(x, y);
+        verifyXY(player, x, y);
+    }
+
+    private void moveRight() {
+        moveRight(player);
     }
 
     private void moveLeft() {
@@ -730,13 +782,11 @@ public class JavaQuestTest {
     }
 
     private void moveUp() {
-        player.moveUp();
-        game.tick();
+        moveUp(player);
     }
 
     private void moveDown() {
-        player.moveDown();
-        game.tick();
+        moveDown(player);
     }
 
     @Test
@@ -906,10 +956,6 @@ public class JavaQuestTest {
                 "║??????                  ??║\n" +
                 "║??????                  ??║\n" +
                 "╚══════════════════════════╝");
-    }
-
-    private void moveRight() {
-        moveRight(player);
     }
 
     @Test
@@ -1394,6 +1440,16 @@ public class JavaQuestTest {
         game.tick();
     }
 
+    private void moveDown(Me alien) {
+        alien.moveDown();
+        game.tick();
+    }
+
+    private void moveUp(Me alien) {
+        alien.moveUp();
+        game.tick();
+    }
+
     @Test
     public void shouldChatBetweenTwoPlayers() {
         moveLeft();
@@ -1750,6 +1806,102 @@ public class JavaQuestTest {
 
         assertMessage(player, "Player: ok\n" +
                 "Stone: " + Stone.MESSAGE_1);
+    }
+
+    @Test
+    public void shouldAnyUserHasTheirMonsterPool() {
+        moveLeft();
+        moveLeft();
+        moveLeft();
+
+        Me alien = game.newPlayer("Alien");
+
+        moveTo(getMonsterX() - 1, getMonsterY());
+        moveTo(alien, getMonster2X() - 2, getMonster2Y());
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I   @   ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝", alien);
+
+        assertMessage(player, "Monster1: Сразись со мной!");
+        assertMessage(alien, "");
+
+        moveRight(alien);
+
+        assertMessage(player, "");
+        assertMessage(alien, "Monster2: Сразись со мной!");
+
+        player.attack("die!");
+
+        assertMessage(player, "Player: die!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+        assertMessage(alien, "");
+
+        moveTo(player, getMonster3X() - 2, getMonster3Y());
+        clearMessages(player);
+        moveRight(player);
+
+        assertMessage(player, "Monster3: Сразись со мной!");
+        assertMessage(alien, "");
+
+        alien.attack("die!");
+
+        assertMessage(player, "");
+        assertMessage(alien, "Alien: die!\n" +
+                "Monster2: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+
+
+        moveTo(alien, getMonster4X() - 2, getMonster4Y());
+        clearMessages(alien);
+        moveRight(alien);
+
+        assertMessage(player, "");
+        assertMessage(alien, "Monster4: Сразись со мной!");
+
+        alien.attack("die!");
+
+        assertMessage(player, "");
+        assertMessage(alien, "Alien: die!\n" +
+                "Monster4: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+
+        player.attack("die!");
+
+        assertMessage(player, "Player: die!\n" +
+                "Monster3: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+        assertMessage(alien, "");
+
     }
 
     private void assertCode(String expected) {

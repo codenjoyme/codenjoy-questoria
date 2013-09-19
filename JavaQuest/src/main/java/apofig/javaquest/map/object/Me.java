@@ -29,7 +29,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         setMessenger(new MessengerImpl());
         messenger.add(messages);
 
-        world = new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this);  // TODO тут как-то заумно очень!
+        world = new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this, this);  // TODO тут как-то заумно очень!
         map.getMap().set(x, y, 'A');
 
         tryToGo(0, 0);
@@ -114,7 +114,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
     }
 
     public Viewable atNewPlace() {
-        return new Viewable() {
+        return new Me() {
             @Override
             public PlayerView view() {
                 return view;
@@ -134,6 +134,12 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
             public boolean isAt(Point point) {
                 return whereToGo.isAt(point);
             }
+
+            @Override
+            public String getName() {
+                return info.getName();
+            }
+
         };
     }
 

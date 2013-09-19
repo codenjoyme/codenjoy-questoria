@@ -13,4 +13,6 @@ public interface World {
     void move(int x, int y);
 
     Something make(char c);
+
+    boolean itsOpenedBy(Me me);
 }

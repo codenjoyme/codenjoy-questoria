@@ -14,22 +14,24 @@ import java.util.*;
  * Date: 2/5/13
  * Time: 9:52 PM
  */
-public class ObjectFactoryImpl implements ObjectFactory {
+public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне кажется эта штука должна быть для каждого юзера отдельной, покуда монстры и комни предткновения у каждого юзера свои...
 
     private ObjectLoader loader;
-    private MonsterPool monsters;
+    private Map<String, MonsterPool> monsters;
     private Map<Something, World> objects;
+    private MonsterFactory monstersFactory;
 
     private ObjectFactoryImpl() {}
 
-    public ObjectFactoryImpl(MonsterPool monsters) {
-        this.monsters = monsters;
-        objects = new HashMap<Something, World>();
+    public ObjectFactoryImpl(MonsterFactory factory) {
+        this.monstersFactory = factory;
+        this.monsters = new HashMap<>();
+        objects = new HashMap<>();
         loader = new ObjectLoader();
     }
 
     @Override
-    public Something get(Place place) {
+    public Something get(Place place, Me founder) {
         Messenger messenger = null;
 
         for (Something smth : getObjects()) {
@@ -43,7 +45,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
 
-        return initObject(place, messenger);
+        return initObject(place, messenger, founder);
     }
 
     private Collection<Something> getObjects() {
@@ -61,12 +63,13 @@ public class ObjectFactoryImpl implements ObjectFactory {
     @Override
     public void remove(Me me) { // TODO test me
         objects.remove(me);
+        monsters.remove(me.getName());
     }
 
-    private Something initObject(Place place, Messenger messenger) {
-        Something result = newObject(place.getChar());
+    private Something initObject(Place place, Messenger messenger, Me founder) {
+        Something result = newObject(place.getChar(), founder);
 
-        WorldImpl world = new WorldImpl(this, place, result);
+        WorldImpl world = new WorldImpl(this, place, result, founder);
 
         if (result instanceof Nothing) {
             return result;
@@ -100,15 +103,16 @@ public class ObjectFactoryImpl implements ObjectFactory {
     @Override
     public void add(Me me) {
         objects.put(me, me.getWorld());
+        monsters.put(me.getName(), monstersFactory.newMonsters());
     }
 
-    private Something newObject(char c) {
+    private Something newObject(char c, Me founder) {
         if (c == ' ' || c == 'I') {
             return new Nothing();
         } else if (c == 'A') {
             throw new IllegalStateException("Незареганный Alien!!!");
         } else if (c == '@') {
-            return monsters.next();
+            return monsters.get(founder.getName()).next();
         }
 
         return loader.load(c);
@@ -138,4 +142,5 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
     }
+
 }

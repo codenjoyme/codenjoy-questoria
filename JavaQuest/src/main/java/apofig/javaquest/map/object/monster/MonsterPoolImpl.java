@@ -13,15 +13,15 @@ import java.util.List;
  * Date: 2/5/13
  * Time: 9:56 PM
  */
-public class MonsterFactoryImpl implements MonsterPool {
+public class MonsterPoolImpl implements MonsterPool {
 
     private List<Monster> monsters;
     private Monster monster;
     private int count;
 
-    private MonsterFactoryImpl() {}
+    private MonsterPoolImpl() {}
 
-    public MonsterFactoryImpl(Iterable<Monster> otherMonsters) {
+    public MonsterPoolImpl(Iterable<Monster> otherMonsters) {
         monsters = Lists.newLinkedList(otherMonsters);
         count = monsters.size() + 1;
     }

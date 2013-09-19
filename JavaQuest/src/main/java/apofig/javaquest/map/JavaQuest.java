@@ -49,7 +49,7 @@ public class JavaQuest implements Tickable {
 
     private Point findFreePosition() {
         Point point = new PointImpl(initPosition.getX(), initPosition.getY());
-        while (!(map.getAt(point) instanceof Nothing)) {
+        while (!(map.getAt(point, null) instanceof Nothing)) {
             point = new PointImpl(point.getX() + 1, point.getY());
         }
         return point;
@@ -84,7 +84,7 @@ public class JavaQuest implements Tickable {
             }
         }
 
-        Something smthAtWay = map.getAt(whereToGo);
+        Something smthAtWay = map.getAt(whereToGo, me);
         smthAtWay.ask();
         if (smthAtWay.canUse()) {
             smthAtWay.getBy(me.getInfo());

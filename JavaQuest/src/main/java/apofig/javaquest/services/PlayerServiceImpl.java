@@ -1,7 +1,8 @@
 package apofig.javaquest.services;
 
 import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.monster.MonsterFactoryImpl;
+import apofig.javaquest.map.object.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterPoolImpl;
 import apofig.javaquest.map.object.monster.MonsterLoader;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.saver.Loader;
@@ -40,8 +41,13 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
             }
 
             @Override
-            public MonsterPool monsters() {
-                return new MonsterFactoryImpl(new MonsterLoader());
+            public MonsterFactory monsters() {
+                return new MonsterFactory() {
+                    @Override
+                    public MonsterPool newMonsters() {
+                        return new MonsterPoolImpl(new MonsterLoader());
+                    }
+                };
             }
         };
     }

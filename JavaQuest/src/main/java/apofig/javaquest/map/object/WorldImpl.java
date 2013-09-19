@@ -10,19 +10,21 @@ public class WorldImpl implements World {
     private Place place;
     private String name;
     private ObjectFactory factory;
+    private Me founder;
 
     private WorldImpl() {}
 
-    public WorldImpl(ObjectFactory factory, Place place, Object owner) {
+    public WorldImpl(ObjectFactory factory, Place place, Something object, Me founder) {
         this.factory = factory;
         this.place = place;
-        this.name = owner.getClass().getSimpleName();
+        this.founder = founder;
+        this.name = object.getClass().getSimpleName();
     }
 
     @Override
     public Something make(char c) {
         place.update(c);
-        return factory.get(place);
+        return factory.get(place, founder);
     }
 
     @Override
@@ -41,5 +43,10 @@ public class WorldImpl implements World {
     @Override
     public Place place() {
         return place;
+    }
+
+    @Override
+    public boolean itsOpenedBy(Me me) {
+        return this.founder.equals(me);
     }
 }
