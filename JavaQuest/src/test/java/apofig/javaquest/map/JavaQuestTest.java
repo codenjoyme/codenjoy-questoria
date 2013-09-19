@@ -1982,4 +1982,24 @@ public class JavaQuestTest {
         assertMessage(player, "");
     }
 
+    @Test
+    public void shouldPlayerCantLeaveMonsterWhenOtherMeetWith() {
+        shouldMonsterBusyWhenFightWithAlien();
+
+        moveLeft(alien);
+
+        assertMessage(alien, "Monster1: Никуда ты не уйдешь!");
+        assertMessage(player, "");
+
+        moveRight(player);
+
+        assertMessage(alien, "");
+        assertMessage(player, "");
+
+        moveLeft(alien);
+
+        assertMessage(alien, "Monster1: Никуда ты не уйдешь!");
+        assertMessage(player, "");
+    }
+
 }
