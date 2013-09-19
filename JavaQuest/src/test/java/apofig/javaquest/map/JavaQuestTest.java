@@ -793,7 +793,7 @@ public class JavaQuestTest {
     public void testWhenITalkWithMonster() {
         moveTo(getMonsterX() - 1, getMonsterY());
 
-        assertMessage("Monster: Сразись со мной!");
+        assertMessage("Monster1: Сразись со мной!");
 
         assertCode("немногоКода('для подсказки');");
 
@@ -820,8 +820,8 @@ public class JavaQuestTest {
         moveRight();
 
         verifyXY(getMonsterX() - 1, getMonsterY());
-        assertMessage("Monster: Сразись со мной!\n" +
-                "Monster: Никуда ты не уйдешь!");
+        assertMessage("Monster1: Сразись со мной!\n" +
+                "Monster1: Никуда ты не уйдешь!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -855,9 +855,9 @@ public class JavaQuestTest {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
@@ -881,9 +881,9 @@ public class JavaQuestTest {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("No!!!");
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: No!!!\n" +
-                "Monster: Я убью тебя!");
+                "Monster1: Я убью тебя!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -912,11 +912,11 @@ public class JavaQuestTest {
         attack("No!!!");
         attack("Nooooo!!!");
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: No!!!\n" +
-                "Monster: Я убью тебя!\n" +
+                "Monster1: Я убью тебя!\n" +
                 "Player: Nooooo!!!\n" +
-                "Monster: Я убью тебя!");
+                "Monster1: Я убью тебя!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1001,9 +1001,9 @@ public class JavaQuestTest {
 
         moveRight();
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ты подобрал меня! Спасибо!!");
 
@@ -1048,9 +1048,9 @@ public class JavaQuestTest {
         moveTo(getMonsterX() - 1, getMonsterY());
         attack("die!");
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -1076,9 +1076,9 @@ public class JavaQuestTest {
         attack("die!");
         moveUp();
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
 
         asrtMap("╔══════════════════════════╗\n" +
@@ -1104,9 +1104,9 @@ public class JavaQuestTest {
         attack("die!");
         attack("Gold die!");
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Player: Gold die!\n" +
                 "Gold: Ты не можешь делать это со мной!");
@@ -1134,9 +1134,9 @@ public class JavaQuestTest {
         moveRight();  // get gold
         moveRight();  // go away
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ты подобрал меня! Спасибо!!");
 
@@ -1163,9 +1163,9 @@ public class JavaQuestTest {
         attack("die!");
         moveLeft();
 
-        assertMessage("Monster: Сразись со мной!\n" +
+        assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
-                "Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$\n" +
                 "Gold: Ну и ладно! Достанусь кому-то другому!!");
 
