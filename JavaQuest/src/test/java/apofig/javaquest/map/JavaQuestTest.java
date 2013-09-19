@@ -1,7 +1,7 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.Me;
-import apofig.javaquest.map.object.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterFactory;
 import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;

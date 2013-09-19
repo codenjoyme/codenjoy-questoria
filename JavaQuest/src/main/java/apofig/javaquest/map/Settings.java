@@ -1,6 +1,6 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.MonsterFactory;
+import apofig.javaquest.map.object.monster.MonsterFactory;
 
 /**
  * User: oleksandr.baglai

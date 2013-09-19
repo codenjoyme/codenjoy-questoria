@@ -113,34 +113,39 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
         return view;
     }
 
+    public class DummyMe extends Me  {
+        @Override
+        public PlayerView view() {
+            return view;
+        }
+
+        @Override
+        public int getY() {
+            return whereToGo.getY();
+        }
+
+        @Override
+        public int getX() {
+            return whereToGo.getX();
+        }
+
+        @Override
+        public boolean isAt(Point point) {
+            return whereToGo.isAt(point);
+        }
+
+        @Override
+        public String getName() {
+            return info.getName();
+        }
+
+        public Me getRealMe() {
+            return Me.this;
+        }
+    }
+
     public Viewable atNewPlace() {
-        return new Me() {
-            @Override
-            public PlayerView view() {
-                return view;
-            }
-
-            @Override
-            public int getY() {
-                return whereToGo.getY();
-            }
-
-            @Override
-            public int getX() {
-                return whereToGo.getX();
-            }
-
-            @Override
-            public boolean isAt(Point point) {
-                return whereToGo.isAt(point);
-            }
-
-            @Override
-            public String getName() {
-                return info.getName();
-            }
-
-        };
+        return new DummyMe();
     }
 
     public Player getInfo() {

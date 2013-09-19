@@ -3,6 +3,7 @@ package apofig.javaquest.map.object;
 import apofig.javaquest.map.Dieble;
 import apofig.javaquest.map.Point;
 import apofig.javaquest.map.object.impl.Nothing;
+import apofig.javaquest.map.object.monster.MonsterFactory;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.services.Tickable;
 import org.fest.reflect.core.Reflection;
@@ -32,6 +33,10 @@ public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне ка�
 
     @Override
     public Something get(Place place, Me founder) {
+        if (founder instanceof Me.DummyMe) {
+            founder = ((Me.DummyMe)founder).getRealMe();
+        }
+
         Messenger messenger = null;
 
         for (Something smth : getObjects()) {

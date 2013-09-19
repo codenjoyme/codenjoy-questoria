@@ -51,6 +51,9 @@ public class Loader {
                         String mainClassName = className.substring(0, className.indexOf('$'));
                         String innerClassName = className.substring(className.indexOf('$') + 1, className.length());
                         Class<?> aClass = loadClass(mainClassName);
+                        if (isNumber(innerClassName)) {
+                            throw new UnsupportedOperationException("Попытка загрузить аннонимный класс '" + className + "'. Не разобрался еще с этим..."); // TODO так разберись!
+                        }
                         for (Class<?> innerClass : aClass.getDeclaredClasses()) {
                             if (innerClass.getSimpleName().equals(innerClassName)) {
                                 if ((innerClass.getModifiers() & Modifier.STATIC) != 0) {
@@ -155,6 +158,15 @@ public class Loader {
             return instances.get(mainObjectId);
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private boolean isNumber(String string) {
+        try {
+            Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 

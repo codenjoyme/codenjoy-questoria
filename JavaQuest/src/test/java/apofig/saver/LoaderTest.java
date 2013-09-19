@@ -3,16 +3,15 @@ package apofig.saver;
 import apofig.javaquest.services.Player;
 import apofig.javaquest.services.PlayerService;
 import apofig.javaquest.services.PlayerServiceImpl;
-import apofig.saver.dummy.ArrayOfArrayOfCharContainer;
-import apofig.saver.dummy.ChildForIntContainer;
-import apofig.saver.dummy.ClassWithInnerClass;
-import apofig.saver.dummy.ClassWithStaticInnerClass;
+import apofig.saver.dummy.*;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.fail;
 
 /**
  * User: sanja
@@ -26,6 +25,8 @@ public class LoaderTest {
         Object object = getObjectTree();
 
         String expected = toString(object);
+
+        assertFalse(expected.contains("DummyMe"));
 
         Object newObject = load(expected);
 
@@ -104,5 +105,26 @@ public class LoaderTest {
 
         String loaded = new Saver().save(new Loader().load(expected));
         assertEquals(saved, loaded);
+    }
+
+    @Test
+    public void anonymClass() {
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // do somthing
+            }
+        };
+
+        ClassWithAnnonymClass object = new ClassWithAnnonymClass(runnable);
+
+        try {
+            checkSaveAndLoad(object,
+                "{\"objects\":[{\"id\":\"ClassWithAnnonymClass@0\",\"type\":\"apofig.saver.dummy.ClassWithAnnonymClass\",\"fields\":[{\"r\":\"@1\"}]},{\"id\":\"@1\",\"type\":\"apofig.saver.LoaderTest$1\",\"fields\":[{\"this$0\":\"LoaderTest@2\"}]},{\"id\":\"LoaderTest@2\",\"type\":\"apofig.saver.LoaderTest\",\"fields\":[]}],\"main\":\"ClassWithAnnonymClass@0\"}");
+            fail();
+        } catch (UnsupportedOperationException e) {
+            assertEquals("Попытка загрузить аннонимный класс 'apofig.saver.LoaderTest$1'. Не разобрался еще с этим...", e.getMessage());
+        }
     }
 }
