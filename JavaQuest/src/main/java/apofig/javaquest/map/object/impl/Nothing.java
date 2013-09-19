@@ -20,11 +20,6 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        return true;
-    }
-
-    @Override
     public void ask() {
 //        clearLog();  // TODO реализовать очистку лога после двух подряд Nothing
     }
@@ -46,11 +41,6 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
 
     @Override
     public void getBy(Player info) {
-        // do nothing
-    }
-
-    @Override
-    public void tryToLeave(Me hero) {
         // do nothing
     }
 

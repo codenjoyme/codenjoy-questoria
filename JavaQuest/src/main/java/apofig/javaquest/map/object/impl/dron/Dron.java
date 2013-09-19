@@ -13,7 +13,7 @@ import apofig.javaquest.services.Tickable;
  * Date: 01.09.13
  * Time: 2:25
  */
-public class Dron extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld {
+public class Dron extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable {
 
     public static final char CHAR = '*';
     private Me hero;

@@ -37,11 +37,6 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        return true;
-    }
-
-    @Override
     public void ask() {
         messenger.sayOnce(MESSAGE);
     }
@@ -75,11 +70,6 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
 
     @Override
     public void getBy(Player info) {
-        // do nothing
-    }
-
-    @Override
-    public void tryToLeave(Me hero) {
         // do nothing
     }
 

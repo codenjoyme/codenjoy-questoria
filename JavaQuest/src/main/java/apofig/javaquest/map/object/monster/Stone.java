@@ -1,6 +1,7 @@
 package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Player;
+import apofig.javaquest.map.object.Leaveable;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.TalkingObject;
@@ -15,7 +16,7 @@ import java.util.List;
  * Date: 12.09.13
  * Time: 19:41
  */
-public class Stone extends TalkingObject implements Something {
+public class Stone extends TalkingObject implements Something, Leaveable {
 
     public static final String MESSAGE_1 = "Ты попал в сказочный мир Ascii кодов. Тут каждый объект живой. \n" +
             "С каждым из них ты сожешь взаимодействовать с помощью кода. \n" +

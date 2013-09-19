@@ -14,9 +14,6 @@ public interface Something {   // TODO раздеребанить интерфе
     void answer(String message);
     void ask();
 
-    boolean canLeave(Me hero); // TODO перенеси в интерфейс Leaveable :)
-    void tryToLeave(Me hero);
-
     boolean canUse();
     void getBy(Player info);
 

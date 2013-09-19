@@ -7,7 +7,7 @@ import apofig.javaquest.map.*;
  * Date: 02.07.13
  * Time: 22:57
  */
-public class Me extends TalkingObject implements Viewable, Joystick, Something {
+public class Me extends TalkingObject implements Viewable, Joystick, Something, Leaveable {
 
     private World world;
     private PlayerView view;

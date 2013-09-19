@@ -66,19 +66,25 @@ public class JavaQuest implements Tickable {
         }
 
         List<Something> somethingNear = map.getNear(me);
-        for (Something smthNear : somethingNear) {
-            if (!smthNear.canLeave(me)) {
-                smthNear.tryToLeave(me);
-                return;
+        for (Something smth : somethingNear) {
+            if (smth instanceof Leaveable) {
+                Leaveable leaveable = (Leaveable) smth;
+                if (!leaveable.canLeave(me)) {
+                    leaveable.tryToLeave(me);
+                    return;
+                }
             }
         }
 
         for (Something smth : somethingNear) {
-            if (smth.canLeave(me)) {
-                if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
-                    smth.tryToLeave(me);
-                    if (smth instanceof Me) {   // TODO testme
-                        me.leave((TalkingObject) smth);
+            if (smth instanceof Leaveable) {
+                Leaveable leaveable = (Leaveable)smth;
+                if (leaveable.canLeave(me)) {
+                    if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
+                        leaveable.tryToLeave(me);
+                        if (smth instanceof Me) {   // TODO testme
+                            me.leave((TalkingObject) smth);
+                        }
                     }
                 }
             }

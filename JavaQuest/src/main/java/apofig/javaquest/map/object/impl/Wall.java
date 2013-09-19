@@ -18,11 +18,6 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        return true;
-    }
-
-    @Override
     public void ask() {
         messenger.say("Пожалуйста, остановись!");
     }
@@ -44,11 +39,6 @@ public class Wall extends TalkingObject implements Something {
 
     @Override
     public void getBy(Player info) {
-        // do nothing
-    }
-
-    @Override
-    public void tryToLeave(Me hero) {
         // do nothing
     }
 }

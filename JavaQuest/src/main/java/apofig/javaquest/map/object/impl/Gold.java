@@ -9,7 +9,7 @@ import apofig.javaquest.map.object.*;
  * Date: 1/20/13
  * Time: 11:03 PM
  */
-public class Gold extends TalkingObject implements Something, SetWorld {
+public class Gold extends TalkingObject implements Something, SetWorld, Leaveable {
 
     private World world;
 
