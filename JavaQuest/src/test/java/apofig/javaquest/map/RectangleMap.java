@@ -38,6 +38,10 @@ public class RectangleMap implements MapLoader {
         map.set(x, y, '$');
     }
 
+    public void setStone(int x, int y) {
+        map.set(x, y, 'O');
+    }
+
     public void set(int x, int y, char c) {
         map.set(x, y, c);
     }

@@ -117,7 +117,7 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     @Override
-    public List<Something> getSomethingNear(final Viewable me) {
+    public List<Something> getSomethingNear(final Viewable me) {    // TODO вот этот метод со следующим объединить...
         final List<Something> result = new LinkedList<Something>();
 
         me.view().near(me, width, height, new Apply() {

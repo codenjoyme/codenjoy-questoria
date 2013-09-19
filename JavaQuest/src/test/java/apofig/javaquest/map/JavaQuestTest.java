@@ -5,6 +5,7 @@ import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
+import apofig.javaquest.map.object.monster.Stone;
 import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,6 +59,14 @@ public class JavaQuestTest {
         return 10;
     }
 
+    public int getStoneX() {
+        return 70;
+    }
+
+    public int getStoneY() {
+        return 3;
+    }
+
     public RectangleMap getMapLoader() {
         return new RectangleMap(getSize(), getSize());
     }
@@ -68,6 +77,7 @@ public class JavaQuestTest {
         mapLoader.setMonster(getMonsterX(), getMonsterY());
         setupDronMentor(mapLoader);
         mapLoader.setWall(getWallX(), getWallY());
+        mapLoader.setStone(getStoneX(), getStoneY());
 
         Settings settings = new Settings() {
             @Override
@@ -1665,6 +1675,81 @@ public class JavaQuestTest {
                 "java.lang.reflect.InvocationTargetException: " +
                 "java.lang.RuntimeException: \"     #  \"' не принята! Остановка!!!");
 
+    }
+
+    @Test
+    public void shouldMeetWithStone() {
+        moveTo(getStoneX() - 1, getStoneY());
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I O     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage(player, "Stone: " + Stone.MESSAGE_INTRO);
+
+        player.attack("");
+
+        assertMessage(player, "Player: ok\n" +
+                "Stone: " + Stone.MESSAGE_1);
+
+        player.attack("");
+
+        assertMessage(player, "Player: ok\n" +
+                "Stone: " + Stone.MESSAGE_2);
+
+        player.attack("");
+
+        assertMessage(player, "Player: ok");
+
+        moveDown();
+
+        assertMessage(player, "");
+
+        moveDown();
+
+        assertMessage(player, "Stone: " + Stone.MESSAGE_GOODBYE);
+
+        moveUp();
+
+        assertMessage(player, "Stone: " + Stone.MESSAGE_INTRO);
+
+        moveUp();
+
+        assertMessage(player, "");
+
+        player.attack("");
+
+        assertMessage(player, "Player: ok\n" +
+                "Stone: " + Stone.MESSAGE_1);
+
+        moveDown();
+
+        assertMessage(player, "");
+
+        moveDown();
+
+        assertMessage(player, "Stone: " + Stone.MESSAGE_GOODBYE);
+
+        moveUp();
+
+        assertMessage(player, "Stone: " + Stone.MESSAGE_INTRO);
+
+        player.attack("");
+
+        assertMessage(player, "Player: ok\n" +
+                "Stone: " + Stone.MESSAGE_1);
     }
 
     private void assertCode(String expected) {

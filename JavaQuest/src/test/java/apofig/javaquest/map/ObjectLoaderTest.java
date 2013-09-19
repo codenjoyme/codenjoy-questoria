@@ -21,7 +21,8 @@ public class ObjectLoaderTest {
         assertEquals("{#=class apofig.javaquest.map.object.impl.Wall, " +
                 "$=class apofig.javaquest.map.object.impl.Gold, " +
                 "*=class apofig.javaquest.map.object.impl.dron.Dron, " +
-                "M=class apofig.javaquest.map.object.impl.dron.DronMentor}", cache.toString());
+                "M=class apofig.javaquest.map.object.impl.dron.DronMentor, " +
+                "O=class apofig.javaquest.map.object.monster.Stone}", cache.toString());
     }
 
     @Test

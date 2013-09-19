@@ -2,6 +2,7 @@ package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.impl.Nothing;
+import apofig.javaquest.map.object.impl.Wall;
 import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
 
@@ -64,14 +65,15 @@ public class JavaQuest implements Tickable {
             return;
         }
 
-        for (Something smthNear : map.getSomethingNear(me)) {
+        List<Something> somethingNear = map.getSomethingNear(me);
+        for (Something smthNear : somethingNear) {
             if (!smthNear.canLeave()) {
                 smthNear.tryToLeave();
                 return;
             }
         }
 
-        for (Something smth : map.getSomethingNear(me)) {
+        for (Something smth : somethingNear) {
             if (smth.canLeave()) {
                 if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
                     smth.tryToLeave();
@@ -87,16 +89,26 @@ public class JavaQuest implements Tickable {
         if (smthAtWay.canUse()) {
             smthAtWay.getBy(me.getInfo());
             me.go();
-            meetWith(me);
+            meetWith(me, somethingNear);
         }
     }
 
-    private void meetWith(Me me) {
+    private void meetWith(Me me, List<Something> alreadyMeet) {
+        List<Something> newObjects = new LinkedList<>();
+
         for (Something object : map.getAllNear(me)) {
+            if (!alreadyMeet.contains(object)) {
+                newObjects.add(object);
+            }
+        }
+
+        for (Something object : newObjects) {
             me.meetWith((TalkingObject) object);
         }
 
-        for (Something object : map.getSomethingNear(me)) {
+        for (Something object : newObjects) {
+            if (object instanceof Wall) continue;
+
             object.ask();
             if (object instanceof Me) {
                 me.ask();

@@ -99,6 +99,9 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something {
 
     @Override
     public void attack(String message) {
+        if ("".equals(message)) {
+            message = "ok";
+        }
         messenger.say(message);
         if (map.getSomethingNear(this).isEmpty()) {
             Something whereIAm = map.getAt(this);
