@@ -4,13 +4,16 @@
 <html>
 <head>
     <style>
+        body {
+            margin : 0px;
+        }
         div, #message {
             font-family:lucida console;
-            font-size:12px;
+            font-size:11px;
         }
         #answer {
-            width:500px;
-            height:500px;
+            width:360px;
+            height:430px;
             border: 1px solid lightgray;
         }
 
@@ -68,9 +71,10 @@
                     <div align="right"><input id="say" type="button" value="Say"/></div>
                 </div>
             </td>
-            <td valign="top">
-                <br>
-                <textarea id="message" rows="40" cols="80" wrap="off">${message}</textarea></br>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2">
+                <textarea id="message" rows="10" cols="135" wrap="off">${message}</textarea></br>
             </td>
             <td>
             </td>
