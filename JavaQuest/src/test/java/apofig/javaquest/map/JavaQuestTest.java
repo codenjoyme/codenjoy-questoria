@@ -2066,7 +2066,7 @@ public class JavaQuestTest {
             game.newPlayer(player.getName());
             fail();
         } catch (IllegalArgumentException e) {
-            assertEquals("Игрок с именем 'Alien' уже зарегистрирован", e.getMessage());
+            assertEquals("Игрок с именем 'Player' уже зарегистрирован", e.getMessage());
         }
     }
 
