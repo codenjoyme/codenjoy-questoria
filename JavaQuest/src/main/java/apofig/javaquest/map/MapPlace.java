@@ -31,7 +31,7 @@ public class MapPlace implements Place {
     }
 
     @Override
-    public String near() {   // TODO test me
+    public String near() {
         return "" + map.get(x - 1, y - 1) + map.get(x, y - 1) + map.get(x + 1, y - 1) +
                 map.get(x + 1, y) +
                 map.get(x + 1, y + 1) + map.get(x, y + 1) + map.get(x - 1, y + 1) +
