@@ -1,14 +1,17 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.object.Me;
+import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.monster.MonsterFactory;
-import apofig.javaquest.map.object.ObjectFactory;
 import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.map.object.monster.Stone;
+import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static apofig.javaquest.map.Messages.withoutSeparator;
 import static junit.framework.Assert.*;
@@ -25,7 +28,7 @@ public class JavaQuestTest {
     private TerritoryMap map;
     private Me player;
     private Me alien;
-    private ObjectFactory objects;
+    private ObjectFactoryImpl objects;
     private int countMonsters = 0;
 
     public int getSize() {
@@ -146,7 +149,7 @@ public class JavaQuestTest {
             }
         };
         game = new JavaQuest(settings);
-        objects = field("objects").ofType(ObjectFactory.class).in(game).get(); // TODO ой вей! Нарушаем инкапсуляцию
+        objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
         map = (TerritoryMap) field("heroMap").ofType(HeroMap.class).in(game).get();
         player = game.newPlayer("Player");
     }
@@ -1507,6 +1510,14 @@ public class JavaQuestTest {
         assertMessage(player, "Player: Message 3");
     }
 
+    private String objects() {
+        List<String> result = new ArrayList<String>();
+        for (Something smth : objects.getObjects()) {
+            result.add(Reflection.field("world").ofType(World.class).in(smth).get().toString());
+        }
+        return result.toString();
+    }
+
     @Test
     public void shouldMeetWithDronMentor() {
         moveTo(getDronMentorX() - 2, getDronMentorY() + 2);
@@ -1533,7 +1544,7 @@ public class JavaQuestTest {
 
         assertMessage(player, "DronMentor: " + DronMentor.MESSAGE);
 
-        assertTrue(objects.toString().contains("[object DronMentor at map[60,60]='M']"));
+        assertTrue(objects().contains("[object DronMentor at map[60,60]='M']"));
 
         player.attack("Ok!");
 

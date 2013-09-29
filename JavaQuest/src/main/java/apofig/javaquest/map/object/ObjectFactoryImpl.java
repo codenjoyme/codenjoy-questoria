@@ -25,12 +25,10 @@ public class ObjectFactoryImpl implements ObjectFactory {
     private Map<String, MonsterPool> monsters;
     private Map<Something, World> objects;
     private MonsterFactory monstersFactory;
-    private TerritoryMap map;
 
     private ObjectFactoryImpl() {}
 
     public ObjectFactoryImpl(MonsterFactory factory, TerritoryMap map) {
-        this.map = map;
         monstersFactory = factory;
         locator = new Locator(map, this);
         monsters = new HashMap<String, MonsterPool>();
@@ -65,7 +63,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         return initObject(place, messenger, founder);
     }
 
-    private Collection<Something> getObjects() {
+    public Collection<Something> getObjects() {
         return new LinkedList<Something>(objects.keySet());
     }
 
@@ -77,7 +75,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     @Override
-    public void remove(Me me) { // TODO test me
+    public void remove(Me me) {
         objects.remove(me);
         monsters.remove(me.getName());
     }
@@ -142,18 +140,6 @@ public class ObjectFactoryImpl implements ObjectFactory {
         throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: '" + c + "'");
     }
 
-    @Override
-    public String toString() {  // TODO для целей тстирования - найти способ удалить!
-        List<String> result = new ArrayList<String>();
-        for (Something smth : getObjects()) {
-            result.add(Reflection.field("world").ofType(World.class).in(smth).get().toString());
-        }
-        return result.toString();
-    }
-
-    /**
-     * Любой объект мира (Something) маркированный как Tickable будет каждый тик оповещаться от JavaQuest
-     */
     @Override
     public void tick() {
         for (Something smth : getObjects()) {

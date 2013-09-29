@@ -32,7 +32,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         messenger.add(messages);
 
         MapPlace heroPlace = map.newHero(this);
-        world = new WorldImpl(objects, heroPlace, this, this);  // TODO тут как-то заумно очень!
+        world = new WorldImpl(objects, heroPlace, this, this);
 
         tryToGo(0, 0);
         view.moveMeTo(this);
