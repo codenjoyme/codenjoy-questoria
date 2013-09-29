@@ -10,17 +10,30 @@ import java.util.Random;
 public class MyDron {
 
     public String whereToGo(String nearMe) {
-//        if (nearMe.charAt(1) == '$' || nearMe.charAt(2) == '$' || nearMe.charAt(3) == '$') {
-//            return "up";
-//        } else if (nearMe.charAt(4) == '$') {
-//            return "right";
-//        } else if (nearMe.charAt(8) == '$') {
-//            return "left";
-//        } else if (nearMe.charAt(7) == '$' || nearMe.charAt(6) == '$' || nearMe.charAt(5) == '$') {
-//            return "down";
-//        }
+        char atWay = ' ';
+        int random = 0;
+        do {
+            random = new java.util.Random().nextInt(7);
+            switch (random) {
+                case 0:
+                    atWay = nearMe.charAt(1);
+                    break;
+                case 1:
+                    atWay = nearMe.charAt(5);
+                    break;
+                case 2:
+                    atWay = nearMe.charAt(7);
+                    break;
+                case 3:
+                    atWay = nearMe.charAt(3);
+                    break;
+                default:
+                    atWay = nearMe.charAt(5);
+                    break;
+            }
 
-        int random = new java.util.Random().nextInt(4);
+        } while (atWay != ' ' && atWay != '$');
+
         switch (random) {
             case 0:
                 return "up";
