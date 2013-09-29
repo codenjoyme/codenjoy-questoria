@@ -56,11 +56,6 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     }
 
     @Override
-    public boolean canUse() {
-        return false;
-    }
-
-    @Override
     public Something leaveAfter() {
         return new Nothing();
     }
@@ -68,11 +63,6 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     @Override
     public char symbol() {
         return CHAR;
-    }
-
-    @Override
-    public void getBy(Player info) {
-        // do nothing
     }
 
     @Override
@@ -111,7 +101,7 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
             Place atWay = place.near(dx, dy);
             if (atWay.getChar() == '$') {
                 messenger.say("Дрон подобрал золото!");
-                Something gold = locator.getAt(atWay, hero);
+                Usable gold = (Usable)locator.getAt(atWay, hero);
                 gold.getBy(hero.getInfo());
             }
             if (atWay.getChar() == ' ' || atWay.getChar() == '$') {

@@ -42,11 +42,6 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public boolean canUse() {
-        return false;  
-    }
-
-    @Override
     public Dron leaveAfter() {
         Dron dron = (Dron)world.make(Dron.CHAR);
         dron.setHero(hero);
@@ -66,11 +61,6 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     @Override
     public char symbol() {
         return 'M';
-    }
-
-    @Override
-    public void getBy(Player info) {
-        // do nothing
     }
 
     @Override

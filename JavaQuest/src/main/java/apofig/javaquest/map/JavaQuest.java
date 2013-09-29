@@ -104,8 +104,8 @@ public class JavaQuest implements Tickable {
         //if (!smthAtWay.isBusy()) { // TODO implement me
             smthAtWay.ask();
         //}
-        if (smthAtWay.canUse()) {
-            smthAtWay.getBy(me.getInfo());
+        if (smthAtWay instanceof Usable) {
+            ((Usable)smthAtWay).getBy(me.getInfo());
             me.go();
             meetWith(me, somethingNear);
         }

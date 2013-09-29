@@ -198,11 +198,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
     }
 
     @Override
-    public boolean canUse() {
-        return false;
-    }
-
-    @Override
     public Something leaveAfter() {
         return world.make(' ');
     }
@@ -210,11 +205,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
     @Override
     public char symbol() {
         return 'A';
-    }
-
-    @Override
-    public void getBy(Player info) {
-
     }
 
     @Override

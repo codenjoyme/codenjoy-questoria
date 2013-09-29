@@ -10,9 +10,7 @@ import apofig.javaquest.map.object.monster.CodeHelper;
  * Date: 1/19/13
  * Time: 8:43 PM
  */
-public class Nothing extends TalkingObject implements Something, CodeHelper, SetWorld {
-
-    private World world;
+public class Nothing extends TalkingObject implements Something, CodeHelper, Usable {
 
     @Override
     public void answer(String message) {
@@ -24,13 +22,8 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
     }
 
     @Override
-    public boolean canUse() {
-        return true;
-    }
-
-    @Override
     public Something leaveAfter() {
-        return world.make(' ');
+        return new Nothing();
     }
 
     @Override
@@ -39,17 +32,12 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
     }
 
     @Override
-    public void getBy(Player info) {
-        // do nothing
-    }
-
-    @Override
     public String getCode() {
         return "";
     }
 
     @Override
-    public void setWorld(World world) {
-        this.world = world;
+    public void getBy(Player info) {
+        // do nothing
     }
 }

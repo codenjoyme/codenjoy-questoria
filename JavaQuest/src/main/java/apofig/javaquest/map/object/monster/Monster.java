@@ -56,11 +56,6 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     }
 
     @Override
-    public boolean canUse() {
-        return false;
-    }
-
-    @Override
     public Something leaveAfter() {
         return world.make('$');
     }
@@ -68,11 +63,6 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     @Override
     public char symbol() {
         return '@';
-    }
-
-    @Override
-    public void getBy(Player info) {
-        // do nothing
     }
 
     @Override

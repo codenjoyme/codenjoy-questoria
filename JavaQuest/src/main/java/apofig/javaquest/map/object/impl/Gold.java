@@ -9,7 +9,7 @@ import apofig.javaquest.map.object.*;
  * Date: 1/20/13
  * Time: 11:03 PM
  */
-public class Gold extends TalkingObject implements Something, SetWorld, Leaveable {
+public class Gold extends TalkingObject implements Something, SetWorld, Leaveable, Usable {
 
     private World world;
 
@@ -26,11 +26,6 @@ public class Gold extends TalkingObject implements Something, SetWorld, Leaveabl
     @Override
     public void ask() {
         messenger.sayOnce("Привет, я - 10$");
-    }
-
-    @Override
-    public boolean canUse() {
-        return true;
     }
 
     @Override

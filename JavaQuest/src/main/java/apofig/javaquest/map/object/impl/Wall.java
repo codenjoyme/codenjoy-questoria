@@ -23,11 +23,6 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public boolean canUse() {
-        return false;
-    }
-
-    @Override
     public Something leaveAfter() {
         return new Nothing();
     }
@@ -35,10 +30,5 @@ public class Wall extends TalkingObject implements Something {
     @Override
     public char symbol() {
         return '#';
-    }
-
-    @Override
-    public void getBy(Player info) {
-        // do nothing
     }
 }

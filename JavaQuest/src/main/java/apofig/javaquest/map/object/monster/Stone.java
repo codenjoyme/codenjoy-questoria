@@ -53,11 +53,6 @@ public class Stone extends TalkingObject implements Something, Leaveable {
     }
 
     @Override
-    public boolean canUse() {
-        return false;
-    }
-
-    @Override
     public Something leaveAfter() {
         return null;
     }
@@ -65,11 +60,6 @@ public class Stone extends TalkingObject implements Something, Leaveable {
     @Override
     public char symbol() {
         return 'O';
-    }
-
-    @Override
-    public void getBy(Player info) {
-        // do nothing
     }
 
     @Override
