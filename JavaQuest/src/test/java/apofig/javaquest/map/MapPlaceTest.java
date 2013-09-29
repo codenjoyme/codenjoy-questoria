@@ -41,8 +41,8 @@ public class MapPlaceTest {
 
     @Test
     public void shouldWorkNearD() {
-        assertEquals('9', place.near(1, 1));
-        assertEquals('1', place.near(-1, -1));
+        assertEquals("map[5,5]='9'", place.near(1, 1).toString());
+        assertEquals("map[3,3]='1'", place.near(-1, -1).toString());
     }
 
 

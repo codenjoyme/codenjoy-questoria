@@ -36,24 +36,24 @@ public class MapPlace implements Place {
     public List<Place> near() {
         List<Place> result = new LinkedList<Place>();
 
-        result.add(new MapPlace(map, x - 1, y - 1));
-        result.add(new MapPlace(map, x    , y - 1));
-        result.add(new MapPlace(map, x + 1, y - 1));
+        result.add(near(-1, -1));
+        result.add(near( 0, -1));
+        result.add(near( 1, -1));
 
-        result.add(new MapPlace(map, x + 1, y    ));
+        result.add(near( 1, 0));
 
-        result.add(new MapPlace(map, x + 1, y + 1));
-        result.add(new MapPlace(map, x    , y + 1));
-        result.add(new MapPlace(map, x - 1, y + 1));
+        result.add(near( 1, 1));
+        result.add(near( 0, 1));
+        result.add(near(-1, 1));
 
-        result.add(new MapPlace(map, x - 1, y    ));
+        result.add(near(-1, 0));
 
         return result;
     }
 
     @Override
-    public char near(int dx, int dy) {
-        return map.get(x + dx, y + dy);
+    public Place near(int dx, int dy) {
+        return new MapPlace(map, x + dx, y + dy);
     }
 
     @Override

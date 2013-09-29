@@ -16,7 +16,7 @@ public interface Place extends Point {
 
     List<Place> near();
 
-    char near(int dx, int dy);
+    Place near(int dx, int dy);
 
     void move(int x, int y);
 }

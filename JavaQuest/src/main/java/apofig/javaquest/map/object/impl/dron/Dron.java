@@ -2,7 +2,9 @@ package apofig.javaquest.map.object.impl.dron;
 
 import apofig.compiler.JavaCompiler;
 import apofig.compiler.JavaMethod;
+import apofig.javaquest.map.MapLocator;
 import apofig.javaquest.map.Player;
+import apofig.javaquest.map.Point;
 import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.CodeHelper;
@@ -15,7 +17,7 @@ import java.util.List;
  * Date: 01.09.13
  * Time: 2:25
  */
-public class Dron extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable {
+public class Dron extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable, SetLocator {
 
     public static final char CHAR = '*';
     private Me hero;
@@ -29,6 +31,7 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
 
     private Place place;
     private World world;
+    private MapLocator locator;
 
     @Override
     public void setPlace(Place place) {
@@ -105,12 +108,13 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
                 return;
             }
 
-            char atWay = place.near(dx, dy);
-            if (atWay == '$') {
+            Place atWay = place.near(dx, dy);
+            if (atWay.getChar() == '$') {
                 messenger.say("Дрон подобрал золото!");
-                hero.getInfo().addGold(10); // TODO тут хардкод, это должно решать золото а не дрон
+                Something gold = locator.getAt(atWay, hero);
+                gold.getBy(hero.getInfo());
             }
-            if (atWay == ' ' || atWay == '$') {
+            if (atWay.getChar() == ' ' || atWay.getChar() == '$') {
                 world.move(place.getX() + dx, place.getY() + dy);
             } else {
                 active = false;
@@ -154,5 +158,10 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     @Override
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    @Override
+    public void setLocator(MapLocator locator) {
+        this.locator = locator;
     }
 }
