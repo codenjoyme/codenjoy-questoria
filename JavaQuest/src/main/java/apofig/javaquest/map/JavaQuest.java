@@ -102,7 +102,9 @@ public class JavaQuest implements Tickable {
 
         Something smthAtWay = locator.getAt(whereToGo, me);
         //if (!smthAtWay.isBusy()) { // TODO implement me
-            smthAtWay.ask();
+            if (smthAtWay instanceof Askable) {
+                ((Askable)smthAtWay).ask();
+            }
         //}
         if (smthAtWay instanceof Usable) {
             ((Usable)smthAtWay).getBy(me.getInfo());
@@ -135,7 +137,10 @@ public class JavaQuest implements Tickable {
 
             if (object instanceof Wall) continue;
 
-            object.ask();
+            if (object instanceof Askable) {
+                ((Askable)object).ask();
+            }
+
             if (object instanceof Me) {
                 me.ask();
             }

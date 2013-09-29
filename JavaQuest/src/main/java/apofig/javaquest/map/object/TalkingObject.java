@@ -5,7 +5,7 @@ package apofig.javaquest.map.object;
  * Date: 1/31/13
  * Time: 12:35 AM
  */
-public class TalkingObject implements SetMessenger {
+public abstract class TalkingObject implements SetMessenger, Askable {
 
     protected Messenger messenger;
 

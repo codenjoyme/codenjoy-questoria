@@ -107,7 +107,9 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         }
         messenger.say(message);
         for (Something smthNear : locator.getNear(this)) {
-            smthNear.answer(message);
+            if (smthNear instanceof Askable) {
+                ((Askable)smthNear).answer(message);
+            }
         }
     }
 

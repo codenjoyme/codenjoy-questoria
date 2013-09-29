@@ -38,7 +38,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     public void answer(String message) {
         if (message.equals(answer)) {
             messenger.say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
-            Something gold = leaveAfter();
+            Askable gold = (Askable)leaveAfter();
             gold.ask();
         } else {
             messenger.say(help);

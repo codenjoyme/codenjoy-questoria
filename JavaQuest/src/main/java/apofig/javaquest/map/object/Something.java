@@ -5,12 +5,9 @@ package apofig.javaquest.map.object;
  * Date: 1/19/13
  * Time: 8:29 PM
  */
-public interface Something {   // TODO раздеребанить интерфейс на более мелкие по образу иподобию CanBeBusy
-    void answer(String message);
-    void ask();
+public interface Something {
 
     Something leaveAfter();
 
     char symbol();
-
 }
