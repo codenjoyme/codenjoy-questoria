@@ -125,7 +125,7 @@ public class TerritoryMap implements HeroMap {
     }
 
     @Override
-    public void removeHero(Viewable me) {    // TODO test me
+    public void removeHero(Viewable me) {
         map.set(me.getX(), me.getY(), ' ');
         fogs.remove(me);
     }
