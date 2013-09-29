@@ -5,6 +5,7 @@ import apofig.javaquest.map.object.Leaveable;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.TalkingObject;
+import apofig.javaquest.map.object.impl.Nothing;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -54,7 +55,7 @@ public class Stone extends TalkingObject implements Something, Leaveable {
 
     @Override
     public Something leaveAfter() {
-        return null;
+        return new Nothing();
     }
 
     @Override
