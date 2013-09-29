@@ -21,9 +21,9 @@ public class Colorizer {
         add("monster", "@");
         add("gold", "$");
         add("alien", "A");
-        add("alien", "M");  // TODO цвет поменять
-        add("iam", "*");    // TODO цвет поменять
-        add("wall", "# ");  // TODO
+        add("mentor", "M");
+        add("dron", "*");
+        add("wall", "# ");
     }
 
     private static void add(String aclass, String...strings) {

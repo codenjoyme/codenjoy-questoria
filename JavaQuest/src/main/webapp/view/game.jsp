@@ -38,6 +38,12 @@
         .alien {
             color:green;
         }
+        .mentor {
+            color:deeppink;
+        }
+        .dron {
+            color:firebrick;
+        }
     </style>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.js"></script>
