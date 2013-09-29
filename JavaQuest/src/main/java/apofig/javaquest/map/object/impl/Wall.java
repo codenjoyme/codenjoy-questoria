@@ -14,7 +14,7 @@ public class Wall extends TalkingObject implements Something {
 
     @Override
     public void answer(String message) {
-        messenger.say("Ты не можешь это делать со мной!"); // TODO test it
+        messenger.sayOnce("Ты не можешь это делать со мной!");
     }
 
     @Override

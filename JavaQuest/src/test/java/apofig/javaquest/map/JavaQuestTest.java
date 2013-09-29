@@ -633,6 +633,16 @@ public class JavaQuestTest {
     }
 
     @Test
+    public void testICantActWall() {
+        testICantGoOnBoardDown();
+
+        player.attack("die!");
+
+        assertMessage("Player: die!\n" +
+                "Wall: Ты не можешь это делать со мной!");
+    }
+
+    @Test
     public void shouldOnlyOneMessagePerTick() {
         testICantGoOnBoardDown();
 

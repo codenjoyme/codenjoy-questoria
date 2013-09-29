@@ -21,7 +21,6 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Set
 
     @Override
     public void ask() {
-//        clearLog();  // TODO реализовать очистку лога после двух подряд Nothing
     }
 
     @Override
