@@ -10,21 +10,6 @@ import java.util.List;
  * Date: 02.07.13
  * Time: 22:52
  */
-public interface TerritoryMap {
+public interface TerritoryMap extends HeroMap, MapLocator {
 
-    Something getAt(Point point, Me founder);
-
-    boolean isNear(Viewable me, Something object);
-
-    void openSpace(Viewable me);
-
-    String getViewArea(Viewable me);
-
-    List<Something> getNear(Viewable me);
-
-    Map getMap();
-
-    void remove(Viewable me);
-
-    void init(Me me);
 }

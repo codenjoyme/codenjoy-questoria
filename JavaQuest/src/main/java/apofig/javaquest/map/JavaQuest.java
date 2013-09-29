@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class JavaQuest implements Tickable {
 
-    private TerritoryMap map;
+    private TerritoryMapImpl map;
     private ObjectFactory objects;
     private List<Me> players;
     private int viewSize;
@@ -42,11 +42,9 @@ public class JavaQuest implements Tickable {
         Player info = new Player(name);
 
         Point point = findFreePosition();
-        Me player = new Me(objects, map, view, new Messages(), point.getX(), point.getY(), info);
+        Me player = new Me(objects, map, map, view, new Messages(), point.getX(), point.getY(), info);
         objects.add(player);
-
         players.add(player);
-        map.init(player);
         map.openSpace(player);
 
         return player;

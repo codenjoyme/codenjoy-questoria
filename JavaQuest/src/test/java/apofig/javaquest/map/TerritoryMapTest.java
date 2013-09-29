@@ -40,6 +40,7 @@ public class TerritoryMapTest {
         view.moveMeTo(me);
 
         TerritoryMap territory = new TerritoryMapImpl(loader, factory);
+        territory.newHero(me);
         territory.openSpace(me);
 
         String viewArea = territory.getViewArea(me);

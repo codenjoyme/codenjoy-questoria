@@ -14,10 +14,6 @@ import java.util.*;
  */
 public class TerritoryMapImpl implements TerritoryMap {
 
-    // ✉ ✍ ✎ ✓ ☑ ☒ ✗ ⊕ ⊗ ☞ ☜ ♫ ✄ ✁ ∞ ♨ ☢ ✈ ☰ ☷ ♥ ★ ☆ ☺ ☹
-    // ♔ ♕ ♖ ♘ ♆ ✠ ♂ ♀ ♠ ♣ ♥ ♦ ☣ ☮ ☃ ☂ ☯ ☠
-    // TODO use it
-
     private int width;
     private int height;
     private Map map;
@@ -32,6 +28,19 @@ public class TerritoryMapImpl implements TerritoryMap {
         height = loader.height();
         map = loader.map();
         fogs = new HashMap<Viewable, Map>();
+    }
+
+    @Override
+    public MapPlace newHero(Viewable hero) {
+        MapPlace place = new MapPlace(map, hero.getX(), hero.getY());
+        map.set(hero.getX(), hero.getY(), 'A');
+
+        if (fogs.containsKey(hero)) {
+            throw new RuntimeException("Юзер уже проиничен!");
+        }
+        fogs.put(hero, new Map(width, height, '?'));
+
+        return place;
     }
 
     @Override
@@ -135,23 +144,9 @@ public class TerritoryMapImpl implements TerritoryMap {
         return result;
     }
 
-    @Override
-    public Map getMap() {
-        return map;
-    }
-
-    @Override
     public void remove(Viewable me) {    // TODO test me
         map.set(me.getX(), me.getY(), ' ');
         fogs.remove(me);
-    }
-
-    @Override
-    public void init(Me me) {
-        if (fogs.containsKey(me)) {
-            throw new RuntimeException("Юзер уже проиничен!");
-        }
-        fogs.put(me, new Map(width, height, '?'));
     }
 
     @Override

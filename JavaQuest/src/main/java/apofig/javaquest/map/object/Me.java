@@ -10,17 +10,19 @@ import apofig.javaquest.map.*;
 public class Me extends TalkingObject implements Viewable, Joystick, Something, Leaveable {
 
     private World world;
+    private MapLocator locator;
     private PlayerView view;
     private int x;
     private int y;
     private Player info;
     private Point whereToGo;
-    private TerritoryMap map;
+    private HeroMap map;
 
     private Me() {}
 
-    public Me(ObjectFactory objects, TerritoryMap map, PlayerView view, Messages messages, int x, int y, Player info) {
+    public Me(ObjectFactory objects, HeroMap map, MapLocator locator, PlayerView view, Messages messages, int x, int y, Player info) {
         this.map = map;
+        this.locator = locator;
         this.view = view;
         this.x = x;
         this.y = y;
@@ -29,8 +31,8 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         setMessenger(new MessengerImpl());
         messenger.add(messages);
 
-        world = new WorldImpl(objects, new MapPlace(map.getMap(), x, y), this, this);  // TODO тут как-то заумно очень!
-        map.getMap().set(x, y, 'A');
+        MapPlace heroPlace = map.newHero(this);
+        world = new WorldImpl(objects, heroPlace, this, this);  // TODO тут как-то заумно очень!
 
         tryToGo(0, 0);
         view.moveMeTo(this);
@@ -103,7 +105,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
             message = "ok";
         }
         messenger.say(message);
-        for (Something smthNear : map.getNear(this)) {
+        for (Something smthNear : locator.getNear(this)) {
             smthNear.answer(message);
         }
     }
