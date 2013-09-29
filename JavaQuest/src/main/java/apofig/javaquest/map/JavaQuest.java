@@ -96,7 +96,7 @@ public class JavaQuest implements Tickable {
                 if (leaveable.canLeave(me)) {
                     if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
                         leaveable.tryToLeave(me);
-                        if (smth instanceof Me) {   // TODO testme
+                        if (smth instanceof Me) {
                             me.leave((TalkingObject) smth);
                         }
                     }
