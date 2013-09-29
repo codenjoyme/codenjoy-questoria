@@ -120,20 +120,6 @@ public class PlayerView {
         }
     }
 
-    public void near(Point point, int mapWidth, int mapHeight, Apply meet) {
-        for (int dy = -1; dy <= 1; dy++) {
-            for (int dx = -1; dx <= 1; dx++) {
-                if (dx == 0 && dy == 0) {
-                    continue;
-                }
-                int x = dx + point.getX();
-                int y = dy + point.getY();
-                boolean isWall = (x < 0 || y < 0 || y >= mapHeight || x >= mapWidth);
-                meet.xy(x, y, true, isWall);
-            }
-        }
-    }
-
     public int size() {
         return size;
     }
