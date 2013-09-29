@@ -15,10 +15,10 @@ import java.util.*;
  * Time: 2:40
  */
 public class Saver {
-    private List<Entry> data = new LinkedList<>();
-    private List<Integer> ids = new LinkedList<>();
-    private List<Class<?>> exclude = new LinkedList<>();
-    private List<Class<?>> excludeParent = new LinkedList<>();
+    private List<Entry> data = new LinkedList<Entry>();
+    private List<Integer> ids = new LinkedList<Integer>();
+    private List<Class<?>> exclude = new LinkedList<Class<?>>();
+    private List<Class<?>> excludeParent = new LinkedList<Class<?>>();
     private Object main;
 
     public Saver exclude(Class<?>... classes) {
@@ -49,13 +49,13 @@ public class Saver {
     }
 
     private List<Map<String, Object>> getDOM() {
-        List<Map<String, Object>> result = new LinkedList<>();
+        List<Map<String, Object>> result = new LinkedList<Map<String, Object>>();
 
         for (Entry entry : data) {
             if (entry.value == null) continue;
             Object object = entry.getKey().object;
 
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<String, Object>();
             map.put("type", object.getClass().getName());
             map.put("id", string(object));
             map.put("fields", getFieldDOM(entry));
@@ -66,10 +66,10 @@ public class Saver {
     }
 
     private List<Object> getFieldDOM(Entry entry) {
-        List<Object> result = new LinkedList<>();
+        List<Object> result = new LinkedList<Object>();
 
         for (Object o : entry.getValue()) {
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = new HashMap<String, Object>();
             if (o instanceof Fld) {
                 Fld fld = (Fld) o;
 
@@ -105,7 +105,7 @@ public class Saver {
         }
 
         if (Collection.class.isAssignableFrom(o.getClass())) {
-            List<Object> result = new LinkedList<>();
+            List<Object> result = new LinkedList<Object>();
             for (Object a : (List) o) {
                 result.add(getValue(a));
             }
@@ -190,7 +190,7 @@ public class Saver {
     }
 
     private List<Object> parse(List<Object> objects) {
-        List<Object> toProcess = new LinkedList<>();
+        List<Object> toProcess = new LinkedList<Object>();
         for (Object object : objects) {
 
             if (object == null) continue;
@@ -234,7 +234,7 @@ public class Saver {
             if (isMap) {
                 Set<Map.Entry<Object, Object>> entries = ((Map<Object, Object>) object).entrySet();
                 List<Map.Entry<Object, Object>> container = sort(entries);
-                List<Fld> list = new LinkedList<>();
+                List<Fld> list = new LinkedList<Fld>();
                 for (Map.Entry<?, ?> entry : container) {
                     list.add(new Fld(entry.getKey(), entry.getValue()));
                 }
@@ -324,7 +324,7 @@ public class Saver {
     }
 
     private List<Map.Entry<Object, Object>> sort(Set<Map.Entry<Object, Object>> entries) {
-        List<Map.Entry<Object, Object>> result = new LinkedList<>(entries);
+        List<Map.Entry<Object, Object>> result = new LinkedList<Map.Entry<Object, Object>>(entries);
         Collections.sort(result, new Comparator<Map.Entry<Object, Object>>() {
             @Override
             public int compare(Map.Entry<Object, Object> o1, Map.Entry<Object, Object> o2) {
@@ -353,7 +353,7 @@ public class Saver {
     }
 
     private List<Field> getFields(Object object) {
-        List<Field> result = new LinkedList<>();
+        List<Field> result = new LinkedList<Field>();
 
         Class<?> clazz = object.getClass();
         do {

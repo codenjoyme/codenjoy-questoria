@@ -25,7 +25,7 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
 
     public PlayerServiceImpl() {
         game = new JavaQuest(settings());
-        players = new HashMap<>();
+        players = new HashMap<String, Player>();
     }
 
     private Settings settings() {
@@ -88,7 +88,7 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
 
     @Override
     public List<Player> players() {
-        List<Player> result = new LinkedList<>(players.values());
+        List<Player> result = new LinkedList<Player>(players.values());
         Collections.sort(result, new Comparator<Player>() {
             @Override
             public int compare(Player o1, Player o2) {

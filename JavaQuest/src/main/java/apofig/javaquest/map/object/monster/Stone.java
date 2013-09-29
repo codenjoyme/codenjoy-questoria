@@ -32,7 +32,7 @@ public class Stone extends TalkingObject implements Something, Leaveable {
 
     public static final String MESSAGE_GOODBYE = "Успехов, Странник!";
 
-    private SimpleIterator<String> iterator = new SimpleIterator<>(Arrays.asList(MESSAGE_1, MESSAGE_2));
+    private SimpleIterator<String> iterator = new SimpleIterator<String>(Arrays.asList(MESSAGE_1, MESSAGE_2));
 
     @Override
     public void answer(String message) {

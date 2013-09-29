@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class Loader {
 
-    private Map<String, Object> instances = new HashMap<>();
+    private Map<String, Object> instances = new HashMap<String, Object>();
 
     public Object load(String saved) {
         try {

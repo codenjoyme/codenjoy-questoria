@@ -27,9 +27,9 @@ public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements Mon
 
     @Override
     protected String method(Object... inputs) {
-        int small = (int)inputs[0];
-        int big = (int)inputs[1];
-        int goal = (int)inputs[2];
+        int small = (Integer)inputs[0];
+        int big = (Integer)inputs[1];
+        int goal = (Integer)inputs[2];
 
         boolean result = (small >= (goal % 5) && small >= goal - big * 5);
 

@@ -101,7 +101,7 @@ public class SaverTest {     // TODO переместить все в LoaderTest
         }
 
         A a = new A();
-        a.bmap = new HashMap<>();
+        a.bmap = new HashMap<Object, B>();
         a.bmap.put(1, new B(11));
         a.bmap.put(new B(22), new B(23));
         a.bmap.put(3, new B(null));

@@ -17,7 +17,7 @@ public class SimpleIterator<T> implements Iterator<T> {
     public SimpleIterator() {}
 
     public SimpleIterator(List<T> data) {
-        this.data = new LinkedList<>(data);
+        this.data = new LinkedList<T>(data);
         reset();
     }
 

@@ -16,7 +16,7 @@ public class MessengerImpl implements Messenger {
     private String name;
 
     public MessengerImpl() {
-        this.messages = new LinkedList<>();
+        this.messages = new LinkedList<Messages>();
     }
 
     @Override

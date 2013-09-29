@@ -91,7 +91,7 @@ public class LoaderTest {
 
     @Test
     public void mapWithKeyCharacter() {
-        Map<Character, Class<?>> map = new HashMap<>();
+        Map<Character, Class<?>> map = new HashMap<Character, Class<?>>();
         map.put(new Character('2'), Object.class);
         map.put(new Character('6'), String.class);
 

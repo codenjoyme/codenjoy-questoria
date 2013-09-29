@@ -49,13 +49,17 @@ public class LoadMapFromFile implements MapLoader {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        List<String> lines = new LinkedList<>();
-        try (Scanner scanner = new Scanner(new File(uri))) {
+        List<String> lines = new LinkedList<String>();
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(uri));
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 lines.add(line);
             }
         } catch (IOException e) {
+            scanner.close();
             throw new RuntimeException(e);
         }
         return lines;

@@ -112,7 +112,7 @@ public class JavaQuest implements Tickable {
     }
 
     private void meetWith(Me me, List<Something> alreadyMeet) {
-        List<Something> newObjects = new LinkedList<>();
+        List<Something> newObjects = new LinkedList<Something>();
 
         for (Something object : locator.getNear(me)) {
             if (!alreadyMeet.contains(object)) {

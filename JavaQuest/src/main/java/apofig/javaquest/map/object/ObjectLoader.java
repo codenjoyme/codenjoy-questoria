@@ -19,7 +19,7 @@ public class ObjectLoader {
     private final List<? extends Class<? extends Something>> except = Arrays.asList(Monster.class, Me.class, Nothing.class);
 
     public ObjectLoader() {
-        cache = new HashMap<>();
+        cache = new HashMap<String, Class<? extends Something>>();
 
         Reflections reflections = new Reflections(Something.class.getPackage().getName());
         Set<Class<? extends Something>> classes = reflections.getSubTypesOf(Something.class);

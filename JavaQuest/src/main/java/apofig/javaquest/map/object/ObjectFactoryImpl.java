@@ -26,8 +26,8 @@ public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне ка�
 
     public ObjectFactoryImpl(MonsterFactory factory) {
         this.monstersFactory = factory;
-        this.monsters = new HashMap<>();
-        objects = new HashMap<>();
+        this.monsters = new HashMap<String, MonsterPool>();
+        objects = new HashMap<Something, World>();
         loader = new ObjectLoader();
     }
 
@@ -54,7 +54,7 @@ public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне ка�
     }
 
     private Collection<Something> getObjects() {
-        return new LinkedList<>(objects.keySet());
+        return new LinkedList<Something>(objects.keySet());
     }
 
     @Override
@@ -129,7 +129,7 @@ public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне ка�
 
     @Override
     public String toString() {  // TODO для целей тстирования - найти способ удалить!
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<String>();
         for (Something smth : getObjects()) {
             result.add(Reflection.field("world").ofType(World.class).in(smth).get().toString());
         }

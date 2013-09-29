@@ -17,7 +17,7 @@ public class MonsterLoader implements Iterable<Monster> {
     private Map<Class<? extends Monster>, Integer> monsters;
 
     public MonsterLoader() {
-        monsters = new HashMap<>();
+        monsters = new HashMap<Class<? extends  Monster>, Integer>();
 
         Reflections reflections = new Reflections(Monster.class.getPackage().getName());
         Set<Class<? extends Monster>> classes = reflections.getSubTypesOf(Monster.class);
@@ -40,7 +40,7 @@ public class MonsterLoader implements Iterable<Monster> {
     }
 
     private List<Class<? extends Monster>> sortedList() {
-        List<Class<? extends Monster>> result = new LinkedList<>(monsters.keySet());
+        List<Class<? extends Monster>> result = new LinkedList<Class<? extends Monster>>(monsters.keySet());
 
         Collections.sort(result, new Comparator<Class<? extends Monster>>() {
             @Override
@@ -54,7 +54,7 @@ public class MonsterLoader implements Iterable<Monster> {
 
     @Override
     public Iterator<Monster> iterator() {
-        List<Monster> result = new LinkedList<>();
+        List<Monster> result = new LinkedList<Monster>();
 
         for (Class<? extends Monster> clazz : sortedList()) {
             result.add(newInstance(clazz));
