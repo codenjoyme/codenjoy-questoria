@@ -50,7 +50,7 @@ public class GameController {
     public ModelAndView command(@RequestParam String command, @RequestParam String playerGameCode) throws JSONException {
         JavaQuestSinglePlayer game = playerService.loadGame(playerGameCode).getGame();
         if (game == null) {
-            buildResponse("{}"); // TODO потестить а может как-то избавиться, а то некрасиво
+            buildResponse("{error:'Неверный код игры - такого пользователя нет!'}");
         }
 
         Joystick joystick = game.getJoystick();
