@@ -26,11 +26,11 @@ public class JavaQuest implements Tickable {
     private JavaQuest() {}
 
     public JavaQuest(Settings settings) {
-        objects = new ObjectFactoryImpl(settings.monsters());
         MapLoader loader = settings.mapLoader();
-        TerritoryMap map = new TerritoryMap(loader, objects);
-        locator = map;
+        TerritoryMap map = new TerritoryMap(loader);
         heroMap = map;
+        objects = new ObjectFactoryImpl(settings.monsters(), map);
+        locator = objects.getLocator();
         players = new LinkedList<Me>();
         viewSize = settings.viewSize();
         initPosition = settings.mapLoader().initPosition();
@@ -90,7 +90,7 @@ public class JavaQuest implements Tickable {
             if (smth instanceof Leaveable) {
                 Leaveable leaveable = (Leaveable)smth;
                 if (leaveable.canLeave(me)) {
-                    if (!locator.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
+                    if (!locator.isNear(me.atNewPlace(), smth) && !locator.getAt(whereToGo, me).equals(smth)) {
                         leaveable.tryToLeave(me);
                         if (smth instanceof Me) {
                             me.leave((TalkingObject) smth);

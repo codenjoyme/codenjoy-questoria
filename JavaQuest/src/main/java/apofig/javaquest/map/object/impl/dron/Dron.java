@@ -8,6 +8,8 @@ import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
 
+import java.util.List;
+
 /**
  * User: sanja
  * Date: 01.09.13
@@ -85,7 +87,7 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     @Override
     public void tick() {
         if (active) {
-            String whereToGo = runCode(code, place.near());   // TODO дрон может зависнуть, и вообще любой клиентский код может зависнуть
+            String whereToGo = runCode(code, getNear());   // TODO дрон может зависнуть, и вообще любой клиентский код может зависнуть
             int dx = 0;
             int dy = 0;
 
@@ -115,6 +117,15 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
                 messenger.sayOnce("Дрон уперся в неопознанный объект! Остановка!!!");
             }
         }
+    }
+
+    private String getNear() {
+        List<Place> near = place.near();
+        String nearString = "";
+        for (Place p : near) {
+            nearString += p.getChar();
+        }
+        return nearString;
     }
 
     private String runCode(String code, String near) {

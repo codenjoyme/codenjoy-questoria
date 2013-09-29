@@ -2,6 +2,8 @@ package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Point;
 
+import java.util.List;
+
 /**
  * User: oleksandr.baglai
  * Date: 2/13/13
@@ -12,7 +14,7 @@ public interface Place extends Point {
 
     char getChar();
 
-    String near();
+    List<Place> near();
 
     char near(int dx, int dy);
 

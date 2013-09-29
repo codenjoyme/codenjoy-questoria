@@ -19,7 +19,6 @@ public class TerritoryMapTest {
 
     @Test
     public void shouldGetViewArea() {
-        ObjectFactory factory = mock(ObjectFactory.class);
         MapLoader loader = mock(MapLoader.class);
 
         int size = 21;
@@ -39,7 +38,7 @@ public class TerritoryMapTest {
         when(me.view()).thenReturn(view);
         view.moveMeTo(me);
 
-        TerritoryMap territory = new TerritoryMap(loader, factory);
+        TerritoryMap territory = new TerritoryMap(loader);
         territory.newHero(me);
         territory.openSpace(me);
 

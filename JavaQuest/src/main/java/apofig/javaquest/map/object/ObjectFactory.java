@@ -1,5 +1,6 @@
 package apofig.javaquest.map.object;
 
+import apofig.javaquest.map.Locator;
 import apofig.javaquest.map.Point;
 import apofig.javaquest.services.Tickable;
 
@@ -13,7 +14,7 @@ public interface ObjectFactory extends Tickable {
 
     void add(Me me);
 
-    boolean isAt(Something smth, Point point);
-
     void remove(Me me);
+
+    Locator getLocator();
 }

@@ -12,18 +12,16 @@ import java.util.*;
  * Date: 1/19/13
  * Time: 2:13 PM
  */
-public class TerritoryMap implements HeroMap, MapLocator {
+public class TerritoryMap implements HeroMap {
 
     private int width;
     private int height;
     private Map map;
     private java.util.Map<Viewable, Map> fogs;
-    private ObjectFactory objects;
 
     private TerritoryMap() {}
 
-    public TerritoryMap(MapLoader loader, ObjectFactory objects) {
-        this.objects = objects;
+    public TerritoryMap(MapLoader loader) {
         width = loader.width();
         height = loader.height();
         map = loader.map();
@@ -127,36 +125,12 @@ public class TerritoryMap implements HeroMap, MapLocator {
     }
 
     @Override
-    public List<Something> getNear(final Viewable me) {
-        final List<Something> result = new LinkedList<Something>();
-
-        me.view().near(me, width, height, new Apply() {
-            @Override
-            public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (!isWall && map.get(x, y) == ' ') {
-                    return;
-                }
-
-                result.add(getAt(new PointImpl(x, y), (Me)me));
-            }
-        });
-
-        return result;
-    }
-
-    @Override
     public void removeHero(Viewable me) {    // TODO test me
         map.set(me.getX(), me.getY(), ' ');
         fogs.remove(me);
     }
 
-    @Override
-    public Something getAt(Point point, Me founder) {
-        return objects.get(map.get(point), founder);
-    }
-
-    @Override
-    public boolean isNear(Viewable me, final Something object) {
-        return getNear(me).contains(object);
+    public MapPlace getAt(Point point) {
+        return map.get(point);
     }
 }

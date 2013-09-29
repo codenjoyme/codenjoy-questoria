@@ -155,7 +155,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         }
     }
 
-    public Viewable atNewPlace() {
+    public Me atNewPlace() {
         return new DummyMe();
     }
 

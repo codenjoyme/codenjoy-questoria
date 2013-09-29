@@ -147,7 +147,7 @@ public class JavaQuestTest {
         };
         game = new JavaQuest(settings);
         objects = field("objects").ofType(ObjectFactory.class).in(game).get(); // TODO ой вей! Нарушаем инкапсуляцию
-        map = (TerritoryMap) field("locator").ofType(MapLocator.class).in(game).get();
+        map = (TerritoryMap) field("heroMap").ofType(HeroMap.class).in(game).get();
         player = game.newPlayer("Player");
     }
 

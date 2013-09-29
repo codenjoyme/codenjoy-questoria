@@ -1,7 +1,9 @@
 package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.Dieble;
+import apofig.javaquest.map.Locator;
 import apofig.javaquest.map.Point;
+import apofig.javaquest.map.TerritoryMap;
 import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.monster.MonsterFactory;
 import apofig.javaquest.map.object.monster.MonsterPool;
@@ -15,20 +17,30 @@ import java.util.*;
  * Date: 2/5/13
  * Time: 9:52 PM
  */
-public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне кажется эта штука должна быть для каждого юзера отдельной, покуда монстры и комни предткновения у каждого юзера свои...
+public class ObjectFactoryImpl implements ObjectFactory {
+    // TODO мне кажется эта штука должна быть для каждого юзера отдельной, покуда монстры и комни предткновения у каждого юзера свои...
 
+    private Locator locator;
     private ObjectLoader loader;
     private Map<String, MonsterPool> monsters;
     private Map<Something, World> objects;
     private MonsterFactory monstersFactory;
+    private TerritoryMap map;
 
     private ObjectFactoryImpl() {}
 
-    public ObjectFactoryImpl(MonsterFactory factory) {
-        this.monstersFactory = factory;
-        this.monsters = new HashMap<String, MonsterPool>();
+    public ObjectFactoryImpl(MonsterFactory factory, TerritoryMap map) {
+        this.map = map;
+        monstersFactory = factory;
+        locator = new Locator(map, this);
+        monsters = new HashMap<String, MonsterPool>();
         objects = new HashMap<Something, World>();
         loader = new ObjectLoader();
+    }
+
+    @Override
+    public Locator getLocator() {
+        return locator;
     }
 
     @Override
@@ -57,8 +69,7 @@ public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне ка�
         return new LinkedList<Something>(objects.keySet());
     }
 
-    @Override
-    public boolean isAt(Something smth, Point place) {
+    private boolean isAt(Something smth, Point place) {
         if (smth instanceof Me) {
             return ((Me)smth).isAt(place);
         }
@@ -89,6 +100,10 @@ public class ObjectFactoryImpl implements ObjectFactory {   // TODO мне ка�
 
         if (SetPlace.class.isAssignableFrom(result.getClass())) {
             ((SetPlace)result).setPlace(place);
+        }
+
+        if (SetLocator.class.isAssignableFrom(result.getClass())) {
+            ((SetLocator)result).setLocator(locator);
         }
 
         if (SetWorld.class.isAssignableFrom(result.getClass())) {

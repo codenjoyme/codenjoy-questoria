@@ -1,5 +1,6 @@
 package apofig.javaquest.map;
 
+
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public interface MapLocator {
 
-    boolean isNear(Viewable me, Something object);
-
     Something getAt(Point point, Me founder);
 
-    List<Something> getNear(Viewable me);
+    boolean isNear(Me founder, Something object);
+
+    List<Something> getNear(Me founder);
 }

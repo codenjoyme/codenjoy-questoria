@@ -1,7 +1,9 @@
 package apofig.javaquest.map;
 
-import apofig.javaquest.map.Map;
 import apofig.javaquest.map.object.Place;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: oleksandr.baglai
@@ -31,11 +33,22 @@ public class MapPlace implements Place {
     }
 
     @Override
-    public String near() {
-        return "" + map.get(x - 1, y - 1) + map.get(x, y - 1) + map.get(x + 1, y - 1) +
-                map.get(x + 1, y) +
-                map.get(x + 1, y + 1) + map.get(x, y + 1) + map.get(x - 1, y + 1) +
-                map.get(x - 1, y);
+    public List<Place> near() {
+        List<Place> result = new LinkedList<Place>();
+
+        result.add(new MapPlace(map, x - 1, y - 1));
+        result.add(new MapPlace(map, x    , y - 1));
+        result.add(new MapPlace(map, x + 1, y - 1));
+
+        result.add(new MapPlace(map, x + 1, y    ));
+
+        result.add(new MapPlace(map, x + 1, y + 1));
+        result.add(new MapPlace(map, x    , y + 1));
+        result.add(new MapPlace(map, x - 1, y + 1));
+
+        result.add(new MapPlace(map, x - 1, y    ));
+
+        return result;
     }
 
     @Override
