@@ -25,4 +25,6 @@ public interface TerritoryMap {
     Map getMap();
 
     void remove(Viewable me);
+
+    void init(Me me);
 }

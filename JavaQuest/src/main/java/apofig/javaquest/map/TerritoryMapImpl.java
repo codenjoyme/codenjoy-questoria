@@ -51,9 +51,6 @@ public class TerritoryMapImpl implements TerritoryMap {
     }
 
     private Map fog(Viewable me) {
-        if (!fogs.containsKey(me)) {
-            fogs.put(me, new Map(width, height, '?'));
-        }
         return fogs.get(me);
     }
 
@@ -67,6 +64,10 @@ public class TerritoryMapImpl implements TerritoryMap {
 
     @Override
     public String getViewArea(final Viewable me) {
+        if (!fogs.containsKey(me)) {
+            throw new IllegalArgumentException("Нет такого пользователя!");
+        }
+
         final StringBuffer result = new StringBuffer();
 
         result.append("╔" + StringUtils.repeat("═", me.view().size()*2) + "╗\n");
@@ -143,6 +144,14 @@ public class TerritoryMapImpl implements TerritoryMap {
     public void remove(Viewable me) {    // TODO test me
         map.set(me.getX(), me.getY(), ' ');
         fogs.remove(me);
+    }
+
+    @Override
+    public void init(Me me) {
+        if (fogs.containsKey(me)) {
+            throw new RuntimeException("Юзер уже проиничен!");
+        }
+        fogs.put(me, new Map(width, height, '?'));
     }
 
     @Override

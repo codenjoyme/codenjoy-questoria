@@ -34,6 +34,10 @@ public class JavaQuest implements Tickable {
     }
 
     public Me newPlayer(String name) {
+        if (hasPlayer(name)) {
+            throw new IllegalArgumentException(String.format("Игрок с именем '%s' уже зарегистрирован", name));
+        }
+
         PlayerView view = new PlayerView(viewSize);
         Player info = new Player(name);
 
@@ -42,9 +46,19 @@ public class JavaQuest implements Tickable {
         objects.add(player);
 
         players.add(player);
+        map.init(player);
         map.openSpace(player);
 
         return player;
+    }
+
+    private boolean hasPlayer(String name) {
+        for (Me player : players) {
+            if (player.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Point findFreePosition() {
@@ -154,7 +168,7 @@ public class JavaQuest implements Tickable {
         return map.getViewArea(player);
     }
 
-    public void remove(String name) {  // TODO test me
+    public void remove(String name) {
         Me foundPlayer = null;
         for (Me player : players) {
             if (player.getName().equals(name)) {
@@ -164,7 +178,7 @@ public class JavaQuest implements Tickable {
         }
 
         if (foundPlayer == null) {
-            throw new IllegalArgumentException(String.format("Игрок с именем %s не найден", name));
+            throw new IllegalArgumentException(String.format("Игрок с именем '%s' не найден", name));
         }
 
         players.remove(foundPlayer);
