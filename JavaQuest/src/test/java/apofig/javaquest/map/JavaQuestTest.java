@@ -7,12 +7,12 @@ import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
 import apofig.javaquest.map.object.monster.Stone;
-import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
 
 import static apofig.javaquest.map.Messages.withoutSeparator;
 import static junit.framework.Assert.*;
+import static org.fest.reflect.core.Reflection.field;
 
 /**
  * User: oleksandr.baglai
@@ -22,7 +22,7 @@ import static junit.framework.Assert.*;
 public class JavaQuestTest {
 
     private JavaQuest game;
-    private TerritoryMapImpl map;
+    private TerritoryMap map;
     private Me player;
     private Me alien;
     private ObjectFactory objects;
@@ -146,8 +146,8 @@ public class JavaQuestTest {
             }
         };
         game = new JavaQuest(settings);
-        objects = Reflection.field("objects").ofType(ObjectFactory.class).in(game).get(); // TODO ой вей! Нарушаем инкапсуляцию
-        map = (TerritoryMapImpl) game.getTerritoryMap();
+        objects = field("objects").ofType(ObjectFactory.class).in(game).get(); // TODO ой вей! Нарушаем инкапсуляцию
+        map = (TerritoryMap) field("locator").ofType(MapLocator.class).in(game).get();
         player = game.newPlayer("Player");
     }
 

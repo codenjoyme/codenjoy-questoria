@@ -16,7 +16,8 @@ import java.util.List;
  */
 public class JavaQuest implements Tickable {
 
-    private TerritoryMapImpl map;
+    private HeroMap heroMap;
+    private MapLocator locator;
     private ObjectFactory objects;
     private List<Me> players;
     private int viewSize;
@@ -27,7 +28,9 @@ public class JavaQuest implements Tickable {
     public JavaQuest(Settings settings) {
         objects = new ObjectFactoryImpl(settings.monsters());
         MapLoader loader = settings.mapLoader();
-        map = new TerritoryMapImpl(loader, objects);
+        TerritoryMap map = new TerritoryMap(loader, objects);
+        locator = map;
+        heroMap = map;
         players = new LinkedList<Me>();
         viewSize = settings.viewSize();
         initPosition = settings.mapLoader().initPosition();
@@ -42,10 +45,9 @@ public class JavaQuest implements Tickable {
         Player info = new Player(name);
 
         Point point = findFreePosition();
-        Me player = new Me(objects, map, map, view, new Messages(), point.getX(), point.getY(), info);
+        Me player = new Me(objects, heroMap, locator, view, new Messages(), point.getX(), point.getY(), info);
         objects.add(player);
         players.add(player);
-        map.openSpace(player);
 
         return player;
     }
@@ -61,14 +63,10 @@ public class JavaQuest implements Tickable {
 
     private Point findFreePosition() {
         Point point = new PointImpl(initPosition.getX(), initPosition.getY());
-        while (!(map.getAt(point, null) instanceof Nothing)) {
+        while (!(locator.getAt(point, null) instanceof Nothing)) {
             point = new PointImpl(point.getX() + 1, point.getY());
         }
         return point;
-    }
-
-    public TerritoryMap getTerritoryMap() {
-        return map;
     }
 
     private void move(Me me) {
@@ -77,7 +75,7 @@ public class JavaQuest implements Tickable {
             return;
         }
 
-        List<Something> somethingNear = map.getNear(me);
+        List<Something> somethingNear = locator.getNear(me);
         for (Something smth : somethingNear) {
             if (smth instanceof Leaveable) {
                 Leaveable leaveable = (Leaveable) smth;
@@ -92,7 +90,7 @@ public class JavaQuest implements Tickable {
             if (smth instanceof Leaveable) {
                 Leaveable leaveable = (Leaveable)smth;
                 if (leaveable.canLeave(me)) {
-                    if (!map.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
+                    if (!locator.isNear(me.atNewPlace(), smth) && !objects.isAt(smth, whereToGo)) {
                         leaveable.tryToLeave(me);
                         if (smth instanceof Me) {
                             me.leave((TalkingObject) smth);
@@ -102,7 +100,7 @@ public class JavaQuest implements Tickable {
             }
         }
 
-        Something smthAtWay = map.getAt(whereToGo, me);
+        Something smthAtWay = locator.getAt(whereToGo, me);
         //if (!smthAtWay.isBusy()) { // TODO implement me
             smthAtWay.ask();
         //}
@@ -116,7 +114,7 @@ public class JavaQuest implements Tickable {
     private void meetWith(Me me, List<Something> alreadyMeet) {
         List<Something> newObjects = new LinkedList<>();
 
-        for (Something object : map.getNear(me)) {
+        for (Something object : locator.getNear(me)) {
             if (!alreadyMeet.contains(object)) {
                 newObjects.add(object);
             }
@@ -145,7 +143,7 @@ public class JavaQuest implements Tickable {
     }
 
     public CodeHelper getCodeHelper(Me player) {
-        for (Something smthNear : map.getNear(player)) {
+        for (Something smthNear : locator.getNear(player)) {
             if (smthNear instanceof CodeHelper) {
                 return (CodeHelper) smthNear;
             }
@@ -163,7 +161,7 @@ public class JavaQuest implements Tickable {
     }
 
     public String printView(Me player) {
-        return map.getViewArea(player);
+        return player.getView();
     }
 
     public void remove(String name) {
@@ -181,6 +179,6 @@ public class JavaQuest implements Tickable {
 
         players.remove(foundPlayer);
         objects.remove(foundPlayer);
-        map.remove(foundPlayer);
+        foundPlayer.die();
     }
 }

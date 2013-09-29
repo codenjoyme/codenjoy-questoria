@@ -14,4 +14,6 @@ public interface HeroMap {
     String getViewArea(Viewable me);
 
     MapPlace newHero(Viewable me);
+
+    void removeHero(Viewable me);
 }

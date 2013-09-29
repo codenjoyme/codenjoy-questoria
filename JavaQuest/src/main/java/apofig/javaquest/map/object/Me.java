@@ -36,6 +36,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
 
         tryToGo(0, 0);
         view.moveMeTo(this);
+        map.openSpace(this);
     }
 
     @Override
@@ -113,6 +114,14 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
     @Override
     public PlayerView view() {
         return view;
+    }
+
+    public void die() {
+        map.removeHero(this);
+    }
+
+    public String getView() {
+        return map.getViewArea(this);
     }
 
     public class DummyMe extends Me  {

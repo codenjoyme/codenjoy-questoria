@@ -39,7 +39,7 @@ public class TerritoryMapTest {
         when(me.view()).thenReturn(view);
         view.moveMeTo(me);
 
-        TerritoryMap territory = new TerritoryMapImpl(loader, factory);
+        TerritoryMap territory = new TerritoryMap(loader, factory);
         territory.newHero(me);
         territory.openSpace(me);
 
