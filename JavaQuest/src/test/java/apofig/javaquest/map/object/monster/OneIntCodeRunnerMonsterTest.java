@@ -135,11 +135,6 @@ public class OneIntCodeRunnerMonsterTest {
                 gold.setWorld(this);
                 return gold;
             }
-
-            @Override
-            public boolean itsOpenedBy(Me me) {
-                return true;
-            }
         });
         messages = new Messages();
         monster.setMessenger(messenger);

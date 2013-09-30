@@ -45,8 +45,4 @@ public class WorldImpl implements World {
         return place;
     }
 
-    @Override
-    public boolean itsOpenedBy(Me me) {
-        return this.founder.equals(me);
-    }
 }

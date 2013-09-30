@@ -14,5 +14,4 @@ public interface World {
 
     Something make(char c);
 
-    boolean itsOpenedBy(Me me);
 }
