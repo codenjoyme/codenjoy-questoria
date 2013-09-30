@@ -102,10 +102,9 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
 
     @Override
     public void attack(String message) {
-        if ("".equals(message)) {
-            message = "ok";
+        if (!"".equals(message)) {
+            messenger.say(message);
         }
-        messenger.say(message);
         for (Something smthNear : locator.getNear(this)) {
             if (smthNear instanceof Askable) {
                 ((Askable)smthNear).answer(message);

@@ -1,11 +1,12 @@
 package apofig.javaquest.map;
 
 import apofig.javaquest.map.object.*;
+import apofig.javaquest.map.object.impl.StoneForum;
 import apofig.javaquest.map.object.monster.MonsterFactory;
 import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
-import apofig.javaquest.map.object.Stone;
+import apofig.javaquest.map.object.impl.Stone;
 import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
@@ -1770,17 +1771,15 @@ public class JavaQuestTest {
 
         player.attack("");
 
-        assertMessage(player, "Player: ok\n" +
-                "Stone: " + Stone.MESSAGE_1);
+        assertMessage("Stone: " + Stone.MESSAGE_1);
 
         player.attack("");
 
-        assertMessage(player, "Player: ok\n" +
-                "Stone: " + Stone.MESSAGE_2);
+        assertMessage("Stone: " + Stone.MESSAGE_2);
 
         player.attack("");
 
-        assertMessage(player, "Player: ok");
+        assertMessage(player, "");
 
         moveDown();
 
@@ -1792,8 +1791,7 @@ public class JavaQuestTest {
 
         player.attack("");
 
-        assertMessage(player, "Player: ok\n" +
-                "Stone: " + Stone.MESSAGE_1);
+        assertMessage("Stone: " + Stone.MESSAGE_1);
 
         moveDown();
 
@@ -1805,8 +1803,7 @@ public class JavaQuestTest {
 
         player.attack("");
 
-        assertMessage(player, "Player: ok\n" +
-                "Stone: " + Stone.MESSAGE_1);
+        assertMessage("Stone: " + Stone.MESSAGE_1);
     }
 
     @Test
@@ -2235,6 +2232,66 @@ public class JavaQuestTest {
 
         assertMessage("Player: ok\n" +
                 "Stone: " + Stone.MESSAGE_1);
+    }
+
+    @Test
+    public void shouldWriteSomethingOnBoardForum() {
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.set(mx, my, '0');
+        moveTo(mx - 1, my);
+
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I 0     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage("StoneForum: " + StoneForum.MESSAGE_INTRO);
+
+        player.attack("");
+
+        assertMessage("StoneForum: " + StoneForum.MESSAGE_LAST);
+
+        player.attack("Тут был Вася");
+
+        assertMessage("Player: Тут был Вася");
+
+        player.attack("");
+
+        assertMessage("StoneForum: " + StoneForum.MESSAGE_LAST);
+
+        player.attack("И Васе тут понравилось!");
+
+        assertMessage("Player: И Васе тут понравилось!");
+
+        moveLeft();
+        moveRight();
+
+        assertMessage("StoneForum: " + StoneForum.MESSAGE_INTRO);
+
+        player.attack("");
+
+        assertMessage("StoneForum: Тут был Вася");
+
+        player.attack("");
+
+        assertMessage("StoneForum: И Васе тут понравилось!");
+
+        player.attack("");
+
+        assertMessage("StoneForum: " + StoneForum.MESSAGE_LAST);
     }
 
 }

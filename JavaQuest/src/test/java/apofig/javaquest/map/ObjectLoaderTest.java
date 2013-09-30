@@ -19,10 +19,11 @@ public class ObjectLoaderTest {
     public void shouldGetAllObjects() {
         java.util.Map cache = Reflection.field("cache").ofType(java.util.Map.class).in(loader).get();
         assertEquals("{#=class apofig.javaquest.map.object.impl.Wall, " +
+                "0=class apofig.javaquest.map.object.impl.StoneForum, " +
                 "$=class apofig.javaquest.map.object.impl.Gold, " +
                 "*=class apofig.javaquest.map.object.impl.dron.Dron, " +
                 "M=class apofig.javaquest.map.object.impl.dron.DronMentor, " +
-                "O=class apofig.javaquest.map.object.monster.Stone}", cache.toString());
+                "O=class apofig.javaquest.map.object.impl.Stone}", cache.toString());
     }
 
     @Test

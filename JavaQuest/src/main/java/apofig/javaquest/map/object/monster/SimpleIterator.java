@@ -17,8 +17,7 @@ public class SimpleIterator<T> implements Iterator<T> {
     public SimpleIterator() {}
 
     public SimpleIterator(List<T> data) {
-        this.data = new LinkedList<T>(data);
-        reset();
+        reset(data);
     }
 
     public void reset() {
@@ -38,5 +37,10 @@ public class SimpleIterator<T> implements Iterator<T> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    public void reset(List<T> data) {
+        this.data = new LinkedList<T>(data);
+        reset();
     }
 }
