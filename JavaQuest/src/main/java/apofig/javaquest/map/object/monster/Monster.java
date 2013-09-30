@@ -19,19 +19,19 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     private String signature;
     private Action onKill;
     private World world;
-    private int weight;
+    private int complexity;
     private Me hero;
 
     public Monster(String question, String answer,
                    String help, String leave,
-                   String signature, int weight)
+                   String signature, int complexity)
     {
         this.question = question;
         this.answer = answer;
         this.help = help;
         this.leave = leave;
         this.signature = signature;
-        this.weight = weight;
+        this.complexity = complexity;
     }
 
     @Override
@@ -103,13 +103,9 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
         this.world = world;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
     @Override
     public String toString() {
-        return String.format("[Monster: %s with weight: %s]", this.getClass().getSimpleName(), weight);
+        return String.format("[Monster: %s with complexity: %s]", this.getClass().getSimpleName(), complexity);
     }
 
     @Override
@@ -124,5 +120,9 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
         if (hero.equals(this.hero)) {
             this.hero = null;
         }
+    }
+
+    public int getComplexity() {
+        return complexity;
     }
 }

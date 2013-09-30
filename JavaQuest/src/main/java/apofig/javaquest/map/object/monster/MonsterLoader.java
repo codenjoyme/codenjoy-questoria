@@ -27,7 +27,7 @@ public class MonsterLoader implements Iterable<Monster> {
 
             Monster monster = newInstance(clazz);
 
-            monsters.put(clazz, monster.getWeight());
+            monsters.put(clazz, monster.getComplexity());
         }
     }
 
