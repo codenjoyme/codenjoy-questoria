@@ -25,11 +25,12 @@ import static org.fest.reflect.core.Reflection.field;
 public class JavaQuestTest {
 
     private JavaQuest game;
-    private TerritoryMap map;
+    private TerritoryMap territoryMap;
     private Me player;
     private Me alien;
     private ObjectFactoryImpl objects;
     private int countMonsters = 0;
+    private RectangleMap map;
 
     public int getSize() {
         return 100;
@@ -39,76 +40,13 @@ public class JavaQuestTest {
         return 13;
     }
 
-    public int getMonsterX() {
-        return 40;
-    }
-
-    public int getMonsterY() {
-        return 22;
-    }
-
-    public int getMonster2X() {
-        return 60;
-    }
-
-    public int getMonster2Y() {
-        return 33;
-    }
-
-    public int getMonster3X() {
-        return getMonsterX() + 10;
-    }
-
-    public int getMonster3Y() {
-        return getMonsterY();
-    }
-
-    public int getMonster4X() {
-        return getMonster2X() + 10;
-    }
-
-    public int getMonster4Y() {
-        return getMonster2Y();
-    }
-
-    public int getDronMentorX() {
-        return 60;
-    }
-
-    public int getDronMentorY() {
-        return 60;
-    }
-
-    public int getWallX() {
-        return 22;
-    }
-
-    public int getWallY() {
-        return 10;
-    }
-
-    public int getStoneX() {
-        return 70;
-    }
-
-    public int getStoneY() {
-        return 3;
-    }
-
     public RectangleMap getMapLoader() {
         return new RectangleMap(getSize(), getSize());
     }
 
     @Before
     public void init() {
-        final RectangleMap mapLoader = getMapLoader();
-        mapLoader.setMonster(getMonsterX(), getMonsterY());
-        mapLoader.setMonster(getMonster2X(), getMonster2Y());
-        mapLoader.setMonster(getMonster3X(), getMonster3Y());
-        mapLoader.setMonster(getMonster4X(), getMonster4Y());
-        setupDronMentor(mapLoader);
-        mapLoader.setWall(getWallX(), getWallY());
-        mapLoader.setStone(getStoneX(), getStoneY());
+        map = getMapLoader();
 
         Settings settings = new Settings() {
             @Override
@@ -118,7 +56,7 @@ public class JavaQuestTest {
 
             @Override
             public MapLoader mapLoader() {
-                return mapLoader;
+                return map;
             }
 
             @Override
@@ -150,16 +88,8 @@ public class JavaQuestTest {
         };
         game = new JavaQuest(settings);
         objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
-        map = (TerritoryMap) field("heroMap").ofType(HeroMap.class).in(game).get();
+        territoryMap = (TerritoryMap) field("heroMap").ofType(HeroMap.class).in(game).get();
         player = game.newPlayer("Player");
-    }
-
-    private void setupDronMentor(RectangleMap mapLoader) {
-        mapLoader.setDronMentor(getDronMentorX(), getDronMentorY());
-        mapLoader.setGold(getDronMentorX(), getDronMentorY() + 2);
-        mapLoader.setGold(getDronMentorX(), getDronMentorY() + 3);
-
-        mapLoader.set(getDronMentorX(), getDronMentorY() + 5, '#');
     }
 
     @Test
@@ -193,7 +123,7 @@ public class JavaQuestTest {
 
     private String getMap(Me me) {
         StringOutputStream out = new StringOutputStream();
-        map.printNear(me, out);
+        territoryMap.printNear(me, out);
         return out.getResult();
     }
 
@@ -574,19 +504,19 @@ public class JavaQuestTest {
         moveTo(getSize() - 6, getSize() - 6);
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║????????                  ║\n" +
                 "║??????                    ║\n" +
                 "║????                      ║\n" +
-                "║??                        ║\n" +
-                "║                  I       ║\n" +
+                "║??                I       ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
+                "║                        ??║\n" +
                 "║                      ????║\n" +
                 "║                    ??????║\n" +
                 "║                  ????????║\n" +
                 "║                ??????????║\n" +
-                "║              ????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
@@ -597,17 +527,17 @@ public class JavaQuestTest {
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????################║\n" +
                 "║??????????################║\n" +
-                "║??                    ####║\n" +
-                "║                  I   ####║\n" +
+                "║????                  ####║\n" +
+                "║??                I   ####║\n" +
                 "║                      ####║\n" +
                 "║                      ####║\n" +
                 "║                      ####║\n" +
                 "║                      ####║\n" +
                 "║                      ????║\n" +
+                "║                      ????║\n" +
                 "║                    ??????║\n" +
                 "║                  ????????║\n" +
                 "║                ??????????║\n" +
-                "║              ????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
@@ -740,9 +670,14 @@ public class JavaQuestTest {
 
     @Test
     public void testWhenMoveICanFindMonster() {
-        moveTo(getMonsterX() - 3, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 3, my);
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -753,8 +688,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
@@ -769,7 +702,7 @@ public class JavaQuestTest {
             if (count++ > 1000) {
                 throw new RuntimeException(String.format(
                         "Я не могу пройти сюда! My x=%s and y=%s, and view:\n%s",
-                        player.getX(), player.getY(), map.getViewArea(player)));
+                        player.getX(), player.getY(), territoryMap.getViewArea(player)));
             }
             if (player.getY() < y) {
                 moveUp(player);
@@ -803,13 +736,19 @@ public class JavaQuestTest {
 
     @Test
     public void testWhenITalkWithMonster() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
 
         assertMessage("Monster1: Сразись со мной!");
 
         assertCode("немногоКода('для подсказки');");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -820,21 +759,25 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldNoMoveWhenITalkWithMonster() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         moveRight();
 
-        verifyXY(getMonsterX() - 1, getMonsterY());
+        verifyXY(mx - 1, my);
         assertMessage("Monster1: Сразись со мной!\n" +
                 "Monster1: Никуда ты не уйдешь!");
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -845,8 +788,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
@@ -864,7 +805,11 @@ public class JavaQuestTest {
 
     @Test
     public void shouldKillMonsterWhenAttack() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("die!");
 
         assertMessage("Monster1: Сразись со мной!\n" +
@@ -872,6 +817,8 @@ public class JavaQuestTest {
                 "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -883,20 +830,24 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldMonsterStillAliveWhenBadAttack() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("No!!!");
 
         assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: No!!!\n" +
                 "Monster1: Я убью тебя!");
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -907,8 +858,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
@@ -920,7 +869,11 @@ public class JavaQuestTest {
 
     @Test
     public void shouldMonsterStillAliveWhenBadAttackTwice() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("No!!!");
         attack("Nooooo!!!");
 
@@ -930,6 +883,8 @@ public class JavaQuestTest {
                 "Player: Nooooo!!!\n" +
                 "Monster1: Я убью тебя!");
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -940,44 +895,52 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldNoMoveWhenITryToGoOnWall() {
-        moveTo(getWallX() - 1, getWallY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setWall(mx, my);
+        moveTo(mx - 1, my);
+
         moveRight();
 
-        verifyXY(getWallX() - 1, getWallY());
+        verifyXY(mx - 1, my);
         assertMessage("Wall: Пожалуйста, остановись!");
         asrtMap("╔══════════════════════════╗\n" +
-                "║??                        ║\n" +
-                "║??                        ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║????          I #         ║\n" +
-                "║????                      ║\n" +
-                "║??????                  ??║\n" +
-                "║??????                  ??║\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I #     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldGetGoldAfterMonsterDie() {
-        moveTo(getMonsterX() - 2, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 2, my);
+
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
 
         moveRight();
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -989,13 +952,13 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
         attack("die!");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1006,8 +969,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
@@ -1020,6 +981,8 @@ public class JavaQuestTest {
                 "Gold: Ты подобрал меня! Спасибо!!");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1030,8 +993,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
@@ -1057,7 +1018,11 @@ public class JavaQuestTest {
 
     @Test
     public void shouldLeaveGoldAfterMonsterDie() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("die!");
 
         assertMessage("Monster1: Сразись со мной!\n" +
@@ -1066,6 +1031,8 @@ public class JavaQuestTest {
                 "Gold: Привет, я - 10$");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1077,14 +1044,16 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldNoRepeatMessageAgain() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("die!");
         moveUp();
 
@@ -1094,6 +1063,8 @@ public class JavaQuestTest {
                 "Gold: Привет, я - 10$");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║????????????????      ????║\n" +
+                "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1105,14 +1076,16 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldNoKillGold() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("die!");
         attack("Gold die!");
 
@@ -1123,6 +1096,8 @@ public class JavaQuestTest {
                 "Player: Gold die!\n" +
                 "Gold: Ты не можешь делать это со мной!");
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1134,14 +1109,16 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldSomeMessageAfterGetGold() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("die!");
         moveRight();  // get gold
         moveRight();  // go away
@@ -1153,6 +1130,8 @@ public class JavaQuestTest {
                 "Gold: Ты подобрал меня! Спасибо!!");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1164,14 +1143,16 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
 
     @Test
     public void shouldGoAwayFromGold() {
-        moveTo(getMonsterX() - 1, getMonsterY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
         attack("die!");
         moveLeft();
 
@@ -1182,6 +1163,8 @@ public class JavaQuestTest {
                 "Gold: Ну и ладно! Достанусь кому-то другому!!");
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1192,8 +1175,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
     }
@@ -1520,50 +1501,59 @@ public class JavaQuestTest {
 
     @Test
     public void shouldMeetWithDronMentor() {
-        moveTo(getDronMentorX() - 2, getDronMentorY() + 2);
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setDronMentor(mx, my);
+        map.setGold(mx, my + 2);
+        map.setGold(mx, my + 3);
+
+        map.set(mx, my + 5, '#');
+
+        moveTo(mx - 2, my + 2);
 
         moveDown();
         moveDown();
+
         moveRight();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????                  ║\n" +
-                "║??????              $     ║\n" +
-                "║??????              $     ║\n" +
-                "║??????                    ║\n" +
-                "║????              I M     ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                  I M     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
         assertMessage(player, "DronMentor: " + DronMentor.MESSAGE);
 
-        assertTrue(objects().contains("[object DronMentor at map[60,60]='M']"));
+        assertTrue(objects(), objects().contains("[object DronMentor at map[40,20]='M']"));
 
         player.attack("Ok!");
 
         assertFalse(objects.toString().contains("[object DronMentor"));
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????                  ║\n" +
-                "║??????              $     ║\n" +
-                "║??????              $     ║\n" +
-                "║??????                    ║\n" +
-                "║????              I *     ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                  I *     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
         assertMessage(player,
@@ -1614,19 +1604,19 @@ public class JavaQuestTest {
         moveLeft();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????                  ║\n" +
-                "║??????              $     ║\n" +
-                "║??????              $     ║\n" +
-                "║??????              *     ║\n" +
-                "║????            I         ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                    $     ║\n" +
+                "║                    *     ║\n" +
+                "║                I         ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Обработка началась!");
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
@@ -1634,19 +1624,19 @@ public class JavaQuestTest {
         game.tick();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????                  ║\n" +
-                "║??????              $     ║\n" +
-                "║??????              *     ║\n" +
-                "║??????                    ║\n" +
-                "║????            I         ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                    *     ║\n" +
+                "║                          ║\n" +
+                "║                I         ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон подобрал золото!");
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:10");
@@ -1654,19 +1644,19 @@ public class JavaQuestTest {
         game.tick();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????                  ║\n" +
-                "║??????              *     ║\n" +
-                "║??????                    ║\n" +
-                "║??????                    ║\n" +
-                "║????            I         ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                          ║\n" +
+                "║                    *     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                I         ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон подобрал золото!");
         assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:20");
@@ -1674,38 +1664,38 @@ public class JavaQuestTest {
         game.tick();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????            *     ║\n" +
-                "║??????                    ║\n" +
-                "║??????                    ║\n" +
-                "║??????                    ║\n" +
-                "║????            I         ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                    *     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                I         ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "");
 
         game.tick();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║????????            #   ??║\n" +
-                "║????????            *     ║\n" +
-                "║??????                    ║\n" +
-                "║??????                    ║\n" +
-                "║??????                    ║\n" +
-                "║????            I         ║\n" +
-                "║??                        ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
                 "║                        ??║\n" +
-                "║                        ??║\n" +
-                "║                      ????║\n" +
+                "║                    #   ??║\n" +
+                "║                    *     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                I         ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║??????????                ║\n" +
+                "║??????????????        ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон уперся в неопознанный объект! Остановка!!!");
 
@@ -1719,19 +1709,19 @@ public class JavaQuestTest {
         moveUp();
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║??????????                ║\n" +
-                "║??????            #       ║\n" +
-                "║??????            *       ║\n" +
-                "║????              I       ║\n" +
-                "║????                      ║\n" +
-                "║????                      ║\n" +
-                "║??                        ║\n" +
+                "║                          ║\n" +
+                "║                  #       ║\n" +
+                "║                  *       ║\n" +
+                "║                  I       ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
-                "║                      ????║\n" +
-                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║????????                  ║\n" +
+                "║????????????          ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
         assertMessage(player, "Dron: Я твой робот! Запрограммируй меня.");
@@ -1755,12 +1745,12 @@ public class JavaQuestTest {
 
     @Test
     public void shouldMeetWithStone() {
-        moveTo(getStoneX() - 1, getStoneY());
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setStone(mx, my);
+        moveTo(mx - 1, my);
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "║                      ????║\n" +
                 "║                          ║\n" +
@@ -1771,6 +1761,9 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
         assertMessage(player, "Stone: " + Stone.MESSAGE_INTRO);
@@ -1830,17 +1823,31 @@ public class JavaQuestTest {
 
     @Test
     public void shouldAnyUserHasTheirMonsterPool() {
-        moveLeft();
-        moveLeft();
-        moveLeft();
+        moveRight();
+        moveRight();
+        moveRight();
 
         alien = game.newPlayer("Alien");
 
-        moveTo(getMonsterX() - 1, getMonsterY());
-        moveTo(alien, getMonster2X() - 2, getMonster2Y());
+        int mx1 = player.getX() + 10;
+        int my1 = player.getY();
+        map.setMonster(mx1, my1);
+
+        int mx2 = player.getX() + 10;
+        int my2 = player.getY() + 4;
+        map.setMonster(mx2, my2);
+
+        int mx3 = player.getX() + 10;
+        int my3 = player.getY() - 4;
+        map.setMonster(mx3, my3);
+
+        moveTo(mx1 - 1, my1);
+        moveTo(alien, mx2 - 2, my2);
 
         asrtMap("╔══════════════════════════╗\n" +
-                "║                          ║\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                A   @     ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1848,72 +1855,174 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
-                "║                          ║\n" +
+                "║                    @     ║\n" +
                 "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-
-        asrtMap("╔══════════════════════════╗\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                  I   @   ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                          ║\n" +
-                "║                      ????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "║??????????????????????????║\n" +
-                "╚══════════════════════════╝", alien);
 
         assertMessage(player, "Monster1: Сразись со мной!");
         assertMessage(alien, "");
 
         moveRight(alien);
 
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                  A @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    @     ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
         assertMessage(player, "");
         assertMessage(alien, "Monster2: Сразись со мной!");
 
         player.attack("die!");
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                  A @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    @     ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
 
         assertMessage(player, "Player: die!\n" +
                 "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
         assertMessage(alien, "");
 
-        moveTo(player, getMonster3X() - 2, getMonster3Y());
-        clearMessages(player);
+        moveLeft(player);
+        assertMessage(player, "Gold: Ну и ладно! Достанусь кому-то другому!!");
+        moveDown(player);
+        moveDown(player);
+        moveDown(player);
+        moveDown(player);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                      ????║\n" +
+                "║                  A @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                I   @     ║\n" +
+                "║                          ║\n" +
+                "║????????                  ║\n" +
+                "║????????                  ║\n" +
+                "╚══════════════════════════╝");
+
         moveRight(player);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                      ????║\n" +
+                "║                  A @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I @     ║\n" +
+                "║                          ║\n" +
+                "║????????                  ║\n" +
+                "║????????                  ║\n" +
+                "╚══════════════════════════╝");
 
         assertMessage(player, "Monster3: Сразись со мной!");
         assertMessage(alien, "");
 
         alien.attack("die!");
 
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                      ????║\n" +
+                "║                  A $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I @     ║\n" +
+                "║                          ║\n" +
+                "║????????                  ║\n" +
+                "║????????                  ║\n" +
+                "╚══════════════════════════╝");
+
         assertMessage(player, "");
         assertMessage(alien, "Alien: die!\n" +
                 "Monster2: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
 
-
-        moveTo(alien, getMonster4X() - 2, getMonster4Y());
-        clearMessages(alien);
+        moveDown(alien);
         moveRight(alien);
+        moveRight(alien);
+        moveDown(alien);
+        assertMessage(alien, "Gold: Ну и ладно! Достанусь кому-то другому!!");
+        moveDown(alien);
+        assertMessage(alien, "Gold: Привет, я - 10$");
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                      ????║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      A   ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I @     ║\n" +
+                "║                          ║\n" +
+                "║????????                  ║\n" +
+                "║????????                  ║\n" +
+                "╚══════════════════════════╝");
+
+        moveDown(alien);
+        moveDown(alien);
+        moveDown(alien);
+        assertMessage(alien, "Gold: Ну и ладно! Достанусь кому-то другому!!");
+        moveDown(alien);
+        moveDown(alien);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║                      ????║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I @ A   ║\n" +
+                "║                          ║\n" +
+                "║????????                  ║\n" +
+                "║????????                  ║\n" +
+                "╚══════════════════════════╝");
 
         assertMessage(player, "");
-        assertMessage(alien, "Monster4: Сразись со мной!");
-
-        alien.attack("die!");
-
-        assertMessage(player, "");
-        assertMessage(alien, "Alien: die!\n" +
-                "Monster4: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
-                "Gold: Привет, я - 10$");
+        assertMessage(alien, "Monster3: Я сейчас занят!");
 
         player.attack("die!");
 
@@ -1921,7 +2030,6 @@ public class JavaQuestTest {
                 "Monster3: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                 "Gold: Привет, я - 10$");
         assertMessage(alien, "");
-
     }
 
     private void assertCode(String expected) {
@@ -1935,17 +2043,21 @@ public class JavaQuestTest {
 
     @Test
     public void shouldMonsterBusyWhenFightWithAlien() {
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+
         moveLeft();
         moveLeft();
         moveLeft();
 
         alien = game.newPlayer("Alien");
 
-        moveTo(alien, getMonsterX() - 1, getMonsterY());
+        moveTo(alien, mx - 1, my);
 
         assertMessage(alien, "Monster1: Сразись со мной!");
 
-        moveTo(getMonsterX() - 3, getMonsterY() - 2);
+        moveTo(mx - 3, my - 2);
         moveRight();
         moveRight();
         moveRight();
@@ -1960,6 +2072,8 @@ public class JavaQuestTest {
         moveLeft(player);
 
         asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║??????????????        ????║\n" +
                 "║??????????                ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1971,8 +2085,6 @@ public class JavaQuestTest {
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
-                "║                      ????║\n" +
-                "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
         assertMessage(alien, "");
@@ -1990,6 +2102,19 @@ public class JavaQuestTest {
                 "Gold: Привет, я - 10$");
         assertMessage(player, "");
     }
+
+    @Test
+    public void shouldCanKillAnotherBusyMonster() { // TODO а может не стоит разрешать помагать?
+        shouldMonsterBusyWhenFightWithAlien();
+
+        player.attack("die!");
+
+        assertMessage(player, "Player: die!");
+        assertMessage(alien,
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
+    }
+
 
     @Test
     public void shouldPlayerCanLeaveBusyMonster() {

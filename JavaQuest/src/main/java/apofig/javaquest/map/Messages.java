@@ -11,6 +11,13 @@ import java.util.List;
 public class Messages {
     private static final String SEPARATOR = "---------------------------------------------------------------\n";
     private List<String> messages = new LinkedList<String>();
+    private String owner;
+
+    public Messages() {}
+
+    public Messages(String owner) {
+        this.owner = owner;
+    }
 
     @Override
     public String toString() {

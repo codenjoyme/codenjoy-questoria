@@ -1,6 +1,5 @@
 package apofig.javaquest.map.object.monster;
 
-import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.Leaveable;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
@@ -8,9 +7,6 @@ import apofig.javaquest.map.object.TalkingObject;
 import apofig.javaquest.map.object.impl.Nothing;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * User: sanja

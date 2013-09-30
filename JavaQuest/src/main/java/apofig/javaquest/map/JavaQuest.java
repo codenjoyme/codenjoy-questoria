@@ -3,6 +3,7 @@ package apofig.javaquest.map;
 import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.impl.Wall;
+import apofig.javaquest.map.object.impl.dron.Dron;
 import apofig.javaquest.map.object.monster.CodeHelper;
 import apofig.javaquest.services.Tickable;
 
@@ -45,7 +46,7 @@ public class JavaQuest implements Tickable {
         Player info = new Player(name);
 
         Point point = findFreePosition();
-        Me player = new Me(objects, heroMap, locator, view, new Messages(), point.getX(), point.getY(), info);
+        Me player = new Me(objects, heroMap, locator, view, new Messages(info.getName()), point.getX(), point.getY(), info);
         objects.add(player);
         players.add(player);
 
@@ -92,7 +93,7 @@ public class JavaQuest implements Tickable {
                 if (leaveable.canLeave(me)) {
                     if (!locator.isNear(me.atNewPlace(), smth) && !locator.getAt(whereToGo, me).equals(smth)) {
                         leaveable.tryToLeave(me);
-                        if (smth instanceof Me) {
+                        if (!(smth instanceof Dron)) {  // TODO а я вот тут так буду перечислять все типы? Как-то не очень это все
                             me.leave((TalkingObject) smth);
                         }
                     }
