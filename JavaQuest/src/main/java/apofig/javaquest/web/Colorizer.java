@@ -19,6 +19,7 @@ public class Colorizer {
         add("fog", "?");
         add("iam", "I");
         add("monster", "@");
+        add("stone", "O");
         add("gold", "$");
         add("alien", "A");
         add("mentor", "M");

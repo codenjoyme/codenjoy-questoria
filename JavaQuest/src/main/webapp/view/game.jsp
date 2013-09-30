@@ -44,6 +44,9 @@
         .dron {
             color:firebrick;
         }
+        .stone {
+            color:sienna;
+        }
     </style>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.js"></script>
