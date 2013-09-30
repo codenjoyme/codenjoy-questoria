@@ -5,7 +5,7 @@ import apofig.javaquest.map.object.monster.MonsterFactory;
 import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.Monster;
 import apofig.javaquest.map.object.monster.MonsterPool;
-import apofig.javaquest.map.object.monster.Stone;
+import apofig.javaquest.map.object.Stone;
 import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;

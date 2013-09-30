@@ -4,9 +4,7 @@ import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.impl.Wall;
 import apofig.javaquest.map.object.impl.dron.Dron;
-import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.CodeHelper;
-import apofig.javaquest.map.object.monster.Stone;
 import apofig.javaquest.services.Tickable;
 
 import java.util.*;

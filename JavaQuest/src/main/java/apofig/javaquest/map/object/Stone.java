@@ -1,10 +1,11 @@
-package apofig.javaquest.map.object.monster;
+package apofig.javaquest.map.object;
 
 import apofig.javaquest.map.object.Leaveable;
 import apofig.javaquest.map.object.Me;
 import apofig.javaquest.map.object.Something;
 import apofig.javaquest.map.object.TalkingObject;
 import apofig.javaquest.map.object.impl.Nothing;
+import apofig.javaquest.map.object.monster.SimpleIterator;
 
 import java.util.Arrays;
 
