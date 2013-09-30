@@ -1060,7 +1060,8 @@ public class JavaQuestTest {
         assertMessage("Monster1: Сразись со мной!\n" +
                 "Player: die!\n" +
                 "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
-                "Gold: Привет, я - 10$");
+                "Gold: Привет, я - 10$\n" +
+                "Gold: Ну и ладно! Достанусь кому-то другому!!");
 
         asrtMap("╔══════════════════════════╗\n" +
                 "║????????????????      ????║\n" +
@@ -1737,9 +1738,8 @@ public class JavaQuestTest {
 
         moveDown();
         assertMessage(player, "Dron: Обработка началась!\n" +
-                "Dron: Команда 'java.lang.RuntimeException: " +
-                "java.lang.reflect.InvocationTargetException: " +
-                "java.lang.RuntimeException: \"     #  \"' не принята! Остановка!!!");
+                "Dron: Команда 'java.lang.RuntimeException: java.lang.reflect.InvocationTargetException: " +
+                "java.lang.RuntimeException: \"  # \"' не принята! Остановка!!!");
 
     }
 
@@ -1784,28 +1784,16 @@ public class JavaQuestTest {
 
         moveDown();
 
-        assertMessage(player, "");
-
-        moveDown();
-
         assertMessage(player, "Stone: " + Stone.MESSAGE_GOODBYE);
 
         moveUp();
 
         assertMessage(player, "Stone: " + Stone.MESSAGE_INTRO);
 
-        moveUp();
-
-        assertMessage(player, "");
-
         player.attack("");
 
         assertMessage(player, "Player: ok\n" +
                 "Stone: " + Stone.MESSAGE_1);
-
-        moveDown();
-
-        assertMessage(player, "");
 
         moveDown();
 
@@ -1975,10 +1963,11 @@ public class JavaQuestTest {
                 "Gold: Привет, я - 10$");
 
         moveDown(alien);
-        moveRight(alien);
-        moveRight(alien);
         moveDown(alien);
+        moveRight(alien);
+        moveRight(alien);
         assertMessage(alien, "Gold: Ну и ладно! Достанусь кому-то другому!!");
+        moveDown(alien);
         moveDown(alien);
         assertMessage(alien, "Gold: Привет, я - 10$");
 
@@ -1987,8 +1976,8 @@ public class JavaQuestTest {
                 "║                    $     ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
-                "║                      A   ║\n" +
-                "║                    $     ║\n" +
+                "║                          ║\n" +
+                "║                    $ A   ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
                 "║                          ║\n" +
@@ -1998,7 +1987,6 @@ public class JavaQuestTest {
                 "║????????                  ║\n" +
                 "╚══════════════════════════╝");
 
-        moveDown(alien);
         moveDown(alien);
         moveDown(alien);
         assertMessage(alien, "Gold: Ну и ладно! Достанусь кому-то другому!!");
@@ -2214,6 +2202,39 @@ public class JavaQuestTest {
         } catch (IllegalArgumentException e) {
             assertEquals("Игрок с именем 'Player' уже зарегистрирован", e.getMessage());
         }
+    }
+
+    @Test
+    public void shouldIfIMeetWithStoneOtherObjects() {
+        int mx = player.getX() + 10;
+        int my = player.getY();
+        map.setStone(mx, my);
+        map.setWall(mx, my + 1);
+        map.setWall(mx, my - 1);
+        moveTo(mx - 1, my);
+
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                    #     ║\n" +
+                "║                  I O     ║\n" +
+                "║                    #     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+
+        assertMessage("Stone: " + Stone.MESSAGE_INTRO);
+
+        player.attack("ok");
+
+        assertMessage("Player: ok\n" +
+                "Stone: " + Stone.MESSAGE_1);
     }
 
 }

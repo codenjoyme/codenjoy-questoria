@@ -4,11 +4,12 @@ import apofig.javaquest.map.object.*;
 import apofig.javaquest.map.object.impl.Nothing;
 import apofig.javaquest.map.object.impl.Wall;
 import apofig.javaquest.map.object.impl.dron.Dron;
+import apofig.javaquest.map.object.impl.dron.DronMentor;
 import apofig.javaquest.map.object.monster.CodeHelper;
+import apofig.javaquest.map.object.monster.Stone;
 import apofig.javaquest.services.Tickable;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: oleksandr.baglai
@@ -123,11 +124,13 @@ public class JavaQuest implements Tickable {
             }
         }
 
+        // Something object = newObjects.get(0);  // TODO а что, если встречаемся с несколькими объектами?
+
         for (Something object : newObjects) {
             if (object instanceof CanBeBusy) {
                 CanBeBusy canBeBusy = (CanBeBusy) object;
                 if (canBeBusy.isBusy()) {
-                    ((TalkingObject) object).connect(me);
+                    ((TalkingObject) object).connect(me);  // TODO вот это как-то ну совсем не очень. Архитектуру Саня придумай!
                     canBeBusy.sayWhenBusy();
                     ((TalkingObject) object).disconnect(me);
                     continue;

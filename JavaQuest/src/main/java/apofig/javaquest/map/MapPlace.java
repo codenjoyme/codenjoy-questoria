@@ -36,15 +36,11 @@ public class MapPlace implements Place {
     public List<Place> near() {
         List<Place> result = new LinkedList<Place>();
 
-        result.add(near(-1, -1));
         result.add(near( 0, -1));
-        result.add(near( 1, -1));
 
         result.add(near( 1, 0));
 
-        result.add(near( 1, 1));
         result.add(near( 0, 1));
-        result.add(near(-1, 1));
 
         result.add(near(-1, 0));
 

@@ -33,10 +33,7 @@ public class MapPlaceTest {
     @Test
     public void shouldWorkNear() {
         assertEquals(
-                "[map[3,3]='1', map[4,3]='2', map[5,3]='3', " +
-                "map[5,4]='6', " +
-                "map[5,5]='9', map[4,5]='8', map[3,5]='7', " +
-                "map[3,4]='4']", place.near().toString());
+                "[map[4,3]='2', map[5,4]='6', map[4,5]='8', map[3,4]='4']", place.near().toString());
     }
 
     @Test
