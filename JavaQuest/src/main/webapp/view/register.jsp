@@ -4,6 +4,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/register.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
     <form:form commandName="player" action="register" method="POST">
@@ -14,7 +16,7 @@
                         <td>Как завать твоего героя?</td>
                     </tr>
                     <tr>
-                        <td><form:input path="name"/></td>
+                        <td><form:input id="name" path="name"/></td>
                         <c:if test="${busy}">
                             <td><span>Игрок с таким именем уже зарегистрирован</span></td>
                         </c:if>
