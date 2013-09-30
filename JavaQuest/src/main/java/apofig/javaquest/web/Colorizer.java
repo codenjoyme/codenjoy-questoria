@@ -1,5 +1,7 @@
 package apofig.javaquest.web;
 
+import apofig.javaquest.map.object.ObjectLoader;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +27,12 @@ public class Colorizer {
         add("mentor", "M");
         add("dron", "*");
         add("wall", "# ");
+
+        for (String ch : new ObjectLoader().objects()) {
+            if (!colorizer.containsKey(ch) && !colorizer.containsKey(ch + " ") ) {
+                add("default", ch);
+            }
+        }
     }
 
     private static void add(String aclass, String...strings) {

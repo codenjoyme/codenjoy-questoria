@@ -54,4 +54,8 @@ public class ObjectLoader {
 
         return newInstance(cache.get(key));
     }
+
+    public List<String> objects() {
+        return new LinkedList(cache.keySet());
+    }
 }

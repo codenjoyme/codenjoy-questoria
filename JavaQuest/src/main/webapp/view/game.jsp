@@ -47,6 +47,9 @@
         .stone {
             color:sienna;
         }
+        .default {
+            color:black;
+        }
     </style>
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.7.2.js"></script>
