@@ -1,6 +1,5 @@
 package apofig.javaquest.map.object.monster.impl;
 
-import apofig.javaquest.map.object.monster.impl.MakeBricksMonster;
 import org.approvaltests.legacycode.LegacyApprovals;
 import org.approvaltests.legacycode.Range;
 import org.junit.Test;
