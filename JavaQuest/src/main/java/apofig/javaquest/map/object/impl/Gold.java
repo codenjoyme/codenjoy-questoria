@@ -12,6 +12,7 @@ import apofig.javaquest.map.object.*;
 public class Gold extends TalkingObject implements Something, SetWorld, Leaveable, Usable {
 
     private World world;
+    private int amount = 10;
 
     @Override
     public void answer(String message) {
@@ -25,7 +26,7 @@ public class Gold extends TalkingObject implements Something, SetWorld, Leaveabl
 
     @Override
     public void ask() {
-        messenger.sayOnce("Привет, я - 10$");
+        messenger.sayOnce("Привет, я - " + amount + "$");
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Gold extends TalkingObject implements Something, SetWorld, Leaveabl
 
     @Override
     public void getBy(Player player) {
-        player.addGold(10);
+        player.addGold(amount);
         leaveAfter();
         messenger.say("Ты подобрал меня! Спасибо!!");
     }
