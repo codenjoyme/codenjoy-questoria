@@ -2,7 +2,6 @@ package apofig.javaquest.map.object.monster;
 
 import apofig.javaquest.map.Action;
 import apofig.javaquest.map.Dieble;
-import apofig.javaquest.map.Player;
 import apofig.javaquest.map.object.*;
 
 /**
@@ -12,6 +11,7 @@ import apofig.javaquest.map.object.*;
  */
 public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld, MeetWithHero, CanBeBusy, Leaveable {
 
+    public static final int GOLD_AMOUNT = 10;
     private String question;
     private String answer;
     protected String help;
@@ -21,6 +21,8 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     private World world;
     private int complexity;
     private Me hero;
+    private int gold;
+    private int attemptsToLeave;
 
     public Monster(String question, String answer,
                    String help, String leave,
@@ -32,6 +34,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
         this.leave = leave;
         this.signature = signature;
         this.complexity = complexity;
+        this.gold = GOLD_AMOUNT;
     }
 
     @Override
@@ -47,7 +50,9 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
 
     @Override
     public boolean canLeave(Me hero) {
-        return this.hero == null || !this.hero.equals(hero);
+        boolean otherHeroCanLeave = this.hero == null || !this.hero.equals(hero);
+        boolean canLeave = attemptsToLeave >= 1;
+        return otherHeroCanLeave || canLeave;
     }
 
     @Override
@@ -57,7 +62,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
 
     @Override
     public Something leaveAfter() {
-        return world.make('$');
+        return world.make('$', gold);
     }
 
     @Override
@@ -68,7 +73,14 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     @Override
     public void tryToLeave(Me hero) {
         if (hero.equals(this.hero)) {
-            messenger.say(leave);
+            if (attemptsToLeave == 0) {
+                messenger.say(leave);
+            } else {
+                // TODO потестить кейз, когда у игрока нет золота вообще, что тогда? Не отпускать его? :)
+                messenger.say("Монстр отнял у тебя немного золота...");
+                gold += this.hero.filchGold(GOLD_AMOUNT);
+            }
+            attemptsToLeave++;
         }
     }
 
@@ -112,6 +124,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     public void meetWith(Me hero) {
         if (this.hero == null) {
             this.hero = hero;
+            attemptsToLeave = 0;
         }
     }
 

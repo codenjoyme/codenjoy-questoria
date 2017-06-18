@@ -37,7 +37,8 @@ public class Locator implements MapLocator {
     }
 
     private Something get(Me founder, Place place) {
-        return factory.get(place, founder);
+        // TODO продумать как локатор будет конфигурировать объекты, как это сейчас делает ObjectFactory
+        return factory.get(place, founder, null);
     }
 
     @Override

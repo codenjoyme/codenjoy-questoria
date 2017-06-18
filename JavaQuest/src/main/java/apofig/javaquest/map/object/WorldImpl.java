@@ -22,9 +22,11 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public Something make(char c) {
+    public Something make(char c, Object... params) {
         place.update(c);
-        return factory.get(place, founder);
+        // TODO подумать над этим - некрасиво как-то
+        Object parameter = (params != null && params.length > 0) ? params[0] : null;
+        return factory.get(place, founder, parameter);
     }
 
     @Override

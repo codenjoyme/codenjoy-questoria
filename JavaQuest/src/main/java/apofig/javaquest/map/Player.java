@@ -24,6 +24,17 @@ public class Player implements PlayerInfo {
         gold += count;
     }
 
+    public int filchGold(int count) {
+        if (gold < count) {
+            int old = gold;
+            gold = 0;
+            return old;
+        } else {
+            gold -= count;
+            return count;
+        }
+    }
+
     public String getName() {
         return name;
     }

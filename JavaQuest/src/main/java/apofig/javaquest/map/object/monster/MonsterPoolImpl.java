@@ -37,7 +37,7 @@ public class MonsterPoolImpl implements MonsterPool {
             monster = new Monster("Я монстр №" + count + "! Борись со мной!",
                     "die!",
                     "Я убью тебя!",
-                    "Никуда ты не уйдешь!",
+                    CodeRunnerMonster.LEAVE,
                     "", count);
             count++;
         }

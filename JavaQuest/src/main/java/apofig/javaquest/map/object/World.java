@@ -12,6 +12,6 @@ public interface World {
 
     void move(int x, int y);
 
-    Something make(char c);
+    Something make(char c, Object... params);
 
 }

@@ -11,7 +11,7 @@ import apofig.compiler.JavaMethod;
 public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
 
     public final static String HELP = "Попробуй еще раз!";
-    public final static String LEAVE = "Никуда ты не уйдешь!";
+    public final static String LEAVE = "Просто так ты не уйдешь!";
 
     private MonsterTest test;
 

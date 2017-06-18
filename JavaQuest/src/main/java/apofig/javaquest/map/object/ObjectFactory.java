@@ -10,7 +10,7 @@ import apofig.javaquest.services.Tickable;
  * Time: 1:49 AM
  */
 public interface ObjectFactory extends Tickable {
-    Something get(Place place, Me founder);
+    Something get(Place place, Me founder, Object params);
 
     void add(Me me);
 

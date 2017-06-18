@@ -125,6 +125,10 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         return map.getViewArea(this);
     }
 
+    public int filchGold(int amount) {
+        return info.filchGold(amount);
+    }
+
     public class DummyMe extends Me  {
         @Override
         public PlayerView view() {

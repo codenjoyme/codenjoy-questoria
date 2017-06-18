@@ -7,6 +7,7 @@ import apofig.javaquest.map.object.monster.impl.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -127,7 +128,7 @@ public class MonsterPoolImplTest {
         Place place = mock(Place.class);
         final Gold gold = new Gold();
         gold.setMessenger(new MessengerImpl());
-        when(objects.get(eq(place), any(Me.class))).thenAnswer(new Answer<Object>() {
+        when(objects.get(eq(place), any(Me.class), anyObject())).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 monster.die();

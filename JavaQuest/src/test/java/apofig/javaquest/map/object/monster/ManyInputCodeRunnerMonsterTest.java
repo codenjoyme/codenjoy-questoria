@@ -127,11 +127,12 @@ public class ManyInputCodeRunnerMonsterTest {
             }
 
             @Override
-            public Something make(char c) {
+            public Something make(char c, Object... params) {
                 die = true;
                 Gold gold = new Gold();
                 gold.setMessenger(messenger);
                 gold.setWorld(this);
+                gold.setParameters((Integer)params[0]);
                 return gold;
             }
         });

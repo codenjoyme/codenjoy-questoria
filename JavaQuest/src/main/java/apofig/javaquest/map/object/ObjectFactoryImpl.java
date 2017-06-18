@@ -42,7 +42,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     @Override
-    public Something get(Place place, Me founder) {
+    public Something get(Place place, Me founder, Object params) {
         if (founder instanceof Me.DummyMe) {
             founder = ((Me.DummyMe)founder).getRealMe();
         }
@@ -60,7 +60,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
 
-        return initObject(place, messenger, founder);
+        return initObject(place, messenger, founder, params);
     }
 
     public Collection<Something> getObjects() {
@@ -80,7 +80,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
         monsters.remove(me.getName());
     }
 
-    private Something initObject(Place place, Messenger messenger, Me founder) {
+    private Something initObject(Place place, Messenger messenger, Me founder, Object params) {
         Something result = newObject(place.getChar(), founder);
 
         WorldImpl world = new WorldImpl(this, place, result, founder);
@@ -106,6 +106,10 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
         if (SetWorld.class.isAssignableFrom(result.getClass())) {
             ((SetWorld)result).setWorld(world);
+        }
+
+        if (SetParameters.class.isAssignableFrom(result.getClass())) {
+            ((SetParameters)result).setParameters(params);
         }
 
         return result;

@@ -72,7 +72,7 @@ public class JavaQuestTest {
                                 return new Monster("Сразись со мной!",
                                         "die!",
                                         "Я убью тебя!",
-                                        "Никуда ты не уйдешь!",
+                                        "Просто так ты не уйдешь!",
                                         "немногоКода('для подсказки');", 0) {
 
                                     @Override
@@ -766,16 +766,20 @@ public class JavaQuestTest {
 
     @Test
     public void shouldNoMoveWhenITalkWithMonster() {
+        givenGold(player, 15);
+
         int mx = player.getX() + 20;
         int my = player.getY();
         map.setMonster(mx, my);
         moveTo(mx - 1, my);
 
-        moveRight();
+        assertMessage("Monster1: Сразись со мной!");
+
+        // first attempt
+        moveLeft();
 
         verifyXY(mx - 1, my);
-        assertMessage("Monster1: Сразись со мной!\n" +
-                "Monster1: Никуда ты не уйдешь!");
+        assertMessage("Monster1: Просто так ты не уйдешь!");
         asrtMap("╔══════════════════════════╗\n" +
                 "║??????????????????????????║\n" +
                 "║                      ????║\n" +
@@ -791,7 +795,113 @@ public class JavaQuestTest {
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
+        assertGold(player, 15);
+
+        // second attempt
+        moveLeft();
+
+        verifyXY(mx - 2, my);
+        assertMessage("Monster1: Монстр отнял у тебя немного золота...");
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                I   @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+        assertGold(player, 5);
     }
+
+    @Test
+    public void shouldNoMoveWhenITalkWithMonster_caseIfNotEnoughGold() {
+        givenGold(player, 5);
+
+        int mx = player.getX() + 20;
+        int my = player.getY();
+        map.setMonster(mx, my);
+        moveTo(mx - 1, my);
+
+        // first attempt
+        moveLeft();
+        // second attempt
+        moveLeft();
+
+        assertMessage("Monster1: Сразись со мной!\n" +
+                "Monster1: Просто так ты не уйдешь!\n" +
+                "Monster1: Монстр отнял у тебя немного золота...");
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                I   @     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+        assertGold(player, 0);
+
+        // проверяем, что монстр таки збрал не 10 а 5
+        moveRight();
+        assertMessage("Monster1: Сразись со мной!");
+
+        attack("die!");
+
+        assertMessage("Player: die!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 15$");
+    }
+
+    @Test
+    public void shouldGetAllGoldFromMonster() {
+        shouldNoMoveWhenITalkWithMonster();
+
+        moveRight();
+        assertMessage("Monster1: Сразись со мной!");
+
+        attack("die!");
+
+        assertMessage("Player: die!\n" +
+                "Monster1: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 20$");
+        asrtMap("╔══════════════════════════╗\n" +
+                "║??????????????????????????║\n" +
+                "║                      ????║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                  I $     ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                          ║\n" +
+                "║                      ????║\n" +
+                "║??????????????????????????║\n" +
+                "╚══════════════════════════╝");
+        assertGold(player, 5);
+
+        // get 20 gold
+        moveRight();
+
+        assertMessage("Gold: Привет, я - 20$\n" + // TODO почему-то говорит что оно золото 2 раза
+                "Gold: Ты подобрал меня! Спасибо!!");
+        assertGold(player, 25);
+    }
+
 
     @Test
     public void shouldNoMoreTHanOneMessageWhenTick() {
@@ -935,7 +1045,7 @@ public class JavaQuestTest {
         map.setMonster(mx, my);
         moveTo(mx - 2, my);
 
-        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
+        assertGold(player, 0);
 
         moveRight();
 
@@ -997,11 +1107,15 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:10");
+        assertGold(player, 10);
+    }
+
+    private void assertInfo(Me player, String info) {
+        assertEquals(info, player.getInfo().toString());
     }
 
     private void assertInfo(String info) {
-        assertEquals(info, player.getInfo().toString());
+        assertInfo(player, info);
     }
 
     private void assertMessage(String message) {
@@ -1621,7 +1735,7 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Обработка началась!");
-        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:0");
+        assertGold(player, 0);
 
         game.tick();
 
@@ -1641,7 +1755,7 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон подобрал золото!");
-        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:10");
+        assertGold(player, 1);
 
         game.tick();
 
@@ -1661,7 +1775,7 @@ public class JavaQuestTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
         assertMessage(player, "Dron: Дрон подобрал золото!");
-        assertInfo("Уровень:0 Опыт:0 Здоровье:100 Золото:20");
+        assertGold(player, 2);
 
         game.tick();
 
@@ -2115,20 +2229,43 @@ public class JavaQuestTest {
     public void shouldPlayerCantLeaveMonsterWhenOtherMeetWith() {
         shouldMonsterBusyWhenFightWithAlien();
 
+        givenGold(player, 15);
+        givenGold(alien, 15);
+
+        assertGold(player, 15);
+        assertGold(alien, 15);
+
         moveLeft(alien);
 
-        assertMessage(alien, "Monster1: Никуда ты не уйдешь!");
+        assertMessage(alien, "Monster1: Просто так ты не уйдешь!");
         assertMessage(player, "");
+
+        assertGold(player, 15);
+        assertGold(alien, 15);
 
         moveRight(player);
 
         assertMessage(alien, "");
         assertMessage(player, "");
 
+        assertGold(player, 15);
+        assertGold(alien, 15);
+
         moveLeft(alien);
 
-        assertMessage(alien, "Monster1: Никуда ты не уйдешь!");
+        assertMessage(alien, "Monster1: Монстр отнял у тебя немного золота...");
         assertMessage(player, "");
+
+        assertGold(player, 15);
+        assertGold(alien, 5);
+    }
+
+    private void assertGold(Me player, int amount) {
+        assertInfo(player, "Уровень:0 Опыт:0 Здоровье:100 Золото:" + amount);
+    }
+
+    private void givenGold(Me player, int amount) {
+        player.filchGold(-amount);
     }
 
     @Test
