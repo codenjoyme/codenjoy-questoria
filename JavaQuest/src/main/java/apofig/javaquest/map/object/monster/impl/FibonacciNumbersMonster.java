@@ -37,7 +37,7 @@ public class FibonacciNumbersMonster extends OneIntCodeRunnerMonster implements 
     }
 
     public final static String QUESTION =
-            "Сделай метод, возвращающий числ Фибоначчи из \n" +
+            "Сделай метод, возвращающий числа Фибоначчи из \n" +
             "ряда по его номеру:\n" +
             "f(0) = 0\n" +
             "f(1) = 1\n" +
