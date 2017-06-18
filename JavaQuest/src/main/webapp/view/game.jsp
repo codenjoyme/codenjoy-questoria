@@ -5,14 +5,14 @@
 <head>
     <style>
         body {
-            margin : 0px;
+            margin : 15px;
         }
         div, #message {
             font-family:lucida console;
             font-size:11px;
         }
         #answer {
-            width:360px;
+            width:540px;
             height:430px;
             border: 1px solid lightgray;
         }
@@ -86,7 +86,7 @@
         </tr>
         <tr>
             <td valign="top" colspan="2">
-                <textarea id="message" rows="10" cols="135" wrap="off">${message}</textarea></br>
+                <textarea id="message" rows="20" cols="159" wrap="off">${message}</textarea></br>
             </td>
             <td>
             </td>
