@@ -13,7 +13,7 @@ public class MyDron {
         char atWay = ' ';
         int random = 0;
         do {
-            random = new java.util.Random().nextInt(7);
+            random = new java.util.Random().nextInt(4);
             switch (random) {
                 case 0:
                     atWay = nearMe.charAt(1);
@@ -34,7 +34,7 @@ public class MyDron {
 
         } while (atWay != ' ' && atWay != '$');
 
-        switch (random) {
+        switch (new java.util.Random().nextInt(4)) {
             case 0:
                 return "up";
             case 1:

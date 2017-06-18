@@ -10,7 +10,8 @@ import apofig.javaquest.map.object.*;
  */
 public class DronMentor extends TalkingObject implements Something, SetWorld, MeetWithHero {
 
-    public static final String MESSAGE = "Видишь все это золото? Оно твое. Ты можешь собрать его намного быстрее, \n" +
+    public static final String MESSAGE =
+            "Видишь все это золото? Оно твое. Ты можешь собрать его намного быстрее, \n" +
             "если воспользуешься помощником. Я научу тебя его делать. \n" +
             "Чтобы робот заработал, тебе нужно наделить его разумом. \n" +
             "    public String whereToGo(String nearMe) {\n" +
@@ -18,9 +19,9 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
             "    }\n" +
             "Реализуй этот метод и посмотрим что у тебя получится. \n" +
             "Строка nearMe - это то что видит робо вокруг себя. Расшифруй ее так\n" +
-            "      123\n" +
-            "      8*4\n" +
-            "      765\n" +
+            "      012\n" +
+            "      7*3\n" +
+            "      654\n" +
             "Команды управления робота - left, right, up, down.\n" +
             "Если робот убежит, тебе прийдется его искать. \n" +
             "Только находясь рядом с ним ты можешь его модифицировать. \n" +
