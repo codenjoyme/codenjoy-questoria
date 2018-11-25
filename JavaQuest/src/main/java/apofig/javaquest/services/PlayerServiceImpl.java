@@ -1,10 +1,10 @@
 package apofig.javaquest.services;
 
-import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.monster.MonsterFactory;
-import apofig.javaquest.map.object.monster.MonsterPoolImpl;
-import apofig.javaquest.map.object.monster.MonsterLoader;
-import apofig.javaquest.map.object.monster.MonsterPool;
+import apofig.javaquest.field.*;
+import apofig.javaquest.field.object.monster.MonsterFactory;
+import apofig.javaquest.field.object.monster.MonsterPoolImpl;
+import apofig.javaquest.field.object.monster.MonsterLoader;
+import apofig.javaquest.field.object.monster.MonsterPool;
 import apofig.saver.Loader;
 import apofig.saver.Saver;
 import org.springframework.stereotype.Component;
@@ -12,20 +12,15 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.Map;
 
-/**
- * User: sanja
- * Date: 02.07.13
- * Time: 21:10
- */
 @Component("playerService")
-public class PlayerServiceImpl implements PlayerService {   // TODO test me
+public class PlayerServiceImpl implements PlayerService {
 
     private JavaQuest game;
     private java.util.Map<String, Player> players;
 
     public PlayerServiceImpl() {
         game = new JavaQuest(settings());
-        players = new HashMap<String, Player>();
+        players = new HashMap<>();
     }
 
     private Settings settings() {
@@ -36,8 +31,8 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
             }
 
             @Override
-            public MapLoader mapLoader() {
-                return new LoadMapFromFile("map.txt");
+            public FieldLoader fieldLoader() {
+                return new LoadFieldFromFile("field.txt");
             }
 
             @Override
@@ -56,21 +51,21 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
     }
 
     @Override
-    public void nextStepForAllGames() {
+    public void tick() {
         game.tick();
     }
 
     @Override
-    public Player loadGame(String playerGameCode) {  
+    public Player getPlayerByCode(String playerGameCode) {
         return players.get(playerGameCode);
     }
 
     @Override
     public boolean alreadyRegistered(String playerName) {
-        return getPlayer(playerName) != null;
+        return getPlayerByName(playerName) != null;
     }
 
-    private Player getPlayer(String playerName) {
+    private Player getPlayerByName(String playerName) {
         for (Map.Entry<String, Player> entry : players.entrySet()) {
             if (entry.getValue().getName().equals(playerName)) {
                 return entry.getValue();
@@ -88,13 +83,8 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
 
     @Override
     public List<Player> players() {
-        List<Player> result = new LinkedList<Player>(players.values());
-        Collections.sort(result, new Comparator<Player>() {
-            @Override
-            public int compare(Player o1, Player o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        List<Player> result = new LinkedList<>(players.values());
+        Collections.sort(result, Comparator.comparing(Player::getName));
         return result;
     }
 
@@ -114,7 +104,7 @@ public class PlayerServiceImpl implements PlayerService {   // TODO test me
 
     @Override
     public void remove(String playerName) {
-        Player player = getPlayer(playerName);
+        Player player = getPlayerByName(playerName);
         players.remove(player.getGameCode());
         game.remove(player.getName());
     }

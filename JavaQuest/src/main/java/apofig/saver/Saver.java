@@ -59,6 +59,9 @@ public class Saver {
             map.put("type", object.getClass().getName());
             map.put("id", string(object));
             map.put("fields", getFieldDOM(entry));
+            if (object.getClass().isEnum()) {
+                map.put("value", object.toString());
+            }
 
             result.add(map);
         }

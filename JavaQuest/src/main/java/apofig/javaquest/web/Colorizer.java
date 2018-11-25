@@ -1,11 +1,11 @@
 package apofig.javaquest.web;
 
-import apofig.javaquest.map.object.ObjectLoader;
+import apofig.javaquest.field.object.ObjectLoader;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static apofig.javaquest.map.object.ObjectFactoryImpl.newObjectError;
+import static apofig.javaquest.field.object.ObjectFactoryImpl.newObjectError;
 
 /**
  * User: oleksandr.baglai

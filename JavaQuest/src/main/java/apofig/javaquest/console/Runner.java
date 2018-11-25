@@ -1,7 +1,7 @@
 package apofig.javaquest.console;
 
-import apofig.javaquest.map.JavaQuestSinglePlayer;
-import apofig.javaquest.map.Joystick;
+import apofig.javaquest.field.JavaQuestSinglePlayer;
+import apofig.javaquest.field.Joystick;
 
 public class Runner {
 	

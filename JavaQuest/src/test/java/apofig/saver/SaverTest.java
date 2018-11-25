@@ -1,10 +1,5 @@
 package apofig.saver;
 
-import apofig.javaquest.map.object.monster.Monster;
-import apofig.javaquest.services.Player;
-import apofig.javaquest.services.PlayerService;
-import apofig.javaquest.services.PlayerServiceImpl;
-import org.approvaltests.Approvals;
 import org.junit.Test;
 
 import java.util.Arrays;

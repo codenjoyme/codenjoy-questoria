@@ -3,11 +3,11 @@ package apofig.javaquest;
 import apofig.javaquest.console.Console;
 import apofig.javaquest.console.ConsoleImpl;
 import apofig.javaquest.console.Runner;
-import apofig.javaquest.map.*;
-import apofig.javaquest.map.object.monster.MonsterFactory;
-import apofig.javaquest.map.object.monster.MonsterPoolImpl;
-import apofig.javaquest.map.object.monster.MonsterLoader;
-import apofig.javaquest.map.object.monster.MonsterPool;
+import apofig.javaquest.field.*;
+import apofig.javaquest.field.object.monster.MonsterFactory;
+import apofig.javaquest.field.object.monster.MonsterPoolImpl;
+import apofig.javaquest.field.object.monster.MonsterLoader;
+import apofig.javaquest.field.object.monster.MonsterPool;
 
 /**
  * User: oleksandr.baglai
@@ -24,8 +24,8 @@ public class Main {
             }
 
             @Override
-            public MapLoader mapLoader() {
-                return new LoadMapFromFile("map.txt");
+            public FieldLoader fieldLoader() {
+                return new LoadFieldFromFile("field.txt");
             }
 
             @Override

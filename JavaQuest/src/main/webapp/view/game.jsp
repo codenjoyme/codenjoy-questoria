@@ -74,7 +74,7 @@
     <table>
         <tr>
             <td>
-                <div id="map">${map}</div>
+                <div id="field">${field}</div>
             </td>
             <td valign="top">
                 <div>

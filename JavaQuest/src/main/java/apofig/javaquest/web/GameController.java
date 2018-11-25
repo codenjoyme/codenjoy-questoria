@@ -1,7 +1,7 @@
 package apofig.javaquest.web;
 
-import apofig.javaquest.map.JavaQuestSinglePlayer;
-import apofig.javaquest.map.Joystick;
+import apofig.javaquest.field.JavaQuestSinglePlayer;
+import apofig.javaquest.field.Joystick;
 import apofig.javaquest.services.Player;
 import apofig.javaquest.services.PlayerService;
 import org.json.JSONException;
@@ -33,11 +33,11 @@ public class GameController {
 
     @RequestMapping(value = "/user/{playerGameCode}", method = RequestMethod.GET)
     public String loadPlayerGame(Model model, @PathVariable("playerGameCode") String playerGameCode) {
-        Player player = playerService.loadGame(playerGameCode);
+        Player player = playerService.getPlayerByCode(playerGameCode);
         if (player == null) {
             return "redirect:/register";
         } else {
-            model.addAttribute("map", getMap(player.getGame()));
+            model.addAttribute("field", getField(player.getGame()));
             model.addAttribute("message", "");
             model.addAttribute("info", player.getGame().getPlayerInfo().toString());
             model.addAttribute("playerGameCode", playerGameCode);
@@ -48,7 +48,7 @@ public class GameController {
 
     @RequestMapping(value = "/answer", method = RequestMethod.GET)
     public ModelAndView command(@RequestParam String command, @RequestParam String playerGameCode) throws JSONException {
-        JavaQuestSinglePlayer game = playerService.loadGame(playerGameCode).getGame();
+        JavaQuestSinglePlayer game = playerService.getPlayerByCode(playerGameCode).getGame();
         if (game == null) {
             buildResponse("{error:'Неверный код игры - такого пользователя нет!'}");
         }
@@ -69,7 +69,7 @@ public class GameController {
         }
 
         JSONObject result = new JSONObject();
-        result.put("map", getMap(game));
+        result.put("field", getField(game));
         result.put("message", game.getMessage());
         result.put("code", game.getCodeHelper().getCode());
         result.put("info", game.getPlayerInfo());
@@ -84,7 +84,7 @@ public class GameController {
         return result;
     }
 
-    private String getMap(JavaQuestSinglePlayer game) {
+    private String getField(JavaQuestSinglePlayer game) {
         return Colorizer.process(game.toString());
     }
 

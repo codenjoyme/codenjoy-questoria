@@ -37,13 +37,13 @@ public class LoaderTest {
 
     private PlayerService getObjectTree() {
         PlayerService result = new PlayerServiceImpl();
-        Player player1 = result.loadGame(result.register("player1"));
-        Player player2 = result.loadGame(result.register("player2"));
+        Player player1 = result.getPlayerByCode(result.register("player1"));
+        Player player2 = result.getPlayerByCode(result.register("player2"));
 
         player1.getGame().getJoystick().moveDown();
         player2.getGame().getJoystick().moveLeft();
 
-        result.nextStepForAllGames();
+        result.tick();
         return result;
     }
 

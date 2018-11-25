@@ -1,22 +1,10 @@
 package apofig.javaquest.services;
 
-import apofig.javaquest.map.JavaQuest;
-import apofig.javaquest.map.JavaQuestSinglePlayer;
-import apofig.javaquest.map.Joystick;
-
-import java.util.Collection;
 import java.util.List;
 
-/**
- * User: sanja
- * Date: 02.07.13
- * Time: 21:11
- */
-public interface PlayerService {
+public interface PlayerService extends Tickable {
 
-    void nextStepForAllGames();
-
-    Player loadGame(String playerGameCode);
+    Player getPlayerByCode(String playerGameCode);
 
     boolean alreadyRegistered(String playerName);
 
@@ -24,9 +12,9 @@ public interface PlayerService {
 
     List<Player> players();
 
-    void saveAllGame();
-
-    void loadAllGame();
-
     void remove(String playerName);
+
+    // TODO кажется эти два метода не должны быть тут
+    void saveAllGame();
+    void loadAllGame();
 }

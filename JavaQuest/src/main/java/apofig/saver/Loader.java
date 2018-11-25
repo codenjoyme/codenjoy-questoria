@@ -56,7 +56,11 @@ public class Loader {
                         }
                         for (Class<?> innerClass : aClass.getDeclaredClasses()) {
                             if (innerClass.getSimpleName().equals(innerClassName)) {
-                                if ((innerClass.getModifiers() & Modifier.STATIC) != 0) {
+                                if (object.has("value")) {
+                                    // this is enum
+                                    String value = (String) object.get("value");
+                                    newInstance = Enum.valueOf((Class<? extends Enum>)innerClass, value);
+                                } else if ((innerClass.getModifiers() & Modifier.STATIC) != 0) {
                                     newInstance = Reflection.constructor().in(innerClass).newInstance();
                                 } else {
                                     JSONArray fields = (JSONArray) object.get("fields");
@@ -80,7 +84,13 @@ public class Loader {
                             newInstance = loadClass((String)fields.get(0));
                         } else {
                             Class<?> aClass = loadClass(className);
-                            newInstance = Reflection.constructor().in(aClass).newInstance();
+                            if (object.has("value")) {
+                                // this is enum
+                                String value = (String) object.get("value");
+                                newInstance = Enum.valueOf((Class<? extends Enum>)aClass, value);
+                            } else {
+                                newInstance = Reflection.constructor().in(aClass).newInstance();
+                            }
                         }
                     }
                 }

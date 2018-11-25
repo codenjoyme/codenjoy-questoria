@@ -34,7 +34,7 @@ public class TimerService implements Runnable {
         }
 
         try {
-            playerService.nextStepForAllGames();
+            playerService.tick();
         } catch (Exception e) {
             e.printStackTrace();
         }

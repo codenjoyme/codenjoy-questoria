@@ -1,7 +1,7 @@
 package apofig.javaquest.services;
 
-import apofig.javaquest.map.JavaQuest;
-import apofig.javaquest.map.JavaQuestSinglePlayer;
+import apofig.javaquest.field.JavaQuest;
+import apofig.javaquest.field.JavaQuestSinglePlayer;
 
 /**
  * User: sanja

@@ -2,8 +2,8 @@ function initGame(contextPath, playerGameCode, editor) {
 
     var serverAnswered = true;
 
-    function drawMap(data) {
-        $("#map").html(data.map);
+    function drawField(data) {
+        $("#field").html(data.field);
         showMessage(data.message);
         showAnswer(data.code);
         $("#info").html(data.info);
@@ -56,7 +56,7 @@ function initGame(contextPath, playerGameCode, editor) {
         serverAnswered = false;
 
         command = command.split("\n").join("</br>");
-        $.getJSON(contextPath + 'answer', {command:command, playerGameCode:playerGameCode, time:$.now()}, drawMap);
+        $.getJSON(contextPath + 'answer', {command:command, playerGameCode:playerGameCode, time:$.now()}, drawField);
     }
 
     function onEditor() {
