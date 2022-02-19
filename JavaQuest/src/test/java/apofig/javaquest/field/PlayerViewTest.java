@@ -6,11 +6,6 @@ import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 6:13 PM
- */
 public class PlayerViewTest {
 
 

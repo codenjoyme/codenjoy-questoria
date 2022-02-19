@@ -9,11 +9,6 @@ import apofig.javaquest.services.Tickable;
 
 import java.util.*;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 2:50 PM
- */
 public class JavaQuest implements Tickable {
 
     private HeroField heroField;

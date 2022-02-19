@@ -4,11 +4,6 @@ import apofig.javaquest.field.Player;
 import apofig.javaquest.field.object.*;
 import apofig.javaquest.field.object.monster.CodeHelper;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 8:43 PM
- */
 public class Nothing extends TalkingObject implements Something, CodeHelper, Usable {
 
     @Override

@@ -3,11 +3,7 @@ package apofig.javaquest.field.object.monster.impl;
 import apofig.javaquest.field.object.monster.MonsterTest;
 import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
-
 /**
- * User: oleksandr.baglai
- * Date: 2/13/13
- * Time: 7:10 PM
  * @author http://projecteuler.net/problem=16
  */
 public class PowerDigitSumMonster extends OneIntCodeRunnerMonster implements MonsterTest {

@@ -10,11 +10,6 @@ import java.util.Map;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * User: sanja
- * Date: 09.09.13
- * Time: 4:21
- */
 public class SaverTest {     // TODO переместить все в LoaderTest и переназвать его, а все иннерклассы вынести наружу в пакет dummy
 
     @Test

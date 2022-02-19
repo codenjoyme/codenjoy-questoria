@@ -4,9 +4,6 @@ import apofig.javaquest.field.object.monster.MonsterTest;
 import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
 /**
- * User: oleksandr.baglai
- * Date: 2/25/13
- * Time: 8:12 PM
  * @author http://projecteuler.net/problem=6
  */
 public class SumSquareDifferenceMonster extends OneIntCodeRunnerMonster implements MonsterTest {

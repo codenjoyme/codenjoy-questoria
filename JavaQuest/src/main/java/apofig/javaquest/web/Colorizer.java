@@ -7,11 +7,6 @@ import java.util.Map;
 
 import static apofig.javaquest.field.object.ObjectFactoryImpl.newObjectError;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 10:05 PM
- */
 public class Colorizer {
 
     private static final Map<String, String> colorizer = new HashMap<String, String>();

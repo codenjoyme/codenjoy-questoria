@@ -15,11 +15,6 @@ import java.util.Iterator;
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/13/13
- * Time: 10:58 PM
- */
 public class MonsterPoolImplTest {
 
     private MonsterPool factory;

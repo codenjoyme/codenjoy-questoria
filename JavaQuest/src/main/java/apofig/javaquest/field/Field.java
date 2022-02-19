@@ -2,11 +2,6 @@ package apofig.javaquest.field;
 
 import java.util.Arrays;
 
-/**
- * User: sanja
- * Date: 09.07.13
- * Time: 22:56
- */
 public class Field {
     private char[][] field;
 

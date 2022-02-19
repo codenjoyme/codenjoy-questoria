@@ -12,11 +12,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/8/13
- * Time: 1:21 PM
- */
 public class OneIntCodeRunnerMonsterTest {
 
     public static final String BAD_CODE = "public String fizzbuzz(int i) {" +

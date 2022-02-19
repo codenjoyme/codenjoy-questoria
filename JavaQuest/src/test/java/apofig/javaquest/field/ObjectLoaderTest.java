@@ -11,11 +11,6 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 import static junit.framework.Assert.assertEquals;
 
-/**
- * User: sanja
- * Date: 06.09.13
- * Time: 3:27
- */
 public class ObjectLoaderTest {
 
     ObjectLoader loader = new ObjectLoader();

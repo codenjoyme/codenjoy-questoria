@@ -1,10 +1,5 @@
 package apofig.saver.dummy;
 
-/**
- * User: sanja
- * Date: 12.09.13
- * Time: 2:28
- */
 public class ClassWithInnerClass {
     public Inner a;
 

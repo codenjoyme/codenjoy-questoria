@@ -1,10 +1,5 @@
 package apofig.javaquest.field;
 
-/**
- * User: sanja
- * Date: 02.07.13
- * Time: 21:20
- */
 public class PointImpl implements Point {
     private int x;
     private int y;

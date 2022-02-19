@@ -4,9 +4,6 @@ import apofig.javaquest.field.object.Me;
 import apofig.javaquest.field.object.monster.Monster;
 import org.apache.commons.lang.StringUtils;
 
-/**
- * Created by indigo on 2018-11-08.
- */
 public class Portal {
 
     private Me hero;

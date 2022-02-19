@@ -8,11 +8,6 @@ import apofig.javaquest.field.object.Something;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: sanja
- * Date: 29.09.13
- * Time: 21:46
- */
 public class Locator implements FieldLocator {
 
     private TerritoryField field;

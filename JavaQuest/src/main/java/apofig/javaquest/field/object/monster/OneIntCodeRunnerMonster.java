@@ -1,10 +1,5 @@
 package apofig.javaquest.field.object.monster;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/26/13
- * Time: 3:12 AM
- */
 public abstract class OneIntCodeRunnerMonster extends ManyInputCodeRunnerMonster {
 
     public static int COUNT_TESTS = 100;

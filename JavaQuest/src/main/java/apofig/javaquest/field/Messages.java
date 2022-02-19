@@ -3,11 +3,6 @@ package apofig.javaquest.field;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 12:33 AM
- */
 public class Messages {
     private static final String SEPARATOR = "---------------------------------------------------------------\n";
     private List<String> messages = new LinkedList<String>();

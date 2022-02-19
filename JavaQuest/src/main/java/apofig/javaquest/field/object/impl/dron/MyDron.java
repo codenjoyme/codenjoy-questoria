@@ -1,10 +1,5 @@
 package apofig.javaquest.field.object.dron;
 
-/**
- * User: sanja
- * Date: 01.09.13
- * Time: 2:35
- */
 public class MyDron {
 
     public String whereToGo(String nearMe) {

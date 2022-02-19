@@ -11,11 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-/**
- * User: sanja
- * Date: 09.09.13
- * Time: 17:29
- */
 public class Loader {
 
     private Map<String, Object> instances = new HashMap<String, Object>();

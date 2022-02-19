@@ -5,11 +5,6 @@ import apofig.javaquest.field.object.Place;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 1:50 AM
- */
 public class FieldPlace implements Place {
     private Field field;
     private int x;

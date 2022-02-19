@@ -3,11 +3,6 @@ package apofig.javaquest.field.object;
 import apofig.javaquest.field.*;
 import apofig.javaquest.field.object.monster.Monster;
 
-/**
- * User: sanja
- * Date: 02.07.13
- * Time: 22:57
- */
 public class Me extends TalkingObject implements Viewable, Joystick, Something, Leaveable {
 
     private World world;

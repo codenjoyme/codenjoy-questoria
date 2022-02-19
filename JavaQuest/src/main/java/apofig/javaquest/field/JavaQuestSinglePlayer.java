@@ -3,11 +3,6 @@ package apofig.javaquest.field;
 import apofig.javaquest.field.object.Me;
 import apofig.javaquest.field.object.monster.CodeHelper;
 
-/**
- * User: sanja
- * Date: 09.07.13
- * Time: 23:48
- */
 public class JavaQuestSinglePlayer {
 
     private JavaQuest game;

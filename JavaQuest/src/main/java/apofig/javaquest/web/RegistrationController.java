@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * User: sanja
- * Date: 08.09.13
- * Time: 4:00
- */
 @Controller
 @RequestMapping(value = "/register")
 public class RegistrationController {

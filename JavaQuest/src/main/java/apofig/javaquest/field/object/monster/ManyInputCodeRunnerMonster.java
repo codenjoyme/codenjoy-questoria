@@ -8,11 +8,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/26/13
- * Time: 3:12 AM
- */
 public abstract class ManyInputCodeRunnerMonster extends WSCodeRunnerMonster {
 
     public ManyInputCodeRunnerMonster(String question, String signature, int weight) {

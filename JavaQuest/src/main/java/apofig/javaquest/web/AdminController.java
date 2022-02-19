@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * User: sanja
- * Date: 08.09.13
- * Time: 4:00
- */
 @Controller
 @RequestMapping(value = "/admin31415")
 public class AdminController {

@@ -15,11 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/30/13
- * Time: 3:21 PM
- */
 @Controller
 public class GameController {
 

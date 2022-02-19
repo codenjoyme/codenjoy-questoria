@@ -4,9 +4,6 @@ import apofig.javaquest.field.object.monster.MonsterTest;
 import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
 /**
- * User: oleksandr.baglai
- * Date: 2/13/13
- * Time: 7:10 PM
  * @author http://euler.jakumo.org/problems/view/7.html
  */
 public class XthPrimeMonster extends OneIntCodeRunnerMonster implements MonsterTest {

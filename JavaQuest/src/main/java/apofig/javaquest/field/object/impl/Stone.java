@@ -8,11 +8,6 @@ import apofig.javaquest.field.object.monster.SimpleIterator;
 
 import java.util.Arrays;
 
-/**
- * User: sanja
- * Date: 12.09.13
- * Time: 19:41
- */
 public class Stone extends TalkingObject implements Something, Leaveable {
 
     public static final String MESSAGE_1 = "Ты попал в сказочный мир Ascii кодов. Тут каждый объект живой. \n" +

@@ -2,11 +2,6 @@ package apofig.javaquest.field.object;
 
 import apofig.javaquest.field.Messages;
 
-/**
- * User: sanja
- * Date: 06.09.13
- * Time: 1:22
- */
 public interface Messenger {
     void sayOnce(String message);
 

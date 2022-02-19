@@ -2,11 +2,6 @@ package apofig.javaquest.field;
 
 import org.apache.commons.lang.StringUtils;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 4:07 PM
- */
 public class PlayerView {
 
     private static final String[] VIEW_CIRCLE = new String[]{

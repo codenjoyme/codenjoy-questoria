@@ -4,11 +4,6 @@ import apofig.javaquest.field.Action;
 import apofig.javaquest.field.Dieble;
 import apofig.javaquest.field.object.*;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 8:30 PM
- */
 public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld, MeetWithHero, CanBeBusy, Leaveable {
 
     public static final int GOLD_AMOUNT = 10;

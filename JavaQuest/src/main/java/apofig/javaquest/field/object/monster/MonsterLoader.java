@@ -7,11 +7,6 @@ import org.reflections.Reflections;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-/**
- * User: sanja
- * Date: 06.09.13
- * Time: 3:12
- */
 public class MonsterLoader implements Iterable<Monster> {
 
     private Map<Class<? extends Monster>, Integer> monsters;

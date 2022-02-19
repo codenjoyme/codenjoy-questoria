@@ -3,11 +3,6 @@ package apofig.javaquest.field.object.monster.impl;
 import apofig.javaquest.field.object.monster.ManyInputCodeRunnerMonster;
 import apofig.javaquest.field.object.monster.MonsterTest;
 
-/**
- * User: sanja
- * Date: 02.07.13
- * Time: 19:11
- */
 public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements MonsterTest {
 
     private static final String SIGNATURE =

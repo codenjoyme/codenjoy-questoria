@@ -17,9 +17,6 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by indigo on 2017-06-18.
- */
 public class CodeRunnerMonsterTest {
 
     private CodeRunnerMonster monster;

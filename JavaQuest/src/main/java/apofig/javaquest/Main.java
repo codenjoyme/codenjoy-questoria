@@ -9,11 +9,6 @@ import apofig.javaquest.field.object.monster.MonsterPoolImpl;
 import apofig.javaquest.field.object.monster.MonsterLoader;
 import apofig.javaquest.field.object.monster.MonsterPool;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 7:10 PM
- */
 public class Main {
 
     public static void main(String[] args) throws Exception {

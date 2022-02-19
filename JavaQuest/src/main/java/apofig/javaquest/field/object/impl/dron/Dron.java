@@ -10,11 +10,6 @@ import apofig.javaquest.services.Tickable;
 
 import java.util.List;
 
-/**
- * User: sanja
- * Date: 01.09.13
- * Time: 2:25
- */
 public class Dron extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable, SetLocator {
 
     public static final char CHAR = '*';

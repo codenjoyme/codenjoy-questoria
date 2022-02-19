@@ -4,11 +4,6 @@ import apofig.compiler.JavaCompiler;
 import apofig.javaquest.field.object.monster.test.TestResult;
 import apofig.javaquest.field.object.monster.test.TestSuite;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/6/13
- * Time: 7:13 PM
- */
 public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
 
     public final static String HELP = "Попробуй еще раз!";

@@ -9,11 +9,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * User: sanja
- * Date: 04.07.13
- * Time: 10:27
- */
 public class TerritoryFieldTest {
 
     @Test

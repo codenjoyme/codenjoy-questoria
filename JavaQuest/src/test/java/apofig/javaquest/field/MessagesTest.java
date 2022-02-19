@@ -5,11 +5,6 @@ import org.junit.Test;
 import static apofig.javaquest.field.Messages.withoutSeparator;
 import static junit.framework.Assert.assertEquals;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/13/13
- * Time: 8:56 PM
- */
 public class MessagesTest {
 
     @Test

@@ -4,11 +4,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/20/13
- * Time: 6:37 PM
- */
 public class LoadFieldFromFileTest {
 
     @Test

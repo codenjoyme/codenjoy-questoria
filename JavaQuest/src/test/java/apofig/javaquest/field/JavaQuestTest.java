@@ -18,11 +18,6 @@ import static apofig.javaquest.field.Messages.withoutSeparator;
 import static junit.framework.Assert.*;
 import static org.fest.reflect.core.Reflection.field;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 2:08 PM
- */
 public class JavaQuestTest {
 
     private JavaQuest game;

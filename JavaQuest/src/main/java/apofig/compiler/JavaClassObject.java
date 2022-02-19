@@ -6,11 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:11 PM
- */
 public class JavaClassObject extends SimpleJavaFileObject {
 
     /**

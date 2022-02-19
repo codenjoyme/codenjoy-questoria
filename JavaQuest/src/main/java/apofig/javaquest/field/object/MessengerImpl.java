@@ -4,11 +4,6 @@ import apofig.javaquest.field.Messages;
 
 import java.util.LinkedList;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 12:35 AM
- */
 public class MessengerImpl implements Messenger {
 
     private LinkedList<Messages> messages;

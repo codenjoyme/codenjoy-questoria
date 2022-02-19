@@ -6,11 +6,6 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * User: sanja
- * Date: 29.09.13
- * Time: 19:48
- */
 public class FieldPlaceTest {
 
     private FieldPlace place;

@@ -3,11 +3,6 @@ package apofig.javaquest.field.object.monster.impl;
 import apofig.javaquest.field.object.monster.MonsterTest;
 import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/13/13
- * Time: 7:10 PM
- */
 public class PrimeFactoryMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
     public static final String OK_CODE =

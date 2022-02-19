@@ -3,11 +3,6 @@ package apofig.javaquest.field.object.monster.impl;
 import apofig.javaquest.field.object.monster.Assertions;
 import org.junit.Test;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/25/13
- * Time: 11:42 PM
- */
 public class FactorialMonsterTest {
 
     @Test

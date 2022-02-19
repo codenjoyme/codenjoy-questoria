@@ -1,10 +1,5 @@
 package apofig.javaquest.field;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/20/13
- * Time: 7:12 PM
- */
 public class RectangleField implements FieldLoader {
 
     private Field field;

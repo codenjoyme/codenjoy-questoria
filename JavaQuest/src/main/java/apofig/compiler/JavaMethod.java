@@ -5,11 +5,6 @@ import apofig.javaquest.field.object.monster.MethodRunner;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:38 PM
- */
 public class JavaMethod implements MethodRunner{
     private Method method;
     private Object object;

@@ -4,11 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: sanja
- * Date: 19.09.13
- * Time: 14:08
- */
 public class SimpleIterator<T> implements Iterator<T> {
 
     private int index;

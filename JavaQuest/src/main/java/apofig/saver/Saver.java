@@ -9,11 +9,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-/**
- * User: sanja
- * Date: 09.09.13
- * Time: 2:40
- */
 public class Saver {
     private List<Entry> data = new LinkedList<Entry>();
     private List<Integer> ids = new LinkedList<Integer>();

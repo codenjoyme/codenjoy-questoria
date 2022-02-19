@@ -7,11 +7,6 @@ import org.reflections.Reflections;
 
 import java.util.*;
 
-/**
- * User: sanja
- * Date: 06.09.13
- * Time: 3:12
- */
 public class ObjectLoader {
 
     private Map<String, Class<? extends Something>> cache;

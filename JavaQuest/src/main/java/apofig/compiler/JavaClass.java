@@ -4,11 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:47 PM
- */
 public class JavaClass {
     private final Class clazz;
 

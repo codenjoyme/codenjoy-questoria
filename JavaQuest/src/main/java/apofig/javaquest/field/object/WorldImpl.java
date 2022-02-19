@@ -1,10 +1,5 @@
 package apofig.javaquest.field.object;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 1:52 AM
- */
 public class WorldImpl implements World {
 
     private Place place;

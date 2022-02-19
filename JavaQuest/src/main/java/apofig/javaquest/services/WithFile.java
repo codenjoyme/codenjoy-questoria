@@ -7,11 +7,6 @@ import java.net.URL;
 import java.nio.CharBuffer;
 import java.util.Scanner;
 
-/**
- * User: sanja
- * Date: 11.09.13
- * Time: 23:29
- */
 public class WithFile {
     private final File file;
 

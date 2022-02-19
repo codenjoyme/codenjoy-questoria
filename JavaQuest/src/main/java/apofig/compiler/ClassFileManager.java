@@ -4,11 +4,6 @@ import javax.tools.*;
 import java.io.IOException;
 import java.security.SecureClassLoader;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:12 PM
- */
 public class ClassFileManager extends
         ForwardingJavaFileManager {
     /**

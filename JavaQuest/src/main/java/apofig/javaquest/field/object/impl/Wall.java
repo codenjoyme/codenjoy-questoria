@@ -3,11 +3,6 @@ package apofig.javaquest.field.object.impl;
 import apofig.javaquest.field.object.Something;
 import apofig.javaquest.field.object.TalkingObject;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/20/13
- * Time: 10:25 PM
- */
 public class Wall extends TalkingObject implements Something {
 
     @Override

@@ -3,11 +3,6 @@ package apofig.javaquest.field.object.impl;
 import apofig.javaquest.field.Player;
 import apofig.javaquest.field.object.*;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/20/13
- * Time: 11:03 PM
- */
 public class Gold extends TalkingObject implements Something, SetWorld, SetParameters<Integer>, Leaveable, Usable {
 
     private World world;

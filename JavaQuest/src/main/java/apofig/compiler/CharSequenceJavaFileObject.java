@@ -4,11 +4,6 @@ import javax.tools.JavaFileObject;
 import javax.tools.SimpleJavaFileObject;
 import java.net.URI;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:10 PM
- */
 public class CharSequenceJavaFileObject extends SimpleJavaFileObject {
 
     /**

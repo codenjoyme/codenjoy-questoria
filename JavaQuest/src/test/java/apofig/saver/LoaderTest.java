@@ -13,11 +13,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.fail;
 
-/**
- * User: sanja
- * Date: 09.09.13
- * Time: 21:35
- */
 public class LoaderTest {
 
     @Test

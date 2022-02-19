@@ -8,11 +8,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:19 PM
- */
 public class JavaCompiler {
     public static int ID = 0;
     private StringBufferOutputStream out;

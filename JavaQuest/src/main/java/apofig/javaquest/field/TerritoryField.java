@@ -7,11 +7,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/19/13
- * Time: 2:13 PM
- */
 public class TerritoryField implements HeroField {
 
     private int width;

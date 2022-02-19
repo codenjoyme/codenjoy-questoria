@@ -1,10 +1,5 @@
 package apofig.javaquest.field.object;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/31/13
- * Time: 12:35 AM
- */
 public abstract class TalkingObject implements SetMessenger, Askable {
 
     protected Messenger messenger;

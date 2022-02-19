@@ -9,11 +9,6 @@ import apofig.javaquest.field.object.monster.SimpleIterator;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * User: sanja
- * Date: 12.09.13
- * Time: 19:41
- */
 public class StoneForum extends TalkingObject implements Something, Leaveable {
 
     public static final String MESSAGE_INTRO = "На камне кто-то что-то написал (нажми say чтобы посмотреть...)";

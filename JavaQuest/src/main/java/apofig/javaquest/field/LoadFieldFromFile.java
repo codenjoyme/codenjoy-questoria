@@ -8,11 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/20/13
- * Time: 6:13 PM
- */
 public class LoadFieldFromFile implements FieldLoader {
 
     private Field field;

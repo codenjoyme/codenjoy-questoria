@@ -5,11 +5,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * User: sanja
- * Date: 07.09.13
- * Time: 14:59
- */
 public class MonsterLoaderTest {
 
     @Test

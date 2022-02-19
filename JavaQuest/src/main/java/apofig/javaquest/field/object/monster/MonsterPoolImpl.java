@@ -6,11 +6,6 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/5/13
- * Time: 9:56 PM
- */
 public class MonsterPoolImpl implements MonsterPool {
 
     private List<Monster> monsters;

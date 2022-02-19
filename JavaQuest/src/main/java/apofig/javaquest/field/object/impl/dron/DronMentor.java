@@ -2,11 +2,6 @@ package apofig.javaquest.field.object.impl.dron;
 
 import apofig.javaquest.field.object.*;
 
-/**
- * User: sanja
- * Date: 01.09.13
- * Time: 2:02
- */
 public class DronMentor extends TalkingObject implements Something, SetWorld, MeetWithHero {
 
     public static final String MESSAGE =

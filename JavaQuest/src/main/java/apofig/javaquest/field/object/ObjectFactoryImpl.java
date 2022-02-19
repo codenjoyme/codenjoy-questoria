@@ -11,11 +11,6 @@ import apofig.javaquest.services.Tickable;
 
 import java.util.*;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/5/13
- * Time: 9:52 PM
- */
 public class ObjectFactoryImpl implements ObjectFactory {
     // TODO мне кажется эта штука должна быть для каждого юзера отдельной, покуда монстры и комни предткновения у каждого юзера свои...
 

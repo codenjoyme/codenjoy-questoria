@@ -4,11 +4,6 @@ import apofig.javaquest.field.Point;
 
 import java.util.List;
 
-/**
- * User: oleksandr.baglai
- * Date: 2/13/13
- * Time: 6:57 PM
- */
 public interface Place extends Point {
     void update(char newChar);
 

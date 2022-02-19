@@ -4,11 +4,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * User: oleksandr.baglai
- * Date: 1/18/13
- * Time: 12:18 PM
- */
 public class CompilerTest {
 
     private JavaCompiler compiler = new JavaCompiler();
