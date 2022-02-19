@@ -4,7 +4,7 @@ public class MySolver implements Solver {
 
     @Override
     public String getAnswer(String... parameters) {
-        int i = Integer.valueOf(parameters[0]);
+        int i = Integer.parseInt(parameters[0]);
 
         String result = "";
         if (i % 3 == 0) {
