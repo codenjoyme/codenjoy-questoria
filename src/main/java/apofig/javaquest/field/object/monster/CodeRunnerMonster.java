@@ -3,6 +3,9 @@ package apofig.javaquest.field.object.monster;
 import apofig.javaquest.field.object.monster.test.TestResult;
 import apofig.javaquest.field.object.monster.test.TestSuite;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
 
     public final static String HELP = "Попробуй еще раз!";
@@ -23,17 +26,19 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
             super.answer(code);
             return;
         }
-//        try {
-//            MethodRunner method = compile(code);
-//            Object[][] testData = getTestData();
-//            for (Object[] data : testData) {
-//                TestResult testResult = test.test(data, method);
-//                testSuite.add(testResult);
-//                if (testSuite.isEnough()) break;
-//            }
-//        } catch (Exception e) {
-//            testSuite.add(new TestResult(e));
-//        }
+        try {
+            List<String> answers = Arrays.asList(code.split("\n"));
+            Object[][] testData = getTestData();
+            for (int i = 0; i < testData.length; i++) {
+                Object[] data = testData[i];
+                String answer = answers.get(i);
+                TestResult testResult = test.test(data, objects -> answer);
+                testSuite.add(testResult);
+                if (testSuite.isEnough()) break;
+            }
+        } catch (Exception e) {
+            testSuite.add(new TestResult(e));
+        }
         processResults(testSuite.getResults());
         testSuite.clear();
     }

@@ -1,12 +1,12 @@
 package apofig.javaquest.field;
 
 import apofig.javaquest.field.object.*;
+import apofig.javaquest.field.object.impl.Stone;
 import apofig.javaquest.field.object.impl.StoneForum;
-import apofig.javaquest.field.object.monster.MonsterFactory;
 import apofig.javaquest.field.object.impl.dron.DronMentor;
 import apofig.javaquest.field.object.monster.Monster;
+import apofig.javaquest.field.object.monster.MonsterFactory;
 import apofig.javaquest.field.object.monster.MonsterPool;
-import apofig.javaquest.field.object.impl.Stone;
 import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
@@ -1680,15 +1680,10 @@ public class JavaQuestTest {
                 "    return \"|\";\n" +
                 "}");
 
-        player.attack(
-                "public String whereToGo(String nearMe) {\n" +
-                "    return \"command\";\n" +
-                "}");
+        player.attack("command");
 
         assertMessage(player,
-                "Player: public String whereToGo(String nearMe) {\n" +
-                "    return \"command\";\n" +
-                "}\n" +
+                "Player: command\n" +
                 "Dron: Команда принята! Обработка начнется после того как ты отойдешь.");
 
         moveLeft();
@@ -1702,19 +1697,12 @@ public class JavaQuestTest {
         assertMessage(player,
                 "Dron: Я твой робот! Запрограммируй меня.");
 
-        assertCode("public String whereToGo(String nearMe) {\n" +
-                "    return \"command\";\n" +
-                "}");
+        assertCode("command");
 
-        player.attack(
-                "public String whereToGo(String nearMe) {\n" +
-                "    return \"up\";\n" +
-                "}");
+        player.attack("up");
 
         assertMessage(player,
-                "Player: public String whereToGo(String nearMe) {\n" +
-                "    return \"up\";\n" +
-                "}\n" +
+                "Player: up\n" +
                 "Dron: Команда принята! Обработка начнется после того как ты отойдешь.");
 
         moveLeft();
@@ -1842,20 +1830,14 @@ public class JavaQuestTest {
 
         assertMessage(player, "Dron: Я твой робот! Запрограммируй меня.");
 
-        assertCode("public String whereToGo(String nearMe) {\n" +
-                "    return \"up\";\n" +
-                "}");
+        assertCode("up");
 
-        player.attack("public String whereToGo(String nearMe) {\n" +
-                "    throw new java.lang.RuntimeException(\"\\\"\" + nearMe + \"\\\"\");\n" +
-                "}");
+        player.attack("badCommand");
         clearMessages(player);
 
         moveDown();
         assertMessage(player, "Dron: Обработка началась!\n" +
-                "Dron: Команда 'java.lang.RuntimeException: java.lang.reflect.InvocationTargetException: " +
-                "java.lang.RuntimeException: \"  # \"' не принята! Остановка!!!");
-
+                "Dron: Команда 'badCommand' не принята! Остановка!!!");
     }
 
     @Test

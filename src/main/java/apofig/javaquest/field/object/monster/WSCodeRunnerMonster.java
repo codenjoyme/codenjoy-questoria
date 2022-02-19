@@ -3,7 +3,7 @@ package apofig.javaquest.field.object.monster;
 import apofig.javaquest.field.object.Me;
 import apofig.javaquest.field.object.PortalMessenger;
 import apofig.javaquest.field.object.monster.test.TestResult;
-import apofig.javaquest.services.Tickable;
+import com.codenjoy.dojo.services.Tickable;
 
 import java.util.Arrays;
 import java.util.LinkedList;

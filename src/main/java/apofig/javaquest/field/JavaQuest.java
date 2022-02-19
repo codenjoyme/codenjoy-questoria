@@ -5,9 +5,10 @@ import apofig.javaquest.field.object.impl.Nothing;
 import apofig.javaquest.field.object.impl.Wall;
 import apofig.javaquest.field.object.impl.dron.Dron;
 import apofig.javaquest.field.object.monster.CodeHelper;
-import apofig.javaquest.services.Tickable;
+import com.codenjoy.dojo.services.Tickable;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class JavaQuest implements Tickable {
 

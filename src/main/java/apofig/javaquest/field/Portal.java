@@ -2,7 +2,7 @@ package apofig.javaquest.field;
 
 import apofig.javaquest.field.object.Me;
 import apofig.javaquest.field.object.monster.Monster;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class Portal {
 

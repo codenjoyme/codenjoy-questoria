@@ -7,9 +7,12 @@ import apofig.javaquest.field.TerritoryField;
 import apofig.javaquest.field.object.impl.Nothing;
 import apofig.javaquest.field.object.monster.MonsterFactory;
 import apofig.javaquest.field.object.monster.MonsterPool;
-import apofig.javaquest.services.Tickable;
+import com.codenjoy.dojo.services.Tickable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class ObjectFactoryImpl implements ObjectFactory {
     // TODO мне кажется эта штука должна быть для каждого юзера отдельной, покуда монстры и комни предткновения у каждого юзера свои...

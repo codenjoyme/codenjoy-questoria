@@ -1,6 +1,5 @@
 package apofig.javaquest.field.object.monster;
 
-import apofig.compiler.JavaMethod;
 import apofig.javaquest.field.*;
 import apofig.javaquest.field.object.Me;
 import apofig.javaquest.field.object.MessengerImpl;
@@ -39,12 +38,7 @@ public class CodeRunnerMonsterTest {
 
             @Override
             public TestResult test(Object[] test, MethodRunner runner) {
-                if ((runner instanceof JavaMethod) &&
-                        ((JavaMethod)runner).getCode().contains(answer))
-                {
-                    return new TestResult(test, "data", "data");
-                }
-                return null;
+                return new TestResult(test, "data", "data");
             }
 
             @Override

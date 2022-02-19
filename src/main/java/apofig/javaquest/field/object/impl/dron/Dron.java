@@ -4,7 +4,7 @@ import apofig.javaquest.field.FieldLocator;
 import apofig.javaquest.field.object.*;
 import apofig.javaquest.field.object.impl.Nothing;
 import apofig.javaquest.field.object.monster.CodeHelper;
-import apofig.javaquest.services.Tickable;
+import com.codenjoy.dojo.services.Tickable;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     @Override
     public void tick() {
         if (active) {
-            String whereToGo = null; // runCode(code, getNear());   // TODO дрон может зависнуть, и вообще любой клиентский код может зависнуть
+            String whereToGo = runCode(code, getNear());   // TODO дрон может зависнуть, и вообще любой клиентский код может зависнуть
             int dx = 0;
             int dy = 0;
 
@@ -112,24 +112,9 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
         return nearString;
     }
 
-//    private String runCode(String code, String near) {
-//        JavaCompiler compiler = new JavaCompiler();
-//        JavaMethod method;
-//        try {
-//            method = compiler.getMethod(code);
-//            return (String)method.run(near);
-//        } catch (Exception e) {  // TODO дублирование с CodeRunnerMonster
-//            try {
-//                if (e.getClass().equals(NullPointerException.class)) {
-//                    return "Извини, NPE!";
-//                }
-//                String details = (e.getCause() != null) ? (e.getCause().getCause().toString()) : "";
-//                return (e.toString() + ": " + details).replaceAll("Dynamic[0-9]+", "Dynamic"); // TODO hotfix
-//            } catch (Exception e2) {
-//                return e2.toString();
-//            }
-//        }
-//    }
+    private String runCode(String code, String near) {
+        return code;
+    }
 
     public void setHero(Me hero) {
         this.hero = hero;
