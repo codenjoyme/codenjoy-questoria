@@ -7,7 +7,8 @@ import apofig.javaquest.field.object.monster.impl.FizzBuzzMonster;
 import org.junit.Test;
 
 import static apofig.javaquest.field.Messages.withoutSeparator;
-import static apofig.javaquest.field.object.monster.impl.FizzBuzzMonster.*;
+import static apofig.javaquest.field.object.monster.impl.FizzBuzzMonster.HELP;
+import static apofig.javaquest.field.object.monster.impl.FizzBuzzMonster.QUESTION;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -105,7 +106,7 @@ public class OneIntCodeRunnerMonsterTest {
     public void shouldPrintOkAndDieWhenOk() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer(OK_CODE,
+        assertMonsterHelpMeWithMyAnswer("OK_CODE",
                 "FizzBuzzMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                         "Gold: Привет, я - 10$");
         assertMonsterDie();

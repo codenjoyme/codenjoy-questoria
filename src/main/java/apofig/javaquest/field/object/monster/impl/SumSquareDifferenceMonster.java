@@ -8,17 +8,6 @@ import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
  */
 public class SumSquareDifferenceMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
-    public static final String OK_CODE =
-            "public String method(int input) {\n" +
-            "        long sum = 0;\n" +
-            "        long sum2 = 0;\n" +
-            "        for (int i = 1; i <= input; i++) {\n" +
-            "            sum += i;\n" +
-            "            sum2 += i * i;\n" +
-            "        }\n" +
-            "        return Long.toString(sum * sum - sum2);\n" +
-            "    }";
-
     @Override
     public String method(int input) {
         long sum = 0;

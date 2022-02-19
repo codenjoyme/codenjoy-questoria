@@ -5,19 +5,6 @@ import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
 public class FibonacciNumbersMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
-    public static final String OK_CODE =
-            "public String method(int number) {\n" +
-            "    int previous = 0;\n" +
-            "    int current = 0;\n" +
-            "    int next = 1;\n" +
-            "    for (int index = 0; index < number; index++) {\n" +
-            "        previous = current;\n" +
-            "        current = next;\n" +
-            "        next = previous + current;\n" +
-            "    }\n" +
-            "    return String.valueOf(current);\n" +
-            "}";
-
     public String method(int number) {
         int previous = 0;
         int current = 0;

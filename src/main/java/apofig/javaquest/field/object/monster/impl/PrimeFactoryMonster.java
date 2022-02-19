@@ -5,25 +5,6 @@ import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
 public class PrimeFactoryMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
-    public static final String OK_CODE =
-            "public String method(int number) {\n" +
-            "    String result = \"\";\n" +
-            "    if (number == 1) {\n" +
-            "        return \"[1]\";\n" +
-            "    }\n" +
-            "    for (int i = 2; i < number / (i - 1); i++) {\n" +
-            "        while (number % i == 0) {\n" +
-            "            number /= i;\n" +
-            "            result += String.valueOf(i) + \",\";\n" +
-            "        }\n" +
-            "    }\n" +
-            "    if (number > 1) {\n" +
-            "        result += String.valueOf(number) + \",\";\n" +
-            "    }\n" +
-            "    result = result.substring(0, result.length() - 1);\n" +
-            "    return \"[\" + result + \"]\";\n" +
-            "}";
-
     public String method(int number) {
         String result = "";
         if (number == 1) {

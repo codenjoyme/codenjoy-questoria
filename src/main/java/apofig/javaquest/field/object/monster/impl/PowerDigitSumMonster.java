@@ -8,16 +8,6 @@ import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
  */
 public class PowerDigitSumMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
-    public static final String OK_CODE =
-            "public String method(int pow) {\n" +
-            "        String temp = java.math.BigInteger.ONE.shiftLeft(pow).toString();\n" +
-            "        int sum = 0;\n" +
-            "        for (int i = 0; i < temp.length(); i++) {\n" +
-            "            sum += temp.charAt(i) - '0';\n" +
-            "        }\n" +
-            "        return Integer.toString(sum);\n" +
-            "    }";
-
     public String method(int pow) {
         String temp = java.math.BigInteger.ONE.shiftLeft(pow).toString();
         int sum = 0;

@@ -10,11 +10,6 @@ public class MakeBricksMonster extends ManyInputCodeRunnerMonster implements Mon
             "    return |;\n" +
             "}";
 
-    public static final String OK_CODE =
-            "public boolean method(int small, int big, int goal) {\n" +
-            "    return (small >= (goal % 5) && small >= goal - big * 5);\n" +
-            "}";
-
     public MakeBricksMonster() {
         super(QUESTION, SIGNATURE, 9);
     }

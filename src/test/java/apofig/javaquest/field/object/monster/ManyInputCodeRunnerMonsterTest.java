@@ -7,7 +7,8 @@ import apofig.javaquest.field.object.monster.impl.LongDivisionMonster;
 import org.junit.Test;
 
 import static apofig.javaquest.field.Messages.withoutSeparator;
-import static apofig.javaquest.field.object.monster.impl.LongDivisionMonster.*;
+import static apofig.javaquest.field.object.monster.impl.LongDivisionMonster.HELP;
+import static apofig.javaquest.field.object.monster.impl.LongDivisionMonster.QUESTION;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -84,7 +85,7 @@ public class ManyInputCodeRunnerMonsterTest {
     public void shouldPrintOkAndDieWhenOk() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer(OK_CODE,
+        assertMonsterHelpMeWithMyAnswer("OK_CODE",
                 "LongDivisionMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
                         "Gold: Привет, я - 10$");
         assertMonsterDie();

@@ -5,21 +5,6 @@ import apofig.javaquest.field.object.monster.OneIntCodeRunnerMonster;
 
 public class FizzBuzzMonster extends OneIntCodeRunnerMonster implements MonsterTest {
 
-    public static final String OK_CODE =
-            "public String fizzbuzz(int i) {" +
-            "   String result = \"\";" +
-            "   if (i % 3 == 0) {" +
-            "       result += \"Fizz\";" +
-            "   }" +
-            "   if (i % 5 == 0) {" +
-            "       result += \"Buzz\";" +
-            "   }" +
-            "   if (result.length() == 0) {" +
-            "       result = String.valueOf(i);" +
-            "   }" +
-            "   return result;" +
-            "}";
-
     public String method(int i) {
        String result = "";
        if (i % 3 == 0) {
