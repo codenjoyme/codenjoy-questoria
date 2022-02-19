@@ -4,7 +4,6 @@ import apofig.javaquest.field.object.Me;
 import apofig.javaquest.field.object.PortalMessenger;
 import apofig.javaquest.field.object.monster.test.TestResult;
 import apofig.javaquest.services.Tickable;
-import apofig.javaquest.transport.PlayerSocket;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public abstract class WSCodeRunnerMonster extends CodeRunnerMonster implements PortalMessenger, Tickable {
 
-    private PlayerSocket socket;
+//    private PlayerSocket socket;
     private List<Object[]> testList = new LinkedList<>();
     private SendStatus send = SendStatus.NONE;
     private Object[] currentTest;
@@ -31,17 +30,17 @@ public abstract class WSCodeRunnerMonster extends CodeRunnerMonster implements P
 
     @Override
     public void tick() {
-        if (socket == null) {
-            System.out.println("socket is null");
-            return;
-        }
-
-        if (socket.isClosed()) {
-            System.out.println("socket is closed");
-            socket = null;
-            clear();
-            return;
-        }
+//        if (socket == null) {
+//            System.out.println("socket is null");
+//            return;
+//        }
+//
+//        if (socket.isClosed()) {
+//            System.out.println("socket is closed");
+//            socket = null;
+//            clear();
+//            return;
+//        }
 
         if (testList.isEmpty() && send == SendStatus.FINISHED) {
             System.out.println("testing complete!");
@@ -68,15 +67,15 @@ public abstract class WSCodeRunnerMonster extends CodeRunnerMonster implements P
             }
             send = SendStatus.SENT;
             System.out.println("send question: " + Arrays.toString(currentTest));
-            socket.callMethod(currentTest);
+//            socket.callMethod(currentTest);
             return;
         }
 
-        String answer = socket.popAnswer();
+        String answer = null; //socket.popAnswer();
         if (answer == null) {
             System.out.println("answer is null");
             send = SendStatus.REPEAT;
-//            disconnect(); // TODO пробовать отправлять вопрос n-ное количество раз, а потом отрубать связь
+            disconnect(); // TODO пробовать отправлять вопрос n-ное количество раз, а потом отрубать связь
             return;
         }
 
@@ -109,10 +108,10 @@ public abstract class WSCodeRunnerMonster extends CodeRunnerMonster implements P
     private void disconnect() {
         System.out.println("disconnected");
         clear();
-        if (socket != null) {
-            socket.close();
-            socket = null;
-        }
+//        if (socket != null) {
+//            socket.close();
+//            socket = null;
+//        }
     }
 
     private void clear() {
@@ -136,19 +135,19 @@ public abstract class WSCodeRunnerMonster extends CodeRunnerMonster implements P
     }
 
     @Override
-    public void portalCreated(PlayerSocket socket) {
-        this.socket = socket;
+    public void portalCreated(Object socket) {
+//        this.socket = socket;
 
         messenger.say(String.format("Портал %s открыт", getPortal()));
 
         // TODO не использовать тут лямбды потому что иначе MonsterLoader не найдет наши головоломки
-        socket.setOnClose(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("client closed()");
-                clear();
-            }
-        });
+//        socket.setOnClose(new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println("client closed()");
+//                clear();
+//            }
+//        });
     }
 
     @Override

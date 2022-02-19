@@ -1,6 +1,5 @@
 package apofig.javaquest.field.object.monster;
 
-import apofig.compiler.JavaCompiler;
 import apofig.javaquest.field.object.monster.test.TestResult;
 import apofig.javaquest.field.object.monster.test.TestSuite;
 
@@ -24,17 +23,17 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
             super.answer(code);
             return;
         }
-        try {
-            MethodRunner method = compile(code);
-            Object[][] testData = getTestData();
-            for (Object[] data : testData) {
-                TestResult testResult = test.test(data, method);
-                testSuite.add(testResult);
-                if (testSuite.isEnough()) break;
-            }
-        } catch (Exception e) {
-            testSuite.add(new TestResult(e));
-        }
+//        try {
+//            MethodRunner method = compile(code);
+//            Object[][] testData = getTestData();
+//            for (Object[] data : testData) {
+//                TestResult testResult = test.test(data, method);
+//                testSuite.add(testResult);
+//                if (testSuite.isEnough()) break;
+//            }
+//        } catch (Exception e) {
+//            testSuite.add(new TestResult(e));
+//        }
         processResults(testSuite.getResults());
         testSuite.clear();
     }
@@ -48,11 +47,6 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
             messenger.say(message);
             messenger.say(help);
         }
-    }
-
-    private MethodRunner compile(String code) {
-        JavaCompiler compiler = new JavaCompiler();
-        return compiler.getMethod(code);
     }
 
     public TestSuite getTestSuite() {

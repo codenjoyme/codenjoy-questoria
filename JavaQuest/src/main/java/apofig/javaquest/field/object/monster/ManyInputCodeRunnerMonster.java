@@ -1,12 +1,6 @@
 package apofig.javaquest.field.object.monster;
 
-import apofig.compiler.JavaMethod;
-import apofig.javaquest.field.Messages;
 import apofig.javaquest.field.object.monster.test.TestResult;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public abstract class ManyInputCodeRunnerMonster extends WSCodeRunnerMonster {
 
