@@ -12,6 +12,8 @@ public class Portal {
     private Me hero;
     private Monster monster;
 
+    public Portal() {}
+
     public Portal(Me hero, Monster monster) {
         this.hero = hero;
         this.monster = monster;
