@@ -26,15 +26,15 @@ public class Runner {
             }
 
             if (line.length() <= 1) {
-                if (ch == 115 || ch == 1099) {
+                if (ch == 'x' || ch == 'ч') {
                     player.moveDown();
-                } else if (ch == 97 || ch == 1092) {
+                } else if (ch == 'a' || ch == 'ф') {
                     player.moveLeft();
-                } else if (ch == 100 || ch == 1074) {
+                } else if (ch == 'd' || ch == 'в') {
                     player.moveRight();
-                } else if (ch == 119 || ch == 1094) {
+                } else if (ch == 's' || ch == 'ы') {
                     player.moveUp();
-                } else if (ch == 'q') {
+                } else if (ch == 'q' || ch == 'й') {
                     break;
                 } else {
                     player.attack(String.valueOf(ch));
@@ -42,6 +42,8 @@ public class Runner {
             } else {
                 player.attack(line);
             }
+
+            game.tick();
 
 		} while (true);
 		

@@ -40,4 +40,8 @@ public class JavaQuestSinglePlayer {
     public CodeHelper getCodeHelper() {
         return game.getCodeHelper(player);
     }
+
+    public void tick() {
+        game.tick();
+    }
 }
