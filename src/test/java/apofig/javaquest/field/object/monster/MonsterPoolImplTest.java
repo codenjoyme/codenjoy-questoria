@@ -110,7 +110,7 @@ public class MonsterPoolImplTest {
         return captor.getAllValues().toString();
     }
 
-    private void setupMonster(final Monster monster) {
+    private void setupMonster(Monster monster) {
         captor = ArgumentCaptor.forClass(String.class);
         messages = mock(Messages.class);
         Messenger messenger = new MessengerImpl();
@@ -118,7 +118,7 @@ public class MonsterPoolImplTest {
         monster.getMessenger().add(messages);
         ObjectFactory objects = mock(ObjectFactory.class);
         Place place = mock(Place.class);
-        final Gold gold = new Gold();
+        Gold gold = new Gold();
         gold.setMessenger(new MessengerImpl());
         Me founder = null;
         when(objects.get(eq(place), eq(founder), any()))
