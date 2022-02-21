@@ -22,7 +22,7 @@ package com.codenjoy.dojo.questoria.services.saver;
  * #L%
  */
 
-import com.codenjoy.dojo.questoria.model.Player;
+import com.codenjoy.dojo.questoria.model.PlayerOld;
 import com.codenjoy.dojo.questoria.model.Runner;
 import com.codenjoy.dojo.questoria.services.saver.dummy.*;
 import org.junit.Test;
@@ -52,8 +52,8 @@ public class LoaderTest {
 
     private Runner getObjectTree() {
         Runner result = new Runner();
-        Player player1 = result.getPlayerByCode(result.register("player1"));
-        Player player2 = result.getPlayerByCode(result.register("player2"));
+        PlayerOld player1 = result.getPlayerByCode(result.register("player1"));
+        PlayerOld player2 = result.getPlayerByCode(result.register("player2"));
 
         player1.getGame().getJoystick().moveDown();
         player2.getGame().getJoystick().moveLeft();

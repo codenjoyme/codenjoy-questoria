@@ -35,7 +35,7 @@ import java.util.*;
 public class Runner implements Tickable {
 
     private Questoria game;
-    private java.util.Map<String, Player> players;
+    private java.util.Map<String, PlayerOld> players;
 
     public Runner() {
         game = new Questoria(settings());
@@ -74,7 +74,7 @@ public class Runner implements Tickable {
         game.tick();
     }
 
-    public Player getPlayerByCode(String playerGameCode) {
+    public PlayerOld getPlayerByCode(String playerGameCode) {
         return players.get(playerGameCode);
     }
 
@@ -82,8 +82,8 @@ public class Runner implements Tickable {
         return getPlayerByName(playerName) != null;
     }
 
-    private Player getPlayerByName(String playerName) {
-        for (Map.Entry<String, Player> entry : players.entrySet()) {
+    private PlayerOld getPlayerByName(String playerName) {
+        for (Map.Entry<String, PlayerOld> entry : players.entrySet()) {
             if (entry.getValue().getName().equals(playerName)) {
                 return entry.getValue();
             }
@@ -92,14 +92,14 @@ public class Runner implements Tickable {
     }
 
     public String register(String playerName) {
-        Player player = new Player(playerName, game);
+        PlayerOld player = new PlayerOld(playerName, game);
         players.put(player.getGameCode(), player);
         return player.getGameCode();
     }
 
-    public List<Player> players() {
-        List<Player> result = new LinkedList<>(players.values());
-        Collections.sort(result, Comparator.comparing(Player::getName));
+    public List<PlayerOld> players() {
+        List<PlayerOld> result = new LinkedList<>(players.values());
+        Collections.sort(result, Comparator.comparing(PlayerOld::getName));
         return result;
     }
 
@@ -116,7 +116,7 @@ public class Runner implements Tickable {
     }
 
     public void remove(String playerName) {
-        Player player = getPlayerByName(playerName);
+        PlayerOld player = getPlayerByName(playerName);
         players.remove(player.getGameCode());
         game.remove(player.getName());
     }

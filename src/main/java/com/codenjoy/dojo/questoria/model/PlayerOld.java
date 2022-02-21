@@ -22,18 +22,19 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-public class Player {
+public class PlayerOld {
+
     private SinglePlayer game;
     private String name;
     private String gameCode;
 
-    public Player(String name, Questoria game) {
+    public PlayerOld(String name, Questoria game) {
         this.name = name;
         this.game = new SinglePlayer(game, name);
         this.gameCode = name + name.hashCode();
     }
 
-    public Player() {
+    public PlayerOld() {
         // do nothing
     }
 
