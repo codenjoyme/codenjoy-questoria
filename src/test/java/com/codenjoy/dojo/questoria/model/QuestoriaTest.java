@@ -815,7 +815,7 @@ public class QuestoriaTest {
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-        assertGoldWithPortal(player, 15, "92866694");
+        assertGoldWithPortal(player, 15, "C81D0857");
 
         // when
         // second attempt
@@ -2238,7 +2238,7 @@ public class QuestoriaTest {
         givenGold(alien, 15);
 
         assertGold(player, 15);
-        assertGoldWithPortal(alien, 15, "BB420B06");
+        assertGoldWithPortal(alien, 15, "C53EA4E3");
 
         // when
         moveLeft(alien);
@@ -2248,7 +2248,7 @@ public class QuestoriaTest {
         assertMessage(player, "");
 
         assertGold(player, 15);
-        assertGoldWithPortal(alien, 15, "BB420B06");
+        assertGoldWithPortal(alien, 15, "C53EA4E3");
 
         // when
         // TODO почему я вернулся тут вправо? я что в прошлой итерации таки ушел от монстра?
@@ -2259,7 +2259,7 @@ public class QuestoriaTest {
         assertMessage(player, "");
 
         assertGold(player, 15);
-        assertGoldWithPortal(alien, 15, "BB420B06");
+        assertGoldWithPortal(alien, 15, "C53EA4E3");
 
         // when
         moveLeft(alien);

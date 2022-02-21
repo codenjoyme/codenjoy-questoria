@@ -35,6 +35,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.Iterator;
 
+import static com.codenjoy.dojo.questoria.model.items.monster.CodeRunnerMonster.ANSWER;
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -73,13 +74,16 @@ public class MonsterPoolImplTest {
 
     @Test
     public void shouldReturnOtherMonsterIfKillOrMessageOtherwise() {
+        String badCode = "-\n-\n-\n-\n-\n-";
+        String okCode = ANSWER;
+
         monster = factory.next();
         setupMonster(monster);
 
         assertEquals(FizzBuzzMonster.class, monster.getClass());
-        monster.answer("OK_CODE");
+        monster.answer(okCode);
 
-        assertMonster(PrimeFactoryMonster.class, BAD_CODE_WITH_ONE_PARAMETER);
+        assertMonster(PrimeFactoryMonster.class, badCode);
         assertEquals("[PrimeFactoryMonster: Для [1] метод должен вернуть “[1]”, но ты вернул “-”\n" +
                 "Для [2] метод должен вернуть “[2]”, но ты вернул “-”\n" +
                 "Для [3] метод должен вернуть “[3]”, но ты вернул “-”\n" +
@@ -87,9 +91,9 @@ public class MonsterPoolImplTest {
                 "Для [5] метод должен вернуть “[5]”, но ты вернул “-”\n" +
                 "Для [6] метод должен вернуть “[2,3]”, но ты вернул “-”" +
                 ", PrimeFactoryMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(PrimeFactoryMonster.class, "OK_CODE");
+        assertMonster(PrimeFactoryMonster.class, okCode);
 
-        assertMonster(LongDivisionMonster.class, BAD_CODE_WITH_TWO_PARAMETERS);
+        assertMonster(LongDivisionMonster.class, badCode);
         assertEquals("[LongDivisionMonster: Для [1, 2] метод должен вернуть “0.5”, но ты вернул “-”\n" +
                 "Для [1, 1] метод должен вернуть “1”, но ты вернул “-”\n" +
                 "Для [5, 5] метод должен вернуть “1”, но ты вернул “-”\n" +
@@ -97,9 +101,9 @@ public class MonsterPoolImplTest {
                 "Для [55, 44] метод должен вернуть “1.25”, но ты вернул “-”\n" +
                 "Для [0, 56] метод должен вернуть “0”, но ты вернул “-”" +
                 ", LongDivisionMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(LongDivisionMonster.class, "OK_CODE");
+        assertMonster(LongDivisionMonster.class, okCode);
 
-        assertMonster(MakeBricksMonster.class, BAD_CODE_WITH_THREE_PARAMETERS);
+        assertMonster(MakeBricksMonster.class, badCode);
         assertEquals("[MakeBricksMonster: Для [0, 1, 5] метод должен вернуть “true”, но ты вернул “-”\n" +
                 "Для [1, 0, 1] метод должен вернуть “true”, но ты вернул “-”\n" +
                 "Для [1, 0, 2] метод должен вернуть “false”, но ты вернул “-”\n" +
@@ -107,7 +111,7 @@ public class MonsterPoolImplTest {
                 "Для [4, 2, 14] метод должен вернуть “true”, но ты вернул “-”\n" +
                 "Для [3, 2, 14] метод должен вернуть “false”, но ты вернул “-”" +
                 ", MakeBricksMonster: Попробуй еще раз!]", getMessage());
-        assertMonster(MakeBricksMonster.class, "OK_CODE");
+        assertMonster(MakeBricksMonster.class, okCode);
 
         assertMonster(Monster.class, "die!");
 

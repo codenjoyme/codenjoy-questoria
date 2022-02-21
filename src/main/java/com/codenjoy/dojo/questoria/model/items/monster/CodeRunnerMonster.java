@@ -51,7 +51,7 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
         try {
             List<String> answers = Arrays.asList(code.split("\n"));
             Object[][] testData = getTestData();
-            for (int i = 0; i < testData.length; i++) {
+            for (int i = 0; i < answers.size(); i++) {
                 Object[] data = testData[i];
                 String answer = answers.get(i);
                 TestResult testResult = test.test(data, objects -> answer);

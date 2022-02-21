@@ -29,6 +29,7 @@ import com.codenjoy.dojo.questoria.model.items.monster.impl.FizzBuzzMonster;
 import org.junit.Test;
 
 import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
+import static com.codenjoy.dojo.questoria.model.items.monster.CodeRunnerMonster.ANSWER;
 import static com.codenjoy.dojo.questoria.model.items.monster.impl.FizzBuzzMonster.HELP;
 import static com.codenjoy.dojo.questoria.model.items.monster.impl.FizzBuzzMonster.QUESTION;
 import static junit.framework.Assert.assertEquals;
@@ -36,10 +37,6 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class OneIntCodeRunnerMonsterTest {
-
-    public static final String BAD_CODE = "public String fizzbuzz(int i) {" +
-            "return (i % 3 == 0)?\"Fizz\":String.valueOf(i);" +
-            "}";
 
     public static final String BAD_CODE_WARNINGS = "Для [1] метод работает правильно - ты вернул “1”\n" +
             "Для [2] метод работает правильно - ты вернул “2”\n" +
@@ -79,58 +76,140 @@ public class OneIntCodeRunnerMonsterTest {
     private boolean die = false;
 
     @Test
-    public void shouldPrintErrorWhenNotPass() {
-        buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer(BAD_CODE,
-                "FizzBuzzMonster: " + BAD_CODE_WARNINGS +
-                "FizzBuzzMonster: " + HELP);
-    }
-
-    @Test
-    public void shouldPrintExceptionWhenBadCode() {
-        buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer("",
-                "FizzBuzzMonster: Exception: java.lang.IllegalArgumentException: Expected one method!\n" +
-                "FizzBuzzMonster: " + HELP);
-    }
-
-    @Test
-    public void shouldPrintExceptionWhenBadCode2() {
+    public void shouldPrintErrorWhenNotPass_caseEmptyString() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(
-                "String fizzbuzz(int i) {\n" +
-                "    return String.valueOf(i);\n" +
-                "}",
-                "FizzBuzzMonster: Для [1] метод сгенерировал Exception: java.lang.RuntimeException: java.lang.IllegalAccessException: Class apofig.compiler.JavaMethod can not access a member of class Dynamic with modifiers \"\"\n" +
+                "",
+                "FizzBuzzMonster: Для [1] метод должен вернуть “1”, но ты вернул “”\n" +
                 "FizzBuzzMonster: " + HELP);
     }
 
     @Test
-    public void shouldPrintExceptionWhenBadCode3() {
+    public void shouldPrintErrorWhenNotPass_caseBadValue() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(
-                "public String fizzbuzz(int i) {\n" +
-                "     return (i  == 0)\\?\"Fizz\":String.valueOf(i);\n" +
-                "}",
-                "FizzBuzzMonster: Exception: java.lang.RuntimeException: /Dynamic.java:2: error: illegal character: '\\'\r\n" +
-                "     return (i  == 0)\\?\"Fizz\":String.valueOf(i);\r\n" +
-                "                     ^\r\n" +
-                "1 error\r\n" +
-                "\n" +
+                "0",
+                "FizzBuzzMonster: Для [1] метод должен вернуть “1”, но ты вернул “0”\n" +
                 "FizzBuzzMonster: " + HELP);
     }
 
     @Test
-    public void shouldPrintOkAndDieWhenOk() {
+    public void shouldPrintErrorWhenNotPass_caseBadValue_severalAnswers() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer("OK_CODE",
+        assertMonsterHelpMeWithMyAnswer(
+                "0\n1\n2\n3",
+                "FizzBuzzMonster: Для [1] метод должен вернуть “1”, но ты вернул “0”\n" +
+                "Для [2] метод должен вернуть “2”, но ты вернул “1”\n" +
+                "Для [3] метод должен вернуть “Fizz”, но ты вернул “2”\n" +
+                "Для [4] метод должен вернуть “4”, но ты вернул “3”\n" +
+                "FizzBuzzMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintErrorWhenNotPass_caseBadType() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "0.1.2.3.4",
+                "FizzBuzzMonster: Для [1] метод должен вернуть “1”, но ты вернул “0.1.2.3.4”\n" +
+                "FizzBuzzMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintErrorWhenNotPass_caseSomeValuesAreBad() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "1\n" +
+                "2\n" +
+                "3\n" +
+                "4\n" +
+                "5\n" +
+                "6\n" +
+                "7\n" +
+                "8\n" +
+                "9\n" +
+                "10\n" +
+                "11\n" +
+                "12\n" +
+                "13\n" +
+                "14\n" +
+                "15\n" +
+                "16\n" +
+                "17\n" +
+                "18\n" +
+                "19\n" +
+                "20\n" +
+                "21\n" +
+                "22\n" +
+                "23\n" +
+                "24\n" +
+                "25\n" +
+                "26",
+
+                "FizzBuzzMonster: Для [1] метод работает правильно - ты вернул “1”\n" +
+                "Для [2] метод работает правильно - ты вернул “2”\n" +
+                "Для [3] метод должен вернуть “Fizz”, но ты вернул “3”\n" +
+                "Для [4] метод работает правильно - ты вернул “4”\n" +
+                "Для [5] метод должен вернуть “Buzz”, но ты вернул “5”\n" +
+                "Для [6] метод должен вернуть “Fizz”, но ты вернул “6”\n" +
+                "Для [7] метод работает правильно - ты вернул “7”\n" +
+                "Для [8] метод работает правильно - ты вернул “8”\n" +
+                "Для [9] метод должен вернуть “Fizz”, но ты вернул “9”\n" +
+                "Для [10] метод должен вернуть “Buzz”, но ты вернул “10”\n" +
+                "Для [11] метод работает правильно - ты вернул “11”\n" +
+                "Для [12] метод должен вернуть “Fizz”, но ты вернул “12”\n" +
+                "FizzBuzzMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintOkAndDieWhenOk_caseAllTestsPassed() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "1\n" +
+                "2\n" +
+                "Fizz\n" +
+                "4\n" +
+                "Buzz\n" +
+                "Fizz\n" +
+                "7\n" +
+                "8\n" +
+                "Fizz\n" +
+                "Buzz\n" +
+                "11\n" +
+                "Fizz\n" +
+                "13\n" +
+                "14\n" +
+                "FizzBuzz\n" +
+                "16\n" +
+                "17\n" +
+                "Fizz\n" +
+                "19\n" +
+                "Buzz\n" +
+                "Fizz\n" +
+                "22\n" +
+                "23\n" +
+                "Fizz\n" +
+                "Buzz\n" +
+                "26",
+
                 "FizzBuzzMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
-                        "Gold: Привет, я - 10$");
+                "Gold: Привет, я - 10$");
+        assertMonsterDie();
+    }
+
+    @Test
+    public void shouldPrintOkAndDieWhenOk_caseMagicWord() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("FizzBuzzMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                ANSWER,
+                "FizzBuzzMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
         assertMonsterDie();
     }
 

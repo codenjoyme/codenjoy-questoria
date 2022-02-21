@@ -55,12 +55,14 @@ public class CodeRunnerMonsterTest {
         monster = new CodeRunnerMonster(question, signature, weight) {
             @Override
             protected Object[][] getTestData() {
-                return new Object[0][0];
+                return new Object[][]{
+                        new Object[]{question},
+                };
             }
 
             @Override
             public TestResult test(Object[] test, MethodRunner runner) {
-                return new TestResult(test, "data", "data");
+                return new TestResult(test, answer, runner.run());
             }
 
             @Override
@@ -80,13 +82,22 @@ public class CodeRunnerMonsterTest {
     @Test
     public void shouldKillMonster() {
         // when
-        monster.answer(
-                "public String method(int n) {\n" +
-                "    return \"" + answer + "\";\n" +
-                "}");
+        monster.answer(answer);
 
         // then
         assertMessage("Monster: тЫ @#& Уб$%@&^ил ме:ня $!@!");
+    }
+
+    @Test
+    public void shouldBadAnswer() {
+        // when
+        monster.answer("bad");
+
+        // then
+        assertMessage(
+                "Monster: Для [question?] метод должен вернуть “bad”, но ты вернул “answer!”\n" +
+                "---------------------------------------------------------------\n" +
+                "Monster: Попробуй еще раз!");
     }
 
     @Test
@@ -128,7 +139,7 @@ public class CodeRunnerMonsterTest {
         monster.meetWith(hero);
 
         // then
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 37A1CBD6",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: A01D5385",
                 hero.getInfo().toString());
     }
 
@@ -138,14 +149,14 @@ public class CodeRunnerMonsterTest {
         Me hero = createHero("me");
         monster.meetWith(hero);
 
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 37A1CBD6",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: A01D5385",
                 hero.getInfo().toString());
 
         // when
         monster.tryToLeave(hero);
 
         // then
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 37A1CBD6",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: A01D5385",
                 hero.getInfo().toString());
     }
 
@@ -155,7 +166,7 @@ public class CodeRunnerMonsterTest {
         Me hero = createHero("me");
         monster.meetWith(hero);
 
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 37A1CBD6",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: A01D5385",
                 hero.getInfo().toString());
 
         // when
@@ -172,7 +183,7 @@ public class CodeRunnerMonsterTest {
         Me hero = createHero("me");
         monster.meetWith(hero);
 
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 37A1CBD6",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: A01D5385",
                 hero.getInfo().toString());
 
         // when
@@ -189,10 +200,9 @@ public class CodeRunnerMonsterTest {
         Me hero = createHero("4hdsdf");
         monster.meetWith(hero);
 
-
         // when
         // then
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 02BA5F03",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 2DBC7732",
                 hero.getInfo().toString());
     }
 
@@ -216,8 +226,9 @@ public class CodeRunnerMonsterTest {
         monster.meetWith(hero1);
 
         // then
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 5D79560B",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 1CCBFBFC",
                 hero1.getInfo().toString());
+
         assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0",
                 hero2.getInfo().toString());
 
@@ -228,7 +239,8 @@ public class CodeRunnerMonsterTest {
         // then
         assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0",
                 hero1.getInfo().toString());
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: B754C04C",
+
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 76A7663D",
                 hero2.getInfo().toString());
 
     }
@@ -243,8 +255,9 @@ public class CodeRunnerMonsterTest {
         monster.meetWith(hero1);
 
         // then
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 5D79560B",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 1CCBFBFC",
                 hero1.getInfo().toString());
+
         assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0",
                 hero2.getInfo().toString());
 
@@ -253,8 +266,9 @@ public class CodeRunnerMonsterTest {
         monster.meetWith(hero2);
 
         // then
-        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 5D79560B",
+        assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0 Портал: 1CCBFBFC",
                 hero1.getInfo().toString());
+
         assertEquals("Уровень:0 Опыт:0 Здоровье:100 Золото:0",
                 hero2.getInfo().toString());
     }

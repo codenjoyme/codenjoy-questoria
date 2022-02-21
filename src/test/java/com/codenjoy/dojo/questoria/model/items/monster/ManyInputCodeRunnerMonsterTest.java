@@ -29,6 +29,7 @@ import com.codenjoy.dojo.questoria.model.items.monster.impl.LongDivisionMonster;
 import org.junit.Test;
 
 import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
+import static com.codenjoy.dojo.questoria.model.items.monster.CodeRunnerMonster.ANSWER;
 import static com.codenjoy.dojo.questoria.model.items.monster.impl.LongDivisionMonster.HELP;
 import static com.codenjoy.dojo.questoria.model.items.monster.impl.LongDivisionMonster.QUESTION;
 import static junit.framework.Assert.assertEquals;
@@ -36,10 +37,6 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class ManyInputCodeRunnerMonsterTest {
-
-    public static final String BAD_CODE = "public String method(int a, int b) {" +
-                "return \"0\";" +
-            "}";
 
     public static final String BAD_CODE_WARNINGS =
             "Для [1, 2] метод должен вернуть “0.5”, но ты вернул “0”\n" +
@@ -56,60 +53,94 @@ public class ManyInputCodeRunnerMonsterTest {
     private boolean die = false;
 
     @Test
-    public void shouldPrintErrorWhenNotPass() {
-        buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer(BAD_CODE,
-                "LongDivisionMonster: " + BAD_CODE_WARNINGS +
-                "LongDivisionMonster: " + HELP);
-    }
-
-    @Test
-    public void shouldPrintExceptionWhenBadCode() {
-        buildMonster(QUESTION, HELP);
-        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer("",
-                "LongDivisionMonster: Exception: java.lang.IllegalArgumentException: Expected one method!\n" +
-                "LongDivisionMonster: " + HELP);
-    }
-
-    @Test
-    public void shouldPrintExceptionWhenBadCode2() {
+    public void shouldPrintErrorWhenNotPass_caseEmptyString() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(
-                "String method(int a, int b) {\n" +
-                "    return \"0\";\n" +
-                "}",
-                "LongDivisionMonster: Для [1, 2] метод сгенерировал Exception: java.lang.RuntimeException: java.lang.IllegalAccessException: Class apofig.compiler.JavaMethod can not access a member of class Dynamic with modifiers \"\"\n" +
+                "",
+                "LongDivisionMonster: Для [1, 2] метод должен вернуть “0.5”, но ты вернул “”\n" +
                 "LongDivisionMonster: " + HELP);
     }
 
     @Test
-    public void shouldPrintExceptionWhenBadCode3() {
+    public void shouldPrintErrorWhenNotPass_caseBadValue() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
         assertMonsterHelpMeWithMyAnswer(
-                "public String method(int a, int b) {\n" +
-                "     return qwe;\n" +
-                "}",
-                "LongDivisionMonster: Exception: java.lang.RuntimeException: /Dynamic.java:2: error: cannot find symbol\r\n" +
-                "     return qwe;\r\n" +
-                "            ^\r\n" +
-                "  symbol:   variable qwe\r\n" +
-                "  location: class Dynamic\r\n" +
-                "1 error\r\n" +
-                "\n" +
+                "0",
+                "LongDivisionMonster: Для [1, 2] метод должен вернуть “0.5”, но ты вернул “0”\n" +
                 "LongDivisionMonster: " + HELP);
     }
 
     @Test
-    public void shouldPrintOkAndDieWhenOk() {
+    public void shouldPrintErrorWhenNotPass_caseBadValue_severalAnswers() {
         buildMonster(QUESTION, HELP);
         assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
-        assertMonsterHelpMeWithMyAnswer("OK_CODE",
+        assertMonsterHelpMeWithMyAnswer(
+                "0\n1\n2\n3",
+                "LongDivisionMonster: Для [1, 2] метод должен вернуть “0.5”, но ты вернул “0”\n" +
+                "Для [1, 1] метод работает правильно - ты вернул “1”\n" +
+                "Для [5, 5] метод должен вернуть “1”, но ты вернул “2”\n" +
+                "Для [55, 5] метод должен вернуть “11”, но ты вернул “3”\n" +
+                "LongDivisionMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintErrorWhenNotPass_caseBadType() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "string",
+                "LongDivisionMonster: Для [1, 2] метод должен вернуть “0.5”, но ты вернул “string”\n" +
+                "LongDivisionMonster: " + HELP);
+    }
+
+    @Test
+    public void shouldPrintOkAndDieWhenOk_caseAllTestsPassed() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(
+                "0.5\n" +
+                "1\n" +
+                "1\n" +
+                "11\n" +
+                "1.25\n" +
+                "0\n" +
+                "56\n" +
+                "-0.5\n" +
+                "-0.5\n" +
+                "0.5\n" +
+                "0.001\n" +
+                "1.2(4)\n" +
+                "1.00(90)\n" +
+                "10.0(90)\n" +
+                "1010.0(90)\n" +
+                "0.0(495)\n" +
+                "-5.0(45)\n" +
+                "0.000(3)\n" +
+                "1.1(153846)\n" +
+                "0.803(571428)\n" +
+                "1.(593984962406015037)\n" +
+                "96.6(1739130434782608695652)\n" +
+                "0.3(5652173913043478260869)\n" +
+                "0.8576942320118070532237143486041032667124906968586017840186012266888836921194851616559161340739231484\n" +
+                "8.5769423201180705322371434860410326671249069685860178401860122668888369211948516165591613407392314847\n" +
+                "85.7694309253951322673994120762759564567464112247141529983428059238030371899258141588263756955847311713\n" +
+                "1.0(309278350515463917525773195876288659793814432989690721649484536082474226804123711340206185567010)\n" +
+                "Div by zero error!",
+
                 "LongDivisionMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
-                        "Gold: Привет, я - 10$");
+                "Gold: Привет, я - 10$");
+        assertMonsterDie();
+    }
+
+    @Test
+    public void shouldPrintOkAndDieWhenOk_caseMagicWord() {
+        buildMonster(QUESTION, HELP);
+        assertMonsterAskMe("LongDivisionMonster: " + QUESTION);
+        assertMonsterHelpMeWithMyAnswer(ANSWER,
+                "LongDivisionMonster: тЫ @#& Уб$%@&^ил ме:ня $!@!\n" +
+                "Gold: Привет, я - 10$");
         assertMonsterDie();
     }
 
