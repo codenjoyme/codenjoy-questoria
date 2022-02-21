@@ -23,18 +23,21 @@ package com.codenjoy.dojo.questoria.model;
  */
 
 import com.codenjoy.dojo.questoria.model.items.Me;
+import com.codenjoy.dojo.services.Point;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 
+import static com.codenjoy.dojo.services.PointImpl.pt;
+
 public class TerritoryField implements HeroField {
 
     private int width;
     private int height;
-    private Field field;
-    private java.util.Map<Viewable, Field> fogs;
+    private FieldOld field;
+    private java.util.Map<Viewable, FieldOld> fogs;
 
     private TerritoryField() {}
 
@@ -42,7 +45,7 @@ public class TerritoryField implements HeroField {
         width = loader.width();
         height = loader.height();
         field = loader.field();
-        fogs = new HashMap<Viewable, Field>();
+        fogs = new HashMap<Viewable, FieldOld>();
     }
 
     @Override
@@ -53,14 +56,14 @@ public class TerritoryField implements HeroField {
         if (fogs.containsKey(hero)) {
             throw new RuntimeException("Юзер уже проиничен!");
         }
-        fogs.put(hero, new Field(width, height, '?'));
+        fogs.put(hero, new FieldOld(width, height, '?'));
 
         return place;
     }
 
     @Override
     public void openSpace(Viewable me) {
-        final Field fog = fog(me);
+        final FieldOld fog = fog(me);
 
         me.view().moveMeTo(me);  // TODO подумать над этим
 
@@ -74,7 +77,7 @@ public class TerritoryField implements HeroField {
         });
     }
 
-    private Field fog(Viewable me) {
+    private FieldOld fog(Viewable me) {
         return fogs.get(me);
     }
 
@@ -98,7 +101,7 @@ public class TerritoryField implements HeroField {
         me.view().see(me, width, height, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
-                Point pt = new PointImpl(x, y);
+                Point pt = pt(x, y);
                 boolean startLine = x == me.view().getX();
                 if (startLine) {
                     result.append("║");
@@ -111,7 +114,7 @@ public class TerritoryField implements HeroField {
                 } else if (fog(me).get(x, y) == '?' || field.get(x, y) == '?') {
                     result.append("??");
                 } else if (playerAt(pt)) {
-                    if (me.isAt(pt)) {
+                    if (me.itsMe(pt)) {
                         result.append("I ");
                     } else {
                         result.append("A ");
@@ -133,7 +136,7 @@ public class TerritoryField implements HeroField {
 
     private boolean playerAt(Point point) {
         for (Viewable player : fogs.keySet()) {
-            if (player.isAt(point)) {
+            if (player.itsMe(point)) {
                 return true;
             }
         }

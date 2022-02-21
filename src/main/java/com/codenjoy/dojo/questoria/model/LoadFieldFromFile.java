@@ -22,6 +22,8 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -30,9 +32,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.codenjoy.dojo.services.PointImpl.pt;
+
 public class LoadFieldFromFile implements FieldLoader {
 
-    private Field field;
+    private FieldOld field;
     private int posx;
     private int posy;
 
@@ -42,7 +46,7 @@ public class LoadFieldFromFile implements FieldLoader {
         int height = lines.get(0).length();
         int width = lines.size();
 
-        field = new Field(height, width);
+        field = new FieldOld(height, width);
 
         for (int y = 0; y < width; y++) {
             String line = lines.get(y);
@@ -93,12 +97,12 @@ public class LoadFieldFromFile implements FieldLoader {
     }
 
     @Override
-    public Field field() {
+    public FieldOld field() {
         return field;
     }
 
     @Override
     public Point initPosition() {
-        return new PointImpl(posx, posy);
+        return pt(posx, posy);
     }
 }

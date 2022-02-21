@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model;
+package com.codenjoy.dojo.questoria.services.ai;
 
 /*-
  * #%L
@@ -22,47 +22,23 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-public class PointImpl implements Point {
-    private int x;
-    private int y;
 
-    private PointImpl() {}
+import com.codenjoy.dojo.client.Solver;
+import com.codenjoy.dojo.games.sample.Board;
+import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Direction;
 
-    public PointImpl(int x, int y) {
-        this.x = x;
-        this.y = y;
+public class AISolver implements Solver<Board> {
+
+    private Dice dice;
+
+    public AISolver(Dice dice) {
+        this.dice = dice;
     }
 
     @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public boolean isAt(Point point) {
-        return point.getX() == x && point.getY() == y;
-    }
-
-    @Override
-    public int getY() {
-        return y;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%s,%s]", x, y);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-
-        if (!(o instanceof Point)) {
-            return false;
-        }
-
-        return isAt((Point)o);
+    public String get(Board board) {
+        if (board.isGameOver()) return "";
+        return Direction.RIGHT.toString(); // TODO implement me
     }
 }

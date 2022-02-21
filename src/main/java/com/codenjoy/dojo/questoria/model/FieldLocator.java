@@ -25,6 +25,7 @@ package com.codenjoy.dojo.questoria.model;
 
 import com.codenjoy.dojo.questoria.model.items.Me;
 import com.codenjoy.dojo.questoria.model.items.Something;
+import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 

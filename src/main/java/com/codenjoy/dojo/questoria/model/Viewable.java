@@ -22,6 +22,8 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
+
 public interface Viewable extends Point {
     PlayerView view();
 }

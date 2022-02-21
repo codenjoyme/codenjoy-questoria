@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model.items.impl.dron;
+package com.codenjoy.dojo.questoria.model.items.impl.drone;
 
 /*-
  * #%L
@@ -22,17 +22,19 @@ package com.codenjoy.dojo.questoria.model.items.impl.dron;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.FieldLocator;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.*;
 import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
 import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Tickable;
 
 import java.util.List;
 
-public class Dron extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable, SetLocator {
+public class Drone extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable, SetLocator {
 
-    public static final char CHAR = '*';
     private Me hero;
 
     private String code =
@@ -45,6 +47,14 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     private Place place;
     private World world;
     private FieldLocator locator;
+
+    public Drone() {
+        super();
+    }
+
+    public Drone(Point pt) {
+        super(pt);
+    }
 
     @Override
     public void setPlace(Place place) {
@@ -71,11 +81,6 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     @Override
     public Something leaveAfter() {
         return new Nothing();
-    }
-
-    @Override
-    public char symbol() {
-        return CHAR;
     }
 
     @Override
@@ -150,5 +155,10 @@ public class Dron extends TalkingObject implements Something, CodeHelper, Tickab
     @Override
     public void setLocator(FieldLocator locator) {
         this.locator = locator;
+    }
+
+    @Override
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.DRONE;
     }
 }

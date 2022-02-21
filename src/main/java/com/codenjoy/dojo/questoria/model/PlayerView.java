@@ -22,6 +22,7 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
 import org.apache.commons.lang3.StringUtils;
 
 public class PlayerView {

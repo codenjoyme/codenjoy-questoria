@@ -23,29 +23,40 @@ package com.codenjoy.dojo.questoria.model;
  */
 
 
-import com.codenjoy.dojo.questoria.model.items.impl.Gold;
-import com.codenjoy.dojo.questoria.model.items.impl.Wall;
 import com.codenjoy.dojo.questoria.services.GameSettings;
+import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.field.Accessor;
-import com.codenjoy.dojo.services.round.RoundGameField;
+import com.codenjoy.dojo.services.event.Calculator;
+import com.codenjoy.dojo.services.round.RoundGamePlayer;
 
-import java.util.Optional;
+public class Player extends RoundGamePlayer<Hero, Field> {
 
-public interface Field extends RoundGameField<Player, Hero> {
+    private Calculator<Void> calculator;
 
-    boolean isBarrier(Point pt);
+    public Player(EventListener listener, GameSettings settings) {
+        super(listener, settings);
+        calculator = settings.calculator();
+    }
 
-    boolean isFree(Point pt);
+    @Override
+    public void start(int round, Object startEvent) {
+        super.start(round, startEvent);
+        hero.clearScores();
+    }
 
-    Optional<Point> freeRandom(Player player);
+    @Override
+    public void event(Object event) {
+        hero.addScore(calculator.score(event));
+        super.event(event);
+    }
 
-    GameSettings settings();
+    @Override
+    public Hero createHero(Point pt) {
+        return new Hero(pt);
+    }
 
-    Accessor<Hero> heroes();
-
-    Accessor<Gold> gold();
-
-    Accessor<Wall> walls();
+    private GameSettings settings() {
+        return (GameSettings) settings;
+    }
 
 }

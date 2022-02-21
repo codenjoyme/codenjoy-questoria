@@ -22,9 +22,13 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
+
+import static com.codenjoy.dojo.services.PointImpl.pt;
+
 public class RectangleField implements FieldLoader {
 
-    private Field field;
+    private FieldOld field;
     private int posx;
     private int posy;
     private int width;
@@ -33,7 +37,7 @@ public class RectangleField implements FieldLoader {
     public RectangleField(int width, int height) {
         this.width = width;
         this.height = height;
-        field = new Field(width, height, ' ');
+        field = new FieldOld(width, height, ' ');
 
         posx = 20;
         posy = 20;
@@ -47,7 +51,7 @@ public class RectangleField implements FieldLoader {
         field.set(x, y, '#');
     }
 
-    public void setDronMentor(int x, int y) {
+    public void setDroneMentor(int x, int y) {
         field.set(x, y, 'M');
     }
 
@@ -69,13 +73,13 @@ public class RectangleField implements FieldLoader {
     }
 
     @Override
-    public Field field() {
+    public FieldOld field() {
         return field;
     }
 
     @Override
     public Point initPosition() {
-        return new PointImpl(posx, posy);
+        return pt(posx, posy);
     }
 
     @Override

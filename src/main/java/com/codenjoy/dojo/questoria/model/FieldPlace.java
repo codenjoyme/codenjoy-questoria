@@ -23,21 +23,20 @@ package com.codenjoy.dojo.questoria.model;
  */
 
 import com.codenjoy.dojo.questoria.model.items.Place;
+import com.codenjoy.dojo.services.PointImpl;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class FieldPlace implements Place {
-    private Field field;
-    private int x;
-    private int y;
+public class FieldPlace extends PointImpl implements Place {
+
+    private FieldOld field;
 
     private FieldPlace() {}
 
-    public FieldPlace(Field field, int x, int y) {
+    public FieldPlace(FieldOld field, int x, int y) {
+        super(x, y);
         this.field = field;
-        this.x = x;
-        this.y = y;
     }
 
     public void update(char newChar) {
@@ -51,7 +50,7 @@ public class FieldPlace implements Place {
 
     @Override
     public List<Place> near() {
-        List<Place> result = new LinkedList<Place>();
+        List<Place> result = new LinkedList<>();
 
         result.add(near( 0, -1));
 
@@ -67,27 +66,6 @@ public class FieldPlace implements Place {
     @Override
     public Place near(int dx, int dy) {
         return new FieldPlace(field, x + dx, y + dy);
-    }
-
-    @Override
-    public void move(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public boolean isAt(Point point) {
-        return x == point.getX() && y == point.getY();
-    }
-
-    @Override
-    public int getY() {
-        return y;
     }
 
     @Override

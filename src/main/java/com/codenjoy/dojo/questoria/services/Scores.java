@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model;
+package com.codenjoy.dojo.questoria.services;
 
 /*-
  * #%L
@@ -22,13 +22,21 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.event.ScoresMap;
+import com.codenjoy.dojo.services.settings.SettingsReader;
 
-public interface FieldLoader {
-    FieldOld field();
+import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.KILL_MONSTER_SCORE;
+import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.PICK_GOLD_SCORE;
 
-    Point initPosition();
+public class Scores extends ScoresMap<Void> {
 
-    int height();
-    int width();
+    public Scores(SettingsReader settings) {
+        super(settings);
+
+        put(Event.Type.PICK_GOLD,
+                value -> settings.integer(PICK_GOLD_SCORE));
+
+        put(Event.Type.KILL_MONSTER,
+                value -> settings.integer(KILL_MONSTER_SCORE));
+    }
 }

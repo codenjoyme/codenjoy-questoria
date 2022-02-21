@@ -25,7 +25,7 @@ package com.codenjoy.dojo.questoria.model;
 import com.codenjoy.dojo.questoria.model.items.*;
 import com.codenjoy.dojo.questoria.model.items.impl.Stone;
 import com.codenjoy.dojo.questoria.model.items.impl.StoneForum;
-import com.codenjoy.dojo.questoria.model.items.impl.dron.DronMentor;
+import com.codenjoy.dojo.questoria.model.items.impl.drone.DroneMentor;
 import com.codenjoy.dojo.questoria.model.items.monster.Monster;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
@@ -40,9 +40,9 @@ import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
 import static junit.framework.Assert.*;
 import static org.fest.reflect.core.Reflection.field;
 
-public class QuestoriaTest {
+public class QuestoriaGameTest {
 
-    private Questoria game;
+    private QuestoriaGame game;
     private TerritoryField territoryField;
     private Me player;
     private Me alien;
@@ -69,7 +69,7 @@ public class QuestoriaTest {
         Settings settings = new Settings() {
             @Override
             public int viewSize() {
-                return QuestoriaTest.this.getViewAreaSize();
+                return QuestoriaGameTest.this.getViewAreaSize();
             }
 
             @Override
@@ -104,7 +104,7 @@ public class QuestoriaTest {
                 };
             }
         };
-        game = new Questoria(settings);
+        game = new QuestoriaGame(settings);
         objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
         player = game.newPlayer("Player");
         territoryField = (TerritoryField) field("heroField").ofType(HeroField.class).in(game).get();
@@ -815,7 +815,7 @@ public class QuestoriaTest {
                 "║                      ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-        assertGoldWithPortal(player, 15, "C81D0857");
+        assertGoldWithPortal(player, 15, "B22C1CE9");
 
         // when
         // second attempt
@@ -1638,10 +1638,10 @@ public class QuestoriaTest {
     }
 
     @Test
-    public void shouldMeetWithDronMentor() {
+    public void shouldMeetWithDroneMentor() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setDronMentor(mx, my);
+        field.setDroneMentor(mx, my);
         field.setGold(mx, my + 2);
         field.setGold(mx, my + 3);
 
@@ -1670,13 +1670,13 @@ public class QuestoriaTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertMessage(player, "DronMentor: " + DronMentor.MESSAGE);
+        assertMessage(player, "DroneMentor: " + DroneMentor.MESSAGE);
 
-        assertTrue(objects(), objects().contains("[object DronMentor at field[40,20]='M']"));
+        assertTrue(objects(), objects().contains("[object DroneMentor at field[40,20]='M']"));
 
         player.attack("Ok!");
 
-        assertFalse(objects.toString().contains("[object DronMentor"));
+        assertFalse(objects.toString().contains("[object DroneMentor"));
 
         asrtFld("╔══════════════════════════╗\n" +
                 "║                        ??║\n" +
@@ -1696,7 +1696,7 @@ public class QuestoriaTest {
 
         assertMessage(player,
                 "Player: Ok!\n" +
-                "Dron: Я твой робот! Запрограммируй меня.");
+                "Drone: Я твой робот! Запрограммируй меня.");
 
         assertCode("public String whereToGo(String nearMe) {\n" +
                 "    return \"|\";\n" +
@@ -1706,18 +1706,18 @@ public class QuestoriaTest {
 
         assertMessage(player,
                 "Player: command\n" +
-                "Dron: Команда принята! Обработка начнется после того как ты отойдешь.");
+                "Drone: Команда принята! Обработка начнется после того как ты отойдешь.");
 
         moveLeft();
 
         assertMessage(player,
-                "Dron: Обработка началась!\n" +
-                "Dron: Команда 'command' не принята! Остановка!!!");
+                "Drone: Обработка началась!\n" +
+                "Drone: Команда 'command' не принята! Остановка!!!");
 
         moveRight();
 
         assertMessage(player,
-                "Dron: Я твой робот! Запрограммируй меня.");
+                "Drone: Я твой робот! Запрограммируй меня.");
 
         assertCode("command");
 
@@ -1725,7 +1725,7 @@ public class QuestoriaTest {
 
         assertMessage(player,
                 "Player: up\n" +
-                "Dron: Команда принята! Обработка начнется после того как ты отойдешь.");
+                "Drone: Команда принята! Обработка начнется после того как ты отойдешь.");
 
         moveLeft();
 
@@ -1744,7 +1744,7 @@ public class QuestoriaTest {
                 "║??????????????        ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-        assertMessage(player, "Dron: Обработка началась!");
+        assertMessage(player, "Drone: Обработка началась!");
         assertGold(player, 0);
 
         game.tick();
@@ -1764,7 +1764,7 @@ public class QuestoriaTest {
                 "║??????????????        ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-        assertMessage(player, "Dron: Дрон подобрал золото!");
+        assertMessage(player, "Drone: Дрон подобрал золото!");
         assertGold(player, 1);
 
         game.tick();
@@ -1784,7 +1784,7 @@ public class QuestoriaTest {
                 "║??????????????        ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-        assertMessage(player, "Dron: Дрон подобрал золото!");
+        assertMessage(player, "Drone: Дрон подобрал золото!");
         assertGold(player, 2);
 
         game.tick();
@@ -1823,7 +1823,7 @@ public class QuestoriaTest {
                 "║??????????????        ????║\n" +
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
-        assertMessage(player, "Dron: Дрон уперся в неопознанный объект! Остановка!!!");
+        assertMessage(player, "Drone: Дрон уперся в неопознанный объект! Остановка!!!");
 
         game.tick();
         assertMessage(player, "");
@@ -1850,7 +1850,7 @@ public class QuestoriaTest {
                 "║??????????????????????????║\n" +
                 "╚══════════════════════════╝");
 
-        assertMessage(player, "Dron: Я твой робот! Запрограммируй меня.");
+        assertMessage(player, "Drone: Я твой робот! Запрограммируй меня.");
 
         assertCode("up");
 
@@ -1858,8 +1858,8 @@ public class QuestoriaTest {
         clearMessages(player);
 
         moveDown();
-        assertMessage(player, "Dron: Обработка началась!\n" +
-                "Dron: Команда 'badCommand' не принята! Остановка!!!");
+        assertMessage(player, "Drone: Обработка началась!\n" +
+                "Drone: Команда 'badCommand' не принята! Остановка!!!");
     }
 
     @Test
@@ -2238,7 +2238,7 @@ public class QuestoriaTest {
         givenGold(alien, 15);
 
         assertGold(player, 15);
-        assertGoldWithPortal(alien, 15, "C53EA4E3");
+        assertGoldWithPortal(alien, 15, "E591B611");
 
         // when
         moveLeft(alien);
@@ -2248,7 +2248,7 @@ public class QuestoriaTest {
         assertMessage(player, "");
 
         assertGold(player, 15);
-        assertGoldWithPortal(alien, 15, "C53EA4E3");
+        assertGoldWithPortal(alien, 15, "E591B611");
 
         // when
         // TODO почему я вернулся тут вправо? я что в прошлой итерации таки ушел от монстра?
@@ -2259,7 +2259,7 @@ public class QuestoriaTest {
         assertMessage(player, "");
 
         assertGold(player, 15);
-        assertGoldWithPortal(alien, 15, "C53EA4E3");
+        assertGoldWithPortal(alien, 15, "E591B611");
 
         // when
         moveLeft(alien);

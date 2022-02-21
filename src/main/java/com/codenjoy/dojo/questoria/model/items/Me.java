@@ -22,8 +22,10 @@ package com.codenjoy.dojo.questoria.model.items;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.*;
 import com.codenjoy.dojo.questoria.model.items.monster.Monster;
+import com.codenjoy.dojo.services.Point;
 
 public class Me extends TalkingObject implements Viewable, Joystick, Something, Leaveable {
 
@@ -69,14 +71,14 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
     }
 
     @Override
-    public boolean isAt(Point point) {
+    public boolean itsMe(Point point) {
         return this.x == point.getX() && this.y == point.getY();
     }
 
     private void tryToGo(int dx, int dy) {
         if (dx == 0 && dy == 0) return;
 
-        whereToGo = new PointImpl(x + dx, y + dy);
+        whereToGo = pt(x + dx, y + dy);
     }
 
     public void go() {
@@ -180,8 +182,8 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         }
 
         @Override
-        public boolean isAt(Point point) {
-            return whereToGo.isAt(point);
+        public boolean itsMe(Point point) {
+            return whereToGo.itsMe(point);
         }
 
         @Override
@@ -223,7 +225,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
 
     @Override
     public void answer(String message) {
-
     }
 
     @Override
@@ -239,11 +240,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
     @Override
     public Something leaveAfter() {
         return world.make(' ');
-    }
-
-    @Override
-    public char symbol() {
-        return 'A';
     }
 
     @Override
@@ -277,5 +273,10 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
         if (object instanceof MeetWithHero) {
             ((MeetWithHero) object).leave(this);
         }
+    }
+
+    @Override
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.OTHER_HERO;
     }
 }

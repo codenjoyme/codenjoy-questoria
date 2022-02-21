@@ -24,17 +24,19 @@ package com.codenjoy.dojo.questoria.model.items;
 
 import com.codenjoy.dojo.questoria.model.Dieble;
 import com.codenjoy.dojo.questoria.model.Locator;
-import com.codenjoy.dojo.questoria.model.Point;
 import com.codenjoy.dojo.questoria.model.TerritoryField;
 import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Tickable;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
+import static com.codenjoy.dojo.questoria.client.Element.*;
 
 public class ObjectFactoryImpl implements ObjectFactory {
     // TODO мне кажется эта штука должна быть для каждого юзера отдельной, покуда монстры и комни предткновения у каждого юзера свои...
@@ -88,9 +90,9 @@ public class ObjectFactoryImpl implements ObjectFactory {
 
     private boolean isAt(Something smth, Point place) {
         if (smth instanceof Me) {
-            return ((Me)smth).isAt(place);
+            return ((Me)smth).itsMe(place);
         }
-        return objects.get(smth).place().isAt(place);
+        return objects.get(smth).place().itsMe(place);
     }
 
     @Override
@@ -148,11 +150,11 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     private Something newObject(char c, Me founder) {
-        if (c == ' ' || c == 'I') {
+        if (c == NOTHING.ch() || c == HERO.ch()) {
             return new Nothing();
-        } else if (c == 'A') {
+        } else if (c == OTHER_HERO.ch()) {
             throw new IllegalStateException("Незареганный Alien!!!");
-        } else if (c == '@') {
+        } else if (c == MONSTER.ch()) {
             return monsters.get(founder.getName()).next();
         }
 

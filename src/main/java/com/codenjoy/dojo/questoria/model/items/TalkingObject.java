@@ -22,9 +22,19 @@ package com.codenjoy.dojo.questoria.model.items;
  * #L%
  */
 
-public abstract class TalkingObject implements SetMessenger, Askable {
+import com.codenjoy.dojo.services.Point;
+
+public abstract class TalkingObject extends PointObject implements SetMessenger, Askable {
 
     protected Messenger messenger;
+
+    public TalkingObject() {
+        super();
+    }
+
+    public TalkingObject(Point pt) {
+        super(pt);
+    }
 
     public Messenger getMessenger() {
         return messenger;

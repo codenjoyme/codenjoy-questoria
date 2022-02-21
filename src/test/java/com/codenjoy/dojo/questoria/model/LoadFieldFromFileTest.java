@@ -93,7 +93,7 @@ public class LoadFieldFromFileTest {
                 "##################################################\n");
     }
 
-    private void verifyField(Field field, String expected) throws Exception {
+    private void verifyField(FieldOld field, String expected) throws Exception {
         int width = field.getWidth();
         int height = field.getHeight();
 

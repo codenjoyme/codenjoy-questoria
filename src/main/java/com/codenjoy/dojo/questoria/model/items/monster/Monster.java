@@ -22,8 +22,10 @@ package com.codenjoy.dojo.questoria.model.items.monster;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.Action;
 import com.codenjoy.dojo.questoria.model.Dieble;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.*;
 
 public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld, MeetWithHero, CanBeBusy, Leaveable {
@@ -83,8 +85,8 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     }
 
     @Override
-    public char symbol() {
-        return '@';
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.MONSTER;
     }
 
     @Override

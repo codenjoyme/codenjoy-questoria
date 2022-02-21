@@ -22,11 +22,12 @@ package com.codenjoy.dojo.questoria.model.items;
  * #L%
  */
 
-import com.codenjoy.dojo.questoria.model.Point;
+import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 
 public interface Place extends Point {
+
     void update(char newChar);
 
     char getChar();

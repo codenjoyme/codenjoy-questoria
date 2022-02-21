@@ -28,7 +28,7 @@ public class PlayerOld {
     private String name;
     private String gameCode;
 
-    public PlayerOld(String name, Questoria game) {
+    public PlayerOld(String name, QuestoriaGame game) {
         this.name = name;
         this.game = new SinglePlayer(game, name);
         this.gameCode = name + name.hashCode();

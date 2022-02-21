@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static com.codenjoy.dojo.services.PointImpl.pt;
 import static junit.framework.Assert.assertEquals;
 
 public class PlayerViewTest {
@@ -103,8 +104,8 @@ public class PlayerViewTest {
         final PlayerView view = new PlayerView(size);
         final StringBuffer result = new StringBuffer();
 
-        view.moveMeTo(new PointImpl(size, size));
-        view.see(new PointImpl(size, size), size*2, size*2, new Apply() {
+        view.moveMeTo(pt(size, size));
+        view.see(pt(size, size), size*2, size*2, new Apply() {
             @Override
             public void xy(int x, int y, boolean canSee, boolean isWall) {
                 if (canSee) {

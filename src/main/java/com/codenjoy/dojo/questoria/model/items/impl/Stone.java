@@ -22,11 +22,14 @@ package com.codenjoy.dojo.questoria.model.items.impl;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.Leaveable;
 import com.codenjoy.dojo.questoria.model.items.Me;
 import com.codenjoy.dojo.questoria.model.items.Something;
 import com.codenjoy.dojo.questoria.model.items.TalkingObject;
 import com.codenjoy.dojo.questoria.model.items.monster.SimpleIterator;
+import com.codenjoy.dojo.services.Point;
 
 import java.util.Arrays;
 
@@ -47,6 +50,14 @@ public class Stone extends TalkingObject implements Something, Leaveable {
     public static final String MESSAGE_GOODBYE = "Успехов, Странник!";
 
     private SimpleIterator<String> iterator = new SimpleIterator<String>(Arrays.asList(MESSAGE_1, MESSAGE_2));
+
+    public Stone() {
+        super();
+    }
+
+    public Stone(Point pt) {
+        super(pt);
+    }
 
     @Override
     public void answer(String message) {
@@ -72,13 +83,13 @@ public class Stone extends TalkingObject implements Something, Leaveable {
     }
 
     @Override
-    public char symbol() {
-        return 'O';
-    }
-
-    @Override
     public void tryToLeave(Me hero) {
         iterator.reset();
         messenger.sayOnce(MESSAGE_GOODBYE);
+    }
+
+    @Override
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.STONE;
     }
 }

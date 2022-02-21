@@ -39,18 +39,20 @@ public class ObjectLoaderTest {
 
     @Test
     public void shouldGetAllObjects() {
-        java.util.Map<String, Class<? extends Something>> cache
+        Map<String, Class<? extends Something>> cache
                 = Reflection.field("cache").ofType(java.util.Map.class).in(loader).get();
         cache = cache.entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getKey))
                 .collect(toMap(java.util.Map.Entry::getKey,
                         java.util.Map.Entry::getValue));
-        assertEquals("{0=class com.codenjoy.dojo.questoria.model.items.impl.StoneForum, " +
+        assertEquals("{" +
+                "0=class com.codenjoy.dojo.questoria.model.items.impl.StoneForum, " +
                 "#=class com.codenjoy.dojo.questoria.model.items.impl.Wall, " +
                 "$=class com.codenjoy.dojo.questoria.model.items.impl.Gold, " +
-                "*=class com.codenjoy.dojo.questoria.model.items.impl.dron.Dron, " +
-                "M=class com.codenjoy.dojo.questoria.model.items.impl.dron.DronMentor, " +
-                "O=class com.codenjoy.dojo.questoria.model.items.impl.Stone}", cache.toString());
+                "*=class com.codenjoy.dojo.questoria.model.items.impl.drone.Drone, " +
+                "M=class com.codenjoy.dojo.questoria.model.items.impl.drone.DroneMentor, " +
+                "O=class com.codenjoy.dojo.questoria.model.items.impl.Stone}",
+                cache.toString());
     }
 
     @Test
@@ -58,7 +60,7 @@ public class ObjectLoaderTest {
         try {
             loader.load('5');
         } catch (IllegalArgumentException e) {
-            assertEquals("Не найден элмент '5' в базе объектов.", e.getMessage());
+            assertEquals("Не найден элемент '5' в базе объектов.", e.getMessage());
         }
     }
 }

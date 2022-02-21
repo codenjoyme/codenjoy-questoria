@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model.items.impl.dron;
+package com.codenjoy.dojo.questoria.model.items.impl.drone;
 
 /*-
  * #%L

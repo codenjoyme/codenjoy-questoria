@@ -22,11 +22,14 @@ package com.codenjoy.dojo.questoria.model.items.impl;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.Leaveable;
 import com.codenjoy.dojo.questoria.model.items.Me;
 import com.codenjoy.dojo.questoria.model.items.Something;
 import com.codenjoy.dojo.questoria.model.items.TalkingObject;
 import com.codenjoy.dojo.questoria.model.items.monster.SimpleIterator;
+import com.codenjoy.dojo.services.Point;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +43,14 @@ public class StoneForum extends TalkingObject implements Something, Leaveable {
     private boolean canWrite = false;
     private List<String> messages = new LinkedList<String>();
     private SimpleIterator<String> iterator = new SimpleIterator<String>(messages);
+
+    public StoneForum() {
+        super();
+    }
+
+    public StoneForum(Point pt) {
+        super(pt);
+    }
 
     @Override
     public void answer(String message) {
@@ -74,13 +85,13 @@ public class StoneForum extends TalkingObject implements Something, Leaveable {
     }
 
     @Override
-    public char symbol() {
-        return '0';
-    }
-
-    @Override
     public void tryToLeave(Me hero) {
         iterator.reset(messages);
         canWrite = false;
+    }
+
+    @Override
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.STONE_FORUM;
     }
 }

@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model.items.impl.dron;
+package com.codenjoy.dojo.questoria.model.items.impl.drone;
 
 /*-
  * #%L
@@ -22,9 +22,12 @@ package com.codenjoy.dojo.questoria.model.items.impl.dron;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.*;
+import com.codenjoy.dojo.services.Point;
 
-public class DronMentor extends TalkingObject implements Something, SetWorld, MeetWithHero {
+public class DroneMentor extends TalkingObject implements Something, SetWorld, MeetWithHero {
 
     public static final String MESSAGE =
             "Видишь все это золото? Оно твое. Ты можешь собрать его намного быстрее, \n" +
@@ -47,9 +50,17 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     private Me hero;
     private World world;
 
+    public DroneMentor() {
+        super();
+    }
+
+    public DroneMentor(Point pt) {
+        super(pt);
+    }
+
     @Override
     public void answer(String message) {
-        Dron dron = leaveAfter();
+        Drone dron = leaveAfter();
         dron.ask();
     }
 
@@ -59,10 +70,10 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public Dron leaveAfter() {
-        Dron dron = (Dron)world.make(Dron.CHAR);
-        dron.setHero(hero);
-        return dron;
+    public Drone leaveAfter() {
+        Drone drone = (Drone) world.make(Element.DRONE.ch());
+        drone.setHero(hero);
+        return drone;
     }
 
     @Override
@@ -76,12 +87,12 @@ public class DronMentor extends TalkingObject implements Something, SetWorld, Me
     }
 
     @Override
-    public char symbol() {
-        return 'M';
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     @Override
-    public void setWorld(World world) {
-        this.world = world;
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.DRONE_MENTOR;
     }
 }

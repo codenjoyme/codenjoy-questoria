@@ -27,13 +27,17 @@ import com.codenjoy.dojo.questoria.model.items.monster.Monster;
 import org.fest.reflect.core.Reflection;
 import org.reflections.Reflections;
 
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class ObjectLoader {
 
     private Map<String, Class<? extends Something>> cache;
 
-    private final List<? extends Class<? extends Something>> except = Arrays.asList(Monster.class, Me.class, Nothing.class);
+    private final List<? extends Class<? extends Something>> except = Arrays.asList(
+            Monster.class,
+            Me.class,
+            Nothing.class);
 
     public ObjectLoader() {
         cache = new HashMap<String, Class<? extends Something>>();
@@ -55,6 +59,9 @@ public class ObjectLoader {
             if (c.isAssignableFrom(clazz)) {
                 return true;
             }
+            if (Modifier.isAbstract(clazz.getModifiers())) {
+                return true;
+            }
         }
         return false;
     }
@@ -66,7 +73,7 @@ public class ObjectLoader {
     public Something load(char ch) {
         String key = String.valueOf(ch);
         if (!cache.containsKey(key)) {
-            throw new IllegalArgumentException("Не найден элмент '" + ch + "' в базе объектов.");
+            throw new IllegalArgumentException("Не найден элемент '" + ch + "' в базе объектов.");
         }
 
         return newInstance(cache.get(key));

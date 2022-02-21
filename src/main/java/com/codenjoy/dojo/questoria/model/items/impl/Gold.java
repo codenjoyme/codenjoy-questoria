@@ -22,13 +22,24 @@ package com.codenjoy.dojo.questoria.model.items.impl;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.PlayerInfoImpl;
 import com.codenjoy.dojo.questoria.model.items.*;
+import com.codenjoy.dojo.services.Point;
 
 public class Gold extends TalkingObject implements Something, SetWorld, SetParameters<Integer>, Leaveable, Usable {
 
     private World world;
     private int amount;
+
+    public Gold() {
+        super();
+    }
+
+    public Gold(Point pt) {
+        super(pt);
+    }
 
     @Override
     public void answer(String message) {
@@ -48,11 +59,6 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
     @Override
     public Something leaveAfter() {
         return world.make(' ');
-    }
-
-    @Override
-    public char symbol() {
-        return '$';
     }
 
     @Override
@@ -78,5 +84,10 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
             amount = 1; // TODO потестить этот кейз
         }
         this.amount = amount;
+    }
+
+    @Override
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.GOLD;
     }
 }

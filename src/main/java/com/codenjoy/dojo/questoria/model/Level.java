@@ -22,10 +22,36 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-public interface Point {
-    int getY();
+import com.codenjoy.dojo.questoria.model.items.impl.Gold;
+import com.codenjoy.dojo.questoria.model.items.impl.Wall;
+import com.codenjoy.dojo.services.field.AbstractLevel;
+import com.codenjoy.dojo.services.field.PointField;
 
-    int getX();
+import java.util.List;
 
-    boolean isAt(Point point);
+import static com.codenjoy.dojo.questoria.client.Element.*;
+
+public class Level extends AbstractLevel {
+
+    public Level(String map) {
+        super(map);
+    }
+
+    public List<Hero> heroes() {
+        return find(Hero::new, HERO);
+    }
+
+    public List<Gold> gold() {
+        return find(Gold::new, GOLD);
+    }
+
+    public List<Wall> walls() {
+        return find(Wall::new, WALL);
+    }
+
+    @Override
+    protected void fill(PointField field) {
+        field.addAll(walls());
+        field.addAll(gold());
+    }
 }

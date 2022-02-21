@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model;
+package com.codenjoy.dojo.questoria.client;
 
 /*-
  * #%L
@@ -22,13 +22,35 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.Point;
 
-public interface FieldLoader {
-    FieldOld field();
+import com.codenjoy.dojo.client.Solver;
+import com.codenjoy.dojo.services.Dice;
 
-    Point initPosition();
+/**
+ * Author: your name
+ *
+ * This is your AI algorithm for the game.
+ * Implement it at your own discretion.
+ * Pay attention to {@link YourSolverTest} - there is
+ * a test framework for you.
+ */
+public class YourSolver implements Solver<Board> {
 
-    int height();
-    int width();
+    private Dice dice;
+    private Board board;
+
+    public YourSolver(Dice dice) {
+        this.dice = dice;
+    }
+
+    @Override
+    public String get(Board board) {
+        this.board = board;
+        if (board.isGameOver()) return "";
+
+        // TODO your code here
+
+        return Command.MOVE_UP;
+    }
+
 }

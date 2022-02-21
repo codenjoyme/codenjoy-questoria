@@ -22,13 +22,25 @@ package com.codenjoy.dojo.questoria.model.items.impl;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
+import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.PlayerInfoImpl;
 import com.codenjoy.dojo.questoria.model.items.Something;
 import com.codenjoy.dojo.questoria.model.items.TalkingObject;
 import com.codenjoy.dojo.questoria.model.items.Usable;
 import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
+import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.printer.state.State;
 
-public class Nothing extends TalkingObject implements Something, CodeHelper, Usable {
+public class Nothing extends TalkingObject implements Something, CodeHelper, Usable, State<Element, Player> {
+
+    public Nothing() {
+        super();
+    }
+
+    public Nothing(Point pt) {
+        super(pt);
+    }
 
     @Override
     public void answer(String message) {
@@ -46,7 +58,7 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Usa
 
     @Override
     public char symbol() {
-        return ' ';
+        return state(null).ch();
     }
 
     @Override
@@ -57,5 +69,10 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Usa
     @Override
     public void getBy(PlayerInfoImpl info) {
         // do nothing
+    }
+
+    @Override
+    public Element state(Player player, Object... alsoAtPoint) {
+        return Element.NOTHING;
     }
 }

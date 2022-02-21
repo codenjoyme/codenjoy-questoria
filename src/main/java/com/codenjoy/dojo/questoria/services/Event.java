@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.model;
+package com.codenjoy.dojo.questoria.services;
 
 /*-
  * #%L
@@ -22,43 +22,44 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import com.codenjoy.dojo.questoria.model.items.Me;
-import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
+import com.codenjoy.dojo.services.event.EventObject;
 
-public class SinglePlayer {
+public class Event implements EventObject<Event.Type, Integer> {
 
-    private QuestoriaGame game;
-    private Me player;
+    private Type event;
+    private int value;
 
-    private SinglePlayer() {}
+    public enum Type {
+        PICK_GOLD,
+        KILL_MONSTER,
 
-    public SinglePlayer(QuestoriaGame game, String name) {
-        this.game = game;
-        player = game.newPlayer(name);
-    }
+        HERO_DIED,
 
-    public String getMessage() {
-        return player.getMessenger().getMessages().getLast(60);
-    }
-
-    public PlayerInfoImpl getPlayerInfo() {
-        return player.getInfo();
-    }
-
-    public Joystick getJoystick() {
-        return player;
+        START_ROUND,
+        WIN_ROUND,
     }
 
     @Override
     public String toString() {
-        return game.printView(player);
+        return event + ((value != 0)?("(" + value + ")"):"");
     }
 
-    public CodeHelper getCodeHelper() {
-        return game.getCodeHelper(player);
+    public Event(Type event) {
+        this.event = event;
     }
 
-    public void tick() {
-        game.tick();
+    public Event(Type event, int value) {
+        this.event = event;
+        this.value = value;
+    }
+
+    @Override
+    public Integer value() {
+        return value;
+    }
+
+    @Override
+    public Type type() {
+        return event;
     }
 }

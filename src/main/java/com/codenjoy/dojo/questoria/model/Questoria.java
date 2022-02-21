@@ -22,189 +22,153 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import com.codenjoy.dojo.questoria.model.items.*;
-import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
+import com.codenjoy.dojo.questoria.model.items.impl.Gold;
 import com.codenjoy.dojo.questoria.model.items.impl.Wall;
-import com.codenjoy.dojo.questoria.model.items.impl.dron.Dron;
-import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
-import com.codenjoy.dojo.services.Tickable;
+import com.codenjoy.dojo.questoria.services.GameSettings;
+import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.field.Accessor;
+import com.codenjoy.dojo.services.field.Generator;
+import com.codenjoy.dojo.services.field.PointField;
+import com.codenjoy.dojo.services.printer.BoardReader;
+import com.codenjoy.dojo.services.round.RoundField;
+import com.codenjoy.dojo.utils.whatsnext.WhatsNextUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
-public class Questoria implements Tickable {
+import static com.codenjoy.dojo.questoria.services.Event.Type.START_ROUND;
+import static com.codenjoy.dojo.questoria.services.Event.Type.WIN_ROUND;
 
-    private HeroField heroField;
-    private FieldLocator locator;
-    private ObjectFactory objects;
-    private List<Me> players;
-    private int viewSize;
-    private Point initPosition;
+public class Questoria extends RoundField<Player, Hero> implements Field {
 
-    private Questoria() {}
+    private Level level;
+    private PointField field;
+    private List<Player> players;
+    private Dice dice;
+    private GameSettings settings;
 
-    public Questoria(Settings settings) {
-        FieldLoader loader = settings.fieldLoader();
-        TerritoryField field = new TerritoryField(loader);
-        heroField = field;
-        objects = new ObjectFactoryImpl(settings.monsters(), field);
-        locator = objects.getLocator();
-        players = new LinkedList<Me>();
-        viewSize = settings.viewSize();
-        initPosition = settings.fieldLoader().initPosition();
+    public Questoria() {
+        // do nothing, for testing only
     }
 
-    public Me newPlayer(String name) {
-        if (hasPlayer(name)) {
-            throw new IllegalArgumentException(String.format("Игрок с именем '%s' уже зарегистрирован", name));
-        }
+    public Questoria(Dice dice, Level level, GameSettings settings) {
+        super(START_ROUND, WIN_ROUND, settings);
 
-        PlayerView view = new PlayerView(viewSize);
-        PlayerInfoImpl info = new PlayerInfoImpl(name);
+        this.level = level;
+        this.dice = dice;
+        this.settings = settings;
+        this.field = new PointField();
+        this.players = new LinkedList<>();
 
-        Point point = findFreePosition();
-        Me player = new Me(objects, heroField, locator, view, new Messages(info.getName()), point.getX(), point.getY(), info);
-        objects.add(player);
-        players.add(player);
-
-        return player;
-    }
-
-    private boolean hasPlayer(String name) {
-        for (Me player : players) {
-            if (player.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Point findFreePosition() {
-        Point point = new PointImpl(initPosition.getX(), initPosition.getY());
-        while (!(locator.getAt(point, null) instanceof Nothing)) {
-            point = new PointImpl(point.getX() + 1, point.getY());
-        }
-        return point;
-    }
-
-    private void move(Me me) {
-        Point whereToGo = me.whereToGo();
-        if (whereToGo == null) {
-            return;
-        }
-
-        List<Something> somethingNear = locator.getNear(me);
-        for (Something smth : somethingNear) {
-            if (smth instanceof Leaveable) {
-                Leaveable leaveable = (Leaveable) smth;
-                if (!leaveable.canLeave(me)) {
-                    leaveable.tryToLeave(me);
-                    return;
-                }
-            }
-        }
-
-        for (Something smth : somethingNear) {
-            if (smth instanceof Leaveable) {
-                Leaveable leaveable = (Leaveable)smth;
-                if (leaveable.canLeave(me)) {
-                    if (!locator.isNear(me.atNewPlace(), smth) && !locator.getAt(whereToGo, me).equals(smth)) {
-                        leaveable.tryToLeave(me);
-                        if (!(smth instanceof Dron)) {  // TODO а я вот тут так буду перечислять все типы? Как-то не очень это все
-                            me.leave((TalkingObject) smth);
-                        }
-                    }
-                }
-            }
-        }
-
-        Something smthAtWay = locator.getAt(whereToGo, me);
-        //if (!smthAtWay.isBusy()) { // TODO implement me
-            if (smthAtWay instanceof Askable) {
-                ((Askable)smthAtWay).ask();
-            }
-        //}
-        if (smthAtWay instanceof Usable) {
-            ((Usable)smthAtWay).getBy(me.getInfo());
-            me.go();
-            meetWith(me, somethingNear);
-        }
-    }
-
-    private void meetWith(Me me, List<Something> alreadyMeet) {
-        List<Something> newObjects = new LinkedList<Something>();
-
-        for (Something object : locator.getNear(me)) {
-            if (!alreadyMeet.contains(object)) {
-                newObjects.add(object);
-            }
-        }
-
-        // Something object = newObjects.get(0);  // TODO а что, если встречаемся с несколькими объектами?
-
-        for (Something object : newObjects) {
-            if (object instanceof CanBeBusy) {
-                CanBeBusy canBeBusy = (CanBeBusy) object;
-                if (canBeBusy.isBusy()) {
-                    ((TalkingObject) object).connect(me);  // TODO вот это как-то ну совсем не очень. Архитектуру Саня придумай!
-                    canBeBusy.sayWhenBusy();
-                    ((TalkingObject) object).disconnect(me);
-                    continue;
-                }
-            }
-
-            me.meetWith((TalkingObject) object);
-
-            if (object instanceof Wall) continue;
-
-            if (object instanceof Askable) {
-                ((Askable)object).ask();
-            }
-
-            if (object instanceof Me) {
-                me.ask();
-            }
-        }
-    }
-
-    public CodeHelper getCodeHelper(Me player) {
-        for (Something smthNear : locator.getNear(player)) {
-            if (smthNear instanceof CodeHelper) {
-                return (CodeHelper) smthNear;
-            }
-        }
-        return new Nothing();
+        clearScore();
     }
 
     @Override
-    public void tick() {
-        System.out.println("----- tick -----");
-        for (Me player : players) {
-            move(player);
-            player.stop();
-        }
-        objects.tick();
+    public void clearScore() {
+        if (level == null) return;
+
+        level.saveTo(field);
+        field.init(this);
+
+        // other clear score actions
+
+        super.clearScore();
     }
 
-    public String printView(Me player) {
-        return player.getView();
+    @Override
+    public void onAdd(Player player) {
+        player.newHero(this);
     }
 
-    public void remove(String name) {
-        Me foundPlayer = null;
-        for (Me player : players) {
-            if (player.getName().equals(name)) {
-                foundPlayer = player;
-                break;
-            }
-        }
-
-        if (foundPlayer == null) {
-            throw new IllegalArgumentException(String.format("Игрок с именем '%s' не найден", name));
-        }
-
-        players.remove(foundPlayer);
-        objects.remove(foundPlayer);
-        foundPlayer.die();
+    @Override
+    public void onRemove(Player player) {
+        heroes().removeExact(player.getHero());
     }
+
+    @Override
+    protected List<Player> players() {
+        return players;
+    }
+
+    @Override
+    public void cleanStuff() {
+        // clean all temporary stuff before next tick
+    }
+
+    @Override
+    protected void setNewObjects() {
+        // add new object after rewarding winner
+    }
+
+    @Override
+    public void tickField() {
+        for (Player player : players) {
+            Hero hero = player.getHero();
+
+            hero.tick();
+
+            // TODO call real game
+        }
+    }
+
+    public int size() {
+        return field.size();
+    }
+
+    @Override
+    public boolean isBarrier(Point pt) {
+        return pt.isOutOf(size())
+                || walls().contains(pt)
+                || heroes().contains(pt);
+    }
+
+    @Override
+    public Optional<Point> freeRandom(Player player) {
+        return Generator.freeRandom(size(), dice, this::isFree);
+    }
+
+    @Override
+    public boolean isFree(Point pt) {
+        return !(gold().contains(pt)
+                || walls().contains(pt)
+                || heroes().contains(pt));
+    }
+
+    @Override
+    public GameSettings settings() {
+        return settings;
+    }
+
+    @Override
+    public BoardReader<Player> reader() {
+        return field.reader(
+                Hero.class,
+                Gold.class,
+                Wall.class);
+    }
+
+    @Override
+    public List<Player> load(String board, Function<Hero, Player> player) {
+        level = new Level(board);
+        return WhatsNextUtils.load(this, level.heroes(), player);
+    }
+
+    @Override
+    public Accessor<Hero> heroes() {
+        return field.of(Hero.class);
+    }
+
+    @Override
+    public Accessor<Gold> gold() {
+        return field.of(Gold.class);
+    }
+
+    @Override
+    public Accessor<Wall> walls() {
+        return field.of(Wall.class);
+    }
+
 }

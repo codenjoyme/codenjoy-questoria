@@ -34,11 +34,11 @@ import java.util.*;
 
 public class Runner implements Tickable {
 
-    private Questoria game;
+    private QuestoriaGame game;
     private java.util.Map<String, PlayerOld> players;
 
     public Runner() {
-        game = new Questoria(settings());
+        game = new QuestoriaGame(settings());
         players = new HashMap<>();
     }
 
