@@ -34,7 +34,6 @@ import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +61,57 @@ public class QuestoriaGameTest {
     }
 
     public FieldLoader getFieldLoader() {
-        return new FieldLoaderImpl()
-                .load(new File("src/test/resources/test_field3.txt"));
+        return new FieldLoaderImpl().load(
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                    I                             \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n" +
+                "                                                  \n");
     }
 
     @Before

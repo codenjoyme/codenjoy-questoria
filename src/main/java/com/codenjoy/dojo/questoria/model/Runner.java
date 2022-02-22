@@ -52,8 +52,7 @@ public class Runner implements Tickable {
 
             @Override
             public FieldLoader fieldLoader() {
-                return new FieldLoaderImpl()
-                        .load(new File("src/main/resources/field.txt"));
+                return new FieldLoaderImpl().load(new File("src/main/resources/field.txt"));
             }
 
             @Override
