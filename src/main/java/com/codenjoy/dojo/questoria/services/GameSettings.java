@@ -23,6 +23,12 @@ package com.codenjoy.dojo.questoria.services;
  */
 
 
+import com.codenjoy.dojo.questoria.model.FieldLoader;
+import com.codenjoy.dojo.questoria.model.FieldLoaderImpl;
+import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
+import com.codenjoy.dojo.questoria.model.items.monster.MonsterLoader;
+import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
+import com.codenjoy.dojo.questoria.model.items.monster.MonsterPoolImpl;
 import com.codenjoy.dojo.services.event.Calculator;
 import com.codenjoy.dojo.services.settings.AllSettings;
 import com.codenjoy.dojo.services.settings.PropertiesKey;
@@ -31,13 +37,13 @@ import com.codenjoy.dojo.services.settings.SettingsImpl;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.KILL_MONSTER_SCORE;
-import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.PICK_GOLD_SCORE;
+import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.*;
 
 public class GameSettings extends SettingsImpl implements AllSettings<GameSettings> {
 
     public enum Keys implements PropertiesKey {
 
+        VIEW_SIZE,
         PICK_GOLD_SCORE,
         KILL_MONSTER_SCORE,
         SCORE_COUNTING_TYPE;
@@ -62,10 +68,32 @@ public class GameSettings extends SettingsImpl implements AllSettings<GameSettin
     public GameSettings() {
         initAll();
 
+        integer(VIEW_SIZE, 41);
         integer(PICK_GOLD_SCORE, 10);
         integer(KILL_MONSTER_SCORE, 100);
 
         Levels.setup(this);
+    }
+
+    public int viewSize() {
+        return integer(VIEW_SIZE);
+    }
+
+    public FieldLoader fieldLoader(int levelNumber) {
+        return new FieldLoaderImpl()
+                .load(getLevelMap(levelNumber));
+    }
+
+    public MonsterFactory monsters() {
+        // нельзя анонимно, потому что loader/saver захотят изучить Settings внутренности
+        return new MonsterFactoryImpl();
+    }
+
+    public static class MonsterFactoryImpl implements MonsterFactory {
+        @Override
+        public MonsterPool newMonsters() {
+            return new MonsterPoolImpl(new MonsterLoader());
+        }
     }
 
     public Calculator<Void> calculator() {

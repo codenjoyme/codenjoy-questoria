@@ -22,83 +22,16 @@ package com.codenjoy.dojo.questoria.services;
  * #L%
  */
 
-import com.codenjoy.dojo.services.multiplayer.LevelProgress;
+import com.codenjoy.dojo.questoria.model.FieldLoaderImpl;
+
+import java.io.File;
+
+import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsFrom1;
 
 public class Levels {
 
     public static void setup(GameSettings settings) {
-        int level = LevelProgress.levelsStartsFrom1;
-        settings.setLevelMaps(level,
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n" +
-                "☼          $          ☼\n" +
-                "☼                     ☼\n" +
-                "☼   $              $  ☼\n" +
-                "☼                     ☼\n" +
-                "☼  $                  ☼\n" +
-                "☼                     ☼\n" +
-                "☼                     ☼\n" +
-                "☼              $      ☼\n" +
-                "☼        $            ☼\n" +
-                "☼                     ☼\n" +
-                "☼ $                   ☼\n" +
-                "☼              $      ☼\n" +
-                "☼                     ☼\n" +
-                "☼    $                ☼\n" +
-                "☼                     ☼\n" +
-                "☼            $        ☼\n" +
-                "☼                     ☼\n" +
-                "☼       $             ☼\n" +
-                "☼                     ☼\n" +
-                "☼       ☺        $    ☼\n" +
-                "☼                     ☼\n" +
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n",
-
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n" +
-                "☼   $         $       ☼\n" +
-                "☼ ☼☼ ☼☼☼☼ ☼  ☼☼ ☼☼  ☼ ☼\n" +
-                "☼ ☼☼      ☼☼ ☼☼ ☼☼ ☼☼ ☼\n" +
-                "☼     ☼☼☼ $☼        ☼ ☼\n" +
-                "☼ ☼☼☼   ☼    ☼☼☼☼ ☼ $ ☼\n" +
-                "☼  ☼$ ☼   ☼☼      ☼☼☼ ☼\n" +
-                "☼     ☼☼☼  ☼☼ $ ☼     ☼\n" +
-                "☼ ☼☼☼          ☼☼☼  ☼ ☼\n" +
-                "☼  ☼  ☼☼☼☼ ☼☼☼    $☼☼ ☼\n" +
-                "☼ $    $    ☼   ☼   ☼ ☼\n" +
-                "☼ ☼☼☼☼ ☼☼ ☼   ☼☼☼ ☼   ☼\n" +
-                "☼      ☼☼ ☼☼☼  $  ☼☼☼ ☼\n" +
-                "☼ ☼☼☼     $   ☼☼☼     ☼\n" +
-                "☼  ☼  ☼☼ ☼☼☼   ☼  ☼☼☼ ☼\n" +
-                "☼    ☼☼    ☼ ☼   $  ☼ ☼\n" +
-                "☼ ☼$     ☼   ☼☼☼ ☼☼   ☼\n" +
-                "☼ ☼  ☼☼  ☼☼      ☼☼ ☼ ☼\n" +
-                "☼ ☼☼ ☼☼   ☼ ☼☼☼☼   $☼ ☼\n" +
-                "☼       ☼    $   ☼☼ ☼ ☼\n" +
-                "☼ ☼☼☼☼ ☼☼☼ ☼☼☼☼ ☼☼  ☼ ☼\n" +
-                "☼     $               ☼\n" +
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n",
-
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n" +
-                "☼     ☼    $     ☼    ☼\n" +
-                "☼     ☼          ☼    ☼\n" +
-                "☼   $ ☼   ☼    ☼☼☼ $  ☼\n" +
-                "☼     ☼   ☼      ☼    ☼\n" +
-                "☼  $  ☼☼☼☼☼☼     ☼☼   ☼\n" +
-                "☼       ☼             ☼\n" +
-                "☼☼☼     ☼   ☼         ☼\n" +
-                "☼           ☼  $ ☼    ☼\n" +
-                "☼        $  ☼    ☼    ☼\n" +
-                "☼☼☼☼☼☼☼☼    ☼☼☼☼☼☼    ☼\n" +
-                "☼ $   ☼     ☼         ☼\n" +
-                "☼     ☼     ☼  $      ☼\n" +
-                "☼     ☼     ☼     ☼   ☼\n" +
-                "☼    $            ☼   ☼\n" +
-                "☼         ☼    ☼☼☼☼☼☼☼☼\n" +
-                "☼   ☼     ☼  $    ☼   ☼\n" +
-                "☼   ☼ $   ☼       ☼   ☼\n" +
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼        ☼\n" +
-                "☼     ☼               ☼\n" +
-                "☼     ☼ ☺     ☼  $    ☼\n" +
-                "☼             ☼       ☼\n" +
-                "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼\n");
+        settings.setLevelMap(levelsStartsFrom1,
+                FieldLoaderImpl.readFile(new File("src/main/resources/field.txt")));
     }
 }

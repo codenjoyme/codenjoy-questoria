@@ -67,7 +67,7 @@ public class FieldLoaderImpl implements FieldLoader {
         return this;
     }
 
-    private String readFile(File file) {
+    public static String readFile(File file) {
         return SmokeUtils.load(file)
                 .replace('.', NOTHING.ch());
     }

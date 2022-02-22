@@ -22,6 +22,7 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.TestGameSettings;
 import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.items.*;
 import com.codenjoy.dojo.questoria.model.items.impl.Stone;
@@ -30,6 +31,7 @@ import com.codenjoy.dojo.questoria.model.items.impl.drone.DroneMentor;
 import com.codenjoy.dojo.questoria.model.items.monster.Monster;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
+import com.codenjoy.dojo.questoria.services.GameSettings;
 import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +41,7 @@ import java.util.List;
 
 import static com.codenjoy.dojo.questoria.client.Element.*;
 import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
+import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsFrom1;
 import static junit.framework.Assert.*;
 import static org.fest.reflect.core.Reflection.field;
 
@@ -51,18 +54,52 @@ public class QuestoriaGameTest {
     private ObjectFactoryImpl objects;
     private int countMonsters = 0;
     private FieldLoader field;
+    private GameSettings settings;
 
     public int getSize() {
         return field.height();
     }
 
-    public int getViewAreaSize() {
-        return 13;
+    @Before
+    public void init() {
+        settings = new TestGameSettings(){
+            @Override
+            public MonsterFactory monsters() {
+                return new MonsterFactory() {
+                    @Override
+                    public MonsterPool newMonsters() {
+                        return new MonsterPool() {
+                            @Override
+                            public Monster next() {
+                                countMonsters++;
+                                return new Monster("Сразись со мной!",
+                                        "die!",
+                                        "Я убью тебя!",
+                                        "Просто так ты не уйдешь!",
+                                        "немногоКода('для подсказки');", 0) {
+
+                                    @Override
+                                    public String getName() {
+                                        return "Monster" + countMonsters;
+                                    }
+                                };
+                            }
+                        };
+                    }
+                };
+            }
+        };
+        settings.setLevelMap(levelsStartsFrom1, level());
+
+        game = new QuestoriaGame(settings);
+        field = game.field();
+        objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
+        player = game.newPlayer("Player");
+        territoryField = (TerritoryField) field("heroField").ofType(HeroField.class).in(game).get();
     }
 
-    public FieldLoader getFieldLoader() {
-        return new FieldLoaderImpl().load(
-                "                                                  \n" +
+    private String level() {
+        return  "                                                  \n" +
                 "                                                  \n" +
                 "                                                  \n" +
                 "                                                  \n" +
@@ -111,55 +148,7 @@ public class QuestoriaGameTest {
                 "                                                  \n" +
                 "                                                  \n" +
                 "                                                  \n" +
-                "                                                  \n");
-    }
-
-    @Before
-    public void init() {
-        field = getFieldLoader();
-
-        Settings settings = new Settings() {
-            @Override
-            public int viewSize() {
-                return QuestoriaGameTest.this.getViewAreaSize();
-            }
-
-            @Override
-            public FieldLoader fieldLoader() {
-                return field;
-            }
-
-            @Override
-            public MonsterFactory monsters() {
-                return new MonsterFactory() {
-                    @Override
-                    public MonsterPool newMonsters() {
-                        return new MonsterPool() {
-                            @Override
-                            public Monster next() {
-                                countMonsters++;
-                                return new Monster("Сразись со мной!",
-                                        "die!",
-                                        "Я убью тебя!",
-                                        "Просто так ты не уйдешь!",
-                                        "немногоКода('для подсказки');", 0) {
-
-                                    @Override
-                                    public String getName() {
-                                        return "Monster" + countMonsters;
-                                    }
-                                };
-
-                            }
-                        };
-                    }
-                };
-            }
-        };
-        game = new QuestoriaGame(settings);
-        objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
-        player = game.newPlayer("Player");
-        territoryField = (TerritoryField) field("heroField").ofType(HeroField.class).in(game).get();
+                "                                                  \n";
     }
 
     public void setMonster(int x, int y) {

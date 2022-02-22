@@ -24,8 +24,7 @@ package com.codenjoy.dojo.questoria;
 
 import com.codenjoy.dojo.questoria.services.GameSettings;
 
-import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.KILL_MONSTER_SCORE;
-import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.PICK_GOLD_SCORE;
+import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.*;
 
 public class TestGameSettings extends GameSettings {
 
@@ -33,6 +32,7 @@ public class TestGameSettings extends GameSettings {
      * Here you can override the settings for all tests.
      */
     public TestGameSettings() {
+        integer(VIEW_SIZE, 13);
         integer(PICK_GOLD_SCORE, 10);
         integer(KILL_MONSTER_SCORE, 100);
     }

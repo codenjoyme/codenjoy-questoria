@@ -52,8 +52,8 @@ public class ObjectFactoryImpl implements ObjectFactory {
     public ObjectFactoryImpl(MonsterFactory factory, TerritoryField field) {
         monstersFactory = factory;
         locator = new Locator(field, this);
-        monsters = new HashMap<String, MonsterPool>();
-        objects = new HashMap<Something, World>();
+        monsters = new HashMap<>();
+        objects = new HashMap<>();
         loader = new ObjectLoader();
     }
 
@@ -85,7 +85,7 @@ public class ObjectFactoryImpl implements ObjectFactory {
     }
 
     public Collection<Something> getObjects() {
-        return new LinkedList<Something>(objects.keySet());
+        return new LinkedList<>(objects.keySet());
     }
 
     private boolean isAt(Something smth, Point place) {

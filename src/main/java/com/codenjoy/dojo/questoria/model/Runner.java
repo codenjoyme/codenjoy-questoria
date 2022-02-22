@@ -22,15 +22,11 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
-import com.codenjoy.dojo.questoria.model.items.monster.MonsterLoader;
-import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
-import com.codenjoy.dojo.questoria.model.items.monster.MonsterPoolImpl;
+import com.codenjoy.dojo.questoria.services.GameSettings;
 import com.codenjoy.dojo.questoria.services.saver.Loader;
 import com.codenjoy.dojo.questoria.services.saver.Saver;
 import com.codenjoy.dojo.services.Tickable;
 
-import java.io.File;
 import java.util.*;
 
 public class Runner implements Tickable {
@@ -39,35 +35,8 @@ public class Runner implements Tickable {
     private java.util.Map<String, PlayerOld> players;
 
     public Runner() {
-        game = new QuestoriaGame(settings());
+        game = new QuestoriaGame(new GameSettings());
         players = new HashMap<>();
-    }
-
-    private Settings settings() {
-        return new Settings() {
-            @Override
-            public int viewSize() {
-                return 41;
-            }
-
-            @Override
-            public FieldLoader fieldLoader() {
-                return new FieldLoaderImpl().load(new File("src/main/resources/field.txt"));
-            }
-
-            @Override
-            public MonsterFactory monsters() {
-                return new MonsterFactoryImpl();
-            }
-        };
-    }
-
-    static class MonsterFactoryImpl implements MonsterFactory {
-
-        @Override
-        public MonsterPool newMonsters() {
-            return new MonsterPoolImpl(new MonsterLoader());
-        }
     }
 
     @Override

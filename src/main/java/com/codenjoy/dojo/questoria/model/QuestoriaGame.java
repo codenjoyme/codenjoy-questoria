@@ -27,6 +27,7 @@ import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
 import com.codenjoy.dojo.questoria.model.items.impl.Wall;
 import com.codenjoy.dojo.questoria.model.items.impl.drone.Drone;
 import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
+import com.codenjoy.dojo.questoria.services.GameSettings;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Tickable;
 
@@ -34,9 +35,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
+import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsFrom1;
 
 public class QuestoriaGame implements Tickable {
 
+    private FieldLoader fieldLoader;
     private HeroField heroField;
     private FieldLocator locator;
     private ObjectFactory objects;
@@ -46,15 +49,15 @@ public class QuestoriaGame implements Tickable {
 
     private QuestoriaGame() {}
 
-    public QuestoriaGame(Settings settings) {
-        FieldLoader loader = settings.fieldLoader();
-        TerritoryField field = new TerritoryField(loader);
+    public QuestoriaGame(GameSettings settings) {
+        fieldLoader = settings.fieldLoader(levelsStartsFrom1);
+        TerritoryField field = new TerritoryField(fieldLoader);
         heroField = field;
         objects = new ObjectFactoryImpl(settings.monsters(), field);
         locator = objects.getLocator();
         players = new LinkedList<>();
         viewSize = settings.viewSize();
-        initPosition = settings.fieldLoader().initPosition();
+        initPosition = fieldLoader.initPosition();
     }
 
     public Me newPlayer(String name) {
@@ -211,5 +214,9 @@ public class QuestoriaGame implements Tickable {
         players.remove(foundPlayer);
         objects.remove(foundPlayer);
         foundPlayer.die();
+    }
+
+    public FieldLoader field() {
+        return fieldLoader;
     }
 }
