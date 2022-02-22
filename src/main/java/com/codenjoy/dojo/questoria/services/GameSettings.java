@@ -39,7 +39,8 @@ public class GameSettings extends SettingsImpl implements AllSettings<GameSettin
     public enum Keys implements PropertiesKey {
 
         PICK_GOLD_SCORE,
-        KILL_MONSTER_SCORE;
+        KILL_MONSTER_SCORE,
+        SCORE_COUNTING_TYPE;
 
         private String key;
 

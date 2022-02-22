@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.services.ai;
+package com.codenjoy.dojo.questoria;
 
 /*-
  * #%L
@@ -22,23 +22,18 @@ package com.codenjoy.dojo.questoria.services.ai;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.services.GameSettings;
 
-import com.codenjoy.dojo.client.Solver;
-import com.codenjoy.dojo.questoria.client.Board;
-import com.codenjoy.dojo.services.Dice;
-import com.codenjoy.dojo.services.Direction;
+import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.KILL_MONSTER_SCORE;
+import static com.codenjoy.dojo.questoria.services.GameSettings.Keys.PICK_GOLD_SCORE;
 
-public class AISolver implements Solver<Board> {
+public class TestGameSettings extends GameSettings {
 
-    private Dice dice;
-
-    public AISolver(Dice dice) {
-        this.dice = dice;
-    }
-
-    @Override
-    public String get(Board board) {
-        if (board.isGameOver()) return "";
-        return Direction.RIGHT.toString(); // TODO implement me
+    /**
+     * Here you can override the settings for all tests.
+     */
+    public TestGameSettings() {
+        integer(PICK_GOLD_SCORE, 10);
+        integer(KILL_MONSTER_SCORE, 100);
     }
 }

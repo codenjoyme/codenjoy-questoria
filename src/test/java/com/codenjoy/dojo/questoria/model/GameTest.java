@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.questoria.services.ai;
+package com.codenjoy.dojo.questoria.model;
 
 /*-
  * #%L
@@ -23,22 +23,24 @@ package com.codenjoy.dojo.questoria.services.ai;
  */
 
 
-import com.codenjoy.dojo.client.Solver;
-import com.codenjoy.dojo.questoria.client.Board;
-import com.codenjoy.dojo.services.Dice;
-import com.codenjoy.dojo.services.Direction;
+import org.junit.Test;
 
-public class AISolver implements Solver<Board> {
+public class GameTest extends AbstractGameTest {
 
-    private Dice dice;
+    @Test
+    public void heroOnTheField() {
+        // given
+        givenFl("#####\n" +
+                "#   #\n" +
+                "# I #\n" +
+                "#   #\n" +
+                "#####\n");
 
-    public AISolver(Dice dice) {
-        this.dice = dice;
-    }
-
-    @Override
-    public String get(Board board) {
-        if (board.isGameOver()) return "";
-        return Direction.RIGHT.toString(); // TODO implement me
+        // then
+        assertF("#####\n" +
+                "#   #\n" +
+                "# I #\n" +
+                "#   #\n" +
+                "#####\n");
     }
 }

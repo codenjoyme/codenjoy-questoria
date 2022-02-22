@@ -24,6 +24,7 @@ package com.codenjoy.dojo.questoria.model;
 
 import com.codenjoy.dojo.services.Point;
 
+import static com.codenjoy.dojo.questoria.client.Element.*;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class RectangleField implements FieldLoader {
@@ -37,30 +38,30 @@ public class RectangleField implements FieldLoader {
     public RectangleField(int width, int height) {
         this.width = width;
         this.height = height;
-        field = new FieldOld(width, height, ' ');
+        field = new FieldOld(width, height, NOTHING.ch());
 
         posx = 20;
         posy = 20;
     }
 
     public void setMonster(int x, int y) {
-        field.set(x, y, '@');
+        field.set(x, y, MONSTER.ch());
     }
 
     public void setWall(int x, int y) {
-        field.set(x, y, '#');
+        field.set(x, y, WALL.ch());
     }
 
     public void setDroneMentor(int x, int y) {
-        field.set(x, y, 'M');
+        field.set(x, y, DRONE_MENTOR.ch());
     }
 
     public void setGold(int x, int y) {
-        field.set(x, y, '$');
+        field.set(x, y, GOLD.ch());
     }
 
     public void setStone(int x, int y) {
-        field.set(x, y, 'O');
+        field.set(x, y, STONE.ch());
     }
 
     public void set(int x, int y, char c) {

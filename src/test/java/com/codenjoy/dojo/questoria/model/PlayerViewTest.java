@@ -31,7 +31,6 @@ import static junit.framework.Assert.assertEquals;
 
 public class PlayerViewTest {
 
-
     public static void fill(char[][] m, char с) {
         for (int x = 0; x < m.length; x++) {
             Arrays.fill(m[x], с);
@@ -100,7 +99,7 @@ public class PlayerViewTest {
                 "? ? ? ?       ? ? ? ? \n");
     }
 
-    private void verifyView(final int size, String expected) throws Exception {
+    private void verifyView(final int size, String expected) {
         final PlayerView view = new PlayerView(size);
         final StringBuffer result = new StringBuffer();
 

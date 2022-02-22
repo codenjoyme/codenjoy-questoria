@@ -25,8 +25,8 @@ package com.codenjoy.dojo.questoria.services;
 
 import com.codenjoy.dojo.client.ClientBoard;
 import com.codenjoy.dojo.client.Solver;
-import com.codenjoy.dojo.games.sample.Board;
-import com.codenjoy.dojo.games.sample.Element;
+import com.codenjoy.dojo.questoria.client.Board;
+import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.Level;
 import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.Questoria;

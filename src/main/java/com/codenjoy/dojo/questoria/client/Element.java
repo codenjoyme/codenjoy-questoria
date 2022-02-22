@@ -53,11 +53,11 @@ public enum Element implements CharElement {
 
         // Heroes of other players in other team.
 
-    ENEMY_HERO('♥'),
+    ENEMY_HERO('E'),
 
         // Player's Hero from the other team who died.
 
-    ENEMY_HERO_DEAD('Z'),
+    ENEMY_HERO_DEAD('e'),
 
         // Gold. It must be picked up.
 
@@ -85,8 +85,6 @@ public enum Element implements CharElement {
         // a prize from the monster.
 
     MONSTER('@');
-
-
 
     private final char ch;
 

@@ -36,6 +36,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codenjoy.dojo.questoria.client.Element.STONE_FORUM;
+import static com.codenjoy.dojo.questoria.client.Element.WALL;
 import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
 import static junit.framework.Assert.*;
 import static org.fest.reflect.core.Reflection.field;
@@ -1645,7 +1647,7 @@ public class QuestoriaGameTest {
         field.setGold(mx, my + 2);
         field.setGold(mx, my + 3);
 
-        field.set(mx, my + 5, '#');
+        field.set(mx, my + 5, WALL.ch());
 
         moveTo(mx - 2, my + 2);
 
@@ -2391,7 +2393,7 @@ public class QuestoriaGameTest {
     public void shouldWriteSomethingOnBoardForum() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.set(mx, my, '0');
+        field.set(mx, my, STONE_FORUM.ch());
         moveTo(mx - 1, my);
 
 
@@ -2446,5 +2448,4 @@ public class QuestoriaGameTest {
 
         assertMessage("StoneForum: " + StoneForum.MESSAGE_LAST);
     }
-
 }

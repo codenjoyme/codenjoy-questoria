@@ -1,5 +1,3 @@
-package com.codenjoy.dojo.questoria.services.ai;
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -21,24 +19,3 @@ package com.codenjoy.dojo.questoria.services.ai;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
-
-import com.codenjoy.dojo.client.Solver;
-import com.codenjoy.dojo.questoria.client.Board;
-import com.codenjoy.dojo.services.Dice;
-import com.codenjoy.dojo.services.Direction;
-
-public class AISolver implements Solver<Board> {
-
-    private Dice dice;
-
-    public AISolver(Dice dice) {
-        this.dice = dice;
-    }
-
-    @Override
-    public String get(Board board) {
-        if (board.isGameOver()) return "";
-        return Direction.RIGHT.toString(); // TODO implement me
-    }
-}

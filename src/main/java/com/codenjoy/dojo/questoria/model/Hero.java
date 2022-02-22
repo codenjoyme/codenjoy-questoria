@@ -22,7 +22,7 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import com.codenjoy.dojo.games.sample.Element;
+import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.joystick.Act;
@@ -31,8 +31,8 @@ import com.codenjoy.dojo.services.printer.state.HeroState;
 import com.codenjoy.dojo.services.printer.state.State;
 import com.codenjoy.dojo.services.round.RoundPlayerHero;
 
-import static com.codenjoy.dojo.games.sample.Element.HERO;
-import static com.codenjoy.dojo.games.sample.Element.HERO_DEAD;
+import static com.codenjoy.dojo.questoria.client.Element.HERO;
+import static com.codenjoy.dojo.questoria.client.Element.HERO_DEAD;
 import static com.codenjoy.dojo.questoria.client.ElementUtils.TEAM_ELEMENT;
 import static com.codenjoy.dojo.questoria.services.Event.Type.HERO_DIED;
 
