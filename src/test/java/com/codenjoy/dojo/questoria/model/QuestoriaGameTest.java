@@ -22,6 +22,7 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.items.*;
 import com.codenjoy.dojo.questoria.model.items.impl.Stone;
 import com.codenjoy.dojo.questoria.model.items.impl.StoneForum;
@@ -36,8 +37,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.codenjoy.dojo.questoria.client.Element.STONE_FORUM;
-import static com.codenjoy.dojo.questoria.client.Element.WALL;
+import static com.codenjoy.dojo.questoria.client.Element.*;
 import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
 import static junit.framework.Assert.*;
 import static org.fest.reflect.core.Reflection.field;
@@ -50,18 +50,18 @@ public class QuestoriaGameTest {
     private Me alien;
     private ObjectFactoryImpl objects;
     private int countMonsters = 0;
-    private RectangleField field;
+    private FieldLoader field;
 
     public int getSize() {
-        return 100;
+        return field.height();
     }
 
     public int getViewAreaSize() {
         return 13;
     }
 
-    public RectangleField getFieldLoader() {
-        return new RectangleField(getSize(), getSize());
+    public FieldLoader getFieldLoader() {
+        return new LoadFieldFromFile("src/test/resources/test_field3.txt");
     }
 
     @Before
@@ -110,6 +110,30 @@ public class QuestoriaGameTest {
         objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
         player = game.newPlayer("Player");
         territoryField = (TerritoryField) field("heroField").ofType(HeroField.class).in(game).get();
+    }
+
+    public void setMonster(int x, int y) {
+        set(x, y, MONSTER);
+    }
+
+    public void setWall(int x, int y) {
+        set(x, y, WALL);
+    }
+
+    public void setDroneMentor(int x, int y) {
+        set(x, y, DRONE_MENTOR);
+    }
+
+    public void setGold(int x, int y) {
+        set(x, y, GOLD);
+    }
+
+    public void setStone(int x, int y) {
+        set(x, y, STONE);
+    }
+
+    public void set(int x, int y, Element element) {
+        field.field().set(x, y, element.ch());
     }
 
     @Test
@@ -692,7 +716,7 @@ public class QuestoriaGameTest {
     public void testWhenMoveICanFindMonster() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 3, my);
 
         asrtFld("╔══════════════════════════╗\n" +
@@ -758,7 +782,7 @@ public class QuestoriaGameTest {
     public void testWhenITalkWithMonster() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
 
@@ -790,7 +814,7 @@ public class QuestoriaGameTest {
 
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         assertMessage("Monster1: Сразись со мной!");
@@ -850,7 +874,7 @@ public class QuestoriaGameTest {
 
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         // first attempt
@@ -942,7 +966,7 @@ public class QuestoriaGameTest {
     public void shouldKillMonsterWhenAttack() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("die!");
@@ -972,7 +996,7 @@ public class QuestoriaGameTest {
     public void shouldMonsterStillAliveWhenBadAttack() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("No!!!");
@@ -1006,7 +1030,7 @@ public class QuestoriaGameTest {
     public void shouldMonsterStillAliveWhenBadAttackTwice() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("No!!!");
@@ -1038,7 +1062,7 @@ public class QuestoriaGameTest {
     public void shouldNoMoveWhenITryToGoOnWall() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setWall(mx, my);
+        setWall(mx, my);
         moveTo(mx - 1, my);
 
         moveRight();
@@ -1066,7 +1090,7 @@ public class QuestoriaGameTest {
     public void shouldGetGoldAfterMonsterDie() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 2, my);
 
         assertGold(player, 0);
@@ -1159,7 +1183,7 @@ public class QuestoriaGameTest {
     public void shouldLeaveGoldAfterMonsterDie() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("die!");
@@ -1190,7 +1214,7 @@ public class QuestoriaGameTest {
     public void shouldNoRepeatMessageAgain() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("die!");
@@ -1223,7 +1247,7 @@ public class QuestoriaGameTest {
     public void shouldNoKillGold() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("die!");
@@ -1256,7 +1280,7 @@ public class QuestoriaGameTest {
     public void shouldSomeMessageAfterGetGold() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("die!");
@@ -1290,7 +1314,7 @@ public class QuestoriaGameTest {
     public void shouldGoAwayFromGold() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
         moveTo(mx - 1, my);
 
         attack("die!");
@@ -1643,11 +1667,11 @@ public class QuestoriaGameTest {
     public void shouldMeetWithDroneMentor() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setDroneMentor(mx, my);
-        field.setGold(mx, my + 2);
-        field.setGold(mx, my + 3);
+        setDroneMentor(mx, my);
+        setGold(mx, my + 2);
+        setGold(mx, my + 3);
 
-        field.set(mx, my + 5, WALL.ch());
+        set(mx, my + 5, WALL);
 
         moveTo(mx - 2, my + 2);
 
@@ -1868,7 +1892,7 @@ public class QuestoriaGameTest {
     public void shouldMeetWithStone() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setStone(mx, my);
+        setStone(mx, my);
         moveTo(mx - 1, my);
 
         asrtFld("╔══════════════════════════╗\n" +
@@ -1936,15 +1960,15 @@ public class QuestoriaGameTest {
 
         int mx1 = player.getX() + 10;
         int my1 = player.getY();
-        field.setMonster(mx1, my1);
+        setMonster(mx1, my1);
 
         int mx2 = player.getX() + 10;
         int my2 = player.getY() + 4;
-        field.setMonster(mx2, my2);
+        setMonster(mx2, my2);
 
         int mx3 = player.getX() + 10;
         int my3 = player.getY() - 4;
-        field.setMonster(mx3, my3);
+        setMonster(mx3, my3);
 
         moveTo(mx1 - 1, my1);
         moveTo(alien, mx2 - 2, my2);
@@ -2150,7 +2174,7 @@ public class QuestoriaGameTest {
     public void shouldMonsterBusyWhenFightWithAlien() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.setMonster(mx, my);
+        setMonster(mx, my);
 
         moveLeft();
         moveLeft();
@@ -2360,9 +2384,9 @@ public class QuestoriaGameTest {
     public void shouldIfIMeetWithStoneOtherObjects() {
         int mx = player.getX() + 10;
         int my = player.getY();
-        field.setStone(mx, my);
-        field.setWall(mx, my + 1);
-        field.setWall(mx, my - 1);
+        setStone(mx, my);
+        setWall(mx, my + 1);
+        setWall(mx, my - 1);
         moveTo(mx - 1, my);
 
         asrtFld("╔══════════════════════════╗\n" +
@@ -2393,7 +2417,7 @@ public class QuestoriaGameTest {
     public void shouldWriteSomethingOnBoardForum() {
         int mx = player.getX() + 20;
         int my = player.getY();
-        field.set(mx, my, STONE_FORUM.ch());
+        set(mx, my, STONE_FORUM);
         moveTo(mx - 1, my);
 
 
