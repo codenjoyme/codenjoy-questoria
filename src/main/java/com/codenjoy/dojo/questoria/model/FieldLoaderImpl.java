@@ -23,24 +23,27 @@ package com.codenjoy.dojo.questoria.model;
  */
 
 import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.utils.SmokeUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
-public class LoadFieldFromFile implements FieldLoader {
+public class FieldLoaderImpl implements FieldLoader {
 
     private FieldOld field;
     private int posx;
     private int posy;
 
-    public LoadFieldFromFile(String fileName) {
-        List<String> lines = loadFromFile(fileName);
+    public FieldLoader load(File file) {
+        return load(readFile(file));
+    }
+
+    public FieldLoader load(String data) {
+        List<String> lines = Arrays.asList(data.split("\n"));
 
         int height = lines.get(0).length();
         int width = lines.size();
@@ -60,26 +63,13 @@ public class LoadFieldFromFile implements FieldLoader {
                 }
             }
         }
+
+        return this;
     }
 
-    private List<String> loadFromFile(String fileName) {
-        List<String> lines = new LinkedList<>();
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new File(fileName));
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine()
-                        .replace('.', NOTHING.ch());
-                lines.add(line);
-            }
-        } catch (IOException e) {
-            if (scanner != null) {
-                scanner.close();
-            }
-            throw new RuntimeException(e);
-        }
-        return lines;
+    private String readFile(File file) {
+        return SmokeUtils.load(file)
+                .replace('.', NOTHING.ch());
     }
 
     @Override

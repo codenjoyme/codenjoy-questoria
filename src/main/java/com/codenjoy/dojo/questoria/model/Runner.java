@@ -30,6 +30,7 @@ import com.codenjoy.dojo.questoria.services.saver.Loader;
 import com.codenjoy.dojo.questoria.services.saver.Saver;
 import com.codenjoy.dojo.services.Tickable;
 
+import java.io.File;
 import java.util.*;
 
 public class Runner implements Tickable {
@@ -51,7 +52,8 @@ public class Runner implements Tickable {
 
             @Override
             public FieldLoader fieldLoader() {
-                return new LoadFieldFromFile("src/main/resources/field.txt");
+                return new FieldLoaderImpl()
+                        .load(new File("src/main/resources/field.txt"));
             }
 
             @Override

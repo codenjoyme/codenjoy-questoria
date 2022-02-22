@@ -25,10 +25,9 @@ package com.codenjoy.dojo.questoria.model;
 import com.codenjoy.dojo.services.Point;
 
 public interface FieldLoader {
+
     FieldOld field();
-
     Point initPosition();
-
     int height();
     int width();
 }

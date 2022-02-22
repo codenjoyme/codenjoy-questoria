@@ -24,13 +24,16 @@ package com.codenjoy.dojo.questoria.model;
 
 import org.junit.Test;
 
+import java.io.File;
+
 import static junit.framework.Assert.assertEquals;
 
 public class LoadFieldFromFileTest {
 
     @Test
     public void shouldLoadFileToField() {
-        FieldLoader loader = new LoadFieldFromFile("src/test/resources/test_field.txt");
+        FieldLoader loader = new FieldLoaderImpl()
+                .load(new File("src/test/resources/test_field.txt"));
 
         assertEquals(33, loader.height());
         assertEquals(35, loader.width());
@@ -73,7 +76,8 @@ public class LoadFieldFromFileTest {
 
     @Test
     public void shouldLoadFileToField2() {
-        FieldLoader loader = new LoadFieldFromFile("src/test/resources/test_field2.txt");
+        FieldLoader loader = new FieldLoaderImpl()
+                .load(new File("src/test/resources/test_field2.txt"));
 
         assertEquals(12, loader.height());
         assertEquals(50, loader.width());
