@@ -26,8 +26,6 @@ import com.codenjoy.dojo.services.Point;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -64,23 +62,19 @@ public class LoadFieldFromFile implements FieldLoader {
     }
 
     private List<String> loadFromFile(String fileName) {
-        URI uri = null;
-        try {
-            uri = getClass().getClassLoader().getResource(fileName).toURI();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        List<String> lines = new LinkedList<String>();
+        List<String> lines = new LinkedList<>();
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new File(uri));
+            scanner = new Scanner(new File(fileName));
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 lines.add(line);
             }
         } catch (IOException e) {
-            scanner.close();
+            if (scanner != null) {
+                scanner.close();
+            }
             throw new RuntimeException(e);
         }
         return lines;

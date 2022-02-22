@@ -29,8 +29,8 @@ import static junit.framework.Assert.assertEquals;
 public class LoadFieldFromFileTest {
 
     @Test
-    public void shouldLoadFileToField() throws Exception {
-        FieldLoader loader = new LoadFieldFromFile("test_field.txt");
+    public void shouldLoadFileToField() {
+        FieldLoader loader = new LoadFieldFromFile("src/test/resources/test_field.txt");
 
         assertEquals(33, loader.height());
         assertEquals(35, loader.width());
@@ -72,8 +72,8 @@ public class LoadFieldFromFileTest {
     }
 
     @Test
-    public void shouldLoadFileToField2() throws Exception {
-        FieldLoader loader = new LoadFieldFromFile("test_field2.txt");
+    public void shouldLoadFileToField2() {
+        FieldLoader loader = new LoadFieldFromFile("src/test/resources/test_field2.txt");
 
         assertEquals(12, loader.height());
         assertEquals(50, loader.width());
@@ -93,7 +93,7 @@ public class LoadFieldFromFileTest {
                 "##################################################\n");
     }
 
-    private void verifyField(FieldOld field, String expected) throws Exception {
+    private void verifyField(FieldOld field, String expected) {
         int width = field.getWidth();
         int height = field.getHeight();
 
