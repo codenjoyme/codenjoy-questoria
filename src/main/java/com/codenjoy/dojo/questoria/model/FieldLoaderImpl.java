@@ -24,6 +24,7 @@ package com.codenjoy.dojo.questoria.model;
 
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.utils.SmokeUtils;
+import com.codenjoy.dojo.utils.TestUtils;
 
 import java.io.File;
 import java.util.Arrays;
@@ -43,6 +44,10 @@ public class FieldLoaderImpl implements FieldLoader {
     }
 
     public FieldLoader load(String data) {
+        if (!data.contains("\n")) {
+            // TODO убрать это после того как выравняю все методы загрузки
+            data = TestUtils.injectN(data);
+        }
         List<String> lines = Arrays.asList(data.split("\n"));
 
         int height = lines.get(0).length();

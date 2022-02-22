@@ -32,6 +32,8 @@ import com.codenjoy.dojo.questoria.model.items.monster.Monster;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
 import com.codenjoy.dojo.questoria.services.GameSettings;
+import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.dice.MockDice;
 import org.fest.reflect.core.Reflection;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,7 +93,9 @@ public class QuestoriaGameTest {
         };
         settings.setLevelMap(levelsStartsFrom1, level());
 
-        game = new QuestoriaGame(settings);
+        Dice dice = new MockDice();
+        Level level = settings.level(levelsStartsFrom1, dice, Level::new);
+        game = new QuestoriaGame(dice, level, settings);
         field = game.field();
         objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
         player = game.newPlayer("Player");

@@ -25,9 +25,13 @@ package com.codenjoy.dojo.questoria.model;
 import com.codenjoy.dojo.questoria.services.GameSettings;
 import com.codenjoy.dojo.questoria.services.saver.Loader;
 import com.codenjoy.dojo.questoria.services.saver.Saver;
+import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Tickable;
+import com.codenjoy.dojo.services.dice.RandomDice;
 
 import java.util.*;
+
+import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsFrom1;
 
 public class Runner implements Tickable {
 
@@ -35,7 +39,10 @@ public class Runner implements Tickable {
     private java.util.Map<String, PlayerOld> players;
 
     public Runner() {
-        game = new QuestoriaGame(new GameSettings());
+        Dice dice = new RandomDice();
+        GameSettings settings = new GameSettings();
+        Level level = settings.level(levelsStartsFrom1, dice, Level::new);
+        game = new QuestoriaGame(dice, level, settings);
         players = new HashMap<>();
     }
 

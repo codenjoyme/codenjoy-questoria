@@ -23,8 +23,6 @@ package com.codenjoy.dojo.questoria.services;
  */
 
 
-import com.codenjoy.dojo.questoria.model.FieldLoader;
-import com.codenjoy.dojo.questoria.model.FieldLoaderImpl;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterFactory;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterLoader;
 import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
@@ -77,11 +75,6 @@ public class GameSettings extends SettingsImpl implements AllSettings<GameSettin
 
     public int viewSize() {
         return integer(VIEW_SIZE);
-    }
-
-    public FieldLoader fieldLoader(int levelNumber) {
-        return new FieldLoaderImpl()
-                .load(getLevelMap(levelNumber));
     }
 
     public MonsterFactory monsters() {

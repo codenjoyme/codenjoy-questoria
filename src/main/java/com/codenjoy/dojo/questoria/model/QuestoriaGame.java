@@ -28,6 +28,7 @@ import com.codenjoy.dojo.questoria.model.items.impl.Wall;
 import com.codenjoy.dojo.questoria.model.items.impl.drone.Drone;
 import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
 import com.codenjoy.dojo.questoria.services.GameSettings;
+import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Tickable;
 
@@ -35,7 +36,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
-import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsFrom1;
 
 public class QuestoriaGame implements Tickable {
 
@@ -49,8 +49,8 @@ public class QuestoriaGame implements Tickable {
 
     private QuestoriaGame() {}
 
-    public QuestoriaGame(GameSettings settings) {
-        fieldLoader = settings.fieldLoader(levelsStartsFrom1);
+    public QuestoriaGame(Dice dice, Level level, GameSettings settings) {
+        fieldLoader = new FieldLoaderImpl().load(level.map());
         TerritoryField field = new TerritoryField(fieldLoader);
         heroField = field;
         objects = new ObjectFactoryImpl(settings.monsters(), field);
