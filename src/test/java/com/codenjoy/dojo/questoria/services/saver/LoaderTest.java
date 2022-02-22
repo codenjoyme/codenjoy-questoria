@@ -55,8 +55,8 @@ public class LoaderTest {
         PlayerOld player1 = result.getPlayerByCode(result.register("player1"));
         PlayerOld player2 = result.getPlayerByCode(result.register("player2"));
 
-        player1.getGame().getJoystick().moveDown();
-        player2.getGame().getJoystick().moveLeft();
+        player1.getJoystick().moveDown();
+        player2.getJoystick().moveLeft();
 
         result.tick();
         return result;

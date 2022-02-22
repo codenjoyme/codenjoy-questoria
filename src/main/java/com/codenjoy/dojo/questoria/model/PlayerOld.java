@@ -22,20 +22,48 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.model.items.Me;
+import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
+
 public class PlayerOld {
 
-    private SinglePlayer game;
+    private QuestoriaGame game;
+    private Me player;
     private String name;
     private String gameCode;
 
+    public PlayerOld() {}
+
     public PlayerOld(String name, QuestoriaGame game) {
         this.name = name;
-        this.game = new SinglePlayer(game, name);
+        this.game = game;
+        player = game.newPlayer(name);
         this.gameCode = name + name.hashCode();
     }
 
-    public PlayerOld() {
-        // do nothing
+    public String getMessage() {
+        return player.getMessenger().getMessages().getLast(60);
+    }
+
+    public PlayerInfoImpl getPlayerInfo() {
+        return player.getInfo();
+    }
+
+    public Joystick getJoystick() {
+        return player;
+    }
+
+    @Override
+    public String toString() {
+        return game.printView(player);
+    }
+
+    public CodeHelper getCodeHelper() {
+        return game.getCodeHelper(player);
+    }
+
+    public void tick() {
+        game.tick();
     }
 
     public String getName() {
@@ -52,9 +80,5 @@ public class PlayerOld {
 
     public void setGameCode(String gameCode) {
         this.gameCode = gameCode;
-    }
-
-    public SinglePlayer getGame() {
-        return game;
     }
 }
