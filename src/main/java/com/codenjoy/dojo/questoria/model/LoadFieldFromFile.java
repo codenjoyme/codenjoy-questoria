@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class LoadFieldFromFile implements FieldLoader {
@@ -68,7 +69,8 @@ public class LoadFieldFromFile implements FieldLoader {
             scanner = new Scanner(new File(fileName));
 
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+                String line = scanner.nextLine()
+                        .replace('.', NOTHING.ch());
                 lines.add(line);
             }
         } catch (IOException e) {
