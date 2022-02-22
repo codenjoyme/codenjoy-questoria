@@ -24,12 +24,14 @@ package com.codenjoy.dojo.questoria.model;
 
 import org.junit.Test;
 
+import java.io.File;
+
 import static junit.framework.Assert.assertEquals;
 
 public class LoadFieldFromFileTest {
 
     @Test
-    public void shouldLoadFileToField() {
+    public void shouldLoadTextToField() {
         FieldLoader loader = new FieldLoaderImpl().load(
                 "###################################\n" +
                 "#################      ############\n" +
@@ -105,20 +107,9 @@ public class LoadFieldFromFileTest {
     }
 
     @Test
-    public void shouldLoadFileToField2() {
-        FieldLoader loader = new FieldLoaderImpl().load(
-                "##################################################\n" +
-                "##################################################\n" +
-                "##################################################\n" +
-                "##I            @                 @             ###\n" +
-                "##############################################@###\n" +
-                "####         @               @                 ###\n" +
-                "####@#############################################\n" +
-                "####       @             @              @      ###\n" +
-                "##############################################@###\n" +
-                "########      @                @               ###\n" +
-                "########@#########################################\n" +
-                "##################################################\n");
+    public void shouldLoadFileToField() {
+        FieldLoader loader = new FieldLoaderImpl()
+                .load(new File("src/test/resources/test_field.txt"));
 
         assertEquals(12, loader.height());
         assertEquals(50, loader.width());
