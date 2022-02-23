@@ -26,6 +26,7 @@ import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.*;
 import com.codenjoy.dojo.questoria.model.items.monster.Monster;
 import com.codenjoy.dojo.services.Point;
+import org.apache.commons.lang3.StringUtils;
 
 public class Me extends TalkingObject implements Viewable, Joystick, Something, Leaveable {
 
@@ -123,7 +124,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
 
     @Override
     public void attack(String message) {
-        if (!"".equals(message)) {
+        if (!StringUtils.isEmpty(message)) {
             messenger.say(message);
         }
         for (Something smthNear : locator.getNear(this)) {
