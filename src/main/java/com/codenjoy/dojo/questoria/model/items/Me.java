@@ -24,6 +24,7 @@ package com.codenjoy.dojo.questoria.model.items;
 
 import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.*;
+import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
 import com.codenjoy.dojo.questoria.model.items.monster.Monster;
 import com.codenjoy.dojo.services.Point;
 
@@ -239,7 +240,7 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
 
     @Override
     public Something leaveAfter() {
-        return world.make(' ');
+        return new Nothing();
     }
 
     @Override

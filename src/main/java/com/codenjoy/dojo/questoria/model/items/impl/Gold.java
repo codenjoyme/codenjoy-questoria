@@ -58,7 +58,7 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
 
     @Override
     public Something leaveAfter() {
-        return world.make(' ');
+        return new Nothing();
     }
 
     @Override
