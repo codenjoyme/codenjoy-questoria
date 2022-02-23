@@ -56,7 +56,7 @@ public class TerritoryField implements HeroField {
         if (fogs.containsKey(hero)) {
             throw new RuntimeException("Игрок уже существует!");
         }
-        fogs.put(hero, new FieldOld(width, height, '?'));
+        fogs.put(hero, new FieldOld(width, height, FOG.ch()));
 
         return place;
     }
@@ -99,9 +99,9 @@ public class TerritoryField implements HeroField {
             if (isWall && canSee) {
                 result.append(WALL.ch());
             } else if (isWall && !canSee) {
-                result.append("?");
-            } else if (fog(me).get(x, y) == '?' || field.get(x, y) == '?') {
-                result.append("?");
+                result.append(FOG.ch());
+            } else if (fog(me).get(x, y) == FOG.ch() || field.get(x, y) == FOG.ch()) {
+                result.append(FOG.ch());
             } else if (playerAt(pt)) {
                 if (me.itsMe(pt)) {
                     result.append(HERO.ch());

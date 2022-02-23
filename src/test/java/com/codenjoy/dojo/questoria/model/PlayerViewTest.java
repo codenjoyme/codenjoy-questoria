@@ -24,6 +24,8 @@ package com.codenjoy.dojo.questoria.model;
 
 import org.junit.Test;
 
+import static com.codenjoy.dojo.questoria.client.Element.FOG;
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 import static junit.framework.Assert.assertEquals;
 
@@ -98,9 +100,9 @@ public class PlayerViewTest {
         view.moveMeTo(pt(size, size));
         view.see(pt(size, size), size, size, (x, y, canSee, isWall) -> {
             if (canSee) {
-                result.append(' ');
+                result.append(NOTHING.ch());
             } else {
-                result.append('?');
+                result.append(FOG.ch());
             }
 
             boolean endLine = (x - size) == view.radius();

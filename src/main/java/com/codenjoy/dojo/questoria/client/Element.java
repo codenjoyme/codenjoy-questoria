@@ -31,6 +31,10 @@ public enum Element implements CharElement {
 
     NOTHING(' '),
 
+        // Fog of war.
+
+    FOG('?'),
+
         // Wall you can't walk through.
 
     WALL('#'),
