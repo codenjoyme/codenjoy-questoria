@@ -75,8 +75,4 @@ public abstract class CodeRunnerMonster extends Monster implements MonsterTest {
             messenger.say(help);
         }
     }
-
-    public TestSuite getTestSuite() {
-        return testSuite;
-    }
 }

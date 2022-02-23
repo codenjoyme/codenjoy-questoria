@@ -60,21 +60,14 @@ public class MonsterLoader implements Iterable<Monster> {
     }
 
     private List<Class<? extends Monster>> sortedList() {
-        List<Class<? extends Monster>> result = new LinkedList<Class<? extends Monster>>(monsters.keySet());
-
-        Collections.sort(result, new Comparator<Class<? extends Monster>>() {
-            @Override
-            public int compare(Class<? extends Monster> o1, Class<? extends Monster> o2) {
-                return monsters.get(o1).compareTo(monsters.get(o2));
-            }
-        });
-
+        List<Class<? extends Monster>> result = new LinkedList<>(monsters.keySet());
+        Collections.sort(result, Comparator.comparing(o -> monsters.get(o)));
         return result;
     }
 
     @Override
     public Iterator<Monster> iterator() {
-        List<Monster> result = new LinkedList<Monster>();
+        List<Monster> result = new LinkedList<>();
 
         for (Class<? extends Monster> clazz : sortedList()) {
             result.add(newInstance(clazz));

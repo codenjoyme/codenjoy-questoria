@@ -25,6 +25,7 @@ package com.codenjoy.dojo.questoria.model.items;
 import com.codenjoy.dojo.questoria.model.Messages;
 
 public interface Messenger {
+
     void sayOnce(String message);
 
     void say(String message);

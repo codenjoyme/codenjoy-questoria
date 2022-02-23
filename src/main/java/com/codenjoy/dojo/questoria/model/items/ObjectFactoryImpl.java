@@ -161,10 +161,6 @@ public class ObjectFactoryImpl implements ObjectFactory {
         return loader.load(c);
     }
 
-    public static UnsupportedOperationException newObjectError(String c) {
-        throw new UnsupportedOperationException("WTF! Новый объект в мире, а мы не в курсе: '" + c + "'");
-    }
-
     @Override
     public void tick() {
         for (Something smth : getObjects()) {
@@ -173,5 +169,4 @@ public class ObjectFactoryImpl implements ObjectFactory {
             }
         }
     }
-
 }

@@ -26,8 +26,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Messages {
+
     private static final String SEPARATOR = "---------------------------------------------------------------\n";
-    private List<String> messages = new LinkedList<String>();
+
+    private List<String> messages = new LinkedList<>();
     private String owner;
 
     public Messages() {}
@@ -58,7 +60,7 @@ public class Messages {
     }
 
     public static String join(List<String> strings, String separator) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         int count = strings.size();
         for (String string : strings) {
             result.append(string);

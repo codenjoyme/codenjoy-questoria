@@ -45,7 +45,7 @@ public class TerritoryField implements HeroField {
         width = loader.width();
         height = loader.height();
         field = loader.field();
-        fogs = new HashMap<Viewable, FieldOld>();
+        fogs = new HashMap<>();
     }
 
     @Override
@@ -67,12 +67,9 @@ public class TerritoryField implements HeroField {
 
         me.view().moveMeTo(me);  // TODO подумать над этим
 
-        me.view().see(me, width, height, new Apply() {
-            @Override
-            public void xy(int xx, int yy, boolean canSee, boolean isWall) {
-                if (canSee && !isWall) {
-                    fog.set(xx, yy, ' ');
-                }
+        me.view().see(me, width, height, (xx, yy, canSee, isWall) -> {
+            if (canSee && !isWall) {
+                fog.set(xx, yy, ' ');
             }
         });
     }
@@ -98,35 +95,32 @@ public class TerritoryField implements HeroField {
         final StringBuffer result = new StringBuffer();
 
         result.append("╔" + StringUtils.repeat("═", me.view().size()*2) + "╗\n");
-        me.view().see(me, width, height, new Apply() {
-            @Override
-            public void xy(int x, int y, boolean canSee, boolean isWall) {
-                Point pt = pt(x, y);
-                boolean startLine = x == me.view().getX();
-                if (startLine) {
-                    result.append("║");
-                }
+        me.view().see(me, width, height, (x, y, canSee, isWall) -> {
+            Point pt = pt(x, y);
+            boolean startLine = x == me.view().getX();
+            if (startLine) {
+                result.append("║");
+            }
 
-                if (isWall && canSee) {
-                    result.append("##");
-                } else if (isWall && !canSee) {
-                    result.append("??");
-                } else if (fog(me).get(x, y) == '?' || field.get(x, y) == '?') {
-                    result.append("??");
-                } else if (playerAt(pt)) {
-                    if (me.itsMe(pt)) {
-                        result.append("I ");
-                    } else {
-                        result.append("A ");
-                    }
+            if (isWall && canSee) {
+                result.append("##");
+            } else if (isWall && !canSee) {
+                result.append("??");
+            } else if (fog(me).get(x, y) == '?' || field.get(x, y) == '?') {
+                result.append("??");
+            } else if (playerAt(pt)) {
+                if (me.itsMe(pt)) {
+                    result.append("I ");
                 } else {
-                    result.append(field.get(x, y)).append(' ');
+                    result.append("A ");
                 }
+            } else {
+                result.append(field.get(x, y)).append(' ');
+            }
 
-                boolean endLine = x == me.view().getX() + me.view().size() - 1;
-                if (endLine) {
-                    result.append("║\n");
-                }
+            boolean endLine = x == me.view().getX() + me.view().size() - 1;
+            if (endLine) {
+                result.append("║\n");
             }
         });
         result.append('╚' + StringUtils.repeat("═", me.view().size()*2) + '╝');

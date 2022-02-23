@@ -40,7 +40,7 @@ public class ObjectLoader {
             Nothing.class);
 
     public ObjectLoader() {
-        cache = new HashMap<String, Class<? extends Something>>();
+        cache = new HashMap<>();
 
         Reflections reflections = new Reflections(Something.class.getPackage().getName());
         Set<Class<? extends Something>> classes = reflections.getSubTypesOf(Something.class);
@@ -80,6 +80,6 @@ public class ObjectLoader {
     }
 
     public List<String> objects() {
-        return new LinkedList(cache.keySet());
+        return new LinkedList<>(cache.keySet());
     }
 }

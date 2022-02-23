@@ -32,6 +32,7 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class Saver {
+
     private List<Entry> data = new LinkedList<>();
     private List<Integer> ids = new LinkedList<>();
     private List<Class<?>> exclude = new LinkedList<>();
@@ -384,12 +385,7 @@ public class Saver {
             clazz = clazz.getSuperclass();
         } while (!Object.class.equals(clazz));
 
-        Collections.sort(result, new Comparator<Field>() {
-            @Override
-            public int compare(Field o1, Field o2) {
-                return (o1.getType() + o1.getName()).compareTo(o2.getType() + o2.getName());
-            }
-        });
+        Collections.sort(result, Comparator.comparing(o -> (o.getType() + o.getName())));
         return result;
     }
 

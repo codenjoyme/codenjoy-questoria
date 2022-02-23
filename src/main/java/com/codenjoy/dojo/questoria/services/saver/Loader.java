@@ -34,14 +34,14 @@ import java.util.*;
 
 public class Loader {
 
-    private Map<String, Object> instances = new HashMap<String, Object>();
+    private Map<String, Object> instances = new HashMap<>();
 
     public Object load(String saved) {
         try {
             JSONObject json = new JSONObject(saved);
-            Iterator keys = json.keys();
-            JSONArray objects = (JSONArray) json.get((String) keys.next());
-            String mainObjectId = (String)json.get((String)keys.next());
+            Iterator<String> keys = json.keys();
+            JSONArray objects = (JSONArray) json.get(keys.next());
+            String mainObjectId = (String)json.get(keys.next());
 
             for (int index = 0; index < objects.length(); index++) {
                 JSONObject object = (JSONObject) objects.get(index);
@@ -59,13 +59,13 @@ public class Loader {
                         newInstance = new Object[fields.length()];
                     }
                 } else if (isList(className)) {
-                    newInstance = new LinkedList();
+                    newInstance = new LinkedList<>();
                 } else if (isMap(className)) {
-                    newInstance = new HashMap();
+                    newInstance = new HashMap<>();
                 } else {
                     if (className.contains("$")) {
                         String mainClassName = className.substring(0, className.indexOf('$'));
-                        String innerClassName = className.substring(className.indexOf('$') + 1, className.length());
+                        String innerClassName = className.substring(className.indexOf('$') + 1);
                         Class<?> aClass = loadClass(mainClassName);
                         if (isNumber(innerClassName)) {
                             throw new UnsupportedOperationException("Попытка загрузить аннонимный класс '" + className + "'. Не разобрался еще с этим..."); // TODO так разберись!
@@ -82,7 +82,7 @@ public class Loader {
                                     JSONArray fields = (JSONArray) object.get("fields");
                                     for (int i = 0; i < fields.length(); i++) {
                                         JSONObject field = (JSONObject)fields.get(i);
-                                        String key = (String)field.keys().next();
+                                        String key = field.keys().next();
                                         if (key.contains("this$")) {
                                             String value = ((String)field.get(key));
                                             Object parent = instances.get(value);
@@ -134,7 +134,7 @@ public class Loader {
                             array[jndex] = (char[])instances.get(fld);
                         }
                         if (container.getClass().getName().startsWith("[C")) {
-                            char[] dest = (char[])container;
+                            char[] dest = (char[]) container;
                             char[] source = ((String) fld).toCharArray();
                             for (int i = 0; i < source.length; i++) {
                                 dest[i] = source[i];
@@ -143,7 +143,7 @@ public class Loader {
                     } else {
                         JSONObject field = (JSONObject) fld;
 
-                        String name = (String) field.keys().next();
+                        String name = field.keys().next();
                         String value = null;
                         Object o = field.get(name);
                         if (!o.equals(JSONObject.NULL)) {
@@ -213,13 +213,11 @@ public class Loader {
         if (Object.class.equals(clazz)) {
             throw new RuntimeException(String.format("Поле %s не найдено нигде в иерархии класса.", name));
         }
-        Field declaredField = null;
         try {
-            declaredField = clazz.getDeclaredField(name);
+            return clazz.getDeclaredField(name);
         } catch (NoSuchFieldException e) {
             return getField(clazz.getSuperclass(), name);
         }
-        return declaredField;
     }
 
     private void setFieldValue(Object object, String name, Object fieldValue) {

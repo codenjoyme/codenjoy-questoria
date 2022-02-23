@@ -30,7 +30,7 @@ import com.codenjoy.dojo.services.Point;
 public class DroneMentor extends TalkingObject implements Something, SetWorld, MeetWithHero {
 
     public static final String MESSAGE =
-            "Видишь все это золото? Оно твое. Ты можешь собрать его намного быстрее, \n" +
+            "Видишь все это золото? Оно твоё. Ты можешь собрать его намного быстрее, \n" +
             "если воспользуешься помощником. Я научу тебя его делать. \n" +
             "Чтобы робот заработал, тебе нужно наделить его разумом. \n" +
             "    public String whereToGo(String nearMe) {\n" +

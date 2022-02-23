@@ -57,7 +57,7 @@ public class SimpleIterator<T> implements Iterator<T> {
     }
 
     public void reset(List<T> data) {
-        this.data = new LinkedList<T>(data);
+        this.data = new LinkedList<>(data);
         reset();
     }
 }

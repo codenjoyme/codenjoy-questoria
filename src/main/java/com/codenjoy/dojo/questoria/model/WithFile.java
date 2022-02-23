@@ -22,11 +22,15 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 public class WithFile {
+
     private final File file;
 
     public WithFile(String fileName) {
@@ -42,46 +46,26 @@ public class WithFile {
                 return file;
             }
             return new File(resource.toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void save(String data) {
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(file);
+        try (FileWriter writer = new FileWriter(file)) {
             writer.write(data);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
     public String load() {
-        FileReader reader = null;
-        try {
-            reader = new FileReader(file);
+        try (FileReader reader = new FileReader(file)) {
             char[] chars = new char[(int) file.length()];
             reader.read(chars);
             return new String(chars);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
