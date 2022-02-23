@@ -34,7 +34,9 @@ import com.codenjoy.dojo.questoria.model.items.monster.MonsterPool;
 import com.codenjoy.dojo.questoria.services.GameSettings;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.dice.MockDice;
+import com.codenjoy.dojo.utils.smart.SmartAssert;
 import org.fest.reflect.core.Reflection;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,9 +46,8 @@ import java.util.List;
 import static com.codenjoy.dojo.questoria.client.Element.*;
 import static com.codenjoy.dojo.questoria.model.Messages.withoutSeparator;
 import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsFrom1;
+import static com.codenjoy.dojo.utils.smart.SmartAssert.assertEquals;
 import static org.fest.reflect.core.Reflection.field;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class QuestoriaGameTest {
 
@@ -102,6 +103,11 @@ public class QuestoriaGameTest {
         objects = (ObjectFactoryImpl) field("objects").ofType(ObjectFactory.class).in(game).get();
         player = game.newPlayer("Player");
         territoryField = (TerritoryField) field("heroField").ofType(HeroField.class).in(game).get();
+    }
+
+    @After
+    public void after() {
+        SmartAssert.checkResult();
     }
 
     private String level() {
@@ -2427,7 +2433,7 @@ public class QuestoriaGameTest {
 
         try {
             asrtFld("");
-            fail("");
+            fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Нет такого пользователя!", e.getMessage());
         }
@@ -2447,6 +2453,10 @@ public class QuestoriaGameTest {
                 "║?????   ?????║\n" +
                 "║?????????????║\n" +
                 "╚═════════════╝", alien);
+    }
+
+    private void fail() {
+        assertEquals(false, true);
     }
 
     @Test
