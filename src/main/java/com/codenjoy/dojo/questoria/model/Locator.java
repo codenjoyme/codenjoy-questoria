@@ -31,6 +31,7 @@ import com.codenjoy.dojo.services.Point;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class Locator implements FieldLocator {
@@ -48,9 +49,9 @@ public class Locator implements FieldLocator {
     @Override
     public List<Something> getNear(Me founder) {
         List<Place> near = field.getAt(pt(founder.getX(), founder.getY())).near();
-        List<Something> result = new LinkedList<Something>();
+        List<Something> result = new LinkedList<>();
         for (Place place : near) {
-            if (place.getChar() == ' ') continue;
+            if (place.getChar() == NOTHING.ch()) continue;
             result.add(get(founder, place));
         }
         return result;

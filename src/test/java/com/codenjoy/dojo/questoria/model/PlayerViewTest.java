@@ -84,7 +84,7 @@ public class PlayerViewTest {
     }
 
     @Test
-    public void testSmallView() throws Exception {
+    public void testSmallView() {
         verifyView(11,
                 "? ? ? ?       ? ? ? ? \n" +
                 "? ?               ? ? \n" +
@@ -104,20 +104,17 @@ public class PlayerViewTest {
         final StringBuffer result = new StringBuffer();
 
         view.moveMeTo(pt(size, size));
-        view.see(pt(size, size), size*2, size*2, new Apply() {
-            @Override
-            public void xy(int x, int y, boolean canSee, boolean isWall) {
-                if (canSee) {
-                    result.append(' ');
-                } else {
-                    result.append('?');
-                }
-                result.append(" ");
+        view.see(pt(size, size), size*2, size*2, (x, y, canSee, isWall) -> {
+            if (canSee) {
+                result.append(' ');
+            } else {
+                result.append('?');
+            }
+            result.append(" ");
 
-                boolean endLine = (x - size) == view.radius();
-                if (endLine) {
-                    result.append('\n');
-                }
+            boolean endLine = (x - size) == view.radius();
+            if (endLine) {
+                result.append('\n');
             }
         });
 

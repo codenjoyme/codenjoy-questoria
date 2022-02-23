@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.codenjoy.dojo.questoria.client.Element.HERO;
 import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
@@ -61,10 +62,10 @@ public class FieldLoaderImpl implements FieldLoader {
             for (int x = 0; x < line.length(); x++) {
                 field.set(x, dy, line.charAt(x));
 
-                if (field.get(x, dy) == 'I') {
+                if (field.get(x, dy) == HERO.ch()) {
                     posx = x;
                     posy = dy;
-                    field.set(x, dy, ' ');
+                    field.set(x, dy, NOTHING.ch());
                 }
             }
         }

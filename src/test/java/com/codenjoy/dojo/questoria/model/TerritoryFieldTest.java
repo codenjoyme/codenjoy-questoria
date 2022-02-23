@@ -25,6 +25,7 @@ package com.codenjoy.dojo.questoria.model;
 import com.codenjoy.dojo.questoria.model.items.Me;
 import org.junit.Test;
 
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -38,7 +39,7 @@ public class TerritoryFieldTest {
 
         int size = 21;
 
-        FieldOld field = new FieldOld(size, size, ' ');
+        FieldOld field = new FieldOld(size, size, NOTHING.ch());
 
         when(loader.width()).thenReturn(size);
         when(loader.height()).thenReturn(size);

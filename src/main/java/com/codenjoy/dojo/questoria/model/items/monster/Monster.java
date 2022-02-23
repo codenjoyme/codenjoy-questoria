@@ -28,6 +28,8 @@ import com.codenjoy.dojo.questoria.model.Dieble;
 import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.*;
 
+import static com.codenjoy.dojo.questoria.client.Element.GOLD;
+
 public class Monster extends TalkingObject implements Something, CodeHelper, Dieble, SetWorld, MeetWithHero, CanBeBusy, Leaveable {
 
     public static final int GOLD_AMOUNT = 10;
@@ -81,7 +83,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
 
     @Override
     public Something leaveAfter() {
-        return world.make('$', gold);
+        return world.make(GOLD.ch(), gold);
     }
 
     @Override

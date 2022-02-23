@@ -22,10 +22,13 @@ package com.codenjoy.dojo.questoria.model.items.impl.drone;
  * #L%
  */
 
+import static com.codenjoy.dojo.questoria.client.Element.GOLD;
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
+
 public class MyDron {
 
     public String whereToGo(String nearMe) {
-        char atWay = ' ';
+        char atWay = NOTHING.ch();
         int random = 0;
         do {
             random = new java.util.Random().nextInt(4);
@@ -47,7 +50,7 @@ public class MyDron {
                     break;
             }
 
-        } while (atWay != ' ' && atWay != '$');
+        } while (atWay != NOTHING.ch() && atWay != GOLD.ch());
 
         switch (new java.util.Random().nextInt(4)) {
             case 0:

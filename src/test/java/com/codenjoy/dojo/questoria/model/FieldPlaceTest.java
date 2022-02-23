@@ -25,6 +25,7 @@ package com.codenjoy.dojo.questoria.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -35,7 +36,7 @@ public class FieldPlaceTest {
 
     @Before
     public void setup() {
-        FieldOld field = new FieldOld(10, 10, ' ');
+        FieldOld field = new FieldOld(10, 10, NOTHING.ch());
         field.set(3, 3, '1');  // 123
         field.set(4, 3, '2');  // 456
         field.set(5, 3, '3');  // 789

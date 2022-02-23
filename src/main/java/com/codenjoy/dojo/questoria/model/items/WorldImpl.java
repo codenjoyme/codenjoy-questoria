@@ -22,6 +22,8 @@ package com.codenjoy.dojo.questoria.model.items;
  * #L%
  */
 
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
+
 public class WorldImpl implements World {
 
     private Place place;
@@ -49,7 +51,7 @@ public class WorldImpl implements World {
     @Override
     public void move(int x, int y) {
         char ch = place.getChar();
-        place.update(' ');
+        place.update(NOTHING.ch());
         place.move(x, y);
         place.update(ch);
     }

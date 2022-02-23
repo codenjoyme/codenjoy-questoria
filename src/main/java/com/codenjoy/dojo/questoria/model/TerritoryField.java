@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 
+import static com.codenjoy.dojo.questoria.client.Element.*;
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class TerritoryField implements HeroField {
@@ -51,7 +52,7 @@ public class TerritoryField implements HeroField {
     @Override
     public FieldPlace newHero(Viewable hero) {
         FieldPlace place = new FieldPlace(field, hero.getX(), hero.getY());
-        field.set(hero.getX(), hero.getY(), 'A');
+        field.set(hero.getX(), hero.getY(), OTHER_HERO.ch());
 
         if (fogs.containsKey(hero)) {
             throw new RuntimeException("Юзер уже проиничен!");
@@ -69,7 +70,7 @@ public class TerritoryField implements HeroField {
 
         me.view().see(me, width, height, (xx, yy, canSee, isWall) -> {
             if (canSee && !isWall) {
-                fog.set(xx, yy, ' ');
+                fog.set(xx, yy, NOTHING.ch());
             }
         });
     }
@@ -103,16 +104,16 @@ public class TerritoryField implements HeroField {
             }
 
             if (isWall && canSee) {
-                result.append("##");
+                result.append(WALL.ch()).append(WALL.ch());
             } else if (isWall && !canSee) {
                 result.append("??");
             } else if (fog(me).get(x, y) == '?' || field.get(x, y) == '?') {
                 result.append("??");
             } else if (playerAt(pt)) {
                 if (me.itsMe(pt)) {
-                    result.append("I ");
+                    result.append(HERO.ch()).append(' ');
                 } else {
-                    result.append("A ");
+                    result.append(OTHER_HERO.ch()).append(' ');
                 }
             } else {
                 result.append(field.get(x, y)).append(' ');
@@ -140,7 +141,7 @@ public class TerritoryField implements HeroField {
 
     @Override
     public void removeHero(Viewable me) {
-        field.set(me.getX(), me.getY(), ' ');
+        field.set(me.getX(), me.getY(), NOTHING.ch());
         fogs.remove(me);
     }
 

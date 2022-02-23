@@ -32,6 +32,9 @@ import com.codenjoy.dojo.services.Tickable;
 
 import java.util.List;
 
+import static com.codenjoy.dojo.questoria.client.Element.GOLD;
+import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
+
 public class Drone extends TalkingObject implements Something, CodeHelper, Tickable, SetPlace, SetWorld, Leaveable, SetLocator {
 
     private Me hero;
@@ -105,12 +108,12 @@ public class Drone extends TalkingObject implements Something, CodeHelper, Ticka
             }
 
             Place atWay = place.near(dx, dy);
-            if (atWay.getChar() == '$') {
+            if (atWay.getChar() == GOLD.ch()) {
                 messenger.say("Дрон подобрал золото!");
-                Usable gold = (Usable)locator.getAt(atWay, hero);
+                Usable gold = (Usable) locator.getAt(atWay, hero);
                 gold.getBy(hero.getInfo());
             }
-            if (atWay.getChar() == ' ' || atWay.getChar() == '$') {
+            if (atWay.getChar() == NOTHING.ch() || atWay.getChar() == GOLD.ch()) {
                 world.move(place.getX() + dx, place.getY() + dy);
             } else {
                 active = false;
