@@ -52,11 +52,6 @@ public class Nothing extends TalkingObject implements Something, CodeHelper, Usa
     }
 
     @Override
-    public Something leaveAfter() {
-        return new Nothing();
-    }
-
-    @Override
     public char symbol() {
         return state(null).ch();
     }

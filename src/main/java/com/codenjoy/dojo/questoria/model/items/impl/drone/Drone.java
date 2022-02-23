@@ -26,7 +26,6 @@ import com.codenjoy.dojo.questoria.client.Element;
 import com.codenjoy.dojo.questoria.model.FieldLocator;
 import com.codenjoy.dojo.questoria.model.Player;
 import com.codenjoy.dojo.questoria.model.items.*;
-import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
 import com.codenjoy.dojo.questoria.model.items.monster.CodeHelper;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Tickable;
@@ -76,11 +75,6 @@ public class Drone extends TalkingObject implements Something, CodeHelper, Ticka
     public void ask() {
         messenger.sayOnce("Я твой робот! Запрограммируй меня.");
         active = false;
-    }
-
-    @Override
-    public Something leaveAfter() {
-        return new Nothing();
     }
 
     @Override

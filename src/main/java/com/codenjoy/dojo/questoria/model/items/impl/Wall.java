@@ -49,11 +49,6 @@ public class Wall extends TalkingObject implements Something {
     }
 
     @Override
-    public Something leaveAfter() {
-        return new Nothing();
-    }
-
-    @Override
     public Element state(Player player, Object... alsoAtPoint) {
         return Element.WALL;
     }

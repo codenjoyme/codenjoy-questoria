@@ -22,9 +22,13 @@ package com.codenjoy.dojo.questoria.model.items;
  * #L%
  */
 
+import com.codenjoy.dojo.questoria.model.items.impl.Nothing;
+
 public interface Something {
 
-    Something leaveAfter();
+    default Something leaveAfter() {
+        return new Nothing();
+    }
 
     char symbol();
 }

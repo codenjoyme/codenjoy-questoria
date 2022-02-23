@@ -57,11 +57,6 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
     }
 
     @Override
-    public Something leaveAfter() {
-        return new Nothing();
-    }
-
-    @Override
     public void getBy(PlayerInfoImpl player) {
         player.addGold(amount);
         leaveAfter();

@@ -78,11 +78,6 @@ public class Stone extends TalkingObject implements Something, Leaveable {
     }
 
     @Override
-    public Something leaveAfter() {
-        return new Nothing();
-    }
-
-    @Override
     public void tryToLeave(Me hero) {
         iterator.reset();
         messenger.sayOnce(MESSAGE_GOODBYE);

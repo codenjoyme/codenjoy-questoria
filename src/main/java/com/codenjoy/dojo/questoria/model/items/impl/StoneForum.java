@@ -80,11 +80,6 @@ public class StoneForum extends TalkingObject implements Something, Leaveable {
     }
 
     @Override
-    public Something leaveAfter() {
-        return new Nothing();
-    }
-
-    @Override
     public void tryToLeave(Me hero) {
         iterator.reset(messages);
         canWrite = false;
