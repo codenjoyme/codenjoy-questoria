@@ -28,9 +28,8 @@ import com.codenjoy.dojo.questoria.model.PlayerInfoImpl;
 import com.codenjoy.dojo.questoria.model.items.*;
 import com.codenjoy.dojo.services.Point;
 
-public class Gold extends TalkingObject implements Something, SetWorld, SetParameters<Integer>, Leaveable, Usable {
+public class Gold extends TalkingObject implements Something, SetParameters<Integer>, Leaveable, Usable {
 
-    private World world;
     private int amount;
 
     public Gold() {
@@ -60,11 +59,6 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
     @Override
     public void tryToLeave(Me hero) {
         messenger.sayOnce("Ну и ладно! Достанусь кому-то другому!!");
-    }
-
-    @Override
-    public void setWorld(World world) {
-        this.world = world;
     }
 
     @Override

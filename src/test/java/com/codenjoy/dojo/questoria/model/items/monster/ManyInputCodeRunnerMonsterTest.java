@@ -179,7 +179,6 @@ public class ManyInputCodeRunnerMonsterTest {
                 die = true;
                 Gold gold = new Gold();
                 gold.setMessenger(messenger);
-                gold.setWorld(this);
                 gold.setParameters((Integer)params[0]);
                 return gold;
             }
