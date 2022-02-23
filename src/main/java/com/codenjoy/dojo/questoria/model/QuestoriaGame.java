@@ -48,8 +48,8 @@ public class QuestoriaGame implements Tickable, GameField {
     private GameSettings settings;
     private PointField field;
 
-    private FieldLoader fieldLoader;
-    private HeroField heroField;
+    private FieldOld fieldOld;
+    private TerritoryField heroField;
     private FieldLocator locator;
     private ObjectFactory objects;
     private List<Me> players;
@@ -66,11 +66,10 @@ public class QuestoriaGame implements Tickable, GameField {
 
         clearScore();
 
-        fieldLoader = new FieldLoaderImpl().load(level.map());
+        fieldOld = new FieldLoaderImpl().load(level.map()).field();
         startSpot = level.heroes().get(0).copy();
-        TerritoryField field = new TerritoryField(fieldLoader);
-        heroField = field;
-        objects = new ObjectFactoryImpl(settings.monsters(), field);
+        heroField = new TerritoryField(fieldOld);
+        objects = new ObjectFactoryImpl(settings.monsters(), heroField);
         locator = objects.getLocator();
         players = new LinkedList<>();
         viewSize = settings.viewSize();
@@ -261,7 +260,7 @@ public class QuestoriaGame implements Tickable, GameField {
         foundPlayer.die();
     }
 
-    protected FieldLoader field() {
-        return fieldLoader;
+    protected FieldOld field() {
+        return fieldOld;
     }
 }

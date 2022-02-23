@@ -35,14 +35,9 @@ public class TerritoryFieldTest {
 
     @Test
     public void shouldGetViewArea() {
-        FieldLoader loader = mock(FieldLoader.class);
-
         int size = 21;
 
         FieldOld field = new FieldOld(size, NOTHING.ch());
-
-        when(loader.size()).thenReturn(size);
-        when(loader.field()).thenReturn(field);
 
         PlayerView view = new PlayerView(13);
 
@@ -53,7 +48,7 @@ public class TerritoryFieldTest {
         when(me.view()).thenReturn(view);
         view.moveMeTo(me);
 
-        TerritoryField territory = new TerritoryField(loader);
+        TerritoryField territory = new TerritoryField(field);
         territory.newHero(me);
         territory.openSpace(me);
 

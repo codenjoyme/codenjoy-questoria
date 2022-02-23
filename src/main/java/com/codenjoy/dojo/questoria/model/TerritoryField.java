@@ -33,15 +33,13 @@ import static com.codenjoy.dojo.questoria.client.Element.*;
 
 public class TerritoryField implements HeroField {
 
-    private int size;
     private FieldOld field;
     private java.util.Map<Viewable, FieldOld> fogs;
 
     private TerritoryField() {}
 
-    public TerritoryField(FieldLoader loader) {
-        size = loader.size();
-        field = loader.field();
+    public TerritoryField(FieldOld field) {
+        this.field = field;
         fogs = new HashMap<>();
     }
 
@@ -53,9 +51,13 @@ public class TerritoryField implements HeroField {
         if (fogs.containsKey(hero)) {
             throw new RuntimeException("Игрок уже существует!");
         }
-        fogs.put(hero, new FieldOld(size, FOG.ch()));
+        fogs.put(hero, new FieldOld(size(), FOG.ch()));
 
         return place;
+    }
+
+    private int size() {
+        return field.size();
     }
 
     @Override
@@ -64,7 +66,7 @@ public class TerritoryField implements HeroField {
 
         me.view().moveMeTo(me);  // TODO подумать над этим
 
-        me.view().see(me, size, (pt, canSee, isWall) -> {
+        me.view().see(me, size(), (pt, canSee, isWall) -> {
             if (canSee && !isWall) {
                 fog.set(pt, NOTHING.ch());
             }
@@ -90,7 +92,7 @@ public class TerritoryField implements HeroField {
         }
 
         StringBuffer result = new StringBuffer();
-        me.view().see(me, size, (pt, canSee, isWall) -> {
+        me.view().see(me, size(), (pt, canSee, isWall) -> {
             result.append(getChar(me, pt, canSee, isWall));
 
             boolean endLine = pt.getX() == me.view().getX() + me.view().size() - 1;

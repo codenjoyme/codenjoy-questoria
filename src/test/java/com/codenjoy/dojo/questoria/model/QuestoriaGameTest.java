@@ -58,7 +58,7 @@ public class QuestoriaGameTest {
     private Me alien;
     private ObjectFactoryImpl objects;
     private int countMonsters = 0;
-    private FieldLoader field;
+    private FieldOld field;
     private GameSettings settings;
 
     public int size() {
@@ -184,7 +184,7 @@ public class QuestoriaGameTest {
     }
 
     public void set(int x, int y, Element element) {
-        field.field().set(x, y, element.ch());
+        field.set(x, y, element.ch());
     }
 
     @Test
