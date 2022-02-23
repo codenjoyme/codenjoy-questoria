@@ -96,12 +96,14 @@ public class TerritoryField implements HeroField {
         me.view().see(me, width, height, (x, y, canSee, isWall) -> {
             Point pt = pt(x, y);
 
-            if (isWall && canSee) {
-                result.append(WALL.ch());
-            } else if (isWall && !canSee) {
+            if (!canSee && (fog(me).get(x, y) == FOG.ch() || field.get(x, y) == FOG.ch())) {
                 result.append(FOG.ch());
-            } else if (fog(me).get(x, y) == FOG.ch() || field.get(x, y) == FOG.ch()) {
-                result.append(FOG.ch());
+            } else if (isWall) {
+                if (canSee) {
+                    result.append(WALL.ch());
+                } else {
+                    result.append(FOG.ch());
+                }
             } else if (playerAt(pt)) {
                 if (me.itsMe(pt)) {
                     result.append(HERO.ch());
