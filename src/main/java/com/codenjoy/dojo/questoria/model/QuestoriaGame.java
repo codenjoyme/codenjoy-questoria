@@ -186,7 +186,6 @@ public class QuestoriaGame implements Tickable {
 
     @Override
     public void tick() {
-        System.out.println("----- tick -----");
         for (Me player : players) {
             move(player);
             player.stop();
