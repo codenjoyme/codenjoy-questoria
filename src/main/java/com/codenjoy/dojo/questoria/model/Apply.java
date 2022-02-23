@@ -22,6 +22,9 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.services.Point;
+
 public interface Apply {
-    void xy(int x, int y, boolean canSee, boolean isWall);
+
+    void xy(Point pt, boolean canSee, boolean isWall);
 }

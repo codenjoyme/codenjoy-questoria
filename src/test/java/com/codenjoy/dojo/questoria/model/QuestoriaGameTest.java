@@ -61,8 +61,8 @@ public class QuestoriaGameTest {
     private FieldLoader field;
     private GameSettings settings;
 
-    public int getSize() {
-        return field.height();
+    public int size() {
+        return field.size();
     }
 
     @Before
@@ -562,7 +562,7 @@ public class QuestoriaGameTest {
 
     @Test
     public void testCheckGoToBoardUpRight() {
-        moveTo(getSize() - 6, getSize() - 6);
+        moveTo(size() - 6, size() - 6);
 
         asrtFld("????         \n" +
                 "???          \n" +
@@ -581,7 +581,7 @@ public class QuestoriaGameTest {
 
     @Test
     public void testTryToOpenViewOnBoardUpRight() {
-        moveTo(getSize() - 2, getSize() - 2);
+        moveTo(size() - 2, size() - 2);
 
         asrtFld("?????########\n" +
                 "?????########\n" +
@@ -644,10 +644,10 @@ public class QuestoriaGameTest {
 
     @Test
     public void testICantGoOnBoardUp() {
-        moveTo(OFFSET, getSize() - 1);
+        moveTo(OFFSET, size() - 1);
         moveUp();
 
-        verifyXY(OFFSET, getSize() - 1);
+        verifyXY(OFFSET, size() - 1);
         assertMessage("Wall: Пожалуйста, остановись!");
         asrtFld("??#########??\n" +
                 "??#########??\n" +
@@ -697,10 +697,10 @@ public class QuestoriaGameTest {
 
     @Test
     public void testICantGoOnBoardRight() {
-        moveTo(getSize() - 1, OFFSET);
+        moveTo(size() - 1, OFFSET);
         moveRight();
 
-        verifyXY(getSize() - 1, OFFSET);
+        verifyXY(size() - 1, OFFSET);
         assertMessage("Wall: Пожалуйста, остановись!");
         asrtFld("?????????????\n" +
                 "          #??\n" +

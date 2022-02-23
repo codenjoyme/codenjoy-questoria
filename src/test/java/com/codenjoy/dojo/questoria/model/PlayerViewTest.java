@@ -98,14 +98,14 @@ public class PlayerViewTest {
         StringBuffer result = new StringBuffer();
 
         view.moveMeTo(pt(size, size));
-        view.see(pt(size, size), size, size, (x, y, canSee, isWall) -> {
+        view.see(pt(size, size), size, (pt, canSee, isWall) -> {
             if (canSee) {
                 result.append(NOTHING.ch());
             } else {
                 result.append(FOG.ch());
             }
 
-            boolean endLine = (x - size) == view.radius();
+            boolean endLine = (pt.getX() - size) == view.radius();
             if (endLine) {
                 result.append('\n');
             }

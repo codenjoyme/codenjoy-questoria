@@ -51,15 +51,14 @@ public class FieldLoaderImpl implements FieldLoader {
         }
         List<String> lines = Arrays.asList(data.split("\n"));
 
-        int height = lines.get(0).length();
-        int width = lines.size();
+        int size = lines.size();
 
-        field = new FieldOld(height, width);
+        field = new FieldOld(size);
 
-        for (int y = 0; y < width; y++) {
+        for (int y = 0; y < size; y++) {
             String line = lines.get(y);
-            int dy = width - 1 - y;
-            for (int x = 0; x < line.length(); x++) {
+            int dy = size - 1 - y;
+            for (int x = 0; x < size; x++) {
                 field.set(x, dy, line.charAt(x));
 
                 if (field.get(x, dy) == HERO.ch()) {
@@ -79,13 +78,8 @@ public class FieldLoaderImpl implements FieldLoader {
     }
 
     @Override
-    public int width() {
-        return field.getWidth();
-    }
-
-    @Override
-    public int height() {
-        return field.getHeight();
+    public int size() {
+        return field.size();
     }
 
     @Override

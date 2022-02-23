@@ -22,17 +22,25 @@ package com.codenjoy.dojo.questoria.model;
  * #L%
  */
 
+import com.codenjoy.dojo.utils.smart.SmartAssert;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
 
-import static junit.framework.Assert.assertEquals;
+import static com.codenjoy.dojo.utils.smart.SmartAssert.assertEquals;
 
 public class LoadFieldFromFileTest {
+
+    @After
+    public void after() {
+        SmartAssert.checkResult();
+    }
 
     @Test
     public void shouldLoadTextToField() {
         FieldLoader loader = new FieldLoaderImpl().load(
+                "###################################\n" +
                 "###################################\n" +
                 "#################      ############\n" +
                 "######              @  ############\n" +
@@ -65,12 +73,15 @@ public class LoadFieldFromFileTest {
                 "##############          ###########\n" +
                 "#################      ############\n" +
                 "###################################\n" +
+                "###################################\n" +
                 "###################################\n");
 
-        assertEquals(33, loader.height());
-        assertEquals(35, loader.width());
-        assertEquals("[10,8]", loader.initPosition().toString());
+        assertEquals(35, loader.size());
+
+        assertEquals("[10,9]", loader.initPosition().toString());
+
         verifyField(loader.field(),
+                "###################################\n" +
                 "###################################\n" +
                 "#################      ############\n" +
                 "######              @  ############\n" +
@@ -103,6 +114,7 @@ public class LoadFieldFromFileTest {
                 "##############          ###########\n" +
                 "#################      ############\n" +
                 "###################################\n" +
+                "###################################\n" +
                 "###################################\n");
     }
 
@@ -111,31 +123,32 @@ public class LoadFieldFromFileTest {
         FieldLoader loader = new FieldLoaderImpl()
                 .load(new File("src/test/resources/test_field.txt"));
 
-        assertEquals(12, loader.height());
-        assertEquals(50, loader.width());
-        assertEquals("[2,8]", loader.initPosition().toString());
+        assertEquals(13, loader.size());
+
+        assertEquals("[1,11]", loader.initPosition().toString());
+
         verifyField(loader.field(),
-                "##################################################\n" +
-                "##################################################\n" +
-                "##################################################\n" +
-                "##             @                 @             ###\n" +
-                "##############################################@###\n" +
-                "####         @               @                 ###\n" +
-                "####@#############################################\n" +
-                "####       @             @              @      ###\n" +
-                "##############################################@###\n" +
-                "########      @                @               ###\n" +
-                "########@#########################################\n" +
-                "##################################################\n");
+                "#############\n" +
+                "#   @   @  ##\n" +
+                "##########  #\n" +
+                "## @   @   ##\n" +
+                "#  ##########\n" +
+                "##   @   @ ##\n" +
+                "##########  #\n" +
+                "## @   @   ##\n" +
+                "#  ##########\n" +
+                "##    @  @ ##\n" +
+                "##########  #\n" +
+                "## @   @   ##\n" +
+                "#############\n");
     }
 
     private void verifyField(FieldOld field, String expected) {
-        int width = field.getWidth();
-        int height = field.getHeight();
+        int size = field.size();
 
         final StringBuffer result = new StringBuffer();
-        for (int y = height - 1; y >= 0; y--) {
-            for (int x = 0; x < width; x++) {
+        for (int y = size - 1; y >= 0; y--) {
+            for (int x = 0; x < size; x++) {
                 result.append(field.get(x, y));
             }
             result.append('\n');

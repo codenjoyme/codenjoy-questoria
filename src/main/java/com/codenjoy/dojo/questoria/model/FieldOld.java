@@ -27,6 +27,7 @@ import com.codenjoy.dojo.services.Point;
 import java.util.Arrays;
 
 import static com.codenjoy.dojo.questoria.client.Element.WALL;
+import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class FieldOld {
 
@@ -34,12 +35,12 @@ public class FieldOld {
 
     private FieldOld() {}
 
-    public FieldOld(int width, int height) {
-        field = new char[width][height];
+    public FieldOld(int size) {
+        field = new char[size][size];
     }
 
-    public FieldOld(int width, int height, char ch) {
-        this(width, height);
+    public FieldOld(int size, char ch) {
+        this(size);
         fill(field, ch);
     }
 
@@ -49,29 +50,29 @@ public class FieldOld {
         }
     }
 
-    private boolean isOutOfWorld(int x, int y) {
-        return x < 0 || y < 0 || y >= getHeight() || x >= getWidth();
+    public char get(int x, int y) {
+        return get(pt(x, y));
     }
 
-    public char get(int x, int y) {
-        if (isOutOfWorld(x, y)) return WALL.ch();
+    public char get(Point pt) {
+        if (pt.isOutOf(size())) return WALL.ch();
 
-        return field[x][y];
+        return field[pt.getX()][pt.getY()];
+    }
+
+    public void set(Point pt, char ch) {
+        set(pt.getX(), pt.getY(), ch);
     }
 
     public void set(int x, int y, char ch) {
         field[x][y] = ch;
     }
 
-    public int getWidth() {
+    public int size() {
         return field.length;
     }
 
-    public int getHeight() {
-        return field[0].length;
-    }
-
-    public FieldPlace get(Point point) {
-        return new FieldPlace(this, point.getX(), point.getY());
+    public FieldPlace place(Point pt) {
+        return new FieldPlace(this, pt.getX(), pt.getY());
     }
 }

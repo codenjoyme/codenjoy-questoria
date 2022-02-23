@@ -25,6 +25,8 @@ package com.codenjoy.dojo.questoria.model;
 import com.codenjoy.dojo.services.Point;
 import org.apache.commons.lang3.StringUtils;
 
+import static com.codenjoy.dojo.services.PointImpl.pt;
+
 public class PlayerView {
 
     private static final String[] VIEW_CIRCLE = new String[]{
@@ -121,7 +123,7 @@ public class PlayerView {
         }
     }
 
-    public void see(Point point, int fieldWidth, int fieldHeight, Apply see) {
+    public void see(Point point, int size, Apply see) {
         int cx = vx + radius();
         int cy = vy + radius();
 
@@ -129,12 +131,13 @@ public class PlayerView {
             for (int dx = -radius(); dx <= radius(); dx++) {
                 int x = dx + cx;
                 int y = dy + cy;
-                boolean isWall = (x < 0 || y < 0 || y >= fieldHeight || x >= fieldWidth);
+                Point pt = pt(x, y);
+                boolean isWall = pt.isOutOf(size);
 
                 int ixx = radius() + x - point.getX();
                 int iyy = radius() + y - point.getY();
                 boolean canSee = canSee(ixx, iyy);
-                see.xy(x, y, canSee, isWall);
+                see.xy(pt, canSee, isWall);
             }
         }
     }

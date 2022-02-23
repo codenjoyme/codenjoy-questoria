@@ -39,10 +39,9 @@ public class TerritoryFieldTest {
 
         int size = 21;
 
-        FieldOld field = new FieldOld(size, size, NOTHING.ch());
+        FieldOld field = new FieldOld(size, NOTHING.ch());
 
-        when(loader.width()).thenReturn(size);
-        when(loader.height()).thenReturn(size);
+        when(loader.size()).thenReturn(size);
         when(loader.field()).thenReturn(field);
 
         PlayerView view = new PlayerView(13);

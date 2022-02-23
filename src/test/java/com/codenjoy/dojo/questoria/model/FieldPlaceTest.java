@@ -36,7 +36,7 @@ public class FieldPlaceTest {
 
     @Before
     public void setup() {
-        FieldOld field = new FieldOld(10, 10, NOTHING.ch());
+        FieldOld field = new FieldOld(10, NOTHING.ch());
         field.set(3, 3, '1');  // 123
         field.set(4, 3, '2');  // 456
         field.set(5, 3, '3');  // 789

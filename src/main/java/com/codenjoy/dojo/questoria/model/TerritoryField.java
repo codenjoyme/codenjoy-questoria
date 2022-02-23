@@ -30,20 +30,17 @@ import java.io.OutputStream;
 import java.util.HashMap;
 
 import static com.codenjoy.dojo.questoria.client.Element.*;
-import static com.codenjoy.dojo.services.PointImpl.pt;
 
 public class TerritoryField implements HeroField {
 
-    private int width;
-    private int height;
+    private int size;
     private FieldOld field;
     private java.util.Map<Viewable, FieldOld> fogs;
 
     private TerritoryField() {}
 
     public TerritoryField(FieldLoader loader) {
-        width = loader.width();
-        height = loader.height();
+        size = loader.size();
         field = loader.field();
         fogs = new HashMap<>();
     }
@@ -56,7 +53,7 @@ public class TerritoryField implements HeroField {
         if (fogs.containsKey(hero)) {
             throw new RuntimeException("Игрок уже существует!");
         }
-        fogs.put(hero, new FieldOld(width, height, FOG.ch()));
+        fogs.put(hero, new FieldOld(size, FOG.ch()));
 
         return place;
     }
@@ -67,9 +64,9 @@ public class TerritoryField implements HeroField {
 
         me.view().moveMeTo(me);  // TODO подумать над этим
 
-        me.view().see(me, width, height, (xx, yy, canSee, isWall) -> {
+        me.view().see(me, size, (pt, canSee, isWall) -> {
             if (canSee && !isWall) {
-                fog.set(xx, yy, NOTHING.ch());
+                fog.set(pt, NOTHING.ch());
             }
         });
     }
@@ -93,10 +90,10 @@ public class TerritoryField implements HeroField {
         }
 
         StringBuffer result = new StringBuffer();
-        me.view().see(me, width, height, (x, y, canSee, isWall) -> {
-            result.append(getChar(me, x, y, canSee, isWall));
+        me.view().see(me, size, (pt, canSee, isWall) -> {
+            result.append(getChar(me, pt, canSee, isWall));
 
-            boolean endLine = x == me.view().getX() + me.view().size() - 1;
+            boolean endLine = pt.getX() == me.view().getX() + me.view().size() - 1;
             if (endLine) {
                 result.append("\n");
             }
@@ -104,9 +101,9 @@ public class TerritoryField implements HeroField {
         return result.toString();
     }
 
-    private char getChar(Viewable me, int x, int y, boolean canSee, boolean isWall) {
+    private char getChar(Viewable me, Point pt, boolean canSee, boolean isWall) {
         if (!canSee) {
-            if (fog(me).get(x, y) == FOG.ch() || field.get(x, y) == FOG.ch()) {
+            if (fog(me).get(pt) == FOG.ch() || field.get(pt) == FOG.ch()) {
                 return FOG.ch();
             }
         }
@@ -119,7 +116,6 @@ public class TerritoryField implements HeroField {
             }
         }
 
-        Point pt = pt(x, y);
         if (playerAt(pt)) {
             if (me.itsMe(pt)) {
                 return HERO.ch();
@@ -128,12 +124,12 @@ public class TerritoryField implements HeroField {
             }
         }
 
-        return field.get(x, y);
+        return field.get(pt);
     }
 
-    private boolean playerAt(Point point) {
+    private boolean playerAt(Point pt) {
         for (Viewable player : fogs.keySet()) {
-            if (player.itsMe(point)) {
+            if (player.itsMe(pt)) {
                 return true;
             }
         }
@@ -147,7 +143,7 @@ public class TerritoryField implements HeroField {
         fogs.remove(me);
     }
 
-    public FieldPlace getAt(Point point) {
-        return field.get(point);
+    public FieldPlace getAt(Point pt) {
+        return field.place(pt);
     }
 }
