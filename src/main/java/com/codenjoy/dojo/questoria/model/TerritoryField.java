@@ -88,14 +88,14 @@ public class TerritoryField implements HeroField {
     }
 
     @Override
-    public String getViewArea(final Viewable me) {
+    public String getViewArea(Viewable me) {
         if (!fogs.containsKey(me)) {
             throw new IllegalArgumentException("Нет такого пользователя!");
         }
 
-        final StringBuffer result = new StringBuffer();
+        StringBuffer result = new StringBuffer();
 
-        result.append("╔" + StringUtils.repeat("═", me.view().size()*2) + "╗\n");
+        result.append("╔" + StringUtils.repeat("═", me.view().size()) + "╗\n");
         me.view().see(me, width, height, (x, y, canSee, isWall) -> {
             Point pt = pt(x, y);
             boolean startLine = x == me.view().getX();
@@ -104,19 +104,19 @@ public class TerritoryField implements HeroField {
             }
 
             if (isWall && canSee) {
-                result.append(WALL.ch()).append(WALL.ch());
+                result.append(WALL.ch());
             } else if (isWall && !canSee) {
-                result.append("??");
+                result.append("?");
             } else if (fog(me).get(x, y) == '?' || field.get(x, y) == '?') {
-                result.append("??");
+                result.append("?");
             } else if (playerAt(pt)) {
                 if (me.itsMe(pt)) {
-                    result.append(HERO.ch()).append(' ');
+                    result.append(HERO.ch());
                 } else {
-                    result.append(OTHER_HERO.ch()).append(' ');
+                    result.append(OTHER_HERO.ch());
                 }
             } else {
-                result.append(field.get(x, y)).append(' ');
+                result.append(field.get(x, y));
             }
 
             boolean endLine = x == me.view().getX() + me.view().size() - 1;
@@ -124,7 +124,7 @@ public class TerritoryField implements HeroField {
                 result.append("║\n");
             }
         });
-        result.append('╚' + StringUtils.repeat("═", me.view().size()*2) + '╝');
+        result.append('╚' + StringUtils.repeat("═", me.view().size()) + '╝');
 
         return result.toString();
     }

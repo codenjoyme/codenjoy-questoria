@@ -10,12 +10,12 @@ package com.codenjoy.dojo.questoria.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -39,14 +39,15 @@ public class PlayerView {
             "?         ?",
             "??       ??",
             "????   ????"};
-    
+
     private char[][] mask;
-    
+
     private int size;
     private int vx = Integer.MIN_VALUE;
     private int vy;
 
-    private PlayerView() {}
+    private PlayerView() {
+    }
 
     public PlayerView(int size) {
         if (size < VIEW_CIRCLE.length) {
@@ -61,7 +62,7 @@ public class PlayerView {
     }
 
     public int radius() {
-        return (size - 1)/2;
+        return (size - 1) / 2;
     }
 
     private boolean canSee(int x, int y) {
@@ -76,32 +77,32 @@ public class PlayerView {
         }
         int dx = vx - point.getX();
         int adx = Math.abs(dx);
-        if (adx < radius()/2) {
+        if (adx < radius() / 2) {
             vx += dx / adx;
         }
 
         int dy = vy - point.getY();
         int ady = Math.abs(dy);
-        if (ady < radius()/2) {
+        if (ady < radius() / 2) {
             vy += dy / ady;
         }
 
-        dx = vx + radius()*2 - point.getX();
+        dx = vx + radius() * 2 - point.getX();
         adx = Math.abs(dx);
-        if (adx < radius()/2) {
+        if (adx < radius() / 2) {
             vx += dx / adx;
         }
 
-        dy = vy + radius()*2 - point.getY();
+        dy = vy + radius() * 2 - point.getY();
         ady = Math.abs(dy);
-        if (ady < radius()/2) {
+        if (ady < radius() / 2) {
             vy += dy / ady;
         }
     }
 
     private void buildMask() {
         String[] mask = new String[size];
-        int delta = (size - VIEW_CIRCLE.length)/2;
+        int delta = (size - VIEW_CIRCLE.length) / 2;
         for (int y = 0; y < size; y++) {
             if (y < delta || y >= (size - delta)) {
                 mask[y] = StringUtils.repeat("?", size);
