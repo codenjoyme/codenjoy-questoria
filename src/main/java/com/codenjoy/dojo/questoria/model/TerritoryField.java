@@ -24,7 +24,6 @@ package com.codenjoy.dojo.questoria.model;
 
 import com.codenjoy.dojo.questoria.model.items.Me;
 import com.codenjoy.dojo.services.Point;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,7 +54,7 @@ public class TerritoryField implements HeroField {
         field.set(hero.getX(), hero.getY(), OTHER_HERO.ch());
 
         if (fogs.containsKey(hero)) {
-            throw new RuntimeException("Юзер уже проиничен!");
+            throw new RuntimeException("Игрок уже существует!");
         }
         fogs.put(hero, new FieldOld(width, height, '?'));
 
@@ -94,14 +93,8 @@ public class TerritoryField implements HeroField {
         }
 
         StringBuffer result = new StringBuffer();
-
-        result.append("╔" + StringUtils.repeat("═", me.view().size()) + "╗\n");
         me.view().see(me, width, height, (x, y, canSee, isWall) -> {
             Point pt = pt(x, y);
-            boolean startLine = x == me.view().getX();
-            if (startLine) {
-                result.append("║");
-            }
 
             if (isWall && canSee) {
                 result.append(WALL.ch());
@@ -121,11 +114,9 @@ public class TerritoryField implements HeroField {
 
             boolean endLine = x == me.view().getX() + me.view().size() - 1;
             if (endLine) {
-                result.append("║\n");
+                result.append("\n");
             }
         });
-        result.append('╚' + StringUtils.repeat("═", me.view().size()) + '╝');
-
         return result.toString();
     }
 
