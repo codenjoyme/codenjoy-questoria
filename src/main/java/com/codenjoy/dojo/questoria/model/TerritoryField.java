@@ -60,7 +60,7 @@ public class TerritoryField implements HeroField {
 
     @Override
     public void openSpace(Viewable me) {
-        final FieldOld fog = fog(me);
+        FieldOld fog = fog(me);
 
         me.view().moveMeTo(me);  // TODO подумать над этим
 

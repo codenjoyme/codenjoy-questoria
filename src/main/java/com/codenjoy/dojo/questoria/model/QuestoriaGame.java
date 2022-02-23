@@ -31,13 +31,22 @@ import com.codenjoy.dojo.questoria.services.GameSettings;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.Tickable;
+import com.codenjoy.dojo.services.field.PointField;
+import com.codenjoy.dojo.services.multiplayer.GameField;
+import com.codenjoy.dojo.services.multiplayer.GamePlayer;
+import com.codenjoy.dojo.services.settings.SettingsReader;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
 
-public class QuestoriaGame implements Tickable {
+public class QuestoriaGame implements Tickable, GameField {
+
+    private Level level;
+    private Dice dice;
+    private GameSettings settings;
+    private PointField field;
 
     private FieldLoader fieldLoader;
     private HeroField heroField;
@@ -50,14 +59,49 @@ public class QuestoriaGame implements Tickable {
     private QuestoriaGame() {}
 
     public QuestoriaGame(Dice dice, Level level, GameSettings settings) {
+        this.level = level;
+        this.dice = dice;
+        this.settings = settings;
+        this.field = new PointField();
+
         fieldLoader = new FieldLoaderImpl().load(level.map());
+        initPosition = fieldLoader.initPosition();
         TerritoryField field = new TerritoryField(fieldLoader);
         heroField = field;
         objects = new ObjectFactoryImpl(settings.monsters(), field);
         locator = objects.getLocator();
         players = new LinkedList<>();
         viewSize = settings.viewSize();
-        initPosition = fieldLoader.initPosition();
+    }
+
+    public void clearScore() {
+        if (level == null) return;
+
+        level.saveTo(field);
+        field.init(this);
+
+        // other clear score actions
+        // super.clearScore(); // TODO implement me
+    }
+
+    @Override
+    public void newGame(GamePlayer player) {
+        // TODO implement me
+    }
+
+    @Override
+    public void remove(GamePlayer player) {
+        // TODO implement me
+    }
+
+    @Override
+    public SettingsReader settings() {
+        return settings;
+    }
+
+    @Override
+    public int size() {
+        return field.size();
     }
 
     public Me newPlayer(String name) {
@@ -215,7 +259,7 @@ public class QuestoriaGame implements Tickable {
         foundPlayer.die();
     }
 
-    public FieldLoader field() {
+    protected FieldLoader field() {
         return fieldLoader;
     }
 }

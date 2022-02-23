@@ -22,6 +22,7 @@ package com.codenjoy.dojo.questoria.services.saver;
  * #L%
  */
 
+import com.codenjoy.dojo.services.settings.SettingsReader;
 import org.fest.reflect.core.Reflection;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +63,17 @@ public class Loader {
                     newInstance = new LinkedList<>();
                 } else if (isMap(className)) {
                     newInstance = new HashMap<>();
+                } else if (isSettings(className)) {
+                    JSONArray fields = (JSONArray) object.get("fields");
+                    String jsonValue = fields.getString(0);
+                    try {
+                        Class<?> aClass = loadClass(className);
+                        SettingsReader settings = (SettingsReader) aClass.newInstance();
+                        settings.update(new JSONObject(jsonValue));
+                        newInstance = settings;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     if (className.contains("$")) {
                         String mainClassName = className.substring(0, className.indexOf('$'));
@@ -103,9 +115,37 @@ public class Loader {
                             if (object.has("value")) {
                                 // this is enum
                                 String value = (String) object.get("value");
-                                newInstance = Enum.valueOf((Class<? extends Enum>)aClass, value);
+                                newInstance = Enum.valueOf((Class<? extends Enum>) aClass, value);
                             } else {
-                                newInstance = Reflection.constructor().in(aClass).newInstance();
+                                try {
+                                    newInstance = Reflection.constructor().in(aClass).newInstance();
+                                } catch (Exception e) {
+                                    Map<Class<?>, Object> primitives = new HashMap<>();
+                                    primitives.put(char.class, '\0');
+                                    primitives.put(int.class, 0);
+                                    primitives.put(boolean.class, false);
+                                    primitives.put(double.class, 0.0);
+                                    primitives.put(short.class, 0);
+                                    primitives.put(String.class, "");
+
+                                    Constructor<?>[] constructors = aClass.getConstructors();
+                                    for (Constructor<?> constructor : constructors) {
+                                        Class[] params = constructor.getParameterTypes();
+                                        Object arguments[] = new Object[params.length];
+                                        for (int i = 0; i < params.length; i++) {
+                                            arguments[i] = primitives.get(params[i]);
+                                        }
+                                        try {
+                                            newInstance = constructor.newInstance(arguments);
+                                            break;
+                                        } catch (Exception e2) {
+                                            continue;
+                                        }
+                                    }
+                                    if (newInstance == null) {
+                                        throw new RuntimeException("Cant construct object for: " + aClass);
+                                    }
+                                }
                             }
                         }
                     }
@@ -163,7 +203,9 @@ public class Loader {
                             }
                             map.put(key, val);
                         } else if (!instances.containsKey(value)) {
-                            if ((value instanceof String) && !value.contains("@")) {
+                            if (value.equals("@NULL")) {
+                                setFieldValue(parent, name, null);
+                            } else if ((value instanceof String)) {
                                 Field declaredField = getField(parent.getClass(), name);
                                 if (declaredField.getType().equals(int.class)) { // TODO как на счет других примитивов?
                                     setFieldValue(parent, name, Integer.valueOf(value));
@@ -184,6 +226,15 @@ public class Loader {
             return instances.get(mainObjectId);
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private boolean isSettings(String className) {
+        try {
+            Class<?> aClass = getClass().getClassLoader().loadClass(className);
+            return SettingsReader.class.isAssignableFrom(aClass);
+        } catch (Exception e) {
+            return false;
         }
     }
 

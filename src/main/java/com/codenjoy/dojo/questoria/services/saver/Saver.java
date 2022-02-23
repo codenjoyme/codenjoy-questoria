@@ -22,6 +22,7 @@ package com.codenjoy.dojo.questoria.services.saver;
  * #L%
  */
 
+import com.codenjoy.dojo.services.settings.SettingsReader;
 import org.apache.commons.lang3.ArrayUtils;
 import org.fest.reflect.core.Reflection;
 import org.json.JSONException;
@@ -249,9 +250,10 @@ public class Saver {
             boolean isMap = Map.class.isAssignableFrom(object.getClass());
             boolean isList = List.class.isAssignableFrom(object.getClass());
             boolean isClass = Class.class.equals(object.getClass());
+            boolean isSettings = SettingsReader.class.isAssignableFrom(object.getClass());
             if (!isArray && !isMap && !isList && !isClass) {
-                boolean isApofig = object.getClass().getPackage().getName().contains("codenjoy");
-                if (!isApofig) continue;
+                boolean isCodenjoy = object.getClass().getPackage().getName().contains("codenjoy");
+                if (!isCodenjoy) continue;
             }
 
             if (isMap) {
@@ -330,6 +332,12 @@ public class Saver {
             if (isClass) {
                 Class<?> clazz = (Class)object;
                 data.add(new Entry(object, Arrays.asList(clazz.getName())));
+                continue;
+            }
+
+            if (isSettings) {
+                String json = ((SettingsReader) object).asJson().toString();
+                data.add(new Entry(object, Arrays.asList(json)));
                 continue;
             }
 

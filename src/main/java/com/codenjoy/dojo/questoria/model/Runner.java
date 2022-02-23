@@ -35,12 +35,18 @@ import static com.codenjoy.dojo.services.multiplayer.LevelProgress.levelsStartsF
 
 public class Runner implements Tickable {
 
+    private GameSettings settings;
     private QuestoriaGame game;
     private java.util.Map<String, PlayerOld> players;
 
-    public Runner() {
+    public Runner() {}
+
+    public Runner(String map) {
+        settings = new GameSettings();
+        if (map != null) {
+            settings.setLevelMap(levelsStartsFrom1, map);
+        }
         Dice dice = new RandomDice();
-        GameSettings settings = new GameSettings();
         Level level = settings.level(levelsStartsFrom1, dice, Level::new);
         game = new QuestoriaGame(dice, level, settings);
         players = new HashMap<>();
@@ -96,5 +102,9 @@ public class Runner implements Tickable {
         PlayerOld player = getPlayerByName(playerName);
         players.remove(player.getGameCode());
         game.remove(player.getName());
+    }
+
+    public GameSettings settings() {
+        return settings;
     }
 }

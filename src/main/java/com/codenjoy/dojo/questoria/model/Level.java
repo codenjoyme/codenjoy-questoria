@@ -26,12 +26,17 @@ import com.codenjoy.dojo.questoria.model.items.impl.Gold;
 import com.codenjoy.dojo.questoria.model.items.impl.Wall;
 import com.codenjoy.dojo.services.field.AbstractLevel;
 import com.codenjoy.dojo.services.field.PointField;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
 import static com.codenjoy.dojo.questoria.client.Element.*;
 
 public class Level extends AbstractLevel {
+
+    public Level() {
+        super(StringUtils.EMPTY);
+    }
 
     public Level(String map) {
         super(map);

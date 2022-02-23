@@ -25,6 +25,7 @@ package com.codenjoy.dojo.questoria.services.saver;
 import com.codenjoy.dojo.questoria.model.PlayerOld;
 import com.codenjoy.dojo.questoria.model.Runner;
 import com.codenjoy.dojo.questoria.services.saver.dummy.*;
+import com.codenjoy.dojo.utils.JsonUtils;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -36,9 +37,32 @@ import static junit.framework.Assert.*;
 public class LoaderTest {
 
     @Test
-    public void test() {
-        Object object = getObjectTree();
+    public void testSimpleMap() {
+        Object object = getObjectTree(
+                "#############\n" +
+                "#I  @   @  ##\n" +
+                "########## $#\n" +
+                "## @   @   ##\n" +
+                "#$ ##########\n" +
+                "##   @   @ ##\n" +
+                "########## $#\n" +
+                "## @   @   ##\n" +
+                "#$ ##########\n" +
+                "##    @  @ ##\n" +
+                "########## $#\n" +
+                "## @   @   ##\n" +
+                "#############\n");
 
+        assertSaveLoad(object);
+    }
+
+    @Test
+    public void testLargeMap() {
+        Object object = getObjectTree(null);
+        assertSaveLoad(object);
+    }
+
+    private void assertSaveLoad(Object object) {
         String expected = toString(object);
 
         assertFalse(expected.contains("DummyMe"));
@@ -47,11 +71,10 @@ public class LoaderTest {
 
         String actual = toString(newObject);
         assertEquals(ln(expected), ln(actual));
-
     }
 
-    private Runner getObjectTree() {
-        Runner result = new Runner();
+    private Runner getObjectTree(String map) {
+        Runner result = new Runner(map);
         PlayerOld player1 = result.getPlayerByCode(result.register("player1"));
         PlayerOld player2 = result.getPlayerByCode(result.register("player2"));
 
@@ -67,11 +90,11 @@ public class LoaderTest {
     }
 
     private String toString(Object object) {
-        return new Saver()./*exclude(char[][].class, char[].class).excludeChildren(Monster.class).*/save(object);
+        return new Saver().save(object);
     }
 
     private String ln(String test) {
-        return test.replaceAll("\\{'id'", "\n{'id'");
+        return JsonUtils.prettyPrint(test);
     }
 
     @Test
