@@ -26,6 +26,8 @@ import com.codenjoy.dojo.services.Point;
 
 import java.util.Arrays;
 
+import static com.codenjoy.dojo.questoria.client.Element.WALL;
+
 public class FieldOld {
 
     private char[][] field;
@@ -52,7 +54,7 @@ public class FieldOld {
     }
 
     public char get(int x, int y) {
-        if (isOutOfWorld(x, y)) return '#';
+        if (isOutOfWorld(x, y)) return WALL.ch();
 
         return field[x][y];
     }

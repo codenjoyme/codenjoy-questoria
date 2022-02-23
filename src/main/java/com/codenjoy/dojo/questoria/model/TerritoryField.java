@@ -94,25 +94,7 @@ public class TerritoryField implements HeroField {
 
         StringBuffer result = new StringBuffer();
         me.view().see(me, width, height, (x, y, canSee, isWall) -> {
-            Point pt = pt(x, y);
-
-            if (!canSee && (fog(me).get(x, y) == FOG.ch() || field.get(x, y) == FOG.ch())) {
-                result.append(FOG.ch());
-            } else if (isWall) {
-                if (canSee) {
-                    result.append(WALL.ch());
-                } else {
-                    result.append(FOG.ch());
-                }
-            } else if (playerAt(pt)) {
-                if (me.itsMe(pt)) {
-                    result.append(HERO.ch());
-                } else {
-                    result.append(OTHER_HERO.ch());
-                }
-            } else {
-                result.append(field.get(x, y));
-            }
+            result.append(getChar(me, x, y, canSee, isWall));
 
             boolean endLine = x == me.view().getX() + me.view().size() - 1;
             if (endLine) {
@@ -120,6 +102,33 @@ public class TerritoryField implements HeroField {
             }
         });
         return result.toString();
+    }
+
+    private char getChar(Viewable me, int x, int y, boolean canSee, boolean isWall) {
+        if (!canSee) {
+            if (fog(me).get(x, y) == FOG.ch() || field.get(x, y) == FOG.ch()) {
+                return FOG.ch();
+            }
+        }
+
+        if (isWall) {
+            if (canSee) {
+                return WALL.ch();
+            } else {
+                return FOG.ch();
+            }
+        }
+
+        Point pt = pt(x, y);
+        if (playerAt(pt)) {
+            if (me.itsMe(pt)) {
+                return HERO.ch();
+            } else {
+                return OTHER_HERO.ch();
+            }
+        }
+
+        return field.get(x, y);
     }
 
     private boolean playerAt(Point point) {
