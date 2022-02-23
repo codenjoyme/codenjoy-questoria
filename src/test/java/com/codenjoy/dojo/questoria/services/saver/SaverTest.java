@@ -10,268 +10,1622 @@ package com.codenjoy.dojo.questoria.services.saver;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
-import org.json.SortedJSONObject;
+import com.codenjoy.dojo.utils.smart.SmartAssert;
+import org.junit.After;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static com.codenjoy.dojo.client.Utils.clean;
-import static org.junit.Assert.assertEquals;
+import static com.codenjoy.dojo.questoria.services.saver.LoaderTest.assertSave;
+import static com.codenjoy.dojo.questoria.services.saver.LoaderTest.assertSaveLoad;
 
-public class SaverTest {     // TODO переместить все в LoaderTest и переназвать его, а все иннерклассы вынести наружу в пакет dummy
+// TODO объединить с LoaderTest они по сути тестируют и Saver и Loader
+public class SaverTest {
+
+    @After
+    public void after() {
+        SmartAssert.checkResult();
+    }
 
     @Test
-    public void simple() {
-        class D {
+    public void simpleDynamicInnerClass() {
+        class D25 {
             int a, b;
         }
 
-        class C {
-            D d;
+        class C25 {
+            D25 d;
             int i;
         }
 
-        class B {
-            C a;
-            C c;
+        class B25 {
+            C25 a;
+            C25 c;
         }
 
-        class A {
-            C c;
-            B b;
-            D d;
+        class A25 {
+            C25 c;
+            B25 b;
+            D25 d;
         }
 
-        D d = new D();
+        D25 d = new D25();
         d.a = 5;
         d.b = 6;
 
-        C c = new C();
+        C25 c = new C25();
         c.d = d;
         c.i = 4;
 
-        B b = new B();
+        B25 b = new B25();
         b.a = c;
-        b.c = new C();
+        b.c = new C25();
 
-        A a = new A();
+        A25 a = new A25();
         a.b = b;
         a.c = c;
         a.d = d;
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1A','fields':[{'b':'B@1'},{'c':'C@2'},{'d':'D@3'},{'this$0':'SaverTest@4'}]},{'id':'B@1','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1B','fields':[{'a':'C@2'},{'c':'C@5'},{'this$0':'SaverTest@4'}]},{'id':'C@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1C','fields':[{'d':'D@3'},{'this$0':'SaverTest@4'},{'i':'4'}]},{'id':'D@3','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1D','fields':[{'this$0':'SaverTest@4'},{'a':'5'},{'b':'6'}]},{'id':'SaverTest@4','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]},{'id':'C@5','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1C','fields':[{'d':'@NULL'},{'this$0':'SaverTest@4'},{'i':'0'}]}],'main':'A@0'}");
+        // TODO реализовать загрузку в Load классе
+        assertSave(a, "{\n" +
+                "  'main':'A25@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'b':'B25@1'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'c':'C25@2'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'd':'D25@3'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'this$0':'SaverTest@4'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A25@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1A25'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'a':'C25@2'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'c':'C25@5'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'this$0':'SaverTest@4'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B25@1',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1B25'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'd':'D25@3'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'this$0':'SaverTest@4'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'i':'4'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'C25@2',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1C25'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'this$0':'SaverTest@4'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'a':'5'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'b':'6'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'D25@3',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1D25'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[],\n" +
+                "      'id':'SaverTest@4',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'd':'@NULL'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'this$0':'SaverTest@4'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'i':'0'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'C25@5',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$1C25'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class D1 {
+        int a, b;
+    }
+
+    static class C1 {
+        D1 d;
+        int i;
+    }
+
+    static class B1 {
+        C1 a;
+        C1 c;
+    }
+
+    static class A1 {
+        C1 c;
+        B1 b;
+        D1 d;
+    }
+
+    @Test
+    public void simple() {
+        D1 d = new D1();
+        d.a = 5;
+        d.b = 6;
+
+        C1 c = new C1();
+        c.d = d;
+        c.i = 4;
+
+        B1 b = new B1();
+        b.a = c;
+        b.c = new C1();
+
+        A1 a = new A1();
+        a.b = b;
+        a.c = c;
+        a.d = d;
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A1@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'b':'B1@1'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'c':'C1@2'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'd':'D1@3'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A1@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A1'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'a':'C1@2'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'c':'C1@4'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B1@1',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B1'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'd':'D1@3'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'i':'4'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'C1@2',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$C1'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'a':'5'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'b':'6'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'D1@3',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$D1'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'd':'@NULL'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'i':'0'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'C1@4',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$C1'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class B2 {
+        int c;
+
+        public B2(int c) {
+            this.c = c;
+        }
+    }
+
+    static class A2 {
+        List<B2> bs;
     }
 
     @Test
     public void list() {
-        class B {
-            int c;
+        A2 a = new A2();
+        a.bs = new LinkedList<>(Arrays.asList(new B2(12), new B2(23), new B2(34)));
 
-            public B(int c) {
-                this.c = c;
-            }
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A2@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'LinkedList@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A2@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A2'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B2@2',\n" +
+                "        'B2@3',\n" +
+                "        'B2@4'\n" +
+                "      ],\n" +
+                "      'id':'LinkedList@1',\n" +
+                "      'type':'java.util.LinkedList'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'12'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B2@2',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B2'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'23'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B2@3',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B2'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'34'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B2@4',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B2'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class B3 {
+        Integer c;
+
+        public B3(Integer c) {
+            this.c = c;
         }
+    }
 
-        class A {
-            List<B> bs;
-        }
-
-        A a = new A();
-        a.bs = Arrays.asList(new B(12), new B(23), new B(34));
-
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$2A','fields':[{'this$0':'SaverTest@1'},{'bs':'ArrayList@2'}]},{'id':'SaverTest@1','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]},{'id':'ArrayList@2','type':'java.util.Arrays$ArrayList','fields':['B@3','B@4','B@5']},{'id':'B@3','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$2B','fields':[{'this$0':'SaverTest@1'},{'c':'12'}]},{'id':'B@4','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$2B','fields':[{'this$0':'SaverTest@1'},{'c':'23'}]},{'id':'B@5','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$2B','fields':[{'this$0':'SaverTest@1'},{'c':'34'}]}],'main':'A@0'}");
+    static class A3 {
+        Map<Object, B3> bmap;
     }
 
     @Test
     public void map() {
-        class B {
-            Integer c;
-
-            public B(Integer c) {
-                this.c = c;
-            }
-        }
-
-        class A {
-            Map<Object, B> bmap;
-        }
-
-        A a = new A();
+        A3 a = new A3();
         a.bmap = new HashMap<>();
-        a.bmap.put(1, new B(11));
-        a.bmap.put(new B(22), new B(23));
-        a.bmap.put(3, new B(null));
+        a.bmap.put(1, new B3(11));
+        a.bmap.put(new B3(22), new B3(23));
+        a.bmap.put(3, new B3(null));
         a.bmap.put(4, null);
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$3A','fields':[{'this$0':'SaverTest@1'},{'bmap':'HashMap@2'}]},{'id':'SaverTest@1','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]},{'id':'HashMap@2','type':'java.util.HashMap','fields':[{'1':'B@3'},{'3':'B@4'},{'4':'@NULL'},{'B@5':'B@6'}]},{'id':'B@3','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$3B','fields':[{'this$0':'SaverTest@1'},{'c':'11'}]},{'id':'B@4','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$3B','fields':[{'this$0':'SaverTest@1'},{'c':'@NULL'}]},{'id':'B@5','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$3B','fields':[{'this$0':'SaverTest@1'},{'c':'22'}]},{'id':'B@6','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$3B','fields':[{'this$0':'SaverTest@1'},{'c':'23'}]}],'main':'A@0'}");
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A3@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bmap':'HashMap@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A3@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A3'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          '1':'B3@2'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          '3':'B3@3'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          '4':'@NULL'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'B3@4':'B3@5'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'HashMap@1',\n" +
+                "      'type':'java.util.HashMap'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'11'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B3@2',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B3'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'@NULL'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B3@3',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B3'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'22'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B3@4',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B3'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'23'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B3@5',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B3'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
     }
 
-    private void assertSave(Object object, String expected) {
-        assertEquals(sort(expected),
-                clean(new Saver().save(object)));
+    static class B4 {
+        String c;
+
+        public B4(String c) {
+            this.c = c;
+        }
     }
 
-    public static String sort(String expected) {
-        return clean(new SortedJSONObject(expected).toString());
+    static class A4 {
+        B4[] bs;
     }
 
     @Test
     public void array() {
-        class B {
-            String c;
+        A4 a = new A4();
+        a.bs = new B4[]{new B4("11"), new B4("22"), new B4("33")};
 
-            public B(String c) {
-                this.c = c;
-            }
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A4@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'B4[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A4@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A4'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B4@2',\n" +
+                "        'B4@3',\n" +
+                "        'B4@4'\n" +
+                "      ],\n" +
+                "      'id':'B4[]@1',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B4;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'11'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B4@2',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B4'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'22'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B4@3',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B4'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'33'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B4@4',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B4'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class B5 {
+        String c;
+
+        public B5(String c) {
+            this.c = c;
         }
+    }
 
-        class A {
-            B[] bs;
+    static class A5 {
+        B5[][] bs;
+    }
+
+    @Test
+    public void arrayOfArray() {
+        A5 a = new A5();
+        a.bs = new B5[][]{
+                new B5[]{new B5("11"), new B5("22"), new B5("33")},
+                new B5[]{new B5("44"), new B5("55")}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A5@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'B5[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A5@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A5'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B5[]@2',\n" +
+                "        'B5[]@3'\n" +
+                "      ],\n" +
+                "      'id':'B5[][]@1',\n" +
+                "      'type':'[[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B5;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B5@4',\n" +
+                "        'B5@5',\n" +
+                "        'B5@6'\n" +
+                "      ],\n" +
+                "      'id':'B5[]@2',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B5;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B5@7',\n" +
+                "        'B5@8'\n" +
+                "      ],\n" +
+                "      'id':'B5[]@3',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B5;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'11'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B5@4',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B5'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'22'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B5@5',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B5'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'33'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B5@6',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B5'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'44'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B5@7',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B5'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'55'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B5@8',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B5'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class B6 {
+        String c;
+
+        public B6(String c) {
+            this.c = c;
         }
+    }
 
-        A a = new A();
-        a.bs = new B[] {new B("11"), new B("22"), new B("33")};
+    static class A6 {
+        B6[][][] bs;
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$4A','fields':[{'bs':'B[]@1'},{'this$0':'SaverTest@2'}]},{'id':'B[]@1','type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$4B;','fields':['B@3','B@4','B@5']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]},{'id':'B@3','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$4B','fields':[{'this$0':'SaverTest@2'},{'c':'11'}]},{'id':'B@4','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$4B','fields':[{'this$0':'SaverTest@2'},{'c':'22'}]},{'id':'B@5','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$4B','fields':[{'this$0':'SaverTest@2'},{'c':'33'}]}],'main':'A@0'}");
+    @Test
+    public void arrayOfArrayOfArray() {
+        A6 a = new A6();
+        a.bs = new B6[][][]{
+                new B6[][]{
+                        new B6[]{new B6("11"), new B6("22"), new B6("33")},
+                        new B6[]{new B6("44"), new B6("55")}
+                },
+                new B6[][]{
+                        new B6[]{new B6("66"), new B6("77")},
+                        new B6[]{new B6("88")}
+                }
+        };
+
+        // TODO реализовать загрузку в Load классе
+        assertSave(a, "{\n" +
+                "  'main':'A6@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'B6[][][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A6@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6[][]@2',\n" +
+                "        'B6[][]@3'\n" +
+                "      ],\n" +
+                "      'id':'B6[][][]@1',\n" +
+                "      'type':'[[[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6[]@4',\n" +
+                "        'B6[]@5'\n" +
+                "      ],\n" +
+                "      'id':'B6[][]@2',\n" +
+                "      'type':'[[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6[]@6',\n" +
+                "        'B6[]@7'\n" +
+                "      ],\n" +
+                "      'id':'B6[][]@3',\n" +
+                "      'type':'[[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6@8',\n" +
+                "        'B6@9',\n" +
+                "        'B6@10'\n" +
+                "      ],\n" +
+                "      'id':'B6[]@4',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6@11',\n" +
+                "        'B6@12'\n" +
+                "      ],\n" +
+                "      'id':'B6[]@5',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6@13',\n" +
+                "        'B6@14'\n" +
+                "      ],\n" +
+                "      'id':'B6[]@6',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'B6@15'\n" +
+                "      ],\n" +
+                "      'id':'B6[]@7',\n" +
+                "      'type':'[Lcom.codenjoy.dojo.questoria.services.saver.SaverTest$B6;'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'11'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@8',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'22'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@9',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'33'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@10',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'44'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@11',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'55'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@12',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'66'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@13',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'77'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@14',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'c':'88'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'B6@15',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$B6'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A7 {
+        int[] bs;
     }
 
 
     @Test
     public void primitiveIntArray() {
-        class A {
-            int[] bs;
-        }
+        A7 a = new A7();
+        a.bs = new int[]{10, 11, 12};
 
-        A a = new A();
-        a.bs = new int[] {10, 11, 12};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A7@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'int[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A7@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A7'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '10',\n" +
+                "        '11',\n" +
+                "        '12'\n" +
+                "      ],\n" +
+                "      'id':'int[]@1',\n" +
+                "      'type':'[I'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$5A','fields':[{'bs':'int[]@1'},{'this$0':'SaverTest@2'}]},{'id':'int[]@1','type':'[I','fields':['10','11','12']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A8 {
+        int[][] bs;
+    }
+
+    @Test
+    public void primitiveIntArrayOfArray() {
+        A8 a = new A8();
+        a.bs = new int[][]{
+                new int[]{10, 11, 12},
+                new int[]{13, 14}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A8@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'int[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A8@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A8'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'int[]@2',\n" +
+                "        'int[]@3'\n" +
+                "      ],\n" +
+                "      'id':'int[][]@1',\n" +
+                "      'type':'[[I'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '10',\n" +
+                "        '11',\n" +
+                "        '12'\n" +
+                "      ],\n" +
+                "      'id':'int[]@2',\n" +
+                "      'type':'[I'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '13',\n" +
+                "        '14'\n" +
+                "      ],\n" +
+                "      'id':'int[]@3',\n" +
+                "      'type':'[I'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A9 {
+        char[] bs;
     }
 
     @Test
     public void primitiveCharArray() {
-        class A {
-            char[] bs;
-        }
+        A9 a = new A9();
+        a.bs = new char[]{'A', 'B', 'C'};
 
-        A a = new A();
-        a.bs = new char[] {'A', 'B', 'C'};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A9@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'char[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A9@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A9'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'ABC'\n" +
+                "      ],\n" +
+                "      'id':'char[]@1',\n" +
+                "      'type':'[C'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$6A','fields':[{'bs':'char[]@1'},{'this$0':'SaverTest@2'}]},{'id':'char[]@1','type':'[C','fields':['ABC']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A10 {
+        char[][] bs;
+    }
+
+    @Test
+    public void primitiveCharArrayOfArray() {
+        A10 a = new A10();
+        a.bs = new char[][]{
+                new char[]{'A', 'B', 'C'},
+                new char[]{'D', 'E'}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A10@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'char[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A10@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A10'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'char[]@2',\n" +
+                "        'char[]@3'\n" +
+                "      ],\n" +
+                "      'id':'char[][]@1',\n" +
+                "      'type':'[[C'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'ABC'\n" +
+                "      ],\n" +
+                "      'id':'char[]@2',\n" +
+                "      'type':'[C'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'DE'\n" +
+                "      ],\n" +
+                "      'id':'char[]@3',\n" +
+                "      'type':'[C'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A11 {
+        boolean[] bs;
     }
 
     @Test
     public void primitiveBooleanArray() {
-        class A {
-            boolean[] bs;
-        }
+        A11 a = new A11();
+        a.bs = new boolean[]{true, false, true};
 
-        A a = new A();
-        a.bs = new boolean[] {true, false, true};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A11@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'boolean[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A11@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A11'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'true',\n" +
+                "        'false',\n" +
+                "        'true'\n" +
+                "      ],\n" +
+                "      'id':'boolean[]@1',\n" +
+                "      'type':'[Z'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$7A','fields':[{'bs':'boolean[]@1'},{'this$0':'SaverTest@2'}]},{'id':'boolean[]@1','type':'[Z','fields':['true','false','true']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A12 {
+        boolean[][] bs;
+    }
+
+    @Test
+    public void primitiveBooleanArrayOfArray() {
+        A12 a = new A12();
+        a.bs = new boolean[][]{
+                new boolean[]{true, false, true},
+                new boolean[]{false, true}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A12@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'boolean[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A12@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A12'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'boolean[]@2',\n" +
+                "        'boolean[]@3'\n" +
+                "      ],\n" +
+                "      'id':'boolean[][]@1',\n" +
+                "      'type':'[[Z'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'true',\n" +
+                "        'false',\n" +
+                "        'true'\n" +
+                "      ],\n" +
+                "      'id':'boolean[]@2',\n" +
+                "      'type':'[Z'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'false',\n" +
+                "        'true'\n" +
+                "      ],\n" +
+                "      'id':'boolean[]@3',\n" +
+                "      'type':'[Z'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A13 {
+        long[] bs;
     }
 
     @Test
     public void primitiveLongArray() {
-        class A {
-            long[] bs;
-        }
+        A13 a = new A13();
+        a.bs = new long[]{1L, 2L, 3l};
 
-        A a = new A();
-        a.bs = new long[] {1L, 2L, 3l};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A13@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'long[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A13@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A13'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1',\n" +
+                "        '2',\n" +
+                "        '3'\n" +
+                "      ],\n" +
+                "      'id':'long[]@1',\n" +
+                "      'type':'[J'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$8A','fields':[{'bs':'long[]@1'},{'this$0':'SaverTest@2'}]},{'id':'long[]@1','type':'[J','fields':['1','2','3']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A14 {
+        long[][] bs;
+    }
+
+    @Test
+    public void primitiveLongArrayOfArray() {
+        A14 a = new A14();
+        a.bs = new long[][]{
+                new long[]{1L, 2L, 3L},
+                new long[]{4L, 5L}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A14@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'long[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A14@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A14'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'long[]@2',\n" +
+                "        'long[]@3'\n" +
+                "      ],\n" +
+                "      'id':'long[][]@1',\n" +
+                "      'type':'[[J'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1',\n" +
+                "        '2',\n" +
+                "        '3'\n" +
+                "      ],\n" +
+                "      'id':'long[]@2',\n" +
+                "      'type':'[J'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '4',\n" +
+                "        '5'\n" +
+                "      ],\n" +
+                "      'id':'long[]@3',\n" +
+                "      'type':'[J'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A15 {
+        byte[] bs;
     }
 
     @Test
     public void primitiveByteArray() {
-        class A {
-            byte[] bs;
-        }
+        A15 a = new A15();
+        a.bs = new byte[]{1, 2, 3};
 
-        A a = new A();
-        a.bs = new byte[] {1, 2, 3};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A15@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'byte[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A15@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A15'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1',\n" +
+                "        '2',\n" +
+                "        '3'\n" +
+                "      ],\n" +
+                "      'id':'byte[]@1',\n" +
+                "      'type':'[B'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$9A','fields':[{'bs':'byte[]@1'},{'this$0':'SaverTest@2'}]},{'id':'byte[]@1','type':'[B','fields':['1','2','3']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A16 {
+        byte[][] bs;
+    }
+
+    @Test
+    public void primitiveByteArrayOfArray() {
+        A16 a = new A16();
+        a.bs = new byte[][]{
+                new byte[]{1, 2, 3},
+                new byte[]{4 ,5}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A16@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'byte[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A16@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A16'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'byte[]@2',\n" +
+                "        'byte[]@3'\n" +
+                "      ],\n" +
+                "      'id':'byte[][]@1',\n" +
+                "      'type':'[[B'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1',\n" +
+                "        '2',\n" +
+                "        '3'\n" +
+                "      ],\n" +
+                "      'id':'byte[]@2',\n" +
+                "      'type':'[B'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '4',\n" +
+                "        '5'\n" +
+                "      ],\n" +
+                "      'id':'byte[]@3',\n" +
+                "      'type':'[B'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A17 {
+        double[] bs;
     }
 
     @Test
     public void primitiveDoubleArray() {
-        class A {
-            double[] bs;
-        }
+        A17 a = new A17();
+        a.bs = new double[]{1, 2, 3};
 
-        A a = new A();
-        a.bs = new double[] {1, 2, 3};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A17@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'double[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A17@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A17'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1.0',\n" +
+                "        '2.0',\n" +
+                "        '3.0'\n" +
+                "      ],\n" +
+                "      'id':'double[]@1',\n" +
+                "      'type':'[D'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$10A','fields':[{'bs':'double[]@1'},{'this$0':'SaverTest@2'}]},{'id':'double[]@1','type':'[D','fields':['1.0','2.0','3.0']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A18 {
+        double[][] bs;
+    }
+
+    @Test
+    public void primitiveDoubleArrayOfArray() {
+        A18 a = new A18();
+        a.bs = new double[][]{
+                new double[]{1D, 2D, 3D},
+                new double[]{4D, 5D}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A18@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'double[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A18@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A18'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'double[]@2',\n" +
+                "        'double[]@3'\n" +
+                "      ],\n" +
+                "      'id':'double[][]@1',\n" +
+                "      'type':'[[D'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1.0',\n" +
+                "        '2.0',\n" +
+                "        '3.0'\n" +
+                "      ],\n" +
+                "      'id':'double[]@2',\n" +
+                "      'type':'[D'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '4.0',\n" +
+                "        '5.0'\n" +
+                "      ],\n" +
+                "      'id':'double[]@3',\n" +
+                "      'type':'[D'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A19 {
+        float[] bs;
     }
 
     @Test
     public void primitiveFloatArray() {
-        class A {
-            float[] bs;
-        }
+        A19 a = new A19();
+        a.bs = new float[]{1, 2, 3};
 
-        A a = new A();
-        a.bs = new float[] {1, 2, 3};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A19@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'float[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A19@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A19'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1.0',\n" +
+                "        '2.0',\n" +
+                "        '3.0'\n" +
+                "      ],\n" +
+                "      'id':'float[]@1',\n" +
+                "      'type':'[F'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$11A','fields':[{'bs':'float[]@1'},{'this$0':'SaverTest@2'}]},{'id':'float[]@1','type':'[F','fields':['1.0','2.0','3.0']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A20 {
+        float[][] bs;
+    }
+
+    @Test
+    public void primitiveFloatArrayOfArray() {
+        A20 a = new A20();
+        a.bs = new float[][]{
+                new float[]{1F, 2F, 3F},
+                new float[]{4F, 5F}
+        };
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A20@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'float[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A20@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A20'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'float[]@2',\n" +
+                "        'float[]@3'\n" +
+                "      ],\n" +
+                "      'id':'float[][]@1',\n" +
+                "      'type':'[[F'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1.0',\n" +
+                "        '2.0',\n" +
+                "        '3.0'\n" +
+                "      ],\n" +
+                "      'id':'float[]@2',\n" +
+                "      'type':'[F'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '4.0',\n" +
+                "        '5.0'\n" +
+                "      ],\n" +
+                "      'id':'float[]@3',\n" +
+                "      'type':'[F'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A21 {
+        short[] bs;
     }
 
     @Test
     public void primitiveShortArray() {
-        class A {
-            short[] bs;
-        }
+        A21 a = new A21();
+        a.bs = new short[]{1, 2, 3};
 
-        A a = new A();
-        a.bs = new short[] {1, 2, 3};
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A21@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'short[]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A21@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A21'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1',\n" +
+                "        '2',\n" +
+                "        '3'\n" +
+                "      ],\n" +
+                "      'id':'short[]@1',\n" +
+                "      'type':'[S'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$12A','fields':[{'bs':'short[]@1'},{'this$0':'SaverTest@2'}]},{'id':'short[]@1','type':'[S','fields':['1','2','3']},{'id':'SaverTest@2','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A22 {
+        short[][] bs;
     }
 
     @Test
-     public void onlyOneFinalField() {
-        class A {
-            final int b = 4;
-        }
+    public void primitiveShortArrayOfArray() {
+        A22 a = new A22();
+        a.bs = new short[][]{
+                new short[]{1, 2, 3},
+                new short[]{4, 5}
+        };
 
-        A a = new A();
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A22@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'bs':'short[][]@1'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A22@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A22'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        'short[]@2',\n" +
+                "        'short[]@3'\n" +
+                "      ],\n" +
+                "      'id':'short[][]@1',\n" +
+                "      'type':'[[S'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '1',\n" +
+                "        '2',\n" +
+                "        '3'\n" +
+                "      ],\n" +
+                "      'id':'short[]@2',\n" +
+                "      'type':'[S'\n" +
+                "    },\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        '4',\n" +
+                "        '5'\n" +
+                "      ],\n" +
+                "      'id':'short[]@3',\n" +
+                "      'type':'[S'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$13A','fields':[{'this$0':'SaverTest@1'}]},{'id':'SaverTest@1','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+    static class A23 {
+        final int b = 4;
+    }
+
+    @Test
+    public void onlyOneFinalField() {
+        A23 a = new A23();
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A23@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[],\n" +
+                "      'id':'A23@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A23'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class B24 {
+        int b;
+    }
+
+    static class A24 extends B24 {
+        int c;
     }
 
     @Test
     public void oneFieldInSuperClass() {
-        class B {
-            int b;
-        }
-
-        class A extends B {
-            int c;
-        }
-
-        A a = new A();
+        A24 a = new A24();
         a.b = 1;
         a.c = 2;
 
-        assertSave(a, "{'objects':[{'id':'A@0','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$14A','fields':[{'this$0':'SaverTest@1'},{'this$0':'SaverTest@1'},{'b':'1'},{'c':'2'}]},{'id':'SaverTest@1','type':'com.codenjoy.dojo.questoria.services.saver.SaverTest','fields':[]}],'main':'A@0'}");
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A24@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'b':'1'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'c':'2'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A24@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A24'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
+    }
+
+    static class A26 {
+        int int1;
+        Integer int2;
+        byte byte1;
+        Byte byte2;
+        short short1;
+        Short short2;
+        long long1;
+        Long long2;
+        boolean boolean1;
+        Boolean boolean2;
+        double double1;
+        Double double2;
+        float float1;
+        Float float2;
+        char char1;
+        Character char2;
+    }
+
+    @Test
+    public void primitivesAndWrappers() {
+        A26 a = new A26();
+        a.int1 = 1;
+        a.int2 = 2;
+        a.byte1 = 3;
+        a.byte2 = 4;
+        a.short1 = 5;
+        a.short2 = 6;
+        a.long1 = 7L;
+        a.long2 = 8L;
+        a.boolean1 = true;
+        a.boolean2 = false;
+        a.double1 = 9D;
+        a.double2 = 10D;
+        a.float1 = 11F;
+        a.float2 = 12F;
+        a.char1 = 'a';
+        a.char2 = 'b';
+
+        assertSaveLoad(a, "{\n" +
+                "  'main':'A26@0',\n" +
+                "  'objects':[\n" +
+                "    {\n" +
+                "      'fields':[\n" +
+                "        {\n" +
+                "          'boolean1':'true'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'byte1':'3'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'char1':'a'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'boolean2':'false'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'byte2':'4'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'char2':'b'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'double2':'10.0'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'float2':'12.0'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'int2':'2'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'long2':'8'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'short2':'6'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'double1':'9.0'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'float1':'11.0'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'int1':'1'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'long1':'7'\n" +
+                "        },\n" +
+                "        {\n" +
+                "          'short1':'5'\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      'id':'A26@0',\n" +
+                "      'type':'com.codenjoy.dojo.questoria.services.saver.SaverTest$A26'\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}");
     }
 }

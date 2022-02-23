@@ -22,15 +22,29 @@ package com.codenjoy.dojo.questoria.services.saver.dummy;
  * #L%
  */
 
-public class IntContainer {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-    private int a;
+public class ArrayOfArrayOfListContainer {
 
-    private IntContainer() {}
+    private List<String>[][] array;
 
-    IntContainer(int a) {
-        this.a = a;
+    private ArrayOfArrayOfListContainer() {}
+
+    public ArrayOfArrayOfListContainer(int i) {
+        array = new List[][] {
+                new List[]{
+                        new ArrayList(Arrays.asList("a1")),
+                        new LinkedList(Arrays.asList("b1", "b2")),
+                        new ArrayList(Arrays.asList("c1", "c2", "c3"))
+                },
+                new List[]{
+                        new LinkedList(Arrays.asList("q1")),
+                        new ArrayList(Arrays.asList("w1", "w2")),
+                        new LinkedList(Arrays.asList("e1", "e2", "e3"))
+                }
+        };
     }
-
 }
-

@@ -23,6 +23,7 @@ package com.codenjoy.dojo.questoria.services.saver.dummy;
  */
 
 public class ClassWithStaticInnerClass {
+
     public Inner a;
 
     private ClassWithStaticInnerClass() {}

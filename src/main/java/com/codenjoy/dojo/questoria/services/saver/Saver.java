@@ -10,12 +10,12 @@ package com.codenjoy.dojo.questoria.services.saver;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -235,16 +235,7 @@ public class Saver {
                 continue;
             }
 
-            boolean isArray =
-                    object instanceof Object[] ||
-                            object instanceof int[] ||
-                            object instanceof char[] ||
-                            object instanceof short[] ||
-                            object instanceof float[] ||
-                            object instanceof long[] ||
-                            object instanceof byte[] ||
-                            object instanceof double[] ||
-                            object instanceof boolean[];
+            boolean isArray = object.getClass().isArray();
             if (object.getClass().getPackage() == null && !isArray) continue;
 
             boolean isMap = Map.class.isAssignableFrom(object.getClass());
@@ -277,38 +268,29 @@ public class Saver {
                 if (object instanceof int[]) {    // TODO как я не люблю массивы в джаве
                     int[] array = (int[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof boolean[]) {
+                } else if (object instanceof boolean[]) {
                     boolean[] array = (boolean[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof byte[]) {
+                } else if (object instanceof byte[]) {
                     byte[] array = (byte[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof long[]) {
+                } else if (object instanceof long[]) {
                     long[] array = (long[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof char[]) {
+                } else if (object instanceof char[]) {
                     char[] array = (char[]) object;
                     list = Arrays.asList(String.valueOf(array));
-                }
-                if (object instanceof double[]) {
+                } else if (object instanceof double[]) {
                     double[] array = (double[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof short[]) {
+                } else if (object instanceof short[]) {
                     short[] array = (short[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof float[]) {
+                } else if (object instanceof float[]) {
                     float[] array = (float[]) object;
                     list = Arrays.asList(ArrayUtils.toObject(array));
-                }
-                if (object instanceof Object[]) {
-                    Object[] array = (Object[]) object;
-                    list = Arrays.asList(array);
+                } else if (object instanceof Object[]) {
+                    list = Arrays.asList((Object[]) object);
                 }
 
                 data.add(new Entry(object, list));
@@ -330,7 +312,7 @@ public class Saver {
             }
 
             if (isClass) {
-                Class<?> clazz = (Class)object;
+                Class<?> clazz = (Class) object;
                 data.add(new Entry(object, Arrays.asList(clazz.getName())));
                 continue;
             }
@@ -377,7 +359,7 @@ public class Saver {
         Key key = new Key(object);
         for (Entry entry : data) {
             if (entry.getKey().equals(key)) {
-                return (List)entry.getValue();
+                return (List) entry.getValue();
             }
         }
         throw new RuntimeException("не найдено!");

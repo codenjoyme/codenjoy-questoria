@@ -23,6 +23,7 @@ package com.codenjoy.dojo.questoria.services.saver.dummy;
  */
 
 public class ClassWithInnerClass {
+
     public Inner a;
 
     private ClassWithInnerClass() {}
