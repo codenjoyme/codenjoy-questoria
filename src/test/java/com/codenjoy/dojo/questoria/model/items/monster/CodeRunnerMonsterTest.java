@@ -33,8 +33,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Matchers.anyChar;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -75,7 +75,7 @@ public class CodeRunnerMonsterTest {
         messenger.add(messages);
         monster.setMessenger(messenger);
         World world = mock(World.class);
-        when(world.make(anyChar(), anyObject())).thenReturn(new Nothing());
+        when(world.make(anyChar(), any())).thenReturn(new Nothing());
         monster.setWorld(world);
     }
 

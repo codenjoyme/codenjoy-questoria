@@ -60,7 +60,7 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     public void answer(String message) {
         if (message.equals(answer)) {
             messenger.say("тЫ @#& Уб$%@&^ил ме:ня $!@!");
-            Askable gold = (Askable)leaveAfter();
+            Askable gold = (Askable) leaveAfter();
             gold.ask();
         } else {
             messenger.say(help);
@@ -68,8 +68,8 @@ public class Monster extends TalkingObject implements Something, CodeHelper, Die
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        boolean otherHeroCanLeave = this.hero == null || !this.hero.equals(hero);
+    public boolean canLeave(Me other) {
+        boolean otherHeroCanLeave = hero == null || !hero.equals(other);
         boolean canLeave = attemptsToLeave >= 1;
         return otherHeroCanLeave || canLeave;
     }

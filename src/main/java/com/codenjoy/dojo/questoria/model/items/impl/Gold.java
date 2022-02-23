@@ -54,7 +54,6 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
     @Override
     public void getBy(PlayerInfoImpl player) {
         player.addGold(amount);
-        leaveAfter();
         messenger.say("Ты подобрал меня! Спасибо!!");
     }
 
