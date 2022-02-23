@@ -54,7 +54,7 @@ public class QuestoriaGame implements Tickable, GameField {
     private ObjectFactory objects;
     private List<Me> players;
     private int viewSize;
-    private Point initPosition;
+    private Point startSpot;
 
     private QuestoriaGame() {}
 
@@ -64,8 +64,10 @@ public class QuestoriaGame implements Tickable, GameField {
         this.settings = settings;
         this.field = new PointField();
 
+        clearScore();
+
         fieldLoader = new FieldLoaderImpl().load(level.map());
-        initPosition = fieldLoader.initPosition();
+        startSpot = level.heroes().get(0).copy();
         TerritoryField field = new TerritoryField(fieldLoader);
         heroField = field;
         objects = new ObjectFactoryImpl(settings.monsters(), field);
@@ -130,7 +132,7 @@ public class QuestoriaGame implements Tickable, GameField {
     }
 
     private Point findFreePosition() {
-        Point point = pt(initPosition.getX(), initPosition.getY());
+        Point point = pt(startSpot.getX(), startSpot.getY());
         while (!(locator.getAt(point, null) instanceof Nothing)) {
             point = pt(point.getX() + 1, point.getY());
         }
