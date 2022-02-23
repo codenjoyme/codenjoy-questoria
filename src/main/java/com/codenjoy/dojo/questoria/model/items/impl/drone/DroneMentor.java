@@ -60,8 +60,8 @@ public class DroneMentor extends TalkingObject implements Something, SetWorld, M
 
     @Override
     public void answer(String message) {
-        Drone dron = leaveAfter();
-        dron.ask();
+        Drone drone = leaveAfter();
+        drone.ask();
     }
 
     @Override
