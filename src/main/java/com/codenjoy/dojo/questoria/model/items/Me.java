@@ -228,11 +228,6 @@ public class Me extends TalkingObject implements Viewable, Joystick, Something, 
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        return true;
-    }
-
-    @Override
     public void ask() {
         messenger.sayOnce("Привет, я такой же как и ты игрок!");
     }

@@ -67,11 +67,6 @@ public class Drone extends TalkingObject implements Something, CodeHelper, Ticka
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        return true;
-    }
-
-    @Override
     public void ask() {
         messenger.sayOnce("Я твой робот! Запрограммируй меня.");
         active = false;

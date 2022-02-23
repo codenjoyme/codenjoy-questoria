@@ -47,11 +47,6 @@ public class Gold extends TalkingObject implements Something, SetWorld, SetParam
     }
 
     @Override
-    public boolean canLeave(Me hero) {
-        return true;
-    }
-
-    @Override
     public void ask() {
         messenger.sayOnce("Привет, я - " + amount + "$");
     }
