@@ -45,14 +45,14 @@ public class ObjectLoaderTest {
                 .sorted(Comparator.comparing(Map.Entry::getKey))
                 .collect(toMap(java.util.Map.Entry::getKey,
                         java.util.Map.Entry::getValue));
-        assertEquals("{" +
-                "0=class com.codenjoy.dojo.questoria.model.items.impl.StoneForum, " +
-                "#=class com.codenjoy.dojo.questoria.model.items.impl.Wall, " +
-                "$=class com.codenjoy.dojo.questoria.model.items.impl.Gold, " +
-                "*=class com.codenjoy.dojo.questoria.model.items.impl.drone.Drone, " +
-                "M=class com.codenjoy.dojo.questoria.model.items.impl.drone.DroneMentor, " +
-                "O=class com.codenjoy.dojo.questoria.model.items.impl.Stone}",
-                cache.toString());
+        assertEquals("{0=class com.codenjoy.dojo.questoria.model.items.impl.StoneForum, \n" +
+                        "#=class com.codenjoy.dojo.questoria.model.items.impl.Wall, \n" +
+                        "$=class com.codenjoy.dojo.questoria.model.items.impl.Gold, \n" +
+                        "*=class com.codenjoy.dojo.questoria.model.items.impl.drone.Drone, \n" +
+                        "M=class com.codenjoy.dojo.questoria.model.items.impl.drone.DroneMentor, \n" +
+                        "?=class com.codenjoy.dojo.questoria.model.items.impl.Fog, \n" +
+                        "O=class com.codenjoy.dojo.questoria.model.items.impl.Stone}",
+                cache.toString().replace(", ", ", \n"));
     }
 
     @Test
