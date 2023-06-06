@@ -25,10 +25,16 @@ package com.codenjoy.dojo.questoria.model;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.utils.SmokeUtils;
 import com.codenjoy.dojo.utils.TestUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.codenjoy.dojo.questoria.client.Element.HERO;
 import static com.codenjoy.dojo.questoria.client.Element.NOTHING;
@@ -42,6 +48,10 @@ public class FieldLoaderImpl implements FieldLoader {
 
     public FieldLoader load(File file) {
         return load(readFile(file));
+    }
+
+    public FieldLoader loadFromResources(String relativePath) {
+        return load(readFileFromResources(relativePath));
     }
 
     public FieldLoader load(String data) {
@@ -75,6 +85,17 @@ public class FieldLoaderImpl implements FieldLoader {
     public static String readFile(File file) {
         return SmokeUtils.load(file)
                 .replace('.', NOTHING.ch());
+    }
+
+    public static String readFileFromResources(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                FieldLoaderImpl.class.getResourceAsStream(fileName), StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"))
+                    .replace('.', NOTHING.ch());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return StringUtils.EMPTY;
+        }
     }
 
     @Override

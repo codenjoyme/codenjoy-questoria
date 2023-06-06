@@ -143,6 +143,21 @@ public class LoadFieldFromFileTest {
                 "#############\n");
     }
 
+    @Test
+    public void shouldLoadJarFileToField() {
+        // given when content loaded from .jar file
+        FieldLoader loader = new FieldLoaderImpl()
+                .loadFromResources("/META-INF/maven/org.apache.commons/commons-lang3/pom.properties");
+
+        // then  // .jar file content read and field is constructed based on the number of lines in the file
+        assertEquals(3, loader.size());
+
+        verifyField(loader.field(),
+                "art\n" +
+                         "gro\n" +
+                         "ver\n");
+    }
+
     private void verifyField(FieldOld field, String expected) {
         int size = field.size();
 
