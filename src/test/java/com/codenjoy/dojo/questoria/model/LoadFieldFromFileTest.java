@@ -144,18 +144,13 @@ public class LoadFieldFromFileTest {
     }
 
     @Test
-    public void shouldLoadJarFileToField() {
+    public void shouldLoadJarFile() {
         // given when content loaded from .jar file
-        FieldLoader loader = new FieldLoaderImpl()
-                .loadFromResources("/META-INF/maven/org.apache.commons/commons-lang3/pom.properties");
+        String content = FieldLoaderImpl.readFileFromResources(
+                "/META-INF/maven/org.apache.commons/commons-lang3/pom.properties");
 
-        // then  // .jar file content read and field is constructed based on the number of lines in the file
-        assertEquals(3, loader.size());
-
-        verifyField(loader.field(),
-                "art\n" +
-                         "gro\n" +
-                         "ver\n");
+        // then .jar file content read, having '.' symbols replaced with ' '
+        assertEquals("artifactId=commons-lang3\ngroupId=org apache commons\nversion=3 11", content);
     }
 
     private void verifyField(FieldOld field, String expected) {

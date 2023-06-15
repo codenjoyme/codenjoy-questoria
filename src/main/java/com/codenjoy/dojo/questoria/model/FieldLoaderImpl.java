@@ -50,10 +50,6 @@ public class FieldLoaderImpl implements FieldLoader {
         return load(readFile(file));
     }
 
-    public FieldLoader loadFromResources(String relativePath) {
-        return load(readFileFromResources(relativePath));
-    }
-
     public FieldLoader load(String data) {
         if (!data.contains("\n")) {
             // TODO убрать это после того как выравняю все методы загрузки
