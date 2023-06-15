@@ -118,3 +118,52 @@ function initGame(contextPath, playerGameCode, editor) {
         send('refresh');
     });
 }
+
+// ========================== user page ==========================
+
+var playerBoard = function() {
+    initLayout(setup.game, 'board.html', setup.contextPath,
+        null,
+        [],
+        function() {
+            $(document.body).show(); // TODO: integrate function initGame() from game.js
+        });
+}
+
+// ========================== game setup ==========================
+
+if (typeof setup == 'undefined') {
+    setup = {};
+    setup.demo = true;
+    setup.code = 123;
+    setup.playerId = 'userId';
+    setup.readableName = 'Stiven Pupkin';
+    initLayout = function(setup, html, context, transformations, scripts, onLoad) {
+        onLoad();
+    }
+}
+
+// var controller;
+
+setup.setupGame = function() {
+    setup.enableDonate = false;
+    setup.enableJoystick = false;
+    setup.enablePlayerInfo = false;
+    setup.enablePlayerInfoLevel = false;
+    setup.enableLeadersTable = false;
+    setup.enableChat = false;
+    setup.enableInfo = false;
+    setup.enableHotkeys = true;
+    setup.enableForkMe = false;
+    setup.enableAdvertisement = false;
+    setup.showBody = false;
+    setup.debug = false;
+}
+
+setup.onPageLoad = function() {
+    playerBoard();
+}
+
+if (setup.demo) {
+    setup.onPageLoad(false);
+}

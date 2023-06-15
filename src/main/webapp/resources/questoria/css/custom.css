@@ -19,3 +19,41 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+.main {
+    transition: padding 1s;
+    margin-top: 15px;
+    padding: 0 15px 0 565px;
+    position: relative;
+}
+
+.game {
+    background-position: center;
+    position: absolute;
+    left: 0px;
+    width:550px!important;
+}
+
+.main-block {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.editor-block {
+    box-sizing: border-box;
+    position: relative;
+    width: 540px;
+    height: 430px;
+    border: 1px solid lightgray;
+    padding-left: 12px;
+}
+
+canvas {
+  width:550px;
+}
+
+div, #message {
+    font-family:lucida console;
+    font-size:11px;
+}
