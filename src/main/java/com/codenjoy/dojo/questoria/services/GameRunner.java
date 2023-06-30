@@ -39,7 +39,10 @@ import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 import com.codenjoy.dojo.services.multiplayer.LevelProgress;
 import com.codenjoy.dojo.services.multiplayer.MultiplayerType;
+import com.codenjoy.dojo.services.printer.BoardReader;
 import com.codenjoy.dojo.services.printer.CharElement;
+import com.codenjoy.dojo.services.printer.PrinterFactory;
+import com.codenjoy.dojo.services.printer.layeredview.PrinterData;
 import com.codenjoy.dojo.services.settings.Parameter;
 
 import static com.codenjoy.dojo.services.settings.SimpleParameter.v;
@@ -98,5 +101,12 @@ public class GameRunner extends AbstractGameType<GameSettings> {
     @Override
     public GamePlayer createPlayer(EventListener listener, int teamId, String playerId, GameSettings settings) {
         return new Player(listener, settings).inTeam(teamId);
+    }
+
+    public PrinterFactory getPrinterFactory() {
+        return PrinterFactory.get((BoardReader reader, Player player, Object... parameters) -> {
+            PrinterData data = player.getPrinter().print();
+            return data.getLayers().get(0);
+        });
     }
 }

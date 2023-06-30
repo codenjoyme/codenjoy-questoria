@@ -117,4 +117,7 @@ public class Hero extends RoundPlayerHero<Field>
         score = Math.max(0, score + added);
     }
 
+    public Point getPosition() {
+        return pt(getX(), getY());
+    }
 }

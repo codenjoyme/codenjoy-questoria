@@ -30,8 +30,10 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.field.Accessor;
 import com.codenjoy.dojo.services.field.Generator;
 import com.codenjoy.dojo.services.field.PointField;
+import com.codenjoy.dojo.services.multiplayer.TriFunction;
 import com.codenjoy.dojo.services.printer.BoardReader;
-import com.codenjoy.dojo.services.round.RoundField;
+import com.codenjoy.dojo.services.printer.layeredview.LayeredField;
+import com.codenjoy.dojo.services.printer.state.State;
 import com.codenjoy.dojo.utils.whatsnext.WhatsNextUtils;
 
 import java.util.LinkedList;
@@ -41,8 +43,9 @@ import java.util.function.Function;
 
 import static com.codenjoy.dojo.questoria.services.Event.Type.START_ROUND;
 import static com.codenjoy.dojo.questoria.services.Event.Type.WIN_ROUND;
+import static com.codenjoy.dojo.services.PointImpl.pt;
 
-public class Questoria extends RoundField<Player, Hero> implements Field {
+public class Questoria extends LayeredField<Player, Hero> implements Field { // cause compilation errors
 
     private Level level;
     private PointField field;
@@ -171,4 +174,23 @@ public class Questoria extends RoundField<Player, Hero> implements Field {
         return field.of(Wall.class);
     }
 
+    public int countLayers() {
+        return 1;
+    }
+
+    public int viewSize() {
+        return settings.integer(GameSettings.Keys.VIEW_SIZE);
+    }
+
+    public TriFunction<Integer, Integer, Integer, State> elements() {
+        return (layer, x, y) -> (State) field.get(pt(x, y)).allValues().get(0);
+    }
+
+    public Point viewCenter(Player player) {
+        return player.getHero().getPosition();
+    }
+
+    public Object[] itemsInSameCell(State item, int layer) {
+        return new Object[0];
+    }
 }

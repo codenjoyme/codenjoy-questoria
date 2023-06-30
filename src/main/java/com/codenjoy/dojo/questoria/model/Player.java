@@ -27,9 +27,9 @@ import com.codenjoy.dojo.questoria.services.GameSettings;
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.event.Calculator;
-import com.codenjoy.dojo.services.round.RoundGamePlayer;
+import com.codenjoy.dojo.services.printer.layeredview.LayeredGamePlayer;
 
-public class Player extends RoundGamePlayer<Hero, Field> {
+public class Player extends LayeredGamePlayer<Hero, Field> { // causes compilation errors
 
     private Calculator<Void> calculator;
 
